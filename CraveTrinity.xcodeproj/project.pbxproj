@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		28A3F8EC2D65973500D8DE44 /* CraveWatch Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 28A3F8C92D65973300D8DE44 /* CraveWatch Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		28A3F90A2D65978500D8DE44 /* RealityKitContent in Frameworks */ = {isa = PBXBuildFile; productRef = 28A3F9092D65978500D8DE44 /* RealityKitContent */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		28A3F86C2D65962B00D8DE44 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -21,28 +26,156 @@
 			remoteGlobalIDString = 28A3F8582D65962900D8DE44;
 			remoteInfo = CraveTrinity;
 		};
+		28A3F8D92D65973500D8DE44 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 28A3F8512D65962900D8DE44 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 28A3F8C82D65973300D8DE44;
+			remoteInfo = "CraveWatch Watch App";
+		};
+		28A3F8E32D65973500D8DE44 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 28A3F8512D65962900D8DE44 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 28A3F8C82D65973300D8DE44;
+			remoteInfo = "CraveWatch Watch App";
+		};
+		28A3F8EA2D65973500D8DE44 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 28A3F8512D65962900D8DE44 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 28A3F8C82D65973300D8DE44;
+			remoteInfo = "CraveWatch Watch App";
+		};
+		28A3F91A2D65978600D8DE44 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 28A3F8512D65962900D8DE44 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 28A3F9042D65978500D8DE44;
+			remoteInfo = CraveVision;
+		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		28A3F8B32D65968100D8DE44 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				28A3F8EC2D65973500D8DE44 /* CraveWatch Watch App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		28A3F8592D65962900D8DE44 /* CraveTrinity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CraveTrinity.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		28A3F86B2D65962B00D8DE44 /* CraveTrinityTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CraveTrinityTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		28A3F8752D65962B00D8DE44 /* CraveTrinityUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CraveTrinityUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		28A3F8592D65962900D8DE44 /* CravePhone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CravePhone.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		28A3F86B2D65962B00D8DE44 /* CravePhoneTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CravePhoneTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		28A3F8752D65962B00D8DE44 /* CravePhoneUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CravePhoneUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		28A3F8C92D65973300D8DE44 /* CraveWatch Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CraveWatch Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		28A3F8D82D65973500D8DE44 /* CraveWatch Watch AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "CraveWatch Watch AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		28A3F8E22D65973500D8DE44 /* CraveWatch Watch AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "CraveWatch Watch AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		28A3F9052D65978500D8DE44 /* CraveVision.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CraveVision.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		28A3F9192D65978600D8DE44 /* CraveVisionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CraveVisionTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		28A3F8C22D65971B00D8DE44 /* Exceptions for "CravePhone" folder in "CravePhone" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				CravePhoneTests/CravePhoneTests.swift,
+				CravePhoneUITests/CravePhoneUITests.swift,
+				CravePhoneUITests/CravePhoneUITestsLaunchTests.swift,
+			);
+			target = 28A3F8582D65962900D8DE44 /* CravePhone */;
+		};
+		28A3F8C32D65971B00D8DE44 /* Exceptions for "CravePhone" folder in "CravePhoneTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				CravePhoneTests/CravePhoneTests.swift,
+			);
+			target = 28A3F86A2D65962B00D8DE44 /* CravePhoneTests */;
+		};
+		28A3F8C42D65971B00D8DE44 /* Exceptions for "CravePhone" folder in "CravePhoneUITests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				CravePhoneUITests/CravePhoneUITests.swift,
+				CravePhoneUITests/CravePhoneUITestsLaunchTests.swift,
+			);
+			target = 28A3F8742D65962B00D8DE44 /* CravePhoneUITests */;
+		};
+		28A3F8FE2D65975E00D8DE44 /* Exceptions for "CraveWatch" folder in "CraveWatch Watch App" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Core/Tests/Integration/CraveWatch_Watch_AppTests.swift,
+				Core/Tests/Unit/CraveWatch_Watch_AppUITests.swift,
+				Core/Tests/Unit/CraveWatch_Watch_AppUITestsLaunchTests.swift,
+			);
+			target = 28A3F8C82D65973300D8DE44 /* CraveWatch Watch App */;
+		};
+		28A3F8FF2D65975E00D8DE44 /* Exceptions for "CraveWatch" folder in "CraveWatch Watch AppTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Core/Tests/Integration/CraveWatch_Watch_AppTests.swift,
+			);
+			target = 28A3F8D72D65973500D8DE44 /* CraveWatch Watch AppTests */;
+		};
+		28A3F9002D65975E00D8DE44 /* Exceptions for "CraveWatch" folder in "CraveWatch Watch AppUITests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Core/Tests/Unit/CraveWatch_Watch_AppUITests.swift,
+				Core/Tests/Unit/CraveWatch_Watch_AppUITestsLaunchTests.swift,
+			);
+			target = 28A3F8E12D65973500D8DE44 /* CraveWatch Watch AppUITests */;
+		};
+		28A3F91F2D65978600D8DE44 /* Exceptions for "CraveVision" folder in "CraveVision" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				CraveVisionTests/CraveVisionTests.swift,
+				Info.plist,
+				Packages/RealityKitContent,
+			);
+			target = 28A3F9042D65978500D8DE44 /* CraveVision */;
+		};
+		28A3F92B2D6597C900D8DE44 /* Exceptions for "CraveVision" folder in "CraveVisionTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				CraveVisionTests/CraveVisionTests.swift,
+			);
+			target = 28A3F9182D65978600D8DE44 /* CraveVisionTests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		28A3F85B2D65962900D8DE44 /* CraveTrinity */ = {
+		28A3F85B2D65962900D8DE44 /* CravePhone */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = CraveTrinity;
+			exceptions = (
+				28A3F8C22D65971B00D8DE44 /* Exceptions for "CravePhone" folder in "CravePhone" target */,
+				28A3F8C32D65971B00D8DE44 /* Exceptions for "CravePhone" folder in "CravePhoneTests" target */,
+				28A3F8C42D65971B00D8DE44 /* Exceptions for "CravePhone" folder in "CravePhoneUITests" target */,
+			);
+			path = CravePhone;
 			sourceTree = "<group>";
 		};
-		28A3F86E2D65962B00D8DE44 /* CraveTrinityTests */ = {
+		28A3F8CA2D65973300D8DE44 /* CraveWatch */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = CraveTrinityTests;
+			exceptions = (
+				28A3F8FE2D65975E00D8DE44 /* Exceptions for "CraveWatch" folder in "CraveWatch Watch App" target */,
+				28A3F8FF2D65975E00D8DE44 /* Exceptions for "CraveWatch" folder in "CraveWatch Watch AppTests" target */,
+				28A3F9002D65975E00D8DE44 /* Exceptions for "CraveWatch" folder in "CraveWatch Watch AppUITests" target */,
+			);
+			path = CraveWatch;
 			sourceTree = "<group>";
 		};
-		28A3F8782D65962B00D8DE44 /* CraveTrinityUITests */ = {
+		28A3F9062D65978500D8DE44 /* CraveVision */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = CraveTrinityUITests;
+			exceptions = (
+				28A3F91F2D65978600D8DE44 /* Exceptions for "CraveVision" folder in "CraveVision" target */,
+				28A3F92B2D6597C900D8DE44 /* Exceptions for "CraveVision" folder in "CraveVisionTests" target */,
+			);
+			path = CraveVision;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -69,15 +202,51 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		28A3F8C62D65973300D8DE44 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		28A3F8D52D65973500D8DE44 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		28A3F8DF2D65973500D8DE44 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		28A3F9022D65978500D8DE44 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				28A3F90A2D65978500D8DE44 /* RealityKitContent in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		28A3F9162D65978600D8DE44 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		28A3F8502D65962900D8DE44 = {
 			isa = PBXGroup;
 			children = (
-				28A3F85B2D65962900D8DE44 /* CraveTrinity */,
-				28A3F86E2D65962B00D8DE44 /* CraveTrinityTests */,
-				28A3F8782D65962B00D8DE44 /* CraveTrinityUITests */,
+				28A3F85B2D65962900D8DE44 /* CravePhone */,
+				28A3F8CA2D65973300D8DE44 /* CraveWatch */,
+				28A3F9062D65978500D8DE44 /* CraveVision */,
 				28A3F85A2D65962900D8DE44 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -85,9 +254,14 @@
 		28A3F85A2D65962900D8DE44 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				28A3F8592D65962900D8DE44 /* CraveTrinity.app */,
-				28A3F86B2D65962B00D8DE44 /* CraveTrinityTests.xctest */,
-				28A3F8752D65962B00D8DE44 /* CraveTrinityUITests.xctest */,
+				28A3F8592D65962900D8DE44 /* CravePhone.app */,
+				28A3F86B2D65962B00D8DE44 /* CravePhoneTests.xctest */,
+				28A3F8752D65962B00D8DE44 /* CravePhoneUITests.xctest */,
+				28A3F8C92D65973300D8DE44 /* CraveWatch Watch App.app */,
+				28A3F8D82D65973500D8DE44 /* CraveWatch Watch AppTests.xctest */,
+				28A3F8E22D65973500D8DE44 /* CraveWatch Watch AppUITests.xctest */,
+				28A3F9052D65978500D8DE44 /* CraveVision.app */,
+				28A3F9192D65978600D8DE44 /* CraveVisionTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -95,31 +269,33 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		28A3F8582D65962900D8DE44 /* CraveTrinity */ = {
+		28A3F8582D65962900D8DE44 /* CravePhone */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 28A3F87F2D65962B00D8DE44 /* Build configuration list for PBXNativeTarget "CraveTrinity" */;
+			buildConfigurationList = 28A3F87F2D65962B00D8DE44 /* Build configuration list for PBXNativeTarget "CravePhone" */;
 			buildPhases = (
 				28A3F8552D65962900D8DE44 /* Sources */,
 				28A3F8562D65962900D8DE44 /* Frameworks */,
 				28A3F8572D65962900D8DE44 /* Resources */,
+				28A3F8B32D65968100D8DE44 /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				28A3F8EB2D65973500D8DE44 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				28A3F85B2D65962900D8DE44 /* CraveTrinity */,
+				28A3F85B2D65962900D8DE44 /* CravePhone */,
 			);
-			name = CraveTrinity;
+			name = CravePhone;
 			packageProductDependencies = (
 			);
 			productName = CraveTrinity;
-			productReference = 28A3F8592D65962900D8DE44 /* CraveTrinity.app */;
+			productReference = 28A3F8592D65962900D8DE44 /* CravePhone.app */;
 			productType = "com.apple.product-type.application";
 		};
-		28A3F86A2D65962B00D8DE44 /* CraveTrinityTests */ = {
+		28A3F86A2D65962B00D8DE44 /* CravePhoneTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 28A3F8822D65962B00D8DE44 /* Build configuration list for PBXNativeTarget "CraveTrinityTests" */;
+			buildConfigurationList = 28A3F8822D65962B00D8DE44 /* Build configuration list for PBXNativeTarget "CravePhoneTests" */;
 			buildPhases = (
 				28A3F8672D65962B00D8DE44 /* Sources */,
 				28A3F8682D65962B00D8DE44 /* Frameworks */,
@@ -130,19 +306,16 @@
 			dependencies = (
 				28A3F86D2D65962B00D8DE44 /* PBXTargetDependency */,
 			);
-			fileSystemSynchronizedGroups = (
-				28A3F86E2D65962B00D8DE44 /* CraveTrinityTests */,
-			);
-			name = CraveTrinityTests;
+			name = CravePhoneTests;
 			packageProductDependencies = (
 			);
 			productName = CraveTrinityTests;
-			productReference = 28A3F86B2D65962B00D8DE44 /* CraveTrinityTests.xctest */;
+			productReference = 28A3F86B2D65962B00D8DE44 /* CravePhoneTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		28A3F8742D65962B00D8DE44 /* CraveTrinityUITests */ = {
+		28A3F8742D65962B00D8DE44 /* CravePhoneUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 28A3F8852D65962B00D8DE44 /* Build configuration list for PBXNativeTarget "CraveTrinityUITests" */;
+			buildConfigurationList = 28A3F8852D65962B00D8DE44 /* Build configuration list for PBXNativeTarget "CravePhoneUITests" */;
 			buildPhases = (
 				28A3F8712D65962B00D8DE44 /* Sources */,
 				28A3F8722D65962B00D8DE44 /* Frameworks */,
@@ -153,15 +326,117 @@
 			dependencies = (
 				28A3F8772D65962B00D8DE44 /* PBXTargetDependency */,
 			);
-			fileSystemSynchronizedGroups = (
-				28A3F8782D65962B00D8DE44 /* CraveTrinityUITests */,
-			);
-			name = CraveTrinityUITests;
+			name = CravePhoneUITests;
 			packageProductDependencies = (
 			);
 			productName = CraveTrinityUITests;
-			productReference = 28A3F8752D65962B00D8DE44 /* CraveTrinityUITests.xctest */;
+			productReference = 28A3F8752D65962B00D8DE44 /* CravePhoneUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		28A3F8C82D65973300D8DE44 /* CraveWatch Watch App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 28A3F8ED2D65973500D8DE44 /* Build configuration list for PBXNativeTarget "CraveWatch Watch App" */;
+			buildPhases = (
+				28A3F8C52D65973300D8DE44 /* Sources */,
+				28A3F8C62D65973300D8DE44 /* Frameworks */,
+				28A3F8C72D65973300D8DE44 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				28A3F8CA2D65973300D8DE44 /* CraveWatch */,
+			);
+			name = "CraveWatch Watch App";
+			packageProductDependencies = (
+			);
+			productName = "CraveWatch Watch App";
+			productReference = 28A3F8C92D65973300D8DE44 /* CraveWatch Watch App.app */;
+			productType = "com.apple.product-type.application";
+		};
+		28A3F8D72D65973500D8DE44 /* CraveWatch Watch AppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 28A3F8F02D65973500D8DE44 /* Build configuration list for PBXNativeTarget "CraveWatch Watch AppTests" */;
+			buildPhases = (
+				28A3F8D42D65973500D8DE44 /* Sources */,
+				28A3F8D52D65973500D8DE44 /* Frameworks */,
+				28A3F8D62D65973500D8DE44 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				28A3F8DA2D65973500D8DE44 /* PBXTargetDependency */,
+			);
+			name = "CraveWatch Watch AppTests";
+			packageProductDependencies = (
+			);
+			productName = "CraveWatch Watch AppTests";
+			productReference = 28A3F8D82D65973500D8DE44 /* CraveWatch Watch AppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		28A3F8E12D65973500D8DE44 /* CraveWatch Watch AppUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 28A3F8F32D65973500D8DE44 /* Build configuration list for PBXNativeTarget "CraveWatch Watch AppUITests" */;
+			buildPhases = (
+				28A3F8DE2D65973500D8DE44 /* Sources */,
+				28A3F8DF2D65973500D8DE44 /* Frameworks */,
+				28A3F8E02D65973500D8DE44 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				28A3F8E42D65973500D8DE44 /* PBXTargetDependency */,
+			);
+			name = "CraveWatch Watch AppUITests";
+			packageProductDependencies = (
+			);
+			productName = "CraveWatch Watch AppUITests";
+			productReference = 28A3F8E22D65973500D8DE44 /* CraveWatch Watch AppUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		28A3F9042D65978500D8DE44 /* CraveVision */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 28A3F9202D65978600D8DE44 /* Build configuration list for PBXNativeTarget "CraveVision" */;
+			buildPhases = (
+				28A3F9012D65978500D8DE44 /* Sources */,
+				28A3F9022D65978500D8DE44 /* Frameworks */,
+				28A3F9032D65978500D8DE44 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				28A3F9062D65978500D8DE44 /* CraveVision */,
+			);
+			name = CraveVision;
+			packageProductDependencies = (
+				28A3F9092D65978500D8DE44 /* RealityKitContent */,
+			);
+			productName = CraveVision;
+			productReference = 28A3F9052D65978500D8DE44 /* CraveVision.app */;
+			productType = "com.apple.product-type.application";
+		};
+		28A3F9182D65978600D8DE44 /* CraveVisionTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 28A3F9232D65978600D8DE44 /* Build configuration list for PBXNativeTarget "CraveVisionTests" */;
+			buildPhases = (
+				28A3F9152D65978600D8DE44 /* Sources */,
+				28A3F9162D65978600D8DE44 /* Frameworks */,
+				28A3F9172D65978600D8DE44 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				28A3F91B2D65978600D8DE44 /* PBXTargetDependency */,
+			);
+			name = CraveVisionTests;
+			packageProductDependencies = (
+			);
+			productName = CraveVisionTests;
+			productReference = 28A3F9192D65978600D8DE44 /* CraveVisionTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -184,6 +459,24 @@
 						CreatedOnToolsVersion = 16.2;
 						TestTargetID = 28A3F8582D65962900D8DE44;
 					};
+					28A3F8C82D65973300D8DE44 = {
+						CreatedOnToolsVersion = 16.2;
+					};
+					28A3F8D72D65973500D8DE44 = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = 28A3F8C82D65973300D8DE44;
+					};
+					28A3F8E12D65973500D8DE44 = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = 28A3F8C82D65973300D8DE44;
+					};
+					28A3F9042D65978500D8DE44 = {
+						CreatedOnToolsVersion = 16.2;
+					};
+					28A3F9182D65978600D8DE44 = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = 28A3F9042D65978500D8DE44;
+					};
 				};
 			};
 			buildConfigurationList = 28A3F8542D65962900D8DE44 /* Build configuration list for PBXProject "CraveTrinity" */;
@@ -200,9 +493,14 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				28A3F8582D65962900D8DE44 /* CraveTrinity */,
-				28A3F86A2D65962B00D8DE44 /* CraveTrinityTests */,
-				28A3F8742D65962B00D8DE44 /* CraveTrinityUITests */,
+				28A3F8582D65962900D8DE44 /* CravePhone */,
+				28A3F86A2D65962B00D8DE44 /* CravePhoneTests */,
+				28A3F8742D65962B00D8DE44 /* CravePhoneUITests */,
+				28A3F8C82D65973300D8DE44 /* CraveWatch Watch App */,
+				28A3F8D72D65973500D8DE44 /* CraveWatch Watch AppTests */,
+				28A3F8E12D65973500D8DE44 /* CraveWatch Watch AppUITests */,
+				28A3F9042D65978500D8DE44 /* CraveVision */,
+				28A3F9182D65978600D8DE44 /* CraveVisionTests */,
 			);
 		};
 /* End PBXProject section */
@@ -223,6 +521,41 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		28A3F8732D65962B00D8DE44 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		28A3F8C72D65973300D8DE44 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		28A3F8D62D65973500D8DE44 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		28A3F8E02D65973500D8DE44 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		28A3F9032D65978500D8DE44 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		28A3F9172D65978600D8DE44 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -253,18 +586,73 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		28A3F8C52D65973300D8DE44 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		28A3F8D42D65973500D8DE44 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		28A3F8DE2D65973500D8DE44 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		28A3F9012D65978500D8DE44 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		28A3F9152D65978600D8DE44 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
 		28A3F86D2D65962B00D8DE44 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 28A3F8582D65962900D8DE44 /* CraveTrinity */;
+			target = 28A3F8582D65962900D8DE44 /* CravePhone */;
 			targetProxy = 28A3F86C2D65962B00D8DE44 /* PBXContainerItemProxy */;
 		};
 		28A3F8772D65962B00D8DE44 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 28A3F8582D65962900D8DE44 /* CraveTrinity */;
+			target = 28A3F8582D65962900D8DE44 /* CravePhone */;
 			targetProxy = 28A3F8762D65962B00D8DE44 /* PBXContainerItemProxy */;
+		};
+		28A3F8DA2D65973500D8DE44 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 28A3F8C82D65973300D8DE44 /* CraveWatch Watch App */;
+			targetProxy = 28A3F8D92D65973500D8DE44 /* PBXContainerItemProxy */;
+		};
+		28A3F8E42D65973500D8DE44 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 28A3F8C82D65973300D8DE44 /* CraveWatch Watch App */;
+			targetProxy = 28A3F8E32D65973500D8DE44 /* PBXContainerItemProxy */;
+		};
+		28A3F8EB2D65973500D8DE44 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 28A3F8C82D65973300D8DE44 /* CraveWatch Watch App */;
+			targetProxy = 28A3F8EA2D65973500D8DE44 /* PBXContainerItemProxy */;
+		};
+		28A3F91B2D65978600D8DE44 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 28A3F9042D65978500D8DE44 /* CraveVision */;
+			targetProxy = 28A3F91A2D65978600D8DE44 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -395,7 +783,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"CraveTrinity/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"CravePhone/PhoneApp/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = HJ7W9PTAD8;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -424,7 +812,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"CraveTrinity/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"CravePhone/PhoneApp/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = HJ7W9PTAD8;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -518,6 +906,242 @@
 			};
 			name = Release;
 		};
+		28A3F8EE2D65973500D8DE44 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"CraveWatch/Core/Resources/Preview Content\"";
+				DEVELOPMENT_TEAM = HJ7W9PTAD8;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = CraveWatch;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.Novamind.CRAVE.CraveTrinity;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Novamind.CRAVE.CraveTrinity.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 11.2;
+			};
+			name = Debug;
+		};
+		28A3F8EF2D65973500D8DE44 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"CraveWatch/Core/Resources/Preview Content\"";
+				DEVELOPMENT_TEAM = HJ7W9PTAD8;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = CraveWatch;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.Novamind.CRAVE.CraveTrinity;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Novamind.CRAVE.CraveTrinity.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 11.2;
+			};
+			name = Release;
+		};
+		28A3F8F12D65973500D8DE44 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HJ7W9PTAD8;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Novamind.CRAVE.CraveWatch-Watch-AppTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CraveWatch Watch App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CraveWatch Watch App";
+				WATCHOS_DEPLOYMENT_TARGET = 11.2;
+			};
+			name = Debug;
+		};
+		28A3F8F22D65973500D8DE44 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HJ7W9PTAD8;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Novamind.CRAVE.CraveWatch-Watch-AppTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CraveWatch Watch App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CraveWatch Watch App";
+				WATCHOS_DEPLOYMENT_TARGET = 11.2;
+			};
+			name = Release;
+		};
+		28A3F8F42D65973500D8DE44 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HJ7W9PTAD8;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Novamind.CRAVE.CraveWatch-Watch-AppUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_TARGET_NAME = "CraveWatch Watch App";
+				WATCHOS_DEPLOYMENT_TARGET = 11.2;
+			};
+			name = Debug;
+		};
+		28A3F8F52D65973500D8DE44 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HJ7W9PTAD8;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Novamind.CRAVE.CraveWatch-Watch-AppUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_TARGET_NAME = "CraveWatch Watch App";
+				WATCHOS_DEPLOYMENT_TARGET = 11.2;
+			};
+			name = Release;
+		};
+		28A3F9212D65978600D8DE44 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"CraveVision/Preview Content\"";
+				DEVELOPMENT_TEAM = HJ7W9PTAD8;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "$(TARGET_NAME)/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Novamind.CRAVE.CraveVision;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = xros;
+				SUPPORTED_PLATFORMS = "xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 7;
+				XROS_DEPLOYMENT_TARGET = 2.2;
+			};
+			name = Debug;
+		};
+		28A3F9222D65978600D8DE44 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"CraveVision/Preview Content\"";
+				DEVELOPMENT_TEAM = HJ7W9PTAD8;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "$(TARGET_NAME)/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Novamind.CRAVE.CraveVision;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = xros;
+				SUPPORTED_PLATFORMS = "xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 7;
+				XROS_DEPLOYMENT_TARGET = 2.2;
+			};
+			name = Release;
+		};
+		28A3F9242D65978600D8DE44 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HJ7W9PTAD8;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Novamind.CRAVE.CraveVisionTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = xros;
+				SUPPORTED_PLATFORMS = "xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 7;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CraveVision.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CraveVision";
+				XROS_DEPLOYMENT_TARGET = 2.2;
+			};
+			name = Debug;
+		};
+		28A3F9252D65978600D8DE44 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HJ7W9PTAD8;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Novamind.CRAVE.CraveVisionTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = xros;
+				SUPPORTED_PLATFORMS = "xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 7;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CraveVision.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CraveVision";
+				XROS_DEPLOYMENT_TARGET = 2.2;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -530,7 +1154,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		28A3F87F2D65962B00D8DE44 /* Build configuration list for PBXNativeTarget "CraveTrinity" */ = {
+		28A3F87F2D65962B00D8DE44 /* Build configuration list for PBXNativeTarget "CravePhone" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				28A3F8802D65962B00D8DE44 /* Debug */,
@@ -539,7 +1163,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		28A3F8822D65962B00D8DE44 /* Build configuration list for PBXNativeTarget "CraveTrinityTests" */ = {
+		28A3F8822D65962B00D8DE44 /* Build configuration list for PBXNativeTarget "CravePhoneTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				28A3F8832D65962B00D8DE44 /* Debug */,
@@ -548,7 +1172,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		28A3F8852D65962B00D8DE44 /* Build configuration list for PBXNativeTarget "CraveTrinityUITests" */ = {
+		28A3F8852D65962B00D8DE44 /* Build configuration list for PBXNativeTarget "CravePhoneUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				28A3F8862D65962B00D8DE44 /* Debug */,
@@ -557,7 +1181,59 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		28A3F8ED2D65973500D8DE44 /* Build configuration list for PBXNativeTarget "CraveWatch Watch App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				28A3F8EE2D65973500D8DE44 /* Debug */,
+				28A3F8EF2D65973500D8DE44 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		28A3F8F02D65973500D8DE44 /* Build configuration list for PBXNativeTarget "CraveWatch Watch AppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				28A3F8F12D65973500D8DE44 /* Debug */,
+				28A3F8F22D65973500D8DE44 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		28A3F8F32D65973500D8DE44 /* Build configuration list for PBXNativeTarget "CraveWatch Watch AppUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				28A3F8F42D65973500D8DE44 /* Debug */,
+				28A3F8F52D65973500D8DE44 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		28A3F9202D65978600D8DE44 /* Build configuration list for PBXNativeTarget "CraveVision" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				28A3F9212D65978600D8DE44 /* Debug */,
+				28A3F9222D65978600D8DE44 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		28A3F9232D65978600D8DE44 /* Build configuration list for PBXNativeTarget "CraveVisionTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				28A3F9242D65978600D8DE44 /* Debug */,
+				28A3F9252D65978600D8DE44 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		28A3F9092D65978500D8DE44 /* RealityKitContent */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RealityKitContent;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 28A3F8512D65962900D8DE44 /* Project object */;
 }
