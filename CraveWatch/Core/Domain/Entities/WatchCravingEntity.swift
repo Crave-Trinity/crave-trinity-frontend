@@ -4,8 +4,6 @@
 //
 //  Created by [Your Name] on [Date].
 //  Description: A SwiftData model representing a craving on the watch side.
-//
-
 import Foundation
 import SwiftData
 

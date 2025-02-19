@@ -218,6 +218,8 @@
 			);
 			platformFiltersByRelativePath = {
 				Core/Presentation/Common/WatchCraveTextEditor.swift = (watchos, );
+				Core/Presentation/ViewModels/CravingLogViewModel.swift = (watchos, );
+				Core/Presentation/Views/Components/VerticalToggleBar.swift = (watchos, );
 				Core/Presentation/Views/CravingLogView.swift = (watchos, );
 				Core/Services/WatchHapticManager.swift = (watchos, );
 			};

@@ -3,20 +3,14 @@
 //  CraveWatch
 //
 //  Created by [Your Name] on [Date].
-//  Description: A simple manager for watch haptic feedback.
-//
-
+//  Description: Provides watch-specific haptic feedback.
 import WatchKit
 
 class WatchHapticManager {
     static let shared = WatchHapticManager()
-
-    enum HapticType {
-        case success
-        case warning
-        case selection
-    }
-
+    
+    enum HapticType { case success, warning, selection }
+    
     func play(_ type: HapticType) {
         switch type {
         case .success:

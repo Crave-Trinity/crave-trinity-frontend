@@ -1,3 +1,10 @@
+//
+//  WatchCraveTextEditor.swift
+//  CraveWatch
+//
+//  Created by [Your Name] on [Date].
+//  Description: A custom text editor for the watch with placeholder text,
+//               a character limit, and focus state handling.
 import SwiftUI
 
 struct WatchCraveTextEditor: View {
@@ -21,7 +28,6 @@ struct WatchCraveTextEditor: View {
                 }
                 .padding(.top, 8)
             }
-
             TextField("", text: $text, axis: .vertical)
                 .multilineTextAlignment(.center)
                 .lineLimit(3)

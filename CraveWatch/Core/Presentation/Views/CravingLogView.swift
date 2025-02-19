@@ -4,10 +4,11 @@
 //
 //  Created by [Your Name] on [Date].
 //  Description:
-//    - Large text box at top
-//    - A single vertical intensity bar on the right
-//      that moves the numeric label up as the fill grows
-//    - A small "Log" button at the bottom
+//    - A more aggressive side-by-side layout:
+//      a bigger text box on the left,
+//      a thin vertical slider on the right,
+//      firmly left of the crown’s green indicator (larger negative padding),
+//      and a smaller "Log" button at the bottom.
 //
 
 import SwiftUI
@@ -16,57 +17,57 @@ import SwiftData
 struct CravingLogView: View {
     @Environment(\.modelContext) private var context
     
+    // Craving text & slider value
     @State private var cravingDescription: String = ""
     @State private var intensity: Int = 5
     
+    // Confirmation overlay
     @State private var showConfirmation: Bool = false
+    
+    // Watch keyboard focus
     @FocusState private var isTextFieldFocused: Bool
     
+    // Connectivity
     @ObservedObject var connectivityService: WatchConnectivityService
 
     var body: some View {
         VStack(spacing: 8) {
-            // 1) Big text editor
-            WatchCraveTextEditor(
-                text: $cravingDescription,
-                primaryPlaceholder: "Craving, Trigger",
-                secondaryPlaceholder: "Hungry, Angry\nLonely, Tired",
-                isFocused: $isTextFieldFocused,
-                characterLimit: 80
-            )
-            .frame(height: 80)
-            .background(Color.gray.opacity(0.1))
-            .cornerRadius(8)
             
-            // 2) The bar on the right + label "Intensity"
-            HStack(alignment: .center) {
-                Spacer()
+            // 1) Horizontal arrangement
+            HStack(spacing: 4) {
+                // A) Bigger text box
+                WatchCraveTextEditor(
+                    text: $cravingDescription,
+                    primaryPlaceholder: "Craving, Trigger",
+                    secondaryPlaceholder: "Hungry, Angry\nLonely, Tired",
+                    isFocused: $isTextFieldFocused,
+                    characterLimit: 80
+                )
+                .frame(width: 120, height: 130) // bigger
+                .background(Color.gray.opacity(0.1))
+                .cornerRadius(8)
                 
-                VStack(spacing: 4) {
-                    VerticalIntensityBar(value: $intensity)
-                    
-                    Text("Intensity")
-                        .font(.caption2)
-                        .foregroundColor(.gray)
-                }
+                Spacer(minLength: 0)
+                
+                // B) Thin vertical slider, pushed further left of the crown
+                VerticalIntensityBar(value: $intensity, barWidth: 4)
+                    .padding(.trailing, -16) // bigger negative => further left from the crown indicator
             }
-            .frame(maxWidth: .infinity, minHeight: 60)
+            .frame(maxWidth: .infinity)
+            .padding(.horizontal, 6)
             
-            // 3) The smaller Log button
+            // 2) Smaller "Log" button
             Button(action: logCraving) {
                 Text("Log")
-                    .font(.system(size: 14))
-                    .frame(width: 80)
-                    .padding(.vertical, 4)
+                    .font(.system(size: 12)) // smaller text
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 3)
             }
             .buttonStyle(.bordered)
             .tint(.blue)
             .buttonBorderShape(.roundedRectangle)
         }
-        .padding(.horizontal, 8)
-        .overlay(
-            ConfirmationOverlay(isPresented: $showConfirmation)
-        )
+        .overlay(ConfirmationOverlay(isPresented: $showConfirmation))
         // Hide watch toolbar if text field is focused
         .toolbar(isTextFieldFocused ? .hidden : .visible)
     }
@@ -82,7 +83,6 @@ struct CravingLogView: View {
         context.insert(newCraving)
         connectivityService.sendCravingToPhone(craving: newCraving)
         
-        // Reset
         cravingDescription = ""
         intensity = 5
         showConfirmation = true
@@ -92,16 +92,13 @@ struct CravingLogView: View {
     }
 }
 
-/// Overlays a green checkmark
 struct ConfirmationOverlay: View {
     @Binding var isPresented: Bool
 
     var body: some View {
         if isPresented {
             ZStack {
-                Color.black.opacity(0.8)
-                    .edgesIgnoringSafeArea(.all)
-                
+                Color.black.opacity(0.8).edgesIgnoringSafeArea(.all)
                 Image(systemName: "checkmark.circle.fill")
                     .font(.system(size: 40))
                     .foregroundColor(.green)
