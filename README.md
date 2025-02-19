@@ -16,142 +16,268 @@
 
 * Leveraged AI to accelerate but made critical planning and logic decisions myself. 
 
-💡 This was built in 7 days from scratch while learning Swift with AI assistance. The commit history proves my iteration speed—over 160 commits solving real programming problems. It wasn’t just AI-generated code; I debugged, refactored, and solved SwiftData persistence issues. I can execute fast, learn fast, and build something real. The marathon continues.
+💡 This was built in 7 days from scratch while learning Swift with AI assistance. The commit history proves my iteration speed—over 200 commits solving real programming problems. It wasn’t just AI-generated code; I debugged, refactored, and solved SwiftData persistence issues. I can execute fast, learn fast, and build something real. The marathon continues.
 
 📂 Project Structure
 
 ```bash
 
-CRAVE/
-│   ├── CRAVE.xcodeproj
-│   ├── CRAVE.xctestplan
-│   └── README.md
-CRAVEApp/
-│   ├── CRAVEApp.swift
-│   ├── ContentView.swift
-│   ├── CRAVE.entitlements
-│   └── README.md
-├── Core/
-│   ├── Configuration/
-│   │   ├── AnalyticsConstants.swift
-│   │   └── AnalyticsConfiguration.swift
-│   ├── DependencyInjection/
-│   │   └── EventTrackingService.swift
-│   ├── DesignSystem/
-│   │   ├── CRAVEDesignSystem.swift
-│   │   └── Components/
-│   │       ├── CraveButton.swift
-│   │       └── CraveTextEditor.swift
-│   ├── Extensions/
-│   │   ├── Array+Analytics.swift
-│   │   ├── Date+Analytics.swift
-│   │   ├── Date+Extensions.swift
-│   │   ├── Dictionary+Analytics.swift
-│   │   └── View+Extensions.swift
-│   └── Utils/
-│       ├── AnalyticsTypes.swift
-│       ├── AnalyticsError.swift
-│       ├── AnalyticsFormatter.swift
-│       └── AnalyticsTransformers.swift
-├── Features/
-│   ├── Analytics/
-│   │   ├── Domain/
-│   │   │   ├── Models/
-│   │   │   │   ├── AnalyticsEvent.swift
-│   │   │   │   ├── AnalyticsInsight.swift
-│   │   │   │   ├── AnalyticsMetadata.swift
-│   │   │   │   ├── AnalyticsPattern.swift
-│   │   │   │   ├── AnalyticsPrediction.swift
-│   │   │   │   ├── BasicAnalyticsResult.swift
-│   │   │   │   └── ContextualData.swift
-│   │   │   └── UseCases/
-│   │   │       ├── AnalyticsProcessor.swift
-│   │   │       ├── AnalyticsAggregator.swift
-│   │   │       └── PatternDetectionService.swift
-│   │   ├── Data/
-│   │   │   ├── Repositories/
-│   │   │   │   ├── AnalyticsStorage.swift
-│   │   │   │   └── AnalyticsManager.swift
-│   │   │   ├── Queries/
-│   │   │   │   ├── CalendarViewQuery.swift
-│   │   │   │   ├── FrequencyQuery.swift
-│   │   │   │   ├── PatternQuery.swift
-│   │   │   │   └── TimeOfDayQuery.swift
-│   │   │   └── Coordinators/
-│   │   │       ├── AnalyticsCoordinator.swift
-│   │   │       └── AnalyticsReporter.swift
-│   │   └── Presentation/
-│   │       ├── Views/
-│   │       │   ├── Dashboard/
-│   │       │   │   └── AnalyticsDashboardView.swift
-│   │       │   └── Components/
-│   │       │       ├── AnalyticsInsightView.swift
-│   │       │       ├── CalendarHeatmapView.swift
-│   │       │       ├── CravingBarChart.swift
-│   │       │       ├── PatternVisualizationView.swift
-│   │       │       └── TimeOfDayPieChart.swift
-│   │       └── ViewModels/
-│   │           ├── AnalyticsDashboardViewModel.swift
-│   │           └── AnalyticsViewModel.swift
-│   └── Craving/
-│       ├── Domain/
-│       │   ├── Models/
-│       │   │   ├── CravingModel.swift
-│       │   │   └── InteractionData.swift
-│       │   └── UseCases/
-│       │       └── CravingAnalyzer.swift
-│       ├── Data/
-│       │   └── Repositories/
-│       │       └── CravingManager.swift
-│       └── Presentation/
-│           ├── Views/
-│           │   ├── List/
-│           │   │   └── CravingListView.swift
-│           │   ├── Logging/
-│           │   │   └── LogCravingView.swift
-│           │   └── DateView/
-│           │       └── DateListView.swift
-│           └── ViewModels/
-│               ├── CravingListViewModel.swift
-│               ├── LogCravingViewModel.swift
-│               └── DateListViewModel.swift
-├── Navigation/
-│   └── CRAVETabView.swift
-├── Resources/
-│   ├── Assets.xcassets/
-│   ├── Preview Content/
-│   │   └── Preview Assets.xcassets
-│   └── Docs/
-│       ├── Images/
-│       │   ├── crave-architecture.svg
-│       │   ├── crave-logging-flow.svg
-│       │   └── crave-navigation-states.svg
-│       ├── AnalyticsAPIReference.md
-│       ├── AnalyticsArchitecture.md
-│       └── AnalyticsImplementationGuide.md
-└── Tests/
-    ├── AnalyticsTests/
-    │   ├── Domain/
-    │   │   ├── AnalyticsEventTests.swift
-    │   │   ├── AnalyticsInsightTests.swift
-    │   │   ├── AnalyticsPatternTests.swift
-    │   │   └── AnalyticsPredictionTests.swift
-    │   ├── Data/
-    │   │   ├── AnalyticsAggregatorTests.swift
-    │   │   ├── AnalyticsConfigurationTests.swift
-    │   │   ├── AnalyticsCoordinatorTests.swift
-    │   │   ├── AnalyticsManagerTests.swift
-    │   │   ├── AnalyticsProcessorTests.swift
-    │   │   └── AnalyticsStorageTests.swift
-    │   └── Integration/
-    │       ├── AnalyticsModelTests.swift
-    │       └── CravingAnalyticsIntegrationTests.swift
-    ├── CravingTests/
-    │   ├── CravingManagerTests.swift
-    │   ├── CravingModelTests.swift
-    │   └── InteractionDataTests.swift
-    └── UITests/
-        └── CRAVEUITests.swift
+CraveTrinity
+├── CravePhone
+│   ├── Core
+│   │   ├── Data
+│   │   │   ├── DTOs
+│   │   │   │   ├── AnalyticsDTO.swift
+│   │   │   │   └── CravingDTO.swift
+│   │   │   ├── DataSources
+│   │   │   │   ├── Local
+│   │   │   │   │   ├── AnalyticsStorage.swift
+│   │   │   │   │   ├── AnalyticsStorageProtocol.swift
+│   │   │   │   │   └── CravingManger.swift
+│   │   │   │   └── Remote
+│   │   │   │       ├── APIClient.swift
+│   │   │   │       └── ModelContainer.swift
+│   │   │   ├── Mappers
+│   │   │   │   ├── AnalyticsMapper.swift
+│   │   │   │   └── CravingMapper.swift
+│   │   │   ├── Repositories
+│   │   │   │   ├── AnalyticsRepositoryImpl.swift
+│   │   │   │   └── CravingRepositoryImpl.swift
+│   │   │   └── Services
+│   │   │       ├── AnalyticsService.swift
+│   │   │       ├── EventTrackingService.swift
+│   │   │       └── PhoneWatchConnectivityService.swift
+│   │   ├── Domain
+│   │   │   ├── Entities
+│   │   │   │   ├── Analytics
+│   │   │   │   │   ├── AnalyticsEntity.swift
+│   │   │   │   │   ├── AnalyticsEvent.swift
+│   │   │   │   │   ├── AnalyticsManager.swift
+│   │   │   │   │   ├── AnalyticsMetadata.swift
+│   │   │   │   │   └── BasicAnalyticsResult.swift
+│   │   │   │   └── Craving
+│   │   │   │       ├── CravingEntity.swift
+│   │   │   │       └── CravingEvent.swift
+│   │   │   ├── Interfaces
+│   │   │   │   ├── Repositories
+│   │   │   │   │   ├── AnalyticsRepository.swift
+│   │   │   │   │   └── CravingRepository.swift
+│   │   │   │   └── UseCases
+│   │   │   │       ├── AnalyticsUseCases.swift
+│   │   │   │       └── CravingUseCases.swift
+│   │   │   └── UseCases
+│   │   │       ├── Analytics
+│   │   │       │   ├── AnalyticsAggregator.swift
+│   │   │       │   ├── AnalyticsProcessor.swift
+│   │   │       │   └── PatternDetectionService.swift
+│   │   │       └── Craving
+│   │   │           └── CravingAnalyzer.swift
+│   │   └── Presentation
+│   │       ├── Common
+│   │       │   ├── DesignSystem
+│   │       │   │   ├── CRAVEDesignSystem.swift
+│   │       │   │   ├── Components
+│   │       │   │   │   ├── CraveButton.swift
+│   │       │   │   │   └── CraveTextEditor.swift
+│   │       │   │   └── Theme.swift
+│   │       │   └── Extensions
+│   │       │       ├── Date+Extensions.swift
+│   │       │       └── View+Extensions.swift
+│   │       ├── Configuration
+│   │       │   ├── AnalyticsConfiguration+Defaults.swift
+│   │       │   └── AnalyticsConfiguration.swift
+│   │       ├── ViewModels
+│   │       │   ├── Analytics
+│   │       │   │   ├── AnalyticsDashboardViewModel.swift
+│   │       │   │   └── AnalyticsViewModel.swift
+│   │       │   └── Craving
+│   │       │       ├── CravingListViewModel.swift
+│   │       │       └── LogCravingViewModel.swift
+│   │       └── Views
+│   │           ├── Analytics
+│   │           │   ├── AnalyticsDashboardView.swift
+│   │           │   └── Components
+│   │           │       ├── AnalyticsCharts.swift
+│   │           │       └── AnalyticsInsight.swift
+│   │           └── Craving
+│   │               ├── Components
+│   │               │   └── CravingCard.swift
+│   │               ├── CravingListView.swift
+│   │               └── LogCravingView.swift
+│   ├── PhoneApp
+│   │   ├── DI
+│   │   │   └── DependencyContainer.swift
+│   │   ├── Navigation
+│   │   │   ├── AppCoordinator.swift
+│   │   │   └── CRAVETabView.swift
+│   │   └── PhoneApp.swift
+│   ├── Resources
+│   │   ├── Assets.xcassets
+│   │   │   ├── AccentColor.colorset
+│   │   │   │   └── Contents.json
+│   │   │   ├── AppIcon.appiconset
+│   │   │   │   └── Contents.json
+│   │   │   └── Contents.json
+│   │   ├── Docs
+│   │   │   ├── AnalyticsAPIReference.md
+│   │   │   ├── AnalyticsArchitechture.md
+│   │   │   └── AnalyticsImplementationGuide.md
+│   │   ├── Images
+│   │   │   ├── crave-architecture.svg
+│   │   │   ├── crave-execution-flow.svg
+│   │   │   ├── crave-logging-flow.svg
+│   │   │   └── crave-navigation-states.svg
+│   │   └── Preview Content
+│   │       └── Preview Assets.xcassets
+│   │           └── Contents.json
+│   └── Tests
+│       ├── AnalyticsTests
+│       │   ├── Data
+│       │   │   ├── AnalyticsAggregatorTests.swift
+│       │   │   ├── AnalyticsConfigurationTests.swift
+│       │   │   ├── AnalyticsCoordinatorTests.swift
+│       │   │   ├── AnalyticsManagerTests.swift
+│       │   │   ├── AnalyticsProcessorTests.swift
+│       │   │   └── AnalyticsStorageTests.swift
+│       │   ├── Domain
+│       │   │   ├── AnalyticsEventTests.swift
+│       │   │   ├── AnalyticsInsightTests.swift
+│       │   │   ├── AnalyticsPatternTests.swift
+│       │   │   └── AnalyticsPredictionTests.swift
+│       │   └── Integration
+│       │       ├── AnalyticsModelTests.swift
+│       │       └── CravingAnalyticsIntegrationTests.swift
+│       ├── CravingTests
+│       │   ├── CravingManagerTests.swift
+│       │   ├── CravingModelTests.swift
+│       │   └── InteractionDataTests.swift
+│       ├── Domain
+│       │   ├── CravePhoneUITests.swift
+│       │   └── CravePhoneUITestsLaunchTests.swift
+│       ├── Integration
+│       │   ├── CravePhoneUITests.swift
+│       │   └── CravePhoneUITestsLaunchTests.swift
+│       └── UITests
+│           ├── CravePhoneUITests.swift
+│           └── CravePhoneUITestsLaunchTests.swift
+├── CraveTrinity.xcodeproj
+│   ├── project.pbxproj
+│   ├── project.xcworkspace
+│   │   ├── contents.xcworkspacedata
+│   │   ├── xcshareddata
+│   │   │   └── swiftpm
+│   │   │       └── configuration
+│   │   └── xcuserdata
+│   │       └── jj.xcuserdatad
+│   │           └── UserInterfaceState.xcuserstate
+│   └── xcuserdata
+│       └── jj.xcuserdatad
+│           └── xcschemes
+│               └── xcschememanagement.plist
+├── CraveVision
+│   ├── Assets.xcassets
+│   │   ├── AccentColor.colorset
+│   │   │   └── Contents.json
+│   │   ├── AppIcon.solidimagestack
+│   │   │   ├── Back.solidimagestacklayer
+│   │   │   │   ├── Content.imageset
+│   │   │   │   │   └── Contents.json
+│   │   │   │   └── Contents.json
+│   │   │   ├── Contents.json
+│   │   │   ├── Front.solidimagestacklayer
+│   │   │   │   ├── Content.imageset
+│   │   │   │   │   └── Contents.json
+│   │   │   │   └── Contents.json
+│   │   │   └── Middle.solidimagestacklayer
+│   │   │       ├── Content.imageset
+│   │   │       │   └── Contents.json
+│   │   │       └── Contents.json
+│   │   └── Contents.json
+│   ├── ContentView.swift
+│   ├── CraveVisionApp.swift
+│   ├── CraveVisionTests
+│   │   └── CraveVisionTests.swift
+│   ├── Info.plist
+│   ├── Packages
+│   │   └── RealityKitContent
+│   │       ├── Package.realitycomposerpro
+│   │       │   ├── ProjectData
+│   │       │   │   └── main.json
+│   │       │   └── WorkspaceData
+│   │       │       ├── SceneMetadataList.json
+│   │       │       └── Settings.rcprojectdata
+│   │       ├── Package.swift
+│   │       ├── README.md
+│   │       └── Sources
+│   │           └── RealityKitContent
+│   │               ├── RealityKitContent.rkassets
+│   │               │   ├── Materials
+│   │               │   │   └── GridMaterial.usda
+│   │               │   └── Scene.usda
+│   │               └── RealityKitContent.swift
+│   └── Preview Content
+│       └── Preview Assets.xcassets
+│           └── Contents.json
+└── CraveWatch
+    ├── Core
+    │   ├── Data
+    │   │   ├── DataSources
+    │   │   │   └── Local
+    │   │   │       └── LocalCravingScore.swift
+    │   │   ├── Mappers
+    │   │   │   └── CravingMapper.swift
+    │   │   └── Repositories
+    │   │       └── CravingRepository.swift
+    │   ├── Domain
+    │   │   ├── Entities
+    │   │   │   └── WatchCravingEntity.swift
+    │   │   ├── Interfaces
+    │   │   │   └── CravingRepositoryProtocol.swift
+    │   │   └── UseCases
+    │   │       ├── EmergencyTriggerUseCase.swift
+    │   │       ├── LogCravingUseCase.swift
+    │   │       └── LogVitalUseCase.swift
+    │   ├── Presentation
+    │   │   ├── Common
+    │   │   │   └── CravingTextEditor.swift
+    │   │   ├── ViewModels
+    │   │   │   ├── CravingLogViewModel.swift
+    │   │   │   ├── EmergencyTriggerViewModel.swift
+    │   │   │   └── VitalsViewModel.swift
+    │   │   └── Views
+    │   │       ├── CravingLogView.swift
+    │   │       ├── EmergencyTriggerView.swift
+    │   │       └── VitalsView.swift
+    │   ├── Resources
+    │   │   ├── Assets.xcassets
+    │   │   │   ├── AccentColor.colorset
+    │   │   │   │   └── Contents.json
+    │   │   │   ├── AppIcon.appiconset
+    │   │   │   │   └── Contents.json
+    │   │   │   └── Contents.json
+    │   │   └── Preview Content
+    │   │       └── Preview Assets.xcassets
+    │   │           └── Contents.json
+    │   ├── Services
+    │   │   ├── OfflineCravingSyncManager.swift
+    │   │   └── WatchConnectivityService.swift
+    │   └── Tests
+    │       ├── Integration
+    │       │   ├── MockWatchConnectivityService.swift
+    │       │   └── OfflineCravingSyncManagerTests.swift
+    │       └── Unit
+    │           ├── CravingLogViewModelTests.swift
+    │           ├── EmergencyTriggerViewModelTests.swift
+    │           └── VitalsViewModelTests.swift
+    └── WatchApp
+        ├── DI
+        │   └── WatchDependencyContainer.swift
+        ├── Navigation
+        │   └── WatchCoordinator.swift
+        └── WatchApp.swift
+
+115 directories, 138 files
+jj@Johns-MacBook-Pro-3 CraveTrinity % 
 
 ```
 ---
