@@ -2,6 +2,7 @@
 //  WatchCoordinator.swift
 //  CraveWatch
 //
+//  Created by [Your Name] on [Date].
 //  Description: Handles watch navigation state and provides a root view.
 //
 
@@ -14,8 +15,6 @@ final class WatchCoordinator {
         self.connectivityService = connectivityService
     }
     
-    // You can choose your initial watch screen here.
-    // For now, we show CravingLogView as the root.
     var rootView: some View {
         CravingLogView(connectivityService: connectivityService)
     }

@@ -3,7 +3,7 @@
 //  CraveWatch
 //
 //  Created by [Your Name] on [Date].
-//  Description: Provides a shared watch haptic feedback mechanism.
+//  Description: A shared watch haptic feedback manager.
 //
 
 import WatchKit

@@ -11,8 +11,6 @@ import SwiftData
 
 @Model
 public class WatchCravingEntity {
-    // SwiftData automatically provides an internal ID, so no need for a custom 'id' property.
-    
     public var text: String
     public var intensity: Int
     public var timestamp: Date

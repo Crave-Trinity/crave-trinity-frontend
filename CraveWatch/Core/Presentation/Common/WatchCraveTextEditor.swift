@@ -4,7 +4,7 @@
 //
 //  Created by [Your Name] on [Date].
 //  Description: A specialized text editor for watch input.
-//               Handles placeholder text, character limits, and fancy focus state.
+//               Handles placeholder text, character limits, and fancy FocusState.
 //
 
 import SwiftUI
@@ -14,19 +14,20 @@ struct WatchCraveTextEditor: View {
     var primaryPlaceholder: String
     var secondaryPlaceholder: String
     
-    // FANCY FOCUS: Ties into parent's @FocusState for advanced focus management.
+    // Ties into parent's @FocusState
     @FocusState.Binding var isFocused: Bool
     
     var characterLimit: Int
 
     var body: some View {
         ZStack(alignment: .top) {
-            // Show placeholder if the user hasn't typed anything AND it's not focused
+            // Show placeholders only if user hasn't typed and it's not focused
             if text.isEmpty && !isFocused {
-                VStack(alignment: .center) {
+                VStack(alignment: .center, spacing: 8) {
                     Text(primaryPlaceholder)
                         .font(.body)
                         .foregroundColor(.gray)
+                    
                     Text(secondaryPlaceholder)
                         .font(.footnote)
                         .foregroundColor(.gray.opacity(0.8))
@@ -39,12 +40,15 @@ struct WatchCraveTextEditor: View {
             TextField("", text: $text, axis: .vertical)
                 .multilineTextAlignment(.center)
                 .lineLimit(3)
-                // Limit the number of characters, play haptic feedback if limit is reached.
-                .onChange(of: text) { _, newValue in
+                // Use the new onChange with two parameters (oldValue, newValue)
+                .onChange(of: text) { oldValue, newValue in
+                    // Enforce character limit
                     if newValue.count > characterLimit {
                         text = String(newValue.prefix(characterLimit))
                         WatchHapticManager.shared.play(.warning)
-                    } else if !newValue.isEmpty && newValue.count == 1 {
+                    }
+                    // If user typed at least one character, do a "selection" haptic
+                    else if !newValue.isEmpty && oldValue.isEmpty {
                         WatchHapticManager.shared.play(.selection)
                     }
                 }
@@ -52,10 +56,9 @@ struct WatchCraveTextEditor: View {
                 // Subtle background color only when user is typing or text is present
                 .background(text.isEmpty && !isFocused ? .clear : Color.gray.opacity(0.2))
                 .cornerRadius(8)
-                // Let's actually focus the text field so the watch keyboard can pop up
                 .focused($isFocused)
-                // Optionally handle taps if you want to manually trigger focus:
                 .onTapGesture {
+                    // Optionally force focus on tap
                     isFocused = true
                     WatchHapticManager.shared.play(.selection)
                 }

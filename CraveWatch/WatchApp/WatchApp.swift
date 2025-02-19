@@ -2,13 +2,14 @@
 //  WatchApp.swift
 //  CraveWatch
 //
+//  Created by [Your Name] on [Date].
 //  Description: The main entry point for the CraveWatch app.
 //               Sets up top-level dependencies and SwiftData for watch-based cravings.
 //
 
 import SwiftUI
 import WatchKit
-import SwiftData  // Import SwiftData so we can call .modelContainer
+import SwiftData
 
 @main
 struct WatchApp: App {
@@ -18,8 +19,7 @@ struct WatchApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationView {
-                // Your coordinator’s rootView determines the app’s initial screen.
-                // Could be a CravingLogView or any other watch screen.
+                // The coordinator’s rootView determines the initial screen of the watch app.
                 dependencyContainer.watchCoordinator.rootView
             }
             // IMPORTANT: Register your SwiftData model(s) here.

@@ -3,8 +3,8 @@
 //  CraveWatch
 //
 //  Created by [Your Name] on [Date].
-//  Description: A SwiftData-based local store for watch cravings.
-//               Provides add/fetch/delete operations via an actor for concurrency safety.
+//  Description: A SwiftData-based local store for watch cravings,
+//               provided as an actor for concurrency safety.
 //
 
 import Foundation
@@ -22,7 +22,7 @@ actor LocalCravingStore {
     /// - Parameters:
     ///   - cravingDescription: The textual description of the craving.
     ///   - intensity: An integer representing the craving intensity.
-    /// - Note: The WatchCravingEntity initializer expects 'text:' for the craving description.
+    /// - Note: Actors ensure concurrency safety if multiple tasks call these methods at once.
     func addCraving(cravingDescription: String, intensity: Int) async throws {
         let entity = WatchCravingEntity(
             text: cravingDescription,
@@ -31,27 +31,19 @@ actor LocalCravingStore {
         )
         modelContext.insert(entity)
         
-        do {
-            try modelContext.save()
-        } catch {
-            throw error
-        }
+        try modelContext.save()
     }
     
-    /// Fetches all cravings from the local store.
+    /// Fetches all cravings from the local store, sorted or filtered as needed.
     func fetchAllCravings() async throws -> [WatchCravingEntity] {
         let fetchDescriptor = FetchDescriptor<WatchCravingEntity>()
         return try modelContext.fetch(fetchDescriptor)
     }
     
-    /// Deletes a specified craving entity from the local store (e.g., after syncing).
+    /// Deletes a specified craving entity from the local store.
     /// - Parameter entity: The WatchCravingEntity to delete.
     func deleteCraving(_ entity: WatchCravingEntity) async throws {
         modelContext.delete(entity)
-        do {
-            try modelContext.save()
-        } catch {
-            throw error
-        }
+        try modelContext.save()
     }
 }

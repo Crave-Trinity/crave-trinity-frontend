@@ -12,7 +12,7 @@ import WatchConnectivity
 
 class WatchConnectivityService: NSObject, ObservableObject, WCSessionDelegate {
     
-    // Published property to let others know if the phone is reachable.
+    // Published property to let others know if the phone is reachable
     @Published var phoneReachable: Bool = false
     
     private var session: WCSession?
@@ -22,14 +22,12 @@ class WatchConnectivityService: NSObject, ObservableObject, WCSessionDelegate {
         if WCSession.isSupported() {
             session = WCSession.default
             session?.delegate = self
-            session?.activate()  // Activate session upon initialization.
+            session?.activate()
         }
     }
     
     // MARK: - Public Methods
     
-    /// Generic method to send any message dictionary to the iPhone.
-    /// - Parameter message: The dictionary containing the message data.
     func sendMessageToPhone(_ message: [String: Any]) {
         guard let session = session, session.isReachable else {
             print("🔴 iPhone not reachable or session not available.")
@@ -40,8 +38,6 @@ class WatchConnectivityService: NSObject, ObservableObject, WCSessionDelegate {
         }
     }
     
-    /// Specialized method to send a craving to the iPhone.
-    /// - Parameter craving: A WatchCravingEntity instance containing craving data.
     func sendCravingToPhone(craving: WatchCravingEntity) {
         let message: [String: Any] = [
             "action": "logCraving",
@@ -72,6 +68,4 @@ class WatchConnectivityService: NSObject, ObservableObject, WCSessionDelegate {
             print("Reachability changed: \(session.isReachable)")
         }
     }
-    
-    // Note: sessionDidBecomeInactive and sessionDidDeactivate are not available on watchOS.
 }

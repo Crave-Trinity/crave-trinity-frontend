@@ -3,35 +3,33 @@
 //  CraveWatch
 //
 //  Created by [Your Name] on [Date].
-//  Description: A watch view for logging cravings. Includes text input, intensity control,
-//               and a confirmation overlay once saved.
+//  Description: A watch view for logging cravings.
+//               Uses the fancy WatchCraveTextEditor and the radical ResistanceBar.
 //
 
 import SwiftUI
 import SwiftData
 
 struct CravingLogView: View {
-    // We get the SwiftData context from the environment
     @Environment(\.modelContext) private var context
     
-    // A local text state for the craving description
+    // Main text state for the craving
     @State private var cravingDescription: String = ""
     
-    // A local state for intensity, default to 5
+    // Intensity from 0..10, start at 5
     @State private var intensity: Int = 5
     
-    // A local state to show a "success" overlay
+    // A local state to show success overlay
     @State private var showConfirmation: Bool = false
     
-    // FANCY FOCUS: The parent can track if the text field is focused
+    // Ties into focus for the text editor
     @FocusState private var isTextFieldFocused: Bool
     
-    // We observe the watch connectivity service for phone reachability, etc.
+    // Connectivity for sending data to iPhone
     @ObservedObject var connectivityService: WatchConnectivityService
 
     var body: some View {
-        VStack(spacing: 4) {
-            // Custom text editor with fancy FocusState
+        VStack(spacing: 6) {
             WatchCraveTextEditor(
                 text: $cravingDescription,
                 primaryPlaceholder: "Craving, Trigger",
@@ -39,13 +37,13 @@ struct CravingLogView: View {
                 isFocused: $isTextFieldFocused,
                 characterLimit: 50
             )
-
-            SleekIntensityControl(intensity: $intensity, showButtons: false)
-
+            
+            ResistanceBar(intensity: $intensity)
+            
             Button(action: {
                 logCraving()
             }) {
-                HStack{
+                HStack {
                     Text("Log")
                         .fontWeight(.semibold)
                         .font(.system(size: 18))
@@ -56,22 +54,20 @@ struct CravingLogView: View {
             .buttonBorderShape(.roundedRectangle)
         }
         .padding(.horizontal, 8)
-        // Overlay a confirmation checkmark when the craving logs successfully
         .overlay(
             ConfirmationOverlay(isPresented: $showConfirmation)
         )
-        // Hide the watch toolbar (if any) when text field is focused
+        // Hide watch toolbar if text field is focused
         .toolbar(isTextFieldFocused ? .hidden : .visible)
     }
 
-    /// Saves a new craving to SwiftData and sends it to the phone
+    /// Creates a new craving, inserts to SwiftData, and sends to phone
     private func logCraving() {
-        // Make sure the user typed something
+        // Ensure the user typed something
         guard !cravingDescription.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             return
         }
-
-        // Create a new WatchCravingEntity
+        
         let newCraving = WatchCravingEntity(
             text: cravingDescription.trimmingCharacters(in: .whitespaces),
             intensity: intensity,
@@ -81,21 +77,20 @@ struct CravingLogView: View {
         // Insert into local SwiftData
         context.insert(newCraving)
         
-        // Send to iPhone
+        // Notify phone
         connectivityService.sendCravingToPhone(craving: newCraving)
-
-        // Reset UI state
+        
+        // Reset UI
         cravingDescription = ""
         intensity = 5
         showConfirmation = true
         isTextFieldFocused = false
-
-        // Provide haptic feedback
+        
+        // Haptic feedback
         WatchHapticManager.shared.play(.success)
     }
 }
 
-// A small overlay that shows a green checkmark when the craving logs successfully.
 struct ConfirmationOverlay: View {
     @Binding var isPresented: Bool
 
@@ -104,14 +99,14 @@ struct ConfirmationOverlay: View {
             ZStack {
                 Color.black.opacity(0.8)
                     .edgesIgnoringSafeArea(.all)
-
+                
                 Image(systemName: "checkmark.circle.fill")
                     .font(.system(size: 40))
                     .foregroundColor(.green)
             }
             .onAppear {
-                // Hide after 1 second
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                // Hide after ~1 second
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     isPresented = false
                 }
             }
