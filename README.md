@@ -12,7 +12,7 @@
 * 📌 Feb 16: First stable working build (still some runtime bugs).
 * 📌 Feb 17: Refactored craving layer, dependency injection fixes.
 * 📌 Feb 18: Apple Watch companion app added, craving syncing.
-* 📌 Feb 19: Unified iOS + Watch into CRAVE Trinity.
+* 📌 Feb 19: Unified iOS + Watch into CRAVE Trinity (+Vision).
 
 * Leveraged AI to accelerate but made critical planning and logic decisions myself. 
 
