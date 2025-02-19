@@ -13,19 +13,10 @@ import SwiftData
 struct CravingLogView: View {
     @Environment(\.modelContext) private var context
     
-    // Main text state for the craving
     @State private var cravingDescription: String = ""
-    
-    // Intensity from 0..10, start at 5
-    @State private var intensity: Int = 5
-    
-    // A local state to show success overlay
+    @State private var intensity: Int = 5  // Starting value
     @State private var showConfirmation: Bool = false
-    
-    // Ties into focus for the text editor
     @FocusState private var isTextFieldFocused: Bool
-    
-    // Connectivity for sending data to iPhone
     @ObservedObject var connectivityService: WatchConnectivityService
 
     var body: some View {
@@ -38,16 +29,26 @@ struct CravingLogView: View {
                 characterLimit: 50
             )
             
-            ResistanceBar(intensity: $intensity)
-            
-            Button(action: {
-                logCraving()
-            }) {
-                HStack {
-                    Text("Log")
-                        .fontWeight(.semibold)
-                        .font(.system(size: 18))
+            // Show an HStack with the numeric label on the left,
+            // and the vertical bar on the right
+            HStack(alignment: .center, spacing: 8) {
+                // The numeric label "5"
+                VStack(spacing: 2) {
+                    Text("\(intensity)")
+                        .font(.title3)
+                        .fontWeight(.bold)
+                    Text("Intensity")
+                        .font(.caption2)
+                        .foregroundColor(.gray)
                 }
+                
+                // The new vertical bar
+                VerticalIntensityBar(intensity: $intensity)
+            }
+            .padding(.vertical, 4)
+            
+            Button("Log") {
+                logCraving()
             }
             .buttonStyle(.bordered)
             .tint(.blue)
@@ -57,13 +58,10 @@ struct CravingLogView: View {
         .overlay(
             ConfirmationOverlay(isPresented: $showConfirmation)
         )
-        // Hide watch toolbar if text field is focused
         .toolbar(isTextFieldFocused ? .hidden : .visible)
     }
 
-    /// Creates a new craving, inserts to SwiftData, and sends to phone
     private func logCraving() {
-        // Ensure the user typed something
         guard !cravingDescription.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             return
         }
@@ -74,26 +72,20 @@ struct CravingLogView: View {
             timestamp: Date()
         )
         
-        // Insert into local SwiftData
         context.insert(newCraving)
-        
-        // Notify phone
         connectivityService.sendCravingToPhone(craving: newCraving)
         
-        // Reset UI
         cravingDescription = ""
         intensity = 5
         showConfirmation = true
         isTextFieldFocused = false
-        
-        // Haptic feedback
         WatchHapticManager.shared.play(.success)
     }
 }
 
 struct ConfirmationOverlay: View {
     @Binding var isPresented: Bool
-
+    
     var body: some View {
         if isPresented {
             ZStack {
@@ -105,7 +97,6 @@ struct ConfirmationOverlay: View {
                     .foregroundColor(.green)
             }
             .onAppear {
-                // Hide after ~1 second
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     isPresented = false
                 }
