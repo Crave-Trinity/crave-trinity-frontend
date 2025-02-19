@@ -1,4 +1,3 @@
-
 import Foundation
 import Combine
 import WatchConnectivity
@@ -33,10 +32,10 @@ class OfflineCravingSyncManager: NSObject, ObservableObject {
         reachabilityCancellable?.cancel()
     }
     
-    func addCravingOffline(description: String, intensity: Int) async {
+    func addCravingOffline(cravingDescription: String, intensity: Int) async {
         do {
             try await localStore.addCraving(
-                description: description,
+                cravingDescription: cravingDescription,
                 intensity: intensity
             )
         } catch {
@@ -54,7 +53,7 @@ class OfflineCravingSyncManager: NSObject, ObservableObject {
                 let message: [String: Any] = [
                     "action": "logCraving",
                     "id": entity.id.uuidString,
-                    "description": entity.description,
+                    "cravingDescription": entity.cravingDescription, // Changed from description to cravingDescription
                     "intensity": entity.intensity,
                     "timestamp": entity.timestamp.timeIntervalSince1970
                 ]
@@ -71,4 +70,3 @@ class OfflineCravingSyncManager: NSObject, ObservableObject {
         }
     }
 }
-

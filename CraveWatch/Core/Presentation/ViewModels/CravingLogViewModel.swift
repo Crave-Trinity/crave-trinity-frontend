@@ -1,4 +1,4 @@
-
+// CravingLogViewModel.swift
 
 import Foundation
 import Combine
@@ -11,7 +11,7 @@ class CravingLogViewModel: ObservableObject {
     @Published var cravingDescription: String = ""
     @Published var intensity: Int = 5  // Sample scale from 1–10
     @Published var showConfirmation = false
-    @Published var errorMessage: String?
+    @Published var errorWrapper: CravingError? // ONLY CHANGE: Changed from String? to CravingError?
 
     // MARK: - Dependencies
     private let watchConnectivityService: WatchConnectivityService
@@ -24,8 +24,8 @@ class CravingLogViewModel: ObservableObject {
     // MARK: - Methods
     func logCraving() {
         guard !cravingDescription.isEmpty else {
-            // Mark error if user attempts to log a blank craving
-            errorMessage = "Please enter a craving description."
+            // ONLY CHANGE: Updated error setting
+            errorWrapper = CravingError(message: "Please enter a craving description.")
             return
         }
 
@@ -47,6 +47,6 @@ class CravingLogViewModel: ObservableObject {
     }
     
     func dismissError() {
-        errorMessage = nil
+        errorWrapper = nil  // ONLY CHANGE: Changed from errorMessage to errorWrapper
     }
 }

@@ -1,4 +1,4 @@
-
+// LocalCravingScore.swift
 import Foundation
 import SwiftData
 
@@ -12,9 +12,9 @@ actor LocalCravingStore {
     }
     
     /// Save a new WatchCravingEntity to local SwiftData.
-    func addCraving(description: String, intensity: Int) async throws {
+    func addCraving(cravingDescription: String, intensity: Int) async throws {  // ONLY CHANGE: parameter name from description to cravingDescription
         let entity = WatchCravingEntity(
-            description: description,
+            cravingDescription: cravingDescription,  // ONLY CHANGE: parameter name from description to cravingDescription
             intensity: intensity,
             timestamp: Date()
         )
@@ -43,5 +43,3 @@ actor LocalCravingStore {
         }
     }
 }
-
-

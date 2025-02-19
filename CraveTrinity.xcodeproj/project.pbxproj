@@ -107,6 +107,59 @@
 				Tests/UITests/CravePhoneUITests.swift,
 				Tests/UITests/CravePhoneUITestsLaunchTests.swift,
 			);
+			platformFiltersByRelativePath = {
+				Core/Data/DTOs/AnalyticsDTO.swift = (ios, );
+				Core/Data/DTOs/CravingDTO.swift = (ios, );
+				Core/Data/DataSources/Local/AnalyticsStorage.swift = (ios, );
+				Core/Data/DataSources/Local/AnalyticsStorageProtocol.swift = (ios, );
+				Core/Data/DataSources/Local/CravingManger.swift = (ios, );
+				Core/Data/DataSources/Remote/APIClient.swift = (ios, );
+				Core/Data/DataSources/Remote/ModelContainer.swift = (ios, );
+				Core/Data/Mappers/AnalyticsMapper.swift = (ios, );
+				Core/Data/Mappers/CravingMapper.swift = (ios, );
+				Core/Data/Repositories/AnalyticsRepositoryImpl.swift = (ios, );
+				Core/Data/Repositories/CravingRepositoryImpl.swift = (ios, );
+				Core/Data/Services/AnalyticsService.swift = (ios, );
+				Core/Data/Services/EventTrackingService.swift = (ios, );
+				Core/Data/Services/PhoneWatchConnectivityService.swift = (ios, );
+				Core/Domain/Entities/Analytics/AnalyticsEntity.swift = (ios, );
+				Core/Domain/Entities/Analytics/AnalyticsEvent.swift = (ios, );
+				Core/Domain/Entities/Analytics/AnalyticsManager.swift = (ios, );
+				Core/Domain/Entities/Analytics/AnalyticsMetadata.swift = (ios, );
+				Core/Domain/Entities/Analytics/BasicAnalyticsResult.swift = (ios, );
+				Core/Domain/Entities/Craving/CravingEntity.swift = (ios, );
+				Core/Domain/Entities/Craving/CravingEvent.swift = (ios, );
+				Core/Domain/Interfaces/Repositories/AnalyticsRepository.swift = (ios, );
+				Core/Domain/Interfaces/Repositories/CravingRepository.swift = (ios, );
+				Core/Domain/Interfaces/UseCases/AnalyticsUseCases.swift = (ios, );
+				Core/Domain/Interfaces/UseCases/CravingUseCases.swift = (ios, );
+				Core/Domain/UseCases/Analytics/AnalyticsAggregator.swift = (ios, );
+				Core/Domain/UseCases/Analytics/AnalyticsProcessor.swift = (ios, );
+				Core/Domain/UseCases/Analytics/PatternDetectionService.swift = (ios, );
+				Core/Domain/UseCases/Craving/CravingAnalyzer.swift = (ios, );
+				Core/Presentation/Common/DesignSystem/CRAVEDesignSystem.swift = (ios, );
+				Core/Presentation/Common/DesignSystem/Components/CraveButton.swift = (ios, );
+				Core/Presentation/Common/DesignSystem/Components/CraveTextEditor.swift = (ios, );
+				Core/Presentation/Common/DesignSystem/Theme.swift = (ios, );
+				"Core/Presentation/Common/Extensions/Date+Extensions.swift" = (ios, );
+				"Core/Presentation/Common/Extensions/View+Extensions.swift" = (ios, );
+				"Core/Presentation/Configuration/AnalyticsConfiguration+Defaults.swift" = (ios, );
+				Core/Presentation/Configuration/AnalyticsConfiguration.swift = (ios, );
+				Core/Presentation/ViewModels/Analytics/AnalyticsDashboardViewModel.swift = (ios, );
+				Core/Presentation/ViewModels/Analytics/AnalyticsViewModel.swift = (ios, );
+				Core/Presentation/ViewModels/Craving/CravingListViewModel.swift = (ios, );
+				Core/Presentation/ViewModels/Craving/LogCravingViewModel.swift = (ios, );
+				Core/Presentation/Views/Analytics/AnalyticsDashboardView.swift = (ios, );
+				Core/Presentation/Views/Analytics/Components/AnalyticsCharts.swift = (ios, );
+				Core/Presentation/Views/Analytics/Components/AnalyticsInsight.swift = (ios, );
+				Core/Presentation/Views/Craving/Components/CravingCard.swift = (ios, );
+				Core/Presentation/Views/Craving/CravingListView.swift = (ios, );
+				Core/Presentation/Views/Craving/LogCravingView.swift = (ios, );
+				PhoneApp/DI/DependencyContainer.swift = (ios, );
+				PhoneApp/Navigation/AppCoordinator.swift = (ios, );
+				PhoneApp/Navigation/CRAVETabView.swift = (ios, );
+				PhoneApp/PhoneApp.swift = (ios, );
+			};
 			target = 28A3F8582D65962900D8DE44 /* CravePhone */;
 		};
 		28A3F8C32D65971B00D8DE44 /* Exceptions for "CravePhone" folder in "CravePhoneTests" target */ = {
@@ -835,7 +888,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"CravePhone/PhoneApp/Resources/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "'CravePhone/Resources/Preview Content'";
 				DEVELOPMENT_TEAM = HJ7W9PTAD8;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -864,7 +917,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"CravePhone/PhoneApp/Resources/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "'CravePhone/Resources/Preview Content'";
 				DEVELOPMENT_TEAM = HJ7W9PTAD8;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;

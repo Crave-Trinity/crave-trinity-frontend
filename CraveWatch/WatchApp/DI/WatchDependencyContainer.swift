@@ -1,9 +1,9 @@
-//WatchDependencyContainer.swift
 import Foundation
 import WatchConnectivity
 
 /// A lightweight container that holds references to core services
 /// (like WatchConnectivity, domain use cases, etc.).
+@MainActor // Added MainActor since we're working with MainActor-isolated components
 class WatchDependencyContainer: ObservableObject {
 
     // MARK: - Services
@@ -25,4 +25,3 @@ class WatchDependencyContainer: ObservableObject {
         self.watchConnectivityService.activateSession()
     }
 }
-

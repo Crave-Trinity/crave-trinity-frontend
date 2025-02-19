@@ -1,10 +1,9 @@
-//WatchCoordinator.swift
-
 import SwiftUI
 
 /// Manages navigation flows on the watch.
 /// This is often optional for watchOS, but if you have multiple screens or flows,
 /// a coordinator helps keep logic out of the SwiftUI views.
+@MainActor // Added MainActor since we're working with MainActor-isolated initializers
 class WatchCoordinator {
     
     // Example service references
@@ -24,9 +23,8 @@ class WatchCoordinator {
         // Right now, let's just show a placeholder:
         CravingLogView(
             viewModel: CravingLogViewModel(
-                watchConnectivityService: watchConnectivityService
+                watchConnectivityService: self.watchConnectivityService // Added explicit self
             )
         )
     }
 }
-

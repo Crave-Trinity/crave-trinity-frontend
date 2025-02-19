@@ -1,4 +1,4 @@
-// File: phone/LogCravingView.swift
+// File: Core/Presentation/Views/Craving/LogCravingView.swift
 
 import SwiftUI
 
