@@ -1,19 +1,10 @@
-//
-//  HorizontalResistanceBar.swift
-//  CraveWatch
-//
-//  Created by [Your Name] on [Date].
-//  Description: A horizontal slider from 0 to 10 using the Digital Crown.
-//               Tap to focus, then rotate the crown to adjust the value.
 import SwiftUI
 
 struct HorizontalResistanceBar: View {
-    @Binding var value: Int  // Expected range: 0...10
+    @Binding var value: Int  // 0..10
     
-    // Local variable to track crown rotation
     @State private var crownValue: Double
     
-    // Bar dimensions
     private let barWidth: CGFloat = 120
     private let barHeight: CGFloat = 8
     
@@ -23,38 +14,29 @@ struct HorizontalResistanceBar: View {
     }
     
     var body: some View {
-        VStack(spacing: 4) {
-            // Label above the bar
-            Text("Resistance")
+        HStack {
+            Text("0")
                 .font(.caption2)
-                .foregroundColor(.gray)
+                .foregroundColor(.secondary)
             
-            HStack {
-                // "0" on the left
-                Text("0")
-                    .font(.caption2)
-                    .foregroundColor(.secondary)
+            ZStack(alignment: .leading) {
+                // Background track
+                RoundedRectangle(cornerRadius: 4)
+                    .foregroundColor(Color.gray.opacity(0.3))
+                    .frame(width: barWidth, height: barHeight)
                 
-                ZStack(alignment: .leading) {
-                    // Background track
-                    RoundedRectangle(cornerRadius: 4)
-                        .foregroundColor(Color.gray.opacity(0.3))
-                        .frame(width: barWidth, height: barHeight)
-                    
-                    // Filled portion based on value
-                    RoundedRectangle(cornerRadius: 4)
-                        .foregroundColor(.blue)
-                        .frame(width: fillWidth(), height: barHeight)
-                        .animation(.easeInOut, value: value)
-                }
-                
-                // "10" on the right
-                Text("10")
-                    .font(.caption2)
-                    .foregroundColor(.secondary)
+                // Fill portion
+                RoundedRectangle(cornerRadius: 4)
+                    .foregroundColor(.blue)
+                    .frame(width: fillWidth(), height: barHeight)
+                    .animation(.easeInOut, value: value)
             }
+            
+            Text("10")
+                .font(.caption2)
+                .foregroundColor(.secondary)
         }
-        // Make the bar focusable so it can receive Digital Crown input
+        // Focusable so the digital crown can adjust it
         .focusable(true)
         .digitalCrownRotation(
             $crownValue,
@@ -71,9 +53,8 @@ struct HorizontalResistanceBar: View {
         }
     }
     
-    /// Calculate fill width based on current value
     private func fillWidth() -> CGFloat {
-        let fraction = CGFloat(value) / 10.0
+        let fraction = CGFloat(value) / 10
         return fraction * barWidth
     }
 }

@@ -1,72 +1,64 @@
-//
-//  CravingLogView.swift
-//  CraveWatch
-//
-//  Created by [Your Name] on [Date].
-//  Description: The primary watch view for logging cravings.
-//               Includes an enlarged text editor, a horizontal Resistance bar,
-//               a vertical Intensity bar, and a Log button placed lower on the screen.
 import SwiftUI
 import SwiftData
 
 struct CravingLogView: View {
-    // SwiftData context for local storage
+    // SwiftData context
     @Environment(\.modelContext) private var context
     
-    // User-entered craving text, increased size
+    // User inputs
     @State private var cravingDescription: String = ""
+    @State private var intensity: Int = 5       // vertical slider
+    @State private var resistance: Int = 5      // horizontal slider
     
-    // "Resistance" value from 0 to 10, default to 5
-    @State private var resistance: Int = 5
-    
-    // "Intensity" value from 0 to 10, default to 5
-    @State private var intensity: Int = 5
-    
-    // Overlay state for success confirmation
+    // Confirmation overlay
     @State private var showConfirmation: Bool = false
     
-    // FocusState for controlling the text editor
+    // Focus for watch keyboard
     @FocusState private var isTextFieldFocused: Bool
     
-    // Connectivity service for sending data to the phone
+    // Connectivity
     @ObservedObject var connectivityService: WatchConnectivityService
 
     var body: some View {
         ScrollView {
             VStack(spacing: 12) {
-                // Enlarged text editor
-                WatchCraveTextEditor(
-                    text: $cravingDescription,
-                    primaryPlaceholder: "Craving, Trigger",
-                    secondaryPlaceholder: "Hungry, Angry\nLonely, Tired",
-                    isFocused: $isTextFieldFocused,
-                    characterLimit: 100  // Increased character limit for more input
-                )
-                .frame(height: 80) // Increase text editor height
                 
-                // Horizontal Resistance bar (tap to focus for crown input)
-                HorizontalResistanceBar(value: $resistance)
-                
-                // Vertical Intensity bar with numeric label on the left
-                HStack(spacing: 8) {
-                    // Display the current intensity value
-                    VStack(spacing: 2) {
+                // 1) Top Row: Text box on the left, vertical bar on the right
+                HStack(alignment: .top, spacing: 8) {
+                    // A. The text editor, bigger
+                    WatchCraveTextEditor(
+                        text: $cravingDescription,
+                        primaryPlaceholder: "Craving, Trigger",
+                        secondaryPlaceholder: "Hungry, Angry\nLonely, Tired",
+                        isFocused: $isTextFieldFocused,
+                        characterLimit: 60
+                    )
+                    .frame(minHeight: 80, maxHeight: 100)  // Make it a bit taller
+                    .background(Color.gray.opacity(0.15))
+                    .cornerRadius(8)
+                    
+                    // B. The vertical intensity bar + numeric label
+                    VStack(spacing: 4) {
+                        // Numeric label for intensity
                         Text("\(intensity)")
                             .font(.title3)
                             .fontWeight(.semibold)
-                        Text("Intensity")
-                            .font(.caption2)
-                            .foregroundColor(.gray)
+                        // The vertical bar
+                        VerticalIntensityBar(value: $intensity)
                     }
-                    
-                    // Vertical slider for intensity
-                    VerticalIntensityBar(value: $intensity)
+                    .frame(minWidth: 50)
                 }
                 
-                // Add spacer to push the button further down
-                Spacer().frame(height: 20)
+                // 2) Middle: A labeled horizontal bar for Resistance
+                VStack(spacing: 4) {
+                    Text("Resistance")
+                        .font(.caption2)
+                        .foregroundColor(.gray)
+                    HorizontalResistanceBar(value: $resistance)
+                }
+                .padding(.top, 4)
                 
-                // Log button, moved lower
+                // 3) The Log button at the bottom
                 Button(action: logCraving) {
                     Text("Log")
                         .font(.headline)
@@ -84,9 +76,11 @@ struct CravingLogView: View {
         .toolbar(isTextFieldFocused ? .hidden : .visible)
     }
     
-    /// Creates a new craving and sends it to the phone.
+    /// Saves a new craving and sends it to phone
     private func logCraving() {
-        guard !cravingDescription.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return }
+        guard !cravingDescription.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            return
+        }
         
         let newCraving = WatchCravingEntity(
             text: cravingDescription.trimmingCharacters(in: .whitespaces),
@@ -94,13 +88,16 @@ struct CravingLogView: View {
             timestamp: Date()
         )
         
+        // Insert to SwiftData
         context.insert(newCraving)
+        
+        // Send to phone
         connectivityService.sendCravingToPhone(craving: newCraving)
         
-        // Reset the UI values
+        // Reset
         cravingDescription = ""
-        resistance = 5
         intensity = 5
+        resistance = 5
         showConfirmation = true
         isTextFieldFocused = false
         
@@ -108,7 +105,7 @@ struct CravingLogView: View {
     }
 }
 
-/// Overlays a green checkmark for about 1 second after logging.
+/// Overlays a green checkmark
 struct ConfirmationOverlay: View {
     @Binding var isPresented: Bool
 
