@@ -1,25 +1,27 @@
 //
-//  CraveWatchApp.swift
-//  CraveWatch Watch App
+//  CRAVEWatchApp.swift
+//  CraveWatch
 //
 //  Created by John H Jung on 2/18/25.
+//  Description: The main entry point for the CraveWatch app.
+//               Sets up top-level dependencies and SwiftData for watch-based cravings.
 //
-
 import SwiftUI
 import WatchKit
+import SwiftData  // Import SwiftData so we can call .modelContainer
 
 @main
 struct CRAVEWatchApp: App {
-    // We reference our watch dependency container to provide single-source-of-truth services.
+    // A single source-of-truth dependency container.
     @StateObject private var dependencyContainer = WatchDependencyContainer()
-
+    
     var body: some Scene {
         WindowGroup {
-            // Start with our optional watch coordinator, or a direct view if you want something simpler
             NavigationView {
                 dependencyContainer.watchCoordinator.rootView
             }
+            // IMPORTANT: Register your SwiftData model(s) here.
+            .modelContainer(for: [WatchCravingEntity.self])
         }
     }
 }
-

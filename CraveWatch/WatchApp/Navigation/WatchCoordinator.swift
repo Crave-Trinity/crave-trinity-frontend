@@ -1,30 +1,35 @@
+//
+//  WatchCoordinator.swift
+//  CraveWatch
+//
+//  Created by John H Jung on 2/18/25.
+//  Description: This coordinator centralizes navigation logic for the watch app.
+//               It creates and manages the initial view and future navigation flows.
+// Key Fixes:
+// • The initializer now uses the argument label 'connectivityService:'.
+// • The lazy property is explicitly marked as @MainActor to satisfy main actor isolation.
 import SwiftUI
+import WatchConnectivity
 
-/// Manages navigation flows on the watch.
-/// This is often optional for watchOS, but if you have multiple screens or flows,
-/// a coordinator helps keep logic out of the SwiftUI views.
-@MainActor // Added MainActor since we're working with MainActor-isolated initializers
+@MainActor
 class WatchCoordinator {
+    // MARK: - Dependencies
+    private let connectivityService: WatchConnectivityService
     
-    // Example service references
-    private let watchConnectivityService: WatchConnectivityService
+    // MARK: - State Preservation
+    // Marking the lazy property with @MainActor ensures the call to the main actor–isolated initializer is allowed.
+    @MainActor private lazy var cravingLogViewModel: CravingLogViewModel = {
+        // This initializer call is now performed on the main actor.
+        CravingLogViewModel(connectivityService: self.connectivityService)
+    }()
     
-    // Store references to each possible root or subview
-    // In reality, you might have multiple subflows: e.g., VitalsView, CravingLogView, etc.
-    
-    init(watchConnectivityService: WatchConnectivityService) {
-        self.watchConnectivityService = watchConnectivityService
+    // MARK: - Initialization
+    init(connectivityService: WatchConnectivityService) {
+        self.connectivityService = connectivityService
     }
-
-    /// The initial view for the watch app.
-    /// Could be a `TabView` for watchOS or a single main view that navigates deeper.
+    
+    /// Provides the initial view for the watch app.
     var rootView: some View {
-        // For example, an entry point that shows a log screen or a vitals screen
-        // Right now, let's just show a placeholder:
-        CravingLogView(
-            viewModel: CravingLogViewModel(
-                watchConnectivityService: self.watchConnectivityService // Added explicit self
-            )
-        )
+        CravingLogView(viewModel: self.cravingLogViewModel)
     }
 }

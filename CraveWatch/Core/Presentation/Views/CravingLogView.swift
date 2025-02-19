@@ -1,58 +1,85 @@
+//
+//  CravingLogView.swift
+//  CraveWatch
+//
+//  Created by [Your Name] on [Date].
+//  Description: A watch UI that lets users enter a craving, select intensity,
+//               and log it locally + transmit to the iPhone.
+//
 import SwiftUI
-
-// NEW: Add this type for error handling
-struct CravingError: Identifiable {
-    let id = UUID()
-    let message: String
-}
+import SwiftData
 
 struct CravingLogView: View {
+    @Environment(\.modelContext) private var modelContext
     
-    @StateObject var viewModel: CravingLogViewModel
-
+    @ObservedObject var viewModel: CravingLogViewModel
+    
     var body: some View {
-        VStack {
-            Text("Log Craving")
-                .font(.headline)
-            
-            TextField("Description", text: $viewModel.cravingDescription)
-                // Replace roundedBorder with watchOS compatible plain style
-                .textFieldStyle(.plain)
-                .padding([.leading, .trailing], 8)
-            
-            HStack {
-                Text("Intensity: \(viewModel.intensity)")
-                Slider(value: Binding(
-                    get: { Double(viewModel.intensity) },
-                    set: { viewModel.intensity = Int($0) }
-                ), in: 1...10, step: 1)
-                .frame(width: 100)
+        NavigationView {
+            VStack(spacing: 16) {
+                // Header
+                Text("Log Your Craving")
+                    .font(.headline)
+                    .padding(.top)
+                
+                // Custom text editor for watch input
+                CraveTextEditor(
+                    text: $viewModel.cravingDescription,
+                    placeholder: "Describe your craving...",
+                    characterLimit: 280
+                )
+                .padding()
+                .background(Color(white: 0.95))
+                .cornerRadius(10)
+                .padding(.horizontal)
+                
+                // Stepper for intensity
+                Stepper(value: $viewModel.intensity, in: 1...10) {
+                    Text("Intensity: \(viewModel.intensity)")
+                }
+                .padding(.horizontal)
+                
+                // Log Craving button
+                Button {
+                    viewModel.logCraving(context: modelContext)
+                } label: {
+                    Text("Log Craving")
+                        .bold()
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                }
+                .padding(.horizontal)
+                .disabled(viewModel.cravingDescription.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                
+                Spacer()
             }
-            .padding(.vertical, 4)
-
-            Button(action: {
-                viewModel.logCraving()
-            }) {
-                Text("Send")
+            .navigationBarTitleDisplayMode(.inline)
+            // Success alert
+            .alert("Success", isPresented: $viewModel.showConfirmation) {
+                Button("OK", role: .cancel) { }
+            } message: {
+                Text("Your craving has been logged locally and sent to iPhone.")
             }
-            .buttonStyle(.borderedProminent)
-            .padding(.top, 8)
-            
-            Spacer()
+            // Error alert
+            .alert("Error", isPresented: Binding(
+                get: { viewModel.errorMessage != nil },
+                set: { _ in viewModel.dismissError() }
+            )) {
+                Button("OK", role: .cancel) { }
+            } message: {
+                Text(viewModel.errorMessage ?? "")
+            }
         }
-        .alert("Success!", isPresented: $viewModel.showConfirmation) {
-            Button("OK", role: .cancel) { }
-        } message: {
-            Text("Craving sent to iPhone.")
-        }
-        // ONLY CHANGE: Updated alert to use CravingError
-        .alert(item: $viewModel.errorWrapper) { error in
-            Alert(
-                title: Text("Error"),
-                message: Text(error.message),
-                dismissButton: .default(Text("OK"))
-            )
-        }
-        .padding()
     }
+}
+
+// MARK: - Preview
+#Preview {
+    let dummyService = WatchConnectivityService()
+    let vm = CravingLogViewModel(connectivityService: dummyService)
+    return CravingLogView(viewModel: vm)
+        .modelContainer(for: WatchCravingEntity.self, inMemory: true)
 }

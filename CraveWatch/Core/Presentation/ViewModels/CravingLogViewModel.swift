@@ -1,52 +1,61 @@
-// CravingLogViewModel.swift
-
+//
+//  CravingLogViewModel.swift
+//  CraveWatch
+//
+//  Created by [Your Name] on [Date].
+//  Description: Handles watch-based craving logging. Stores data locally in SwiftData
+//               and forwards it to the iPhone via WatchConnectivityService.
+//
 import Foundation
+import SwiftData
 import Combine
 
-/// A simple ViewModel responsible for handling the watch-based craving log flow.
 @MainActor
-class CravingLogViewModel: ObservableObject {
-
-    // MARK: - Published Properties (bound to the View)
+final class CravingLogViewModel: ObservableObject {
+    
+    // MARK: - Published Properties
     @Published var cravingDescription: String = ""
-    @Published var intensity: Int = 5  // Sample scale from 1–10
-    @Published var showConfirmation = false
-    @Published var errorWrapper: CravingError? // ONLY CHANGE: Changed from String? to CravingError?
-
+    @Published var intensity: Int = 5  // Example scale: 1 to 10
+    @Published var showConfirmation: Bool = false
+    @Published var errorMessage: String? = nil
+    
     // MARK: - Dependencies
-    private let watchConnectivityService: WatchConnectivityService
-
-    // MARK: - Init
-    init(watchConnectivityService: WatchConnectivityService) {
-        self.watchConnectivityService = watchConnectivityService
+    private let connectivityService: WatchConnectivityService
+    
+    // MARK: - Initialization
+    init(connectivityService: WatchConnectivityService) {
+        self.connectivityService = connectivityService
     }
-
-    // MARK: - Methods
-    func logCraving() {
-        guard !cravingDescription.isEmpty else {
-            // ONLY CHANGE: Updated error setting
-            errorWrapper = CravingError(message: "Please enter a craving description.")
+    
+    // MARK: - Public Methods
+    /// Creates a local WatchCravingEntity in SwiftData and sends it to the phone.
+    func logCraving(context: ModelContext) {
+        // Validate user input
+        let trimmed = cravingDescription.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else {
+            errorMessage = "Please enter a craving description."
             return
         }
-
-        // Construct a dictionary to send to the phone
-        let message: [String: Any] = [
-            "action": "logCraving",
-            "description": cravingDescription,
-            "intensity": intensity,
-            "timestamp": Date().timeIntervalSince1970
-        ]
-
-        // Attempt to send data to iPhone
-        watchConnectivityService.sendMessageToPhone(message)
         
-        // Reset local states (if you'd like) after sending
+        // Create a new local entity
+        let newCraving = WatchCravingEntity(text: trimmed, intensity: intensity, timestamp: Date())
+        
+        // Insert into the watch's SwiftData store
+        context.insert(newCraving)
+        // SwiftData typically autosaves, but you could do: try? context.save() if you want explicit saving
+        
+        // Send to iPhone
+        connectivityService.sendCravingToPhone(craving: newCraving)
+        
+        // Reset UI state
         cravingDescription = ""
         intensity = 5
         showConfirmation = true
+        errorMessage = nil
     }
     
+    /// Clears any existing error message.
     func dismissError() {
-        errorWrapper = nil  // ONLY CHANGE: Changed from errorMessage to errorWrapper
+        errorMessage = nil
     }
 }

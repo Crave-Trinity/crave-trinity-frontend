@@ -7,7 +7,7 @@
 		<key>CravePhone.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>1</integer>
+			<integer>0</integer>
 		</dict>
 		<key>CraveTrinity.xcscheme_^#shared#^_</key>
 		<dict>
@@ -22,12 +22,45 @@
 		<key>CraveVision.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>2</integer>
+			<integer>1</integer>
 		</dict>
 		<key>CraveWatch Watch App.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>0</integer>
+			<integer>2</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>28A3F8582D65962900D8DE44</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>28A3F86A2D65962B00D8DE44</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>28A3F8742D65962B00D8DE44</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>28A3F8C82D65973300D8DE44</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>28A3F8D72D65973500D8DE44</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>28A3F8E12D65973500D8DE44</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>

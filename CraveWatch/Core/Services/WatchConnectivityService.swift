@@ -1,61 +1,75 @@
-
-// WatchConnectivityService
-#if os(watchOS)
+//
+//  WatchConnectivityService.swift
+//  CraveWatch
+//
+//  Created by [Your Name] on [Date].
+//  Description: A watch-specific service that manages WCSession to send messages (including cravings)
+//               to the iPhone. It publishes the phone’s reachability status and provides both a generic
+//               and a specialized (for cravings) method for sending messages.
+import Foundation
 import WatchConnectivity
-import Combine
 
-/// WatchConnectivityService is responsible for handling watch-to-phone communication.
-/// It tracks whether the paired iPhone is reachable.
 class WatchConnectivityService: NSObject, ObservableObject, WCSessionDelegate {
     
-    // Publishes whether the iPhone is reachable from the watch.
+    // Published property to let others know if the phone is reachable.
     @Published var phoneReachable: Bool = false
     
-    private let session: WCSession? = WCSession.isSupported() ? WCSession.default : nil
+    private var session: WCSession?
     
     override init() {
         super.init()
-        activateSession()
+        if WCSession.isSupported() {
+            session = WCSession.default
+            session?.delegate = self
+            session?.activate()  // Activate session upon initialization.
+        }
     }
     
-    /// Sets up and activates the WCSession.
-    func activateSession() {
-        session?.delegate = self
-        session?.activate()
-    }
-    
-    /// Sends a message from the watch to the iPhone.
+    /// Generic method to send any message dictionary to the iPhone.
+    /// - Parameter message: The dictionary containing the message data.
     func sendMessageToPhone(_ message: [String: Any]) {
-        guard let validSession = session, validSession.isReachable else {
-            phoneReachable = false
-            print("🔴 iPhone not reachable.")
+        guard let session = session, session.isReachable else {
+            print("🔴 iPhone not reachable or session not available.")
             return
         }
-        
-        validSession.sendMessage(message, replyHandler: nil) { error in
-            print("🔴 Message failed: \(error.localizedDescription)")
+        session.sendMessage(message, replyHandler: nil) { error in
+            print("🔴 Failed to send message: \(error.localizedDescription)")
         }
+    }
+    
+    /// Specialized method to send a craving to the iPhone.
+    /// - Parameter craving: A WatchCravingEntity instance containing craving data.
+    func sendCravingToPhone(craving: WatchCravingEntity) {
+        let message: [String: Any] = [
+            "action": "logCraving",
+            "description": craving.text,   // Use the 'text' property as defined in the entity.
+            "intensity": craving.intensity,
+            "timestamp": craving.timestamp.timeIntervalSince1970
+        ]
+        sendMessageToPhone(message)
     }
     
     // MARK: - WCSessionDelegate Methods
     
-    func session(_ session: WCSession,
-                 activationDidCompleteWith state: WCSessionActivationState,
-                 error: Error?) {
-        // Optional: handle activation success or errors.
-        if let error = error {
-            print("🔴 Activation error: \(error.localizedDescription)")
+    // These methods must be nonisolated in Swift 6. We use Task { @MainActor in ... } to ensure main-thread updates.
+    nonisolated func session(_ session: WCSession,
+                             activationDidCompleteWith activationState: WCSessionActivationState,
+                             error: Error?) {
+        Task { @MainActor in
+            if let error = error {
+                print("🔴 Session activation error: \(error.localizedDescription)")
+            } else {
+                print("✅ WatchConnectivity session activated. State: \(activationState.rawValue)")
+            }
         }
     }
     
-    func sessionReachabilityDidChange(_ session: WCSession) {
-        // Update UI on main thread when reachability changes.
-        DispatchQueue.main.async {
+    nonisolated func sessionReachabilityDidChange(_ session: WCSession) {
+        Task { @MainActor in
             self.phoneReachable = session.isReachable
-            print("⚠️ phoneReachable changed to \(session.isReachable)")
+            print("Reachability changed: \(session.isReachable)")
         }
     }
     
-    // Implement additional delegate methods if needed.
+    // Note: sessionDidBecomeInactive and sessionDidDeactivate are not available on watchOS.
 }
-#endif

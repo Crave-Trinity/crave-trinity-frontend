@@ -1,5 +1,8 @@
 // File: Core/Presentation/Views/Craving/LogCravingView.swift
-
+// Description:
+// This view presents a form for logging a craving on the phone.
+// It uses LogCravingViewModel to manage state and handle use case execution,
+// and displays an alert if an error occurs.
 import SwiftUI
 
 @MainActor
@@ -54,9 +57,8 @@ struct LogCravingView_Previews: PreviewProvider {
 final class MockAddCravingUseCase: AddCravingUseCaseProtocol {
     func execute(cravingText: String) async throws -> CravingEntity {
         guard cravingText.count >= 3 else {
-            throw CravingError.invalidInput
+            throw PhoneCravingError.invalidInput
         }
         return CravingEntity(text: cravingText)
     }
 }
-
