@@ -6,12 +6,20 @@
 //
 
 import SwiftUI
+import WatchKit
 
 @main
-struct CraveWatch_Watch_AppApp: App {
+struct CRAVEWatchApp: App {
+    // We reference our watch dependency container to provide single-source-of-truth services.
+    @StateObject private var dependencyContainer = WatchDependencyContainer()
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            // Start with our optional watch coordinator, or a direct view if you want something simpler
+            NavigationView {
+                dependencyContainer.watchCoordinator.rootView
+            }
         }
     }
 }
+

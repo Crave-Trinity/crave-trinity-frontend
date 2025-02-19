@@ -109,24 +109,28 @@
 		28A3F8FE2D65975E00D8DE44 /* Exceptions for "CraveWatch" folder in "CraveWatch Watch App" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Core/Tests/Integration/CraveWatch_Watch_AppTests.swift,
-				Core/Tests/Unit/CraveWatch_Watch_AppUITests.swift,
-				Core/Tests/Unit/CraveWatch_Watch_AppUITestsLaunchTests.swift,
+				Core/Tests/Integration/MockWatchConnectivityService.swift,
+				Core/Tests/Integration/OfflineCravingSyncManagerTests.swift,
+				Core/Tests/Unit/CravingLogViewModelTests.swift,
+				Core/Tests/Unit/EmergencyTriggerViewModelTests.swift,
+				Core/Tests/Unit/VitalsViewModelTests.swift,
 			);
 			target = 28A3F8C82D65973300D8DE44 /* CraveWatch Watch App */;
 		};
 		28A3F8FF2D65975E00D8DE44 /* Exceptions for "CraveWatch" folder in "CraveWatch Watch AppTests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Core/Tests/Integration/CraveWatch_Watch_AppTests.swift,
+				Core/Tests/Integration/MockWatchConnectivityService.swift,
+				Core/Tests/Integration/OfflineCravingSyncManagerTests.swift,
 			);
 			target = 28A3F8D72D65973500D8DE44 /* CraveWatch Watch AppTests */;
 		};
 		28A3F9002D65975E00D8DE44 /* Exceptions for "CraveWatch" folder in "CraveWatch Watch AppUITests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Core/Tests/Unit/CraveWatch_Watch_AppUITests.swift,
-				Core/Tests/Unit/CraveWatch_Watch_AppUITestsLaunchTests.swift,
+				Core/Tests/Unit/CravingLogViewModelTests.swift,
+				Core/Tests/Unit/EmergencyTriggerViewModelTests.swift,
+				Core/Tests/Unit/VitalsViewModelTests.swift,
 			);
 			target = 28A3F8E12D65973500D8DE44 /* CraveWatch Watch AppUITests */;
 		};
