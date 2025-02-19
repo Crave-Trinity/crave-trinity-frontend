@@ -4,10 +4,9 @@
 //
 //  Created by [Your Name] on [Date].
 //  Description:
-//    - A more aggressive side-by-side layout:
-//      a bigger text box on the left,
-//      a thin vertical slider on the right,
-//      firmly left of the crown’s green indicator (larger negative padding),
+//    - An aggressively side-by-side layout:
+//      a narrower text box on the left,
+//      a thin vertical slider on the right, pushed further toward the crown,
 //      and a smaller "Log" button at the bottom.
 //
 
@@ -31,11 +30,10 @@ struct CravingLogView: View {
     @ObservedObject var connectivityService: WatchConnectivityService
 
     var body: some View {
-        VStack(spacing: 8) {
-            
+        VStack(spacing: 4) {  // Reduced vertical spacing
             // 1) Horizontal arrangement
-            HStack(spacing: 4) {
-                // A) Bigger text box
+            HStack(spacing: 2) { // Tighter horizontal spacing
+                // A) Narrower text box
                 WatchCraveTextEditor(
                     text: $cravingDescription,
                     primaryPlaceholder: "Craving, Trigger",
@@ -43,23 +41,22 @@ struct CravingLogView: View {
                     isFocused: $isTextFieldFocused,
                     characterLimit: 80
                 )
-                .frame(width: 120, height: 130) // bigger
+                .frame(width: 100, height: 130) // Slightly narrower width
                 .background(Color.gray.opacity(0.1))
                 .cornerRadius(8)
                 
-                Spacer(minLength: 0)
-                
-                // B) Thin vertical slider, pushed further left of the crown
+                // B) Thin vertical slider, pushed toward the crown
                 VerticalIntensityBar(value: $intensity, barWidth: 4)
-                    .padding(.trailing, -16) // bigger negative => further left from the crown indicator
+                    .padding(.trailing, -20) // Larger negative padding
+                    .offset(x: -4)           // Optional additional shift
             }
-            .frame(maxWidth: .infinity)
-            .padding(.horizontal, 6)
-            
+            // Remove extra horizontal padding to keep things tight
+            .padding(.horizontal, 0)
+
             // 2) Smaller "Log" button
             Button(action: logCraving) {
                 Text("Log")
-                    .font(.system(size: 12)) // smaller text
+                    .font(.system(size: 12))
                     .padding(.horizontal, 8)
                     .padding(.vertical, 3)
             }
