@@ -4,8 +4,9 @@
 //
 //  Created by [Your Name] on [Date].
 //  Description: A watch-specific service that manages WCSession to send messages (including cravings)
-//               to the iPhone. It publishes the phone’s reachability status and provides both a generic
-//               and a specialized (for cravings) method for sending messages.
+//               to the iPhone. It also publishes the phone’s reachability status.
+//
+
 import Foundation
 import WatchConnectivity
 
@@ -25,6 +26,8 @@ class WatchConnectivityService: NSObject, ObservableObject, WCSessionDelegate {
         }
     }
     
+    // MARK: - Public Methods
+    
     /// Generic method to send any message dictionary to the iPhone.
     /// - Parameter message: The dictionary containing the message data.
     func sendMessageToPhone(_ message: [String: Any]) {
@@ -42,16 +45,15 @@ class WatchConnectivityService: NSObject, ObservableObject, WCSessionDelegate {
     func sendCravingToPhone(craving: WatchCravingEntity) {
         let message: [String: Any] = [
             "action": "logCraving",
-            "description": craving.text,   // Use the 'text' property as defined in the entity.
+            "description": craving.text,
             "intensity": craving.intensity,
             "timestamp": craving.timestamp.timeIntervalSince1970
         ]
         sendMessageToPhone(message)
     }
     
-    // MARK: - WCSessionDelegate Methods
+    // MARK: - WCSessionDelegate
     
-    // These methods must be nonisolated in Swift 6. We use Task { @MainActor in ... } to ensure main-thread updates.
     nonisolated func session(_ session: WCSession,
                              activationDidCompleteWith activationState: WCSessionActivationState,
                              error: Error?) {

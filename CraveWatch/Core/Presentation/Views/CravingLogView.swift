@@ -2,32 +2,43 @@
 //  CravingLogView.swift
 //  CraveWatch
 //
-//  Directory: CraveWatch/Core/Presentation/Views
-//
-//  Description:
-//  A refined watchOS view for logging cravings.  Emphasizes simplicity,
-//  clarity, and a focused user experience.  Designed for quick,
-//  intuitive input.
+//  Created by [Your Name] on [Date].
+//  Description: A watch view for logging cravings. Includes text input, intensity control,
+//               and a confirmation overlay once saved.
 //
 
 import SwiftUI
 import SwiftData
 
 struct CravingLogView: View {
+    // We get the SwiftData context from the environment
     @Environment(\.modelContext) private var context
+    
+    // A local text state for the craving description
     @State private var cravingDescription: String = ""
+    
+    // A local state for intensity, default to 5
     @State private var intensity: Int = 5
+    
+    // A local state to show a "success" overlay
     @State private var showConfirmation: Bool = false
-    @FocusState private var isTextFieldFocused: Bool // Focus state for the text field
+    
+    // FANCY FOCUS: The parent can track if the text field is focused
+    @FocusState private var isTextFieldFocused: Bool
+    
+    // We observe the watch connectivity service for phone reachability, etc.
     @ObservedObject var connectivityService: WatchConnectivityService
 
     var body: some View {
-        VStack(spacing: 8) {
-            // Pass $isTextFieldFocused to WatchCraveTextEditor
-            WatchCraveTextEditor(text: $cravingDescription,
-                                 placeholder: "Craving, Trigger",
-                                 characterLimit: 50)
-            .focused($isTextFieldFocused)
+        VStack(spacing: 4) {
+            // Custom text editor with fancy FocusState
+            WatchCraveTextEditor(
+                text: $cravingDescription,
+                primaryPlaceholder: "Craving, Trigger",
+                secondaryPlaceholder: "Hungry, Angry\nLonely, Tired",
+                isFocused: $isTextFieldFocused,
+                characterLimit: 50
+            )
 
             SleekIntensityControl(intensity: $intensity, showButtons: false)
 
@@ -43,35 +54,48 @@ struct CravingLogView: View {
             .buttonStyle(.bordered)
             .tint(.blue)
             .buttonBorderShape(.roundedRectangle)
-
         }
         .padding(.horizontal, 8)
+        // Overlay a confirmation checkmark when the craving logs successfully
         .overlay(
             ConfirmationOverlay(isPresented: $showConfirmation)
         )
-        .navigationTitle("Log Craving")
-        .toolbar(isTextFieldFocused ? .hidden : .visible) // Hide toolbar when editing
+        // Hide the watch toolbar (if any) when text field is focused
+        .toolbar(isTextFieldFocused ? .hidden : .visible)
     }
 
+    /// Saves a new craving to SwiftData and sends it to the phone
     private func logCraving() {
+        // Make sure the user typed something
         guard !cravingDescription.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             return
         }
 
-        let newCraving = WatchCravingEntity(text: cravingDescription.trimmingCharacters(in: .whitespaces), intensity: intensity, timestamp: Date())
+        // Create a new WatchCravingEntity
+        let newCraving = WatchCravingEntity(
+            text: cravingDescription.trimmingCharacters(in: .whitespaces),
+            intensity: intensity,
+            timestamp: Date()
+        )
+        
+        // Insert into local SwiftData
         context.insert(newCraving)
+        
+        // Send to iPhone
         connectivityService.sendCravingToPhone(craving: newCraving)
 
+        // Reset UI state
         cravingDescription = ""
         intensity = 5
         showConfirmation = true
-        isTextFieldFocused = false // Dismiss keyboard after logging
+        isTextFieldFocused = false
 
+        // Provide haptic feedback
         WatchHapticManager.shared.play(.success)
     }
 }
 
-// Separate, reusable confirmation overlay
+// A small overlay that shows a green checkmark when the craving logs successfully.
 struct ConfirmationOverlay: View {
     @Binding var isPresented: Bool
 
@@ -86,6 +110,7 @@ struct ConfirmationOverlay: View {
                     .foregroundColor(.green)
             }
             .onAppear {
+                // Hide after 1 second
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                     isPresented = false
                 }

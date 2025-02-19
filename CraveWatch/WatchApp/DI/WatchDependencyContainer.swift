@@ -2,29 +2,22 @@
 //  WatchDependencyContainer.swift
 //  CraveWatch
 //
-//  Created by John H Jung on 2/18/25.
-//  Description: A lightweight container that holds references to core services
-//               (like WatchConnectivity, domain use cases, etc.) and provides them to the watch coordinator.
+//  Description: Centralizes watch dependencies like the connectivity service,
+//               so any view can easily access them.
 //
-import Foundation
-import WatchConnectivity
 
-@MainActor
-class WatchDependencyContainer: ObservableObject {
+import SwiftUI
+
+final class WatchDependencyContainer: ObservableObject {
+    // WatchConnectivityService is the main link to the phone
+    @Published var connectivityService = WatchConnectivityService()
     
-    // MARK: - Services
-    let watchConnectivityService: WatchConnectivityService
-    
-    // MARK: - Coordinator
-    let watchCoordinator: WatchCoordinator
+    // The coordinator manages top-level watch navigation.
+    lazy var watchCoordinator = WatchCoordinator(
+        connectivityService: connectivityService
+    )
     
     init() {
-        // Initialize the watch connectivity service.
-        self.watchConnectivityService = WatchConnectivityService()
-        
-        // IMPORTANT: Use the correct argument label. Our WatchCoordinator expects 'connectivityService:'.
-        self.watchCoordinator = WatchCoordinator(connectivityService: watchConnectivityService)
-        
-        // No extra activation call is needed, as WatchConnectivityService activates its session in its init.
+        // Any additional setup can happen here
     }
 }
