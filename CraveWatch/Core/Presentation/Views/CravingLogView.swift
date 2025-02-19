@@ -1,159 +1,95 @@
-//ViewModels/CravingLogViewModel.swift
+//
+//  CravingLogView.swift
+//  CraveWatch
+//
+//  Directory: CraveWatch/Core/Presentation/Views
+//
+//  Description:
+//  A refined watchOS view for logging cravings.  Emphasizes simplicity,
+//  clarity, and a focused user experience.  Designed for quick,
+//  intuitive input.
+//
 
 import SwiftUI
 import SwiftData
 
 struct CravingLogView: View {
-    @Environment(\.modelContext) private var modelContext
-    @ObservedObject var viewModel: CravingLogViewModel
-    
+    @Environment(\.modelContext) private var context
+    @State private var cravingDescription: String = ""
+    @State private var intensity: Int = 5
+    @State private var showConfirmation: Bool = false
+    @FocusState private var isTextFieldFocused: Bool // Focus state for the text field
+    @ObservedObject var connectivityService: WatchConnectivityService
+
     var body: some View {
-        ScrollView {
-            VStack(spacing: 6) {
-                
-                // Text Input Area
-                SleekTextInputArea(text: $viewModel.cravingDescription)
-                    .frame(height: 80) // Adjust as desired for your design
-                
-                // Intensity Control
-                SleekIntensityControl(intensity: $viewModel.intensity)
-                
-                // Log Button
-                Button(action: {
-                    WatchHapticManager.shared.play(.success)
-                    viewModel.logCraving(context: modelContext)
-                }) {
+        VStack(spacing: 8) {
+            // Pass $isTextFieldFocused to WatchCraveTextEditor
+            WatchCraveTextEditor(text: $cravingDescription,
+                                 placeholder: "Craving, Trigger",
+                                 characterLimit: 50)
+            .focused($isTextFieldFocused)
+
+            SleekIntensityControl(intensity: $intensity, showButtons: false)
+
+            Button(action: {
+                logCraving()
+            }) {
+                HStack{
                     Text("Log")
-                        .font(.system(.callout, design: .rounded, weight: .semibold))
-                        .padding(.vertical, 4)
-                        .frame(maxWidth: .infinity)
-                }
-                .buttonStyle(.bordered)
-                .tint(.blue)
-                .controlSize(.mini)
-                .disabled(
-                    viewModel.cravingDescription
-                        .trimmingCharacters(in: .whitespacesAndNewlines)
-                        .isEmpty
-                )
-            }
-            .padding(.horizontal, 4)
-        }
-        .overlay(
-            Group {
-                if viewModel.showConfirmation {
-                    SuccessOverlay {
-                        viewModel.showConfirmation = false
-                    }
+                        .fontWeight(.semibold)
+                        .font(.system(size: 18))
                 }
             }
-        )
-        .alert("Error", isPresented: Binding(
-            get: { viewModel.errorMessage != nil },
-            set: { _ in viewModel.dismissError() }
-        )) {
-            Button("OK", role: .cancel) {
-                WatchHapticManager.shared.play(.error)
-            }
-        } message: {
-            Text(viewModel.errorMessage ?? "")
-        }
-    }
-}
-
-// MARK: - Sleek Text Input
-private struct SleekTextInputArea: View {
-    @Binding var text: String
-    
-    var body: some View {
-        ZStack(alignment: .topLeading) {
-            // Placeholder
-            if text.isEmpty {
-                VStack(alignment: .center, spacing: 2) {
-                    Text("Craving, Trigger")
-                        .font(.system(.title3, weight: .semibold))
-                        .foregroundColor(.gray.opacity(0.9))
-                        .multilineTextAlignment(.center)
-                    
-                    Text("Hungry, Angry\nLonely, Tired")
-                        .font(.system(.footnote))
-                        .foregroundColor(.gray.opacity(0.6))
-                        .multilineTextAlignment(.center)
-                }
-                .padding(.top, 2)
-                .frame(maxWidth: .infinity)
-            }
-            
-            // Actual Text Input
-            TextField("", text: $text)
-                .multilineTextAlignment(.center)  // Center the typed text, too
-                .textFieldStyle(.plain)
-                .font(.system(.body))
-                .foregroundColor(.primary)
-                .padding(.top, text.isEmpty ? 36 : 0)
-        }
-        // Slight background “bubble”
-        .padding(6)
-        .background(
-            Color.gray.opacity(0.1)
-                .cornerRadius(8)
-        )
-    }
-}
-
-// MARK: - Sleek Intensity Control
-private struct SleekIntensityControl: View {
-    @Binding var intensity: Int
-    
-    var body: some View {
-        VStack(spacing: 2) {
-            Text("Intensity: \(intensity)")
-                .font(.footnote)
-                .foregroundColor(.gray)
-            
-            Slider(
-                value: Binding(
-                    get: { Double(intensity) },
-                    set: { intensity = Int($0) }
-                ),
-                in: 1...10,
-                step: 1
-            )
+            .buttonStyle(.bordered)
             .tint(.blue)
-            .frame(height: 14) // Slimmer slider
-            .onChange(of: intensity) { _, newValue in
-                WatchHapticManager.shared.play(.intensity(level: newValue))
-            }
+            .buttonBorderShape(.roundedRectangle)
+
         }
+        .padding(.horizontal, 8)
+        .overlay(
+            ConfirmationOverlay(isPresented: $showConfirmation)
+        )
+        .navigationTitle("Log Craving")
+        .toolbar(isTextFieldFocused ? .hidden : .visible) // Hide toolbar when editing
+    }
+
+    private func logCraving() {
+        guard !cravingDescription.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            return
+        }
+
+        let newCraving = WatchCravingEntity(text: cravingDescription.trimmingCharacters(in: .whitespaces), intensity: intensity, timestamp: Date())
+        context.insert(newCraving)
+        connectivityService.sendCravingToPhone(craving: newCraving)
+
+        cravingDescription = ""
+        intensity = 5
+        showConfirmation = true
+        isTextFieldFocused = false // Dismiss keyboard after logging
+
+        WatchHapticManager.shared.play(.success)
     }
 }
 
-// MARK: - Success Overlay
-private struct SuccessOverlay: View {
-    var onDismiss: () -> Void
-    
+// Separate, reusable confirmation overlay
+struct ConfirmationOverlay: View {
+    @Binding var isPresented: Bool
+
     var body: some View {
-        VStack {
-            Image(systemName: "checkmark.circle.fill")
-                .font(.system(size: 40))
-                .foregroundColor(.green)
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.black.opacity(0.7))
-        .onTapGesture(perform: onDismiss)
-        .onAppear {
-            WatchHapticManager.shared.playProgressComplete()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                onDismiss()
+        if isPresented {
+            ZStack {
+                Color.black.opacity(0.8)
+                    .edgesIgnoringSafeArea(.all)
+
+                Image(systemName: "checkmark.circle.fill")
+                    .font(.system(size: 40))
+                    .foregroundColor(.green)
+            }
+            .onAppear {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    isPresented = false
+                }
             }
         }
     }
-}
-
-// MARK: - Preview
-#Preview {
-    let dummyService = WatchConnectivityService()
-    let vm = CravingLogViewModel(connectivityService: dummyService)
-    return CravingLogView(viewModel: vm)
-        .modelContainer(for: WatchCravingEntity.self, inMemory: true)
 }

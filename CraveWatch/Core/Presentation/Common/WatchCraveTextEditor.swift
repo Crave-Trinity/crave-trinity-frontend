@@ -4,58 +4,33 @@
 
 import SwiftUI
 
+/// A reusable text editor component specifically designed for watchOS.
+/// Provides a clean, minimalist input area with haptic feedback and character limits.
 struct WatchCraveTextEditor: View {
-    // MARK: - Properties
     @Binding var text: String
-    let placeholder: String
-    let characterLimit: Int
-    
-    // MARK: - State
-    @State private var isFocused: Bool = false
-    
-    // MARK: - Initialization
-    init(text: Binding<String>, placeholder: String, characterLimit: Int) {
-        self._text = text
-        self.placeholder = placeholder
-        self.characterLimit = characterLimit
-    }
-    
-    // MARK: - Body
-    var body: some View {
-        ZStack(alignment: .leading) {
-            if text.isEmpty {
-                Text(placeholder)
-                    .foregroundColor(.gray)
-                    .padding(.horizontal, 4)
-            }
-            
-            TextField("", text: $text)
-                .textFieldStyle(.plain)
-                .onChange(of: text) { oldValue, newValue in
-                    if newValue.count > characterLimit {
-                        text = String(newValue.prefix(characterLimit))
-                        WatchHapticManager.shared.play(.warning)
-                    } else if !newValue.isEmpty && oldValue.isEmpty {
-                        WatchHapticManager.shared.play(.selection)
-                    }
-                }
-        }
-        .frame(height: 60)
-        .background(Color.gray.opacity(0.2))  // Watch-appropriate background
-        .cornerRadius(8)
-        .onTapGesture {
-            isFocused = true
-            WatchHapticManager.shared.play(.selection)
-        }
-    }
-}
+    var placeholder: String
+    @FocusState var isFocused: Bool // Changed to @FocusState
+    var characterLimit: Int
 
-// MARK: - Preview
-#Preview {
-    WatchCraveTextEditor(
-        text: .constant(""),
-        placeholder: "Tap to describe...",
-        characterLimit: 280
-    )
-    .padding()
+    var body: some View {
+        TextField(placeholder, text: $text, axis: .vertical)
+            .multilineTextAlignment(.center)
+            .lineLimit(3)
+            .focused($isFocused) // Correctly using $isFocused
+            .onChange(of: text) { _, newValue in
+                if newValue.count > characterLimit {
+                    text = String(newValue.prefix(characterLimit))
+                    WatchHapticManager.shared.play(.warning)
+                } else if !newValue.isEmpty && newValue.count == 1 {
+                     WatchHapticManager.shared.play(.selection)
+                }
+            }
+            .frame(minHeight: 60)
+            .background(Color.gray.opacity(0.2))
+            .cornerRadius(8)
+            .onTapGesture {
+                isFocused = true
+                WatchHapticManager.shared.play(.selection)
+            }
+    }
 }
