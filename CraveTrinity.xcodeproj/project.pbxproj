@@ -85,24 +85,72 @@
 		28A3F8C22D65971B00D8DE44 /* Exceptions for "CravePhone" folder in "CravePhone" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				CravePhoneTests/CravePhoneTests.swift,
-				CravePhoneUITests/CravePhoneUITests.swift,
-				CravePhoneUITests/CravePhoneUITestsLaunchTests.swift,
+				Tests/AnalyticsTests/Data/AnalyticsAggregatorTests.swift,
+				Tests/AnalyticsTests/Data/AnalyticsConfigurationTests.swift,
+				Tests/AnalyticsTests/Data/AnalyticsCoordinatorTests.swift,
+				Tests/AnalyticsTests/Data/AnalyticsManagerTests.swift,
+				Tests/AnalyticsTests/Data/AnalyticsProcessorTests.swift,
+				Tests/AnalyticsTests/Data/AnalyticsStorageTests.swift,
+				Tests/AnalyticsTests/Domain/AnalyticsEventTests.swift,
+				Tests/AnalyticsTests/Domain/AnalyticsInsightTests.swift,
+				Tests/AnalyticsTests/Domain/AnalyticsPatternTests.swift,
+				Tests/AnalyticsTests/Domain/AnalyticsPredictionTests.swift,
+				Tests/AnalyticsTests/Integration/AnalyticsModelTests.swift,
+				Tests/AnalyticsTests/Integration/CravingAnalyticsIntegrationTests.swift,
+				Tests/CravingTests/CravingManagerTests.swift,
+				Tests/CravingTests/CravingModelTests.swift,
+				Tests/CravingTests/InteractionDataTests.swift,
+				Tests/Domain/CravePhoneUITests.swift,
+				Tests/Domain/CravePhoneUITestsLaunchTests.swift,
+				Tests/Integration/CravePhoneUITests.swift,
+				Tests/Integration/CravePhoneUITestsLaunchTests.swift,
+				Tests/UITests/CravePhoneUITests.swift,
+				Tests/UITests/CravePhoneUITestsLaunchTests.swift,
 			);
 			target = 28A3F8582D65962900D8DE44 /* CravePhone */;
 		};
 		28A3F8C32D65971B00D8DE44 /* Exceptions for "CravePhone" folder in "CravePhoneTests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				CravePhoneTests/CravePhoneTests.swift,
+				Tests/AnalyticsTests/Data/AnalyticsAggregatorTests.swift,
+				Tests/AnalyticsTests/Data/AnalyticsConfigurationTests.swift,
+				Tests/AnalyticsTests/Data/AnalyticsCoordinatorTests.swift,
+				Tests/AnalyticsTests/Data/AnalyticsManagerTests.swift,
+				Tests/AnalyticsTests/Data/AnalyticsProcessorTests.swift,
+				Tests/AnalyticsTests/Data/AnalyticsStorageTests.swift,
+				Tests/AnalyticsTests/Domain/AnalyticsEventTests.swift,
+				Tests/AnalyticsTests/Domain/AnalyticsInsightTests.swift,
+				Tests/AnalyticsTests/Domain/AnalyticsPatternTests.swift,
+				Tests/AnalyticsTests/Domain/AnalyticsPredictionTests.swift,
+				Tests/AnalyticsTests/Integration/AnalyticsModelTests.swift,
+				Tests/AnalyticsTests/Integration/CravingAnalyticsIntegrationTests.swift,
+				Tests/CravingTests/CravingManagerTests.swift,
+				Tests/CravingTests/CravingModelTests.swift,
+				Tests/CravingTests/InteractionDataTests.swift,
 			);
+			platformFiltersByRelativePath = {
+				Tests/AnalyticsTests/Data/AnalyticsAggregatorTests.swift = (ios, );
+				Tests/AnalyticsTests/Data/AnalyticsConfigurationTests.swift = (ios, );
+				Tests/AnalyticsTests/Data/AnalyticsCoordinatorTests.swift = (ios, );
+				Tests/AnalyticsTests/Data/AnalyticsManagerTests.swift = (ios, );
+				Tests/AnalyticsTests/Data/AnalyticsProcessorTests.swift = (ios, );
+				Tests/AnalyticsTests/Data/AnalyticsStorageTests.swift = (ios, );
+				Tests/AnalyticsTests/Domain/AnalyticsEventTests.swift = (ios, );
+				Tests/AnalyticsTests/Domain/AnalyticsInsightTests.swift = (ios, );
+				Tests/AnalyticsTests/Domain/AnalyticsPatternTests.swift = (ios, );
+				Tests/AnalyticsTests/Domain/AnalyticsPredictionTests.swift = (ios, );
+			};
 			target = 28A3F86A2D65962B00D8DE44 /* CravePhoneTests */;
 		};
 		28A3F8C42D65971B00D8DE44 /* Exceptions for "CravePhone" folder in "CravePhoneUITests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				CravePhoneUITests/CravePhoneUITests.swift,
-				CravePhoneUITests/CravePhoneUITestsLaunchTests.swift,
+				Tests/Domain/CravePhoneUITests.swift,
+				Tests/Domain/CravePhoneUITestsLaunchTests.swift,
+				Tests/Integration/CravePhoneUITests.swift,
+				Tests/Integration/CravePhoneUITestsLaunchTests.swift,
+				Tests/UITests/CravePhoneUITests.swift,
+				Tests/UITests/CravePhoneUITestsLaunchTests.swift,
 			);
 			target = 28A3F8742D65962B00D8DE44 /* CravePhoneUITests */;
 		};

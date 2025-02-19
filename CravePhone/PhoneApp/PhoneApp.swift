@@ -1,32 +1,17 @@
-//
-//  CraveTrinityApp.swift
-//  CraveTrinity
-//
-//  Created by John H Jung on 2/18/25.
-//
-
+// CRAVEApp.swift
 import SwiftUI
 import SwiftData
 
 @main
-struct CraveTrinityApp: App {
-    var sharedModelContainer: ModelContainer = {
-        let schema = Schema([
-            Item.self,
-        ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-
-        do {
-            return try ModelContainer(for: schema, configurations: [modelConfiguration])
-        } catch {
-            fatalError("Could not create ModelContainer: \(error)")
-        }
-    }()
+struct CRAVEApp: App {
+    @StateObject private var container: DependencyContainer  = DependencyContainer() // Create it here, ONCE.
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            CRAVETabView(container: container) //Pass container
+                .environmentObject(container) // Inject into environment
         }
-        .modelContainer(sharedModelContainer)
     }
 }
+
+
