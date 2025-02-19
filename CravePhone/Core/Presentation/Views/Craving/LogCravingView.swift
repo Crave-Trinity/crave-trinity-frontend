@@ -1,4 +1,4 @@
-// File: Core/Presentation/Views/Craving/LogCravingView.swift
+// File: phone/LogCravingView.swift
 
 import SwiftUI
 
@@ -59,3 +59,4 @@ final class MockAddCravingUseCase: AddCravingUseCaseProtocol {
         return CravingEntity(text: cravingText)
     }
 }
+

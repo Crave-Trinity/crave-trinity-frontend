@@ -1,5 +1,4 @@
 
-
 // File: AnalyticsEventTests.swift
 // Purpose: Tests for the analytics event system
 
@@ -42,3 +41,4 @@ final class AnalyticsEventTests: XCTestCase {
     
     // Add more tests...
 }
+
