@@ -3,9 +3,11 @@
 //  CraveWatch
 //
 //  Created by [Your Name] on [Date].
-//  Description: Handles watch-based craving logging. Stores data locally in SwiftData
-//               and forwards it to the iPhone via WatchConnectivityService.
-//
+//  Description:
+//    A ViewModel for watch-based craving logging. It validates user input, creates a local
+//    SwiftData model (WatchCravingEntity) for the craving, sends it to the iPhone via the
+//    connectivity service, and resets UI state on success.
+//    All operations run on the main actor to ensure UI safety.
 import Foundation
 import SwiftData
 import Combine
@@ -13,48 +15,67 @@ import Combine
 @MainActor
 final class CravingLogViewModel: ObservableObject {
     
-    // MARK: - Published Properties
+    // MARK: - Published Properties (UI State)
+    /// The text entered by the user describing their craving.
     @Published var cravingDescription: String = ""
-    @Published var intensity: Int = 5  // Example scale: 1 to 10
+    
+    /// A numeric value representing the intensity of the craving (e.g., on a scale of 1–10).
+    @Published var intensity: Int = 5
+    
+    /// A flag used to trigger a success alert once a craving is logged.
     @Published var showConfirmation: Bool = false
+    
+    /// An optional error message string that displays validation or processing errors.
     @Published var errorMessage: String? = nil
     
     // MARK: - Dependencies
+    /// The connectivity service used to send craving data from the watch to the iPhone.
     private let connectivityService: WatchConnectivityService
     
     // MARK: - Initialization
+    /// Initializes the view model with the required connectivity service.
+    /// - Parameter connectivityService: The watch connectivity service for message transmission.
     init(connectivityService: WatchConnectivityService) {
         self.connectivityService = connectivityService
     }
     
     // MARK: - Public Methods
-    /// Creates a local WatchCravingEntity in SwiftData and sends it to the phone.
+    /// Logs a craving by validating input, creating a new WatchCravingEntity,
+    /// inserting it into the local SwiftData store, and sending it to the iPhone.
+    /// - Parameter context: The SwiftData ModelContext used for persisting data on the watch.
     func logCraving(context: ModelContext) {
-        // Validate user input
+        // Trim whitespace and newlines from the input.
         let trimmed = cravingDescription.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        // Validate that the user has provided a non-empty description.
         guard !trimmed.isEmpty else {
             errorMessage = "Please enter a craving description."
             return
         }
         
-        // Create a new local entity
-        let newCraving = WatchCravingEntity(text: trimmed, intensity: intensity, timestamp: Date())
+        // Create a new WatchCravingEntity.
+        // Note: The initializer expects 'text:' as the parameter label for the description.
+        let newCraving = WatchCravingEntity(
+            text: trimmed,
+            intensity: intensity,
+            timestamp: Date()
+        )
         
-        // Insert into the watch's SwiftData store
+        // Insert the new entity into the local SwiftData store.
         context.insert(newCraving)
-        // SwiftData typically autosaves, but you could do: try? context.save() if you want explicit saving
+        // If you prefer explicit saving, you can call try? context.save() here.
         
-        // Send to iPhone
+        // Send the craving data to the iPhone.
         connectivityService.sendCravingToPhone(craving: newCraving)
         
-        // Reset UI state
+        // Reset UI state: clear the input, reset intensity, clear errors, and show confirmation.
         cravingDescription = ""
         intensity = 5
-        showConfirmation = true
         errorMessage = nil
+        showConfirmation = true
     }
     
-    /// Clears any existing error message.
+    /// Clears any error message from the view model.
     func dismissError() {
         errorMessage = nil
     }

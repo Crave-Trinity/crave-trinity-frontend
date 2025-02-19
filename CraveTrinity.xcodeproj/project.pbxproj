@@ -216,6 +216,11 @@
 				Core/Tests/Unit/EmergencyTriggerViewModelTests.swift,
 				Core/Tests/Unit/VitalsViewModelTests.swift,
 			);
+			platformFiltersByRelativePath = {
+				Core/Presentation/Common/WatchCraveTextEditor.swift = (watchos, );
+				Core/Presentation/Views/CravingLogView.swift = (watchos, );
+				Core/Services/WatchHapticManager.swift = (watchos, );
+			};
 			target = 28A3F8C82D65973300D8DE44 /* CraveWatch Watch App */;
 		};
 		28A3F8FF2D65975E00D8DE44 /* Exceptions for "CraveWatch" folder in "CraveWatch Watch AppTests" target */ = {
