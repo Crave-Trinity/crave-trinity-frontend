@@ -3,22 +3,20 @@
 //  CraveWatch
 //
 //  Created by [Your Name] on [Date].
-//  Description: Centralizes watch dependencies like the connectivity service,
-//               so any view can easily access them.
+//  Description: Central place to construct watch dependencies,
+//               e.g., the connectivity service and coordinator.
 //
 
 import SwiftUI
 
 final class WatchDependencyContainer: ObservableObject {
-    // WatchConnectivityService is the main link to the phone.
+    // WatchConnectivityService for sending data to phone
     @Published var connectivityService = WatchConnectivityService()
     
-    // The coordinator manages top-level watch navigation.
-    lazy var watchCoordinator = WatchCoordinator(
-        connectivityService: connectivityService
-    )
+    // The watch coordinator handles top-level navigation
+    lazy var watchCoordinator = WatchCoordinator(connectivityService: connectivityService)
     
     init() {
-        // Additional setup if needed.
+        // Any additional setup if needed
     }
 }

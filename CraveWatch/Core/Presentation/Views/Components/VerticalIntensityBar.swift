@@ -3,74 +3,68 @@
 //  CraveWatch
 //
 //  Created by [Your Name] on [Date].
-//  Description: A vertical bar on the right, labeled with "Resistance" at the top,
-//               going from 10 at the top to 0 at the bottom. The user turns the Digital Crown
-//               to adjust intensity from 0..10.
-//
-
+//  Description: A vertical slider from 0 to 10 using the Digital Crown.
+//               Tap to focus, then rotate the crown to adjust the value.
+//               The text "Intensity" is rotated vertically.
 import SwiftUI
 
 struct VerticalIntensityBar: View {
-    @Binding var intensity: Int  // The current value 0..10
+    @Binding var value: Int  // Expected range: 0...10
     
-    @State private var crownValue: Double  // Local double for the digital crown
+    // Local variable for crown tracking
+    @State private var crownValue: Double
     
-    init(intensity: Binding<Int>) {
-        _intensity = intensity
-        // Initialize the crownValue to the incoming intensity
-        _crownValue = State(initialValue: Double(intensity.wrappedValue))
+    // Bar dimensions
+    private let barHeight: CGFloat = 60
+    private let barWidth: CGFloat = 8
+    
+    init(value: Binding<Int>) {
+        _value = value
+        _crownValue = State(initialValue: Double(value.wrappedValue))
     }
     
     var body: some View {
-        VStack(spacing: 2) {
-            // A small "Resistance" label
-            Text("Resistance")
-                .font(.caption2) // tiny watch font
-                .foregroundColor(.gray)
-            
-            // The "10" label near top
-            Text("10")
-                .font(.caption)
-                .foregroundColor(.secondary)
-            
+        HStack(spacing: 4) {
+            // Vertical slider bar
             ZStack(alignment: .bottom) {
-                // The background track (light gray)
+                // Background track
                 RoundedRectangle(cornerRadius: 4)
                     .foregroundColor(Color.gray.opacity(0.3))
+                    .frame(width: barWidth, height: barHeight)
                 
-                // The fill portion, scaled by fraction
+                // Filled portion based on current value
                 RoundedRectangle(cornerRadius: 4)
                     .foregroundColor(.blue)
-                    .frame(height: fillHeight())
+                    .frame(width: barWidth, height: fillHeight())
+                    .animation(.easeInOut, value: value)
             }
-            .frame(width: 8, height: 70) // Adjust to your watch layout
-            .padding(.vertical, 4)
+            .focusable(true)
+            .digitalCrownRotation(
+                $crownValue,
+                from: 0, through: 10, by: 1,
+                sensitivity: .low,
+                isContinuous: false
+            )
+            .onChange(of: crownValue) { oldVal, newVal in
+                let newValue = min(10, max(0, Int(newVal)))
+                if newValue != value {
+                    value = newValue
+                    WatchHapticManager.shared.play(.selection)
+                }
+            }
             
-            // The "0" label near bottom
-            Text("0")
-                .font(.caption)
-                .foregroundColor(.secondary)
-        }
-        // Let the user rotate the digital crown
-        .focusable(true)
-        .digitalCrownRotation(
-            $crownValue,
-            from: 0, through: 10, by: 1,
-            sensitivity: .low,
-            isContinuous: false
-        )
-        // Use new two-parameter onChange for watchOS 10+
-        .onChange(of: crownValue) { oldVal, newVal in
-            // clamp 0..10
-            intensity = min(10, max(0, Int(newVal)))
+            // Rotated text label for vertical orientation
+            Text("Intensity")
+                .font(.caption2)
+                .foregroundColor(.gray)
+                .rotationEffect(.degrees(-90))
+                .frame(width: 0, height: barHeight)  // Align with the bar height
         }
     }
     
-    /// Fill the bar from bottom up. If intensity=10 => 100% fill, intensity=0 => 0% fill
+    /// Calculate fill height based on current value
     private func fillHeight() -> CGFloat {
-        // Our total bar is 70 px tall.
-        let maxHeight: CGFloat = 70
-        let fraction = CGFloat(intensity) / 10.0
-        return maxHeight * fraction
+        let fraction = CGFloat(value) / 10.0
+        return fraction * barHeight
     }
 }

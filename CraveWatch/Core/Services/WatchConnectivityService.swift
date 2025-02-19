@@ -3,8 +3,8 @@
 //  CraveWatch
 //
 //  Created by [Your Name] on [Date].
-//  Description: A watch-specific service that manages WCSession to send messages (including cravings)
-//               to the iPhone. It also publishes the phone’s reachability status.
+//  Description: Manages WCSession for sending messages to the iPhone.
+//               Publishes phone reachability status.
 //
 
 import Foundation
@@ -12,9 +12,7 @@ import WatchConnectivity
 
 class WatchConnectivityService: NSObject, ObservableObject, WCSessionDelegate {
     
-    // Published property to let others know if the phone is reachable
     @Published var phoneReachable: Bool = false
-    
     private var session: WCSession?
     
     override init() {
@@ -26,8 +24,9 @@ class WatchConnectivityService: NSObject, ObservableObject, WCSessionDelegate {
         }
     }
     
-    // MARK: - Public Methods
+    // MARK: - Public
     
+    /// Generic method to send any dictionary to the iPhone
     func sendMessageToPhone(_ message: [String: Any]) {
         guard let session = session, session.isReachable else {
             print("🔴 iPhone not reachable or session not available.")
@@ -38,14 +37,15 @@ class WatchConnectivityService: NSObject, ObservableObject, WCSessionDelegate {
         }
     }
     
+    /// Sends a WatchCravingEntity to the phone
     func sendCravingToPhone(craving: WatchCravingEntity) {
-        let message: [String: Any] = [
+        let msg: [String: Any] = [
             "action": "logCraving",
             "description": craving.text,
             "intensity": craving.intensity,
             "timestamp": craving.timestamp.timeIntervalSince1970
         ]
-        sendMessageToPhone(message)
+        sendMessageToPhone(msg)
     }
     
     // MARK: - WCSessionDelegate
