@@ -10,7 +10,7 @@
 * 📌 **Feb 16–18:** [**isolated-crave-watch** (Apple Watch MVP)](https://github.com/The-Obstacle-Is-The-Way/isolated-crave-watch) – On-wrist craving logging, watch-to-phone sync.  
 * 📌 **Feb 19:** [**crave-trinity** (Unified iOS + Watch + Vision)](https://github.com/The-Obstacle-Is-The-Way/crave-trinity) – Single codebase with AR/VR hooks for future expansion.
 
-**Over 200 commits in 7 days**—fast iteration, real SwiftData challenges solved. Every commit mattered. Execution speed: from blank slate to multi-platform synergy in **one week**. Billionaires Build. No execuses... the marathon continues.
+**Over 200 commits in 7 days**—fast iteration, real SwiftData challenges solved. Every commit mattered. Execution speed: from blank slate to multi-platform synergy in **one week**. Billionaires Build... no excuses. The marathon continues.
 
 * Leveraged AI to accelerate but made critical planning and logic decisions myself. 
 
