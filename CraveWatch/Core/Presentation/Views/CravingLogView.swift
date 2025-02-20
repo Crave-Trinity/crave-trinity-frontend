@@ -33,22 +33,22 @@ struct CravingLogView: View {
                     .foregroundColor(.white)
                 
                 // 2) Second line: Hungry Angry
-                Text("Hungry     Angry")
+                Text("Hungry                         Angry")
                     .font(.system(size: 14, weight: .semibold))
                     .foregroundColor(.white.opacity(0.85))
                 
                 // 3) Middle text editor
                 WatchCraveTextEditor(
                     text: $viewModel.cravingText,
-                    primaryPlaceholder: "Tap to log craving",
-                    secondaryPlaceholder: "Max 50 chars",
+                    primaryPlaceholder: "Log Craving",
+                    secondaryPlaceholder: "50 chars",
                     isFocused: $isEditorFocused,
                     characterLimit: 50
                 )
                 .frame(height: 60)
                 
                 // 4) Bottom line: Lonely Tired
-                Text("Lonely     Tired")
+                Text("Lonely                         Tired")
                     .font(.system(size: 14, weight: .semibold))
                     .foregroundColor(.white.opacity(0.85))
                 
