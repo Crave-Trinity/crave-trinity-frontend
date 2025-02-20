@@ -3,13 +3,9 @@
 //  CravePhone
 //
 //  Description:
-//    A custom TextEditor with a centered, watch-inspired placeholder.
-//    Shows placeholders in this order:
-//      1) What are you craving?
-//      2) Why?
-//      3) Log Craving (gradient)
-//      4) With who?
-//      5) Where?
+//    A custom TextEditor with a centered, watch-inspired placeholder system.
+//    It displays multiple placeholder lines if the editor is empty.
+//    You can pass in an array of placeholders for easy extension.
 //
 //  Created by John H Jung on <date>.
 //  Updated by ChatGPT on <today's date>.
@@ -38,52 +34,66 @@ public struct GradientText: View {
 }
 
 public struct CraveTextEditor: View {
-    // The user-entered text
+    // MARK: - Bound/Text State
     @Binding var text: String
     
     // Character limit for the text
     let characterLimit: Int
     
-    // Whether the TextEditor is currently focused
+    // Placeholder lines (you can pass in custom prompts)
+    let placeholderLines: [PlaceholderLine]
+    
+    // Keep track of focus
     @FocusState private var isFocused: Bool
+    
+    // MARK: - Nested Types
+    public enum PlaceholderLine {
+        /// A simple text line
+        case plain(String)
+        /// A gradient text line (bigger, stylized)
+        case gradient(String)
+        
+        // Additional expansions possible, e.g. icons, images, etc.
+    }
     
     // MARK: - Initializer
     public init(
         text: Binding<String>,
-        characterLimit: Int
+        characterLimit: Int,
+        placeholderLines: [PlaceholderLine] = [
+            .plain("What are you craving?"),
+            .plain("Why?"),
+            .gradient("Log Craving"),
+            .plain("With who?"),
+            .plain("Where?")
+        ]
     ) {
         self._text = text
         self.characterLimit = characterLimit
+        self.placeholderLines = placeholderLines
     }
     
+    // MARK: - Body
     public var body: some View {
         ZStack(alignment: .topLeading) {
             
-            // Show this VStack only if text is empty
+            // Show placeholder lines only if text is empty
             if text.isEmpty {
-                VStack(spacing: 8) {
-                    // 1) What are you craving?
-                    Text("What are you craving?")
-                        .font(.system(size: 16, weight: .semibold))
-                    
-                    // 2) Why?
-                    Text("Why?")
-                        .font(.system(size: 16, weight: .semibold))
-                    
-                    // 3) Log Craving (gradient)
-                    GradientText(
-                        text: "Log Craving",
-                        font: CRAVEDesignSystem.Typography.largestCraving,
-                        gradient: CRAVEDesignSystem.Colors.cravingOrangeGradient
-                    )
-                    
-                    // 4) With who?
-                    Text("With who?")
-                        .font(.system(size: 16, weight: .semibold))
-                    
-                    // 5) Where?
-                    Text("Where?")
-                        .font(.system(size: 16, weight: .semibold))
+                VStack(spacing: CRAVEDesignSystem.Layout.smallSpacing) {
+                    ForEach(placeholderLines.indices, id: \.self) { index in
+                        let line = placeholderLines[index]
+                        switch line {
+                        case .plain(let string):
+                            Text(string)
+                                .font(.system(size: 16, weight: .semibold))
+                        case .gradient(let string):
+                            GradientText(
+                                text: string,
+                                font: CRAVEDesignSystem.Typography.largestCraving,
+                                gradient: CRAVEDesignSystem.Colors.cravingOrangeGradient
+                            )
+                        }
+                    }
                 }
                 .multilineTextAlignment(.center)
                 .foregroundColor(CRAVEDesignSystem.Colors.placeholderSecondary)
@@ -93,28 +103,22 @@ public struct CraveTextEditor: View {
             
             // The actual TextEditor
             if #available(iOS 18, *) {
-                // iOS 18+ allows .onChange(of: text, initial: true)
                 TextEditor(text: $text)
                     .focused($isFocused)
                     .font(CRAVEDesignSystem.Typography.body)
                     .foregroundColor(CRAVEDesignSystem.Colors.textPrimary)
                     .background(Color.clear)
                     .onChange(of: text, initial: true) { _, newValue in
-                        if newValue.count > characterLimit {
-                            text = String(newValue.prefix(characterLimit))
-                        }
+                        limitTextIfNeeded(newValue)
                     }
             } else {
-                // For iOS 15 - 17
                 TextEditor(text: $text)
                     .focused($isFocused)
                     .font(CRAVEDesignSystem.Typography.body)
                     .foregroundColor(CRAVEDesignSystem.Colors.textPrimary)
                     .background(Color.clear)
                     .onChange(of: text) { newValue in
-                        if newValue.count > characterLimit {
-                            text = String(newValue.prefix(characterLimit))
-                        }
+                        limitTextIfNeeded(newValue)
                     }
             }
         }
@@ -125,6 +129,13 @@ public struct CraveTextEditor: View {
         }
         // Hide the default scroll background on iOS 16+
         .modifier(ScrollBackgroundClearModifier())
+    }
+    
+    // MARK: - Private Helpers
+    private func limitTextIfNeeded(_ newValue: String) {
+        if newValue.count > characterLimit {
+            text = String(newValue.prefix(characterLimit))
+        }
     }
 }
 
@@ -138,4 +149,3 @@ struct ScrollBackgroundClearModifier: ViewModifier {
         }
     }
 }
-

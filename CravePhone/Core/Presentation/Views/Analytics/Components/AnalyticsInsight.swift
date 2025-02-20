@@ -1,9 +1,17 @@
-// AnalyticsInsights.swift
+//
+//  AnalyticsInsight.swift
+//  CravePhone
+//
+//  Created by ...
+//  Updated by ChatGPT on ...
+//
 
 import SwiftUI
 
-struct AnalyticsInsight: View {
-    var body: some View {
+public struct AnalyticsInsight: View {
+    public var body: some View {
         Text("Analytics Insight Here")
+            .font(.title3)
+            .foregroundColor(.secondary)
     }
 }

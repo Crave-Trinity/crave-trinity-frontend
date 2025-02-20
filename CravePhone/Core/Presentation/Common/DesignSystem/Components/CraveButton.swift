@@ -4,7 +4,7 @@
 //
 //  Description:
 //    A minimal, watch-inspired button. Uses a larger font for the button text.
-//    Defaults to the brand (blue) gradient, but you can pass in the orange gradient.
+//    Defaults to the brand (blue) gradient, but can accept a custom gradient.
 //
 //  Created by John H Jung on <date>.
 //  Updated by ChatGPT on <today’s date>.
@@ -13,11 +13,16 @@
 import SwiftUI
 
 public struct CraveButton: View {
+    // MARK: - Properties
     public let title: String
     public let action: () -> Void
     public let gradient: LinearGradient
-
-    // Primary initializer that requires a gradient
+    
+    // Optional customization
+    private var cornerRadius: CGFloat = CRAVEDesignSystem.Layout.cornerRadius
+    private var buttonHeight: CGFloat = CRAVEDesignSystem.Layout.buttonHeight
+    
+    // MARK: - Initializers
     public init(
         title: String,
         action: @escaping () -> Void,
@@ -28,7 +33,7 @@ public struct CraveButton: View {
         self.gradient = gradient
     }
     
-    // Convenience init: defaults to the brand gradient (blue)
+    // Convenience: brand default
     public init(
         title: String,
         action: @escaping () -> Void
@@ -40,15 +45,15 @@ public struct CraveButton: View {
         )
     }
     
+    // MARK: - Body
     public var body: some View {
         Button(action: action) {
             Text(title)
-                .font(CRAVEDesignSystem.Typography.buttonLarge) // bigger text
+                .font(CRAVEDesignSystem.Typography.buttonLarge)
                 .foregroundColor(CRAVEDesignSystem.Colors.textOnPrimary)
-                .frame(maxWidth: .infinity, minHeight: CRAVEDesignSystem.Layout.buttonHeight)
+                .frame(maxWidth: .infinity, minHeight: buttonHeight)
                 .background(gradient)
-                .cornerRadius(CRAVEDesignSystem.Layout.cornerRadius)
+                .cornerRadius(cornerRadius)
         }
     }
 }
-

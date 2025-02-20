@@ -141,7 +141,7 @@
 				Core/Presentation/Common/DesignSystem/CRAVEDesignSystem.swift = (ios, );
 				Core/Presentation/Common/DesignSystem/Components/CraveButton.swift = (ios, );
 				Core/Presentation/Common/DesignSystem/Components/CraveTextEditor.swift = (ios, );
-				Core/Presentation/Common/DesignSystem/Theme.swift = (ios, );
+				Core/Presentation/Common/DesignSystem/CraveTheme.swift = (ios, );
 				"Core/Presentation/Common/Extensions/Date+Extensions.swift" = (ios, );
 				"Core/Presentation/Common/Extensions/View+Extensions.swift" = (ios, );
 				"Core/Presentation/Configuration/AnalyticsConfiguration+Defaults.swift" = (ios, );

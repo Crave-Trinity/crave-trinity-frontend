@@ -1,15 +1,15 @@
 //
-//  BasicAnalyticsResult.swift
+//  AnalyticsAggregatorProtocol.swift
 //  CravePhone
 //
 //  Description:
-//    A domain struct capturing high-level analytics results
-//    for display in the UI.
+//    Domain interface that aggregates craving events into
+//    some intermediate data structure (e.g., an "AggregatedData").
 //
 
 import Foundation
 
-public struct BasicAnalyticsResult {
+public struct AggregatedData {
     public let totalCravings: Int
     public let totalResisted: Int
     public let averageIntensity: Double
@@ -18,7 +18,6 @@ public struct BasicAnalyticsResult {
     public let cravingsByWeekday: [Int: Int]
     public let commonTriggers: [String: Int]
     public let timePatterns: [String]
-    public let detectedPatterns: [String]
 
     public init(
         totalCravings: Int,
@@ -28,8 +27,7 @@ public struct BasicAnalyticsResult {
         cravingsByHour: [Int: Int],
         cravingsByWeekday: [Int: Int],
         commonTriggers: [String: Int],
-        timePatterns: [String],
-        detectedPatterns: [String]
+        timePatterns: [String]
     ) {
         self.totalCravings = totalCravings
         self.totalResisted = totalResisted
@@ -39,6 +37,9 @@ public struct BasicAnalyticsResult {
         self.cravingsByWeekday = cravingsByWeekday
         self.commonTriggers = commonTriggers
         self.timePatterns = timePatterns
-        self.detectedPatterns = detectedPatterns
     }
+}
+
+public protocol AnalyticsAggregatorProtocol: AnyObject {
+    func aggregate(events: [CravingEvent]) async throws -> AggregatedData
 }

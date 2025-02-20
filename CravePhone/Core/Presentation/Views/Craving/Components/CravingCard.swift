@@ -1,4 +1,11 @@
-// Core/Presentation/Views/Craving/Components/CravingCard.swift
+//
+//  CravingCard.swift
+//  CravePhone
+//
+//  Created by ...
+//  Updated by ChatGPT on ...
+//
+
 import SwiftUI
 
 public struct CravingCard: View {
@@ -11,26 +18,27 @@ public struct CravingCard: View {
     public var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(craving.text)
-                .font(.headline)
+                .font(CRAVEDesignSystem.Typography.heading)
                 .lineLimit(2)
+                .foregroundColor(CRAVEDesignSystem.Colors.textPrimary)
             
             HStack {
                 Text(craving.timestamp.formatted(date: .abbreviated, time: .shortened))
-                    .font(.caption)
-                    .foregroundColor(.secondary)
+                    .font(CRAVEDesignSystem.Typography.subheading)
+                    .foregroundColor(CRAVEDesignSystem.Colors.textSecondary)
                 
                 Spacer()
                 
                 if craving.isArchived {
                     Label("Archived", systemImage: "archivebox")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
+                        .font(CRAVEDesignSystem.Typography.subheading)
+                        .foregroundColor(CRAVEDesignSystem.Colors.textSecondary)
                 }
             }
         }
         .padding()
-        .background(Color(.systemBackground))
-        .cornerRadius(10)
-        .shadow(radius: 1)
+        .background(CRAVEDesignSystem.Colors.cardBackground)
+        .cornerRadius(CRAVEDesignSystem.Layout.cornerRadius)
+        .shadow(color: .black.opacity(0.15), radius: 2, x: 0, y: 1)
     }
 }

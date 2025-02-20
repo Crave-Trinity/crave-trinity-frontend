@@ -1,4 +1,11 @@
-// CRAVEApp/App/Views/Craving/CravingListView.swift
+//
+//  CravingListView.swift
+//  CravePhone
+//
+//  Created by ...
+//  Updated by ChatGPT on ...
+//
+
 import SwiftUI
 
 public struct CravingListView: View {
@@ -9,25 +16,36 @@ public struct CravingListView: View {
     }
 
     public var body: some View {
-        NavigationView { // Embed in NavigationView for title
-            List {
-                ForEach(viewModel.cravings, id: \.id) { craving in
-                    CravingCard(craving: craving) // Using CravingCard for each craving
+        NavigationView {
+            ZStack {
+                // 1) The main list
+                List {
+                    ForEach(viewModel.cravings, id: \.id) { craving in
+                        CravingCard(craving: craving)
+                    }
+                    .onDelete(perform: deleteCraving)
                 }
-                .onDelete(perform: deleteCraving)
-            }
-            .navigationTitle("Cravings") // Set navigation title
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
+                .navigationTitle("Cravings")
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        EditButton()
+                    }
                 }
-            }
-            .refreshable {
-                await viewModel.fetchCravings()
-            }
-            .onAppear {
-                Task {
+                .refreshable {
                     await viewModel.fetchCravings()
+                }
+                .onAppear {
+                    Task {
+                        await viewModel.fetchCravings()
+                    }
+                }
+                
+                // 2) Optional loading overlay
+                if viewModel.isLoading {
+                    ProgressView("Loading...")
+                        .padding(40)
+                        .background(Color.black.opacity(0.6))
+                        .cornerRadius(12)
                 }
             }
         }
@@ -43,28 +61,33 @@ public struct CravingListView: View {
     }
 }
 
+// MARK: - PREVIEW
+#if DEBUG
 struct CravingListView_Previews: PreviewProvider {
     static var previews: some View {
-        CravingListView(viewModel: CravingListViewModel(fetchCravingsUseCase: MockFetchCravingsUseCase(), archiveCravingUseCase: MockArchiveCravingUseCase()))
-            .environmentObject(DependencyContainer())
+        CravingListView(
+            viewModel: CravingListViewModel(
+                fetchCravingsUseCase: MockFetchCravingsUseCase(),
+                archiveCravingUseCase: MockArchiveCravingUseCase()
+            )
+        )
     }
 }
 
-// Mock Use Cases for Preview - Mock FetchCravingsUseCaseProtocol
-final class MockFetchCravingsUseCase: FetchCravingsUseCaseProtocol {
+// MARK: - Mock Classes for Preview
+
+fileprivate class MockFetchCravingsUseCase: FetchCravingsUseCaseProtocol {
     func execute() async throws -> [CravingEntity] {
         [
-            CravingEntity(text: "Sample Craving 1"),
-            CravingEntity(text: "Another Craving")
+            CravingEntity(text: "Mock Craving #1"),
+            CravingEntity(text: "Mock Craving #2")
         ]
     }
 }
 
-// Mock Use Cases for Preview - MockArchiveCravingUseCaseProtocol
-final class MockArchiveCravingUseCase: ArchiveCravingUseCaseProtocol {
+fileprivate class MockArchiveCravingUseCase: ArchiveCravingUseCaseProtocol {
     func execute(_ craving: CravingEntity) async throws {
-        // do nothing
+        // No-op
     }
 }
-
-
+#endif

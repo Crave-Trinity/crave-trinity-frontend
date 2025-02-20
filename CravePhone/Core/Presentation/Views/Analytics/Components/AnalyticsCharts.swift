@@ -1,3 +1,11 @@
+//
+//  AnalyticsCharts.swift
+//  CravePhone
+//
+//  Created by ...
+//  Updated by ChatGPT on ...
+//
+
 import SwiftUI
 import Charts
 
@@ -20,4 +28,3 @@ public struct AnalyticsCharts: View {
         .frame(height: 200)
     }
 }
-

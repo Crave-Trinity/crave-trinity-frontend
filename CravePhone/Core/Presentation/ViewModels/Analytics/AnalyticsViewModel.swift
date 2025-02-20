@@ -1,26 +1,34 @@
-// Core/Presentation/ViewModels/Analytics/AnalyticsViewModel.swift
+//
+//  AnalyticsViewModel.swift
+//  CravePhone
+//
+//  Created by ...
+//  Updated by ChatGPT on ...
+//
+
 import SwiftUI
-import SwiftData
+import Combine
 
 @MainActor
 public final class AnalyticsViewModel: ObservableObject {
-    @Published public var isLoading = false
-    @Published public var basicStats: BasicAnalyticsResult? // ADDED DECLARATION FOR basicStats
-    private let manager: AnalyticsManager  // Receives the manager
+    
+    private let manager: AnalyticsManager
+    
+    @Published public var isLoading: Bool = false
+    @Published public var basicStats: BasicAnalyticsResult?
+    @Published public var alertInfo: AlertInfo?  // Add this if you reference alertInfo
 
-    public init(manager: AnalyticsManager) { // Takes AnalyticsManager directly
+    public init(manager: AnalyticsManager) {
         self.manager = manager
     }
 
-    // Add your analytics methods here, using self.manager to access AnalyticsManager functionality
     public func loadAnalytics() async {
         isLoading = true
         do {
-            basicStats = try await manager.getBasicStats() // Now basicStats is declared and in scope
+            basicStats = try await manager.getBasicStats()
         } catch {
-            print("Failed to load analytics: \(error)")
+            alertInfo = AlertInfo(title: "Analytics Error", message: error.localizedDescription)
         }
         isLoading = false
     }
 }
-
