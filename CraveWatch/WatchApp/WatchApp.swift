@@ -3,8 +3,7 @@
 //  CraveWatch
 //
 //  Created by [Your Name] on [Date].
-//  Description: The main entry point for the watch app.
-//               Sets up SwiftData and a top-level navigation.
+//  Description: The main entry point for the watch app. Sets up SwiftData and a top-level navigation via a dependency container.
 //
 
 import SwiftUI
@@ -13,17 +12,18 @@ import SwiftData
 
 @main
 struct WatchApp: App {
-    // Dependency container for watch services
+    // Create the dependency container for watch services.
     @StateObject private var dependencyContainer = WatchDependencyContainer()
     
     var body: some Scene {
         WindowGroup {
             NavigationView {
-                // The watch coordinator’s root view
+                // The watch coordinator provides the root view.
                 dependencyContainer.watchCoordinator.rootView
             }
-            // Register the SwiftData model
+            // Registers the SwiftData model container for WatchCravingEntity.
             .modelContainer(for: [WatchCravingEntity.self])
         }
     }
 }
+

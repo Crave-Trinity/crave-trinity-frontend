@@ -221,6 +221,7 @@
 				Core/Presentation/ViewModels/CravingLogViewModel.swift = (watchos, );
 				Core/Presentation/Views/Components/VerticalToggleBar.swift = (watchos, );
 				Core/Presentation/Views/CravingLogView.swift = (watchos, );
+				Core/Presentation/Views/CravingPagesView.swift = (watchos, );
 				Core/Services/WatchConnectivityService.swift = (watchos, );
 				Core/Services/WatchHapticManager.swift = (watchos, );
 			};

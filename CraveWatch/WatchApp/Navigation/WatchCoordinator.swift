@@ -3,8 +3,7 @@
 //  CraveWatch
 //
 //  Created by [Your Name] on [Date].
-//  Description: Manages top-level watch navigation.
-//               Currently returns CravingLogView as the root.
+//  Description: Manages top-level watch navigation. Currently returns CravingLogView as the root view.
 //
 
 import SwiftUI
@@ -16,8 +15,10 @@ final class WatchCoordinator {
         self.connectivityService = connectivityService
     }
     
+    @MainActor
     var rootView: some View {
-        // Display the CravingLogView as the main screen
-        CravingLogView(connectivityService: connectivityService)
+        let viewModel = CravingLogViewModel(connectivityService: connectivityService)
+        return CravingLogView(viewModel: viewModel)
     }
 }
+
