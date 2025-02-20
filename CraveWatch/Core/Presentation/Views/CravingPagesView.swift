@@ -2,30 +2,21 @@
 //  CravingPagesView.swift
 //  CraveWatch
 //
+//  Created by [Your Name] on [Date].
 //  Description:
-//    A TabView with PageTabViewStyle that shows two pages side by side:
-//      1) CravingLogView (for text-based logging)
-//      2) CravingIntensityView (for adjusting intensity/resistance)
+//    A TabView that lets the user horizontally swipe between the craving logging screen
+//    and the intensity/resistance adjustment screen. Dots indicate the pages.
 //
 //  Usage:
-//    1. Provide a WatchConnectivityService and SwiftData model container
-//       in your @main app or Scene.
-//    2. Initialize CravingLogViewModel and pass it here if desired,
-//       or create it inside this view.
-//
-//  Created by [Your Name] on [Date]
-//
-
+//    Set CravingPagesView as the root view in your WatchApp.
 import SwiftUI
 import SwiftData
 
 struct CravingPagesView: View {
     @Environment(\.modelContext) private var context
-    
-    // Provide connectivity from outside
     @ObservedObject var connectivityService: WatchConnectivityService
     
-    // Create or inject the CravingLogViewModel
+    // Create the shared ViewModel that handles logging.
     @StateObject private var viewModel: CravingLogViewModel
     
     init(connectivityService: WatchConnectivityService) {
@@ -35,14 +26,15 @@ struct CravingPagesView: View {
     
     var body: some View {
         TabView {
-            // PAGE 1: CravingLogView
+            // Page 1: Log Craving screen
             CravingLogView(viewModel: viewModel)
                 .tag(0)
             
-            // PAGE 2: CravingIntensityView
-            CravingIntensityView(intensity: $viewModel.intensity, resistance: .constant(5))
+            // Page 2: Intensity/Resistance screen
+            CravingIntensityView(intensity: $viewModel.intensity, resistance: $viewModel.resistance)
                 .tag(1)
         }
         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
     }
 }
+

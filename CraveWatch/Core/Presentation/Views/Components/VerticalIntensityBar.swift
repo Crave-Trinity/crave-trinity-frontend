@@ -3,13 +3,11 @@
 //  CraveWatch
 //
 //  Description:
-//  A vertical slider for values 1...10. The bar fills from the bottom and
-//  displays a numeric label that moves along with the fill.
-//  The Digital Crown rotates in steps of 1.
+//  A vertical slider for values 1...10. The bar fills from the bottom and displays a numeric label
+//  that moves along with the fill. The Digital Crown rotates in steps of 1.
 //
-//  Created by [Your Name] on [Date].
+//  Created by [Your Name] on [Date]
 //
-
 import SwiftUI
 import WatchKit
 
@@ -18,7 +16,6 @@ struct VerticalIntensityBar: View {
     let barWidth: CGFloat
     let barHeight: CGFloat
     
-    // The crown's rotation value (kept as Double for smooth updates)
     @State private var crownValue: Double
     let minValue = 1
     let maxValue = 10
@@ -32,17 +29,16 @@ struct VerticalIntensityBar: View {
     
     var body: some View {
         ZStack(alignment: .bottom) {
-            // Background track.
             RoundedRectangle(cornerRadius: 4)
                 .foregroundColor(Color.gray.opacity(0.3))
                 .frame(width: barWidth, height: barHeight)
-            // Filled portion (with a small margin on each side).
+            
             let fillWidth = barWidth - 2
             RoundedRectangle(cornerRadius: 4)
                 .foregroundColor(.blue)
                 .frame(width: fillWidth, height: fillHeight())
                 .animation(.easeInOut, value: value)
-            // Numeric label that moves with the fill.
+            
             Text("\(value)")
                 .font(.caption2)
                 .fontWeight(.bold)
@@ -70,20 +66,17 @@ struct VerticalIntensityBar: View {
         }
     }
     
-    // Computes the fraction of the bar filled (0...1).
     private func fillFraction() -> CGFloat {
         CGFloat(value - minValue) / CGFloat(maxValue - minValue)
     }
     
-    // Computes the actual height of the filled portion.
     private func fillHeight() -> CGFloat {
         barHeight * fillFraction()
     }
     
-    // Calculates the vertical offset for the numeric label.
     private func labelOffset() -> CGFloat {
         let fill = fillHeight()
-        let offset = -(fill - 8)  // negative because alignment is .bottom
+        let offset = -(fill - 8)
         return max(offset, -barHeight + 8)
     }
 }

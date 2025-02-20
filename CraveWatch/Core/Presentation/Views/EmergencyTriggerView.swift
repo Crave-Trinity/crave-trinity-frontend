@@ -38,3 +38,4 @@ struct EmergencyTriggerView: View {
     }
 }
 
+ 

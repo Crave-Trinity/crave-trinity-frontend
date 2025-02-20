@@ -3,23 +3,18 @@
 //  CraveWatch
 //
 //  Description:
-//    Displays a text editor for logging cravings. Ties into CravingLogViewModel
-//    to handle SwiftData insertion, phone connectivity, and error/confirmation states.
+//    Displays a custom text editor for logging cravings using the sexy gradient
+//    placeholder. It ties into CravingLogViewModel to handle logging via SwiftData,
+//    sends the craving to the phone, and shows a green checkmark overlay with haptic feedback.
 //
-//  Created by [Your Name] on [Date]
 //
 
 import SwiftUI
 import SwiftData
 
 struct CravingLogView: View {
-    // Environment
     @Environment(\.modelContext) private var context
-    
-    // The ViewModel controlling logic
     @ObservedObject var viewModel: CravingLogViewModel
-    
-    // Focus state for the text editor
     @FocusState private var isEditorFocused: Bool
     
     var body: some View {
@@ -32,29 +27,31 @@ struct CravingLogView: View {
                     .font(.system(size: 16, weight: .bold))
                     .foregroundColor(.white)
                 
-                // 2) Second line: Hungry Angry
+                // 2) Second line: Hungry     Angry
                 Text("Hungry                         Angry")
                     .font(.system(size: 14, weight: .semibold))
                     .foregroundColor(.white.opacity(0.85))
                 
-                // 3) Middle text editor
+                // 3) Custom text editor with gradient placeholder
                 WatchCraveTextEditor(
                     text: $viewModel.cravingText,
                     primaryPlaceholder: "Log Craving",
-                    secondaryPlaceholder: "50 chars",
+                    secondaryPlaceholder: "200 chars",
                     isFocused: $isEditorFocused,
-                    characterLimit: 50
+                    characterLimit: 200
                 )
                 .frame(height: 60)
                 
-                // 4) Bottom line: Lonely Tired
+                // 4) Bottom line: Lonely     Tired
                 Text("Lonely                         Tired")
                     .font(.system(size: 14, weight: .semibold))
                     .foregroundColor(.white.opacity(0.85))
                 
-                // 5) Log button
+                // 5) Log button: triggers the log action.
                 Button(action: {
-                    viewModel.logCraving(context: context)
+                    Task {
+                        viewModel.logCraving(context: context)
+                    }
                 }) {
                     Text("Log")
                         .font(.system(size: 15, weight: .semibold))
@@ -69,16 +66,17 @@ struct CravingLogView: View {
             .padding(.top, -2)
             .padding(.bottom, 6)
             
-            // Success confirmation overlay
+            // Confirmation overlay: shows a green checkmark when logging succeeds.
             if viewModel.showConfirmation {
                 ConfirmationOverlay(isPresented: $viewModel.showConfirmation)
             }
         }
-        // Show error alert if needed
-        .alert("Error", isPresented: Binding(
-            get: { viewModel.errorMessage != nil },
-            set: { if !$0 { viewModel.dismissError() } }
-        )) {
+        // Error alert: shows if viewModel.errorMessage is set.
+        .alert("Error",
+               isPresented: Binding(
+                    get: { viewModel.errorMessage != nil },
+                    set: { if !$0 { viewModel.dismissError() } }
+               )) {
             Button("OK", role: .cancel) {}
         } message: {
             Text(viewModel.errorMessage ?? "")
@@ -86,7 +84,7 @@ struct CravingLogView: View {
     }
 }
 
-// (Optional) reuse the same ConfirmationOverlay from your existing code
+// MARK: - Confirmation Overlay
 struct ConfirmationOverlay: View {
     @Binding var isPresented: Bool
     
@@ -109,11 +107,11 @@ struct ConfirmationOverlay: View {
     }
 }
 
-// MARK: - Premium Blue Gradient (same as CravingIntensityView)
+// MARK: - Premium Blue Gradient
 fileprivate let premiumBlueGradient = LinearGradient(
     gradient: Gradient(colors: [
-        Color(hue: 0.58, saturation: 0.8, brightness: 0.7), // top
-        Color(hue: 0.58, saturation: 0.9, brightness: 0.4)  // bottom
+        Color(hue: 0.58, saturation: 0.8, brightness: 0.7),
+        Color(hue: 0.58, saturation: 0.9, brightness: 0.4)
     ]),
     startPoint: .top,
     endPoint: .bottom
