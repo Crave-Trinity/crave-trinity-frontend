@@ -19,8 +19,9 @@
 📂 Project Structure
 
 ```bash
-
-CraveTrinity
+118 directories, 148 files
+jj@Johns-MacBook-Pro-3 CraveTrinity % tree -I ".git"
+.
 ├── CravePhone
 │   ├── Core
 │   │   ├── Data
@@ -44,7 +45,7 @@ CraveTrinity
 │   │   │   └── Services
 │   │   │       ├── AnalyticsService.swift
 │   │   │       ├── EventTrackingService.swift
-│   │   │       └── PhoneWatchConnectivityService.swift
+│   │   │       └── PhoneConnectivityService.swift
 │   │   ├── Domain
 │   │   │   ├── Entities
 │   │   │   │   ├── Analytics
@@ -167,7 +168,12 @@ CraveTrinity
 │   │   │       └── configuration
 │   │   └── xcuserdata
 │   │       └── jj.xcuserdatad
+│   │           ├── IDEFindNavigatorScopes.plist
 │   │           └── UserInterfaceState.xcuserstate
+│   ├── xcshareddata
+│   │   └── xcschemes
+│   │       ├── CravePhone.xcscheme
+│   │       └── CraveWatch Watch App.xcscheme
 │   └── xcuserdata
 │       └── jj.xcuserdatad
 │           └── xcschemes
@@ -216,65 +222,72 @@ CraveTrinity
 │   └── Preview Content
 │       └── Preview Assets.xcassets
 │           └── Contents.json
-└── CraveWatch
-    ├── Core
-    │   ├── Data
-    │   │   ├── DataSources
-    │   │   │   └── Local
-    │   │   │       └── LocalCravingScore.swift
-    │   │   ├── Mappers
-    │   │   │   └── CravingMapper.swift
-    │   │   └── Repositories
-    │   │       └── CravingRepository.swift
-    │   ├── Domain
-    │   │   ├── Entities
-    │   │   │   └── WatchCravingEntity.swift
-    │   │   ├── Interfaces
-    │   │   │   └── CravingRepositoryProtocol.swift
-    │   │   └── UseCases
-    │   │       ├── EmergencyTriggerUseCase.swift
-    │   │       ├── LogCravingUseCase.swift
-    │   │       └── LogVitalUseCase.swift
-    │   ├── Presentation
-    │   │   ├── Common
-    │   │   │   └── CravingTextEditor.swift
-    │   │   ├── ViewModels
-    │   │   │   ├── CravingLogViewModel.swift
-    │   │   │   ├── EmergencyTriggerViewModel.swift
-    │   │   │   └── VitalsViewModel.swift
-    │   │   └── Views
-    │   │       ├── CravingLogView.swift
-    │   │       ├── EmergencyTriggerView.swift
-    │   │       └── VitalsView.swift
-    │   ├── Resources
-    │   │   ├── Assets.xcassets
-    │   │   │   ├── AccentColor.colorset
-    │   │   │   │   └── Contents.json
-    │   │   │   ├── AppIcon.appiconset
-    │   │   │   │   └── Contents.json
-    │   │   │   └── Contents.json
-    │   │   └── Preview Content
-    │   │       └── Preview Assets.xcassets
-    │   │           └── Contents.json
-    │   ├── Services
-    │   │   ├── OfflineCravingSyncManager.swift
-    │   │   └── WatchConnectivityService.swift
-    │   └── Tests
-    │       ├── Integration
-    │       │   ├── MockWatchConnectivityService.swift
-    │       │   └── OfflineCravingSyncManagerTests.swift
-    │       └── Unit
-    │           ├── CravingLogViewModelTests.swift
-    │           ├── EmergencyTriggerViewModelTests.swift
-    │           └── VitalsViewModelTests.swift
-    └── WatchApp
-        ├── DI
-        │   └── WatchDependencyContainer.swift
-        ├── Navigation
-        │   └── WatchCoordinator.swift
-        └── WatchApp.swift
-
-115 directories, 138 files
+├── CraveWatch
+│   ├── Core
+│   │   ├── Data
+│   │   │   ├── DataSources
+│   │   │   │   └── Local
+│   │   │   │       └── LocalCravingScore.swift
+│   │   │   ├── Mappers
+│   │   │   │   └── CravingMapper.swift
+│   │   │   └── Repositories
+│   │   │       └── CravingRepository.swift
+│   │   ├── Domain
+│   │   │   ├── Entities
+│   │   │   │   └── WatchCravingEntity.swift
+│   │   │   ├── Interfaces
+│   │   │   │   └── CravingRepositoryProtocol.swift
+│   │   │   ├── UseCases
+│   │   │   │   ├── EmergencyTriggerUseCase.swift
+│   │   │   │   ├── LogCravingUseCase.swift
+│   │   │   │   └── LogVitalUseCase.swift
+│   │   │   └── WatchCravingError.swift
+│   │   ├── Presentation
+│   │   │   ├── Common
+│   │   │   │   └── WatchCraveTextEditor.swift
+│   │   │   ├── ViewModels
+│   │   │   │   ├── CravingLogViewModel.swift
+│   │   │   │   ├── EmergencyTriggerViewModel.swift
+│   │   │   │   └── VitalsViewModel.swift
+│   │   │   └── Views
+│   │   │       ├── Components
+│   │   │       │   ├── VerticalIntensityBar.swift
+│   │   │       │   └── VerticalToggleBar.swift
+│   │   │       ├── CravingIntensityView.swift
+│   │   │       ├── CravingLogView.swift
+│   │   │       ├── CravingPagesView.swift
+│   │   │       ├── EmergencyTriggerView.swift
+│   │   │       └── VitalsView.swift
+│   │   ├── Resources
+│   │   │   ├── Assets.xcassets
+│   │   │   │   ├── AccentColor.colorset
+│   │   │   │   │   └── Contents.json
+│   │   │   │   ├── AppIcon.appiconset
+│   │   │   │   │   └── Contents.json
+│   │   │   │   └── Contents.json
+│   │   │   └── Preview Content
+│   │   │       └── Preview Assets.xcassets
+│   │   │           └── Contents.json
+│   │   ├── Services
+│   │   │   ├── OfflineCravingSyncManager.swift
+│   │   │   ├── WatchConnectivityService.swift
+│   │   │   └── WatchHapticManager.swift
+│   │   └── Tests
+│   │       ├── Integration
+│   │       │   ├── MockWatchConnectivityService.swift
+│   │       │   └── OfflineCravingSyncManagerTests.swift
+│   │       └── Unit
+│   │           ├── CravingLogViewModelTests.swift
+│   │           ├── EmergencyTriggerViewModelTests.swift
+│   │           └── VitalsViewModelTests.swift
+│   └── WatchApp
+│       ├── DI
+│       │   └── WatchDependencyContainer.swift
+│       ├── Navigation
+│       │   └── WatchCoordinator.swift
+│       └── WatchApp.swift
+└── README.md
+118 directories, 148 files
 jj@Johns-MacBook-Pro-3 CraveTrinity % 
 
 ```
