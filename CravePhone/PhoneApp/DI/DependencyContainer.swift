@@ -3,8 +3,11 @@
 //  CravePhone
 //
 //  Description:
-//    A dependency container that creates your domain/data layer objects
-//    and injects them where needed. Refs to protocol types -> SOLID compliance.
+//    Builds your domain/data layers, exposes factories for your ViewModels
+//    that the Coordinator calls.
+//
+//  Created by ...
+//  Updated by ChatGPT on ...
 //
 
 import Foundation
@@ -16,7 +19,7 @@ public final class DependencyContainer: ObservableObject {
     
     @Published private(set) var modelContainer: ModelContainer
     
-    // MARK: - Lazy singletons (example)
+    // MARK: - Lazy Singletons
     
     private lazy var analyticsStorage: AnalyticsStorageProtocol = {
         AnalyticsStorage(modelContext: modelContainer.mainContext)
@@ -26,7 +29,6 @@ public final class DependencyContainer: ObservableObject {
         AnalyticsMapper()
     }()
     
-    // IMPORTANT: store as a protocol type
     private lazy var analyticsRepository: AnalyticsRepositoryProtocol = {
         AnalyticsRepositoryImpl(storage: analyticsStorage, mapper: analyticsMapper)
     }()
@@ -36,12 +38,13 @@ public final class DependencyContainer: ObservableObject {
     }()
     
     private lazy var patternDetectionService: PatternDetectionServiceProtocol = {
-        PatternDetectionServiceImpl(storage: analyticsStorage,
-                                   configuration: AnalyticsConfiguration.shared)
+        PatternDetectionServiceImpl(
+            storage: analyticsStorage,
+            configuration: AnalyticsConfiguration.shared
+        )
     }()
     
     private lazy var analyticsManager: AnalyticsManager = {
-        // Here, AnalyticsManager expects those 3 protocol parameters
         AnalyticsManager(
             repository: analyticsRepository,
             aggregator: analyticsAggregator,
@@ -49,7 +52,7 @@ public final class DependencyContainer: ObservableObject {
         )
     }()
     
-    // Craving
+    // For cravings
     private lazy var cravingManager: CravingManager = {
         CravingManager(modelContext: modelContainer.mainContext)
     }()
@@ -61,11 +64,7 @@ public final class DependencyContainer: ObservableObject {
     // MARK: - Init
     
     public init() {
-        // Initialize ModelContainer with your domain's schema
-        let schema = Schema([
-            CravingEntity.self,
-            AnalyticsMetadata.self
-        ])
+        let schema = Schema([CravingEntity.self, AnalyticsMetadata.self])
         do {
             self.modelContainer = try ModelContainer(for: schema)
         } catch {
@@ -73,30 +72,25 @@ public final class DependencyContainer: ObservableObject {
         }
     }
     
-    // MARK: - Craving Use Cases
+    // MARK: - Use Cases
     
     private func makeAddCravingUseCase() -> AddCravingUseCaseProtocol {
         AddCravingUseCase(cravingRepository: cravingRepository)
     }
-    
     private func makeFetchCravingsUseCase() -> FetchCravingsUseCaseProtocol {
         FetchCravingsUseCase(cravingRepository: cravingRepository)
     }
-    
     private func makeArchiveCravingUseCase() -> ArchiveCravingUseCaseProtocol {
         ArchiveCravingUseCase(cravingRepository: cravingRepository)
     }
     
-    // MARK: - Public ViewModel Factories
-    
+    // MARK: - Public Factories
     public func makeAnalyticsDashboardViewModel() -> AnalyticsDashboardViewModel {
         AnalyticsDashboardViewModel(manager: analyticsManager)
     }
-    
     public func makeLogCravingViewModel() -> LogCravingViewModel {
         LogCravingViewModel(addCravingUseCase: makeAddCravingUseCase())
     }
-    
     public func makeCravingListViewModel() -> CravingListViewModel {
         CravingListViewModel(
             fetchCravingsUseCase: makeFetchCravingsUseCase(),

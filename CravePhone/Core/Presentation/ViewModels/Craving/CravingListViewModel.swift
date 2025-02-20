@@ -2,7 +2,11 @@
 //  CravingListViewModel.swift
 //  CravePhone
 //
-//  Created by John H Jung on ...
+//  Description:
+//    Example ViewModel that fetches + archives cravings.
+//    We'll show them in CravingListView.
+//
+//  Created by ...
 //  Updated by ChatGPT on ...
 //
 
@@ -12,23 +16,19 @@ import Combine
 @MainActor
 public final class CravingListViewModel: ObservableObject {
     
-    // MARK: - Dependencies
     private let fetchCravingsUseCase: FetchCravingsUseCaseProtocol
     private let archiveCravingUseCase: ArchiveCravingUseCaseProtocol
     
-    // MARK: - Published Properties
     @Published public private(set) var cravings: [CravingEntity] = []
-    @Published public var alertInfo: AlertInfo?  // <-- Add this line
+    @Published public var alertInfo: AlertInfo?
     @Published public var isLoading: Bool = false
-
-    // MARK: - Init
+    
     public init(fetchCravingsUseCase: FetchCravingsUseCaseProtocol,
                 archiveCravingUseCase: ArchiveCravingUseCaseProtocol) {
         self.fetchCravingsUseCase = fetchCravingsUseCase
         self.archiveCravingUseCase = archiveCravingUseCase
     }
     
-    // MARK: - Public Methods
     public func fetchCravings() async {
         do {
             isLoading = true
@@ -43,7 +43,7 @@ public final class CravingListViewModel: ObservableObject {
         do {
             isLoading = true
             try await archiveCravingUseCase.execute(craving)
-            await fetchCravings() // Refresh the list
+            await fetchCravings()
         } catch {
             alertInfo = AlertInfo(title: "Error", message: error.localizedDescription)
         }

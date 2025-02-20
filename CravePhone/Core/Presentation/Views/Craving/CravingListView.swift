@@ -2,6 +2,10 @@
 //  CravingListView.swift
 //  CravePhone
 //
+//  Description:
+//    A simple list of cravings, each row is a CravingCard.
+//    Uses navigationTitle("Cravings") and refreshable.
+//
 //  Created by ...
 //  Updated by ChatGPT on ...
 //
@@ -10,7 +14,7 @@ import SwiftUI
 
 public struct CravingListView: View {
     @StateObject private var viewModel: CravingListViewModel
-
+    
     public init(viewModel: CravingListViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
     }
@@ -18,7 +22,7 @@ public struct CravingListView: View {
     public var body: some View {
         NavigationView {
             ZStack {
-                // 1) The main list
+                // Main list
                 List {
                     ForEach(viewModel.cravings, id: \.id) { craving in
                         CravingCard(craving: craving)
@@ -35,12 +39,10 @@ public struct CravingListView: View {
                     await viewModel.fetchCravings()
                 }
                 .onAppear {
-                    Task {
-                        await viewModel.fetchCravings()
-                    }
+                    Task { await viewModel.fetchCravings() }
                 }
                 
-                // 2) Optional loading overlay
+                // Loading overlay
                 if viewModel.isLoading {
                     ProgressView("Loading...")
                         .padding(40)
@@ -48,9 +50,14 @@ public struct CravingListView: View {
                         .cornerRadius(12)
                 }
             }
+            .alert(item: $viewModel.alertInfo) { info in
+                Alert(title: Text(info.title),
+                      message: Text(info.message),
+                      dismissButton: .default(Text("OK")))
+            }
         }
     }
-
+    
     private func deleteCraving(at offsets: IndexSet) {
         offsets.forEach { index in
             let craving = viewModel.cravings[index]
@@ -61,7 +68,7 @@ public struct CravingListView: View {
     }
 }
 
-// MARK: - PREVIEW
+// MARK: - Preview
 #if DEBUG
 struct CravingListView_Previews: PreviewProvider {
     static var previews: some View {
@@ -74,20 +81,16 @@ struct CravingListView_Previews: PreviewProvider {
     }
 }
 
-// MARK: - Mock Classes for Preview
-
+// Example mocks
 fileprivate class MockFetchCravingsUseCase: FetchCravingsUseCaseProtocol {
     func execute() async throws -> [CravingEntity] {
         [
-            CravingEntity(text: "Mock Craving #1"),
-            CravingEntity(text: "Mock Craving #2")
+            CravingEntity(text: "Sample Craving #1"),
+            CravingEntity(text: "Sample Craving #2")
         ]
     }
 }
-
 fileprivate class MockArchiveCravingUseCase: ArchiveCravingUseCaseProtocol {
-    func execute(_ craving: CravingEntity) async throws {
-        // No-op
-    }
+    func execute(_ craving: CravingEntity) async throws {}
 }
 #endif
