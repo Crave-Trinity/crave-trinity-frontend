@@ -1,13 +1,16 @@
-
 //
 //  CRAVETabView.swift
 //  CravePhone
 //
-//  Description:
-//    A TabView that references the AppCoordinator's factory methods.
+//  Directory: CravePhone/PhoneApp/Navigation/CRAVETabView.swift
 //
-//  Created by ...
-//  Updated by ChatGPT on ...
+//  Description:
+//    A TabView that references the AppCoordinator's factory methods to create screens.
+//    Demonstrates Inversion of Control: the coordinator handles building each view.
+//    This adheres to MVVM + Coordinator pattern for navigation.
+//
+//  Created by <Your Name> on <date>.
+//  Updated by ChatGPT on <today's date>.
 //
 
 import SwiftUI
@@ -32,9 +35,11 @@ public struct CRAVETabView: View {
                     Label("Cravings", systemImage: "list.bullet")
                 }
             
-            // Possibly a 3rd tab for analytics:
+            // If you have an Analytics tab, uncomment below:
             // coordinator.makeAnalyticsView()
-            //     .tabItem { Label("Analytics", systemImage: "chart.bar") }
+            //     .tabItem {
+            //         Label("Analytics", systemImage: "chart.bar")
+            //     }
         }
     }
 }

@@ -1,8 +1,17 @@
-// CravingListView.swift
-// CravePhone
 //
-// Description: A simple list of cravings, each row is a CravingCard.
-// Uses navigationTitle("Cravings") and refreshable.
+//  CravingListView.swift
+//  CravePhone
+//
+//  Directory: CravePhone/Core/Presentation/Views/Craving/CravingListView.swift
+//
+//  Description:
+//    A simple list of cravings, each row is a CravingCard. Uses a ViewModel to fetch
+//    cravings, and refreshable for pull-to-refresh. Adheres to MVVM, SOLID, and
+//    Single Responsibility: displaying a list of CravingEntities.
+//
+//  Created by <Your Name> on <date>.
+//  Updated by ChatGPT on <today's date>.
+//
 
 import SwiftUI
 
@@ -16,6 +25,7 @@ public struct CravingListView: View {
     public var body: some View {
         NavigationView {
             ZStack {
+                // Main content
                 List {
                     ForEach(viewModel.cravings, id: \.id) { craving in
                         CravingCard(craving: craving)
@@ -35,6 +45,7 @@ public struct CravingListView: View {
                     Task { await viewModel.fetchCravings() }
                 }
                 
+                // Loading overlay
                 if viewModel.isLoading {
                     ProgressView("Loading...")
                         .padding(40)
@@ -42,10 +53,13 @@ public struct CravingListView: View {
                         .cornerRadius(12)
                 }
             }
+            // Alerts
             .alert(item: $viewModel.alertInfo) { info in
-                Alert(title: Text(info.title),
-                      message: Text(info.message),
-                      dismissButton: .default(Text("OK")))
+                Alert(
+                    title: Text(info.title),
+                    message: Text(info.message),
+                    dismissButton: .default(Text("OK"))
+                )
             }
         }
     }
@@ -61,6 +75,7 @@ public struct CravingListView: View {
 }
 
 #if DEBUG
+// MARK: - Preview & Mocks
 struct CravingListView_Previews: PreviewProvider {
     static var previews: some View {
         CravingListView(
@@ -80,6 +95,7 @@ fileprivate class MockFetchCravingsUseCase: FetchCravingsUseCaseProtocol {
         ]
     }
 }
+
 fileprivate class MockArchiveCravingUseCase: ArchiveCravingUseCaseProtocol {
     func execute(_ craving: CravingEntity) async throws {}
 }

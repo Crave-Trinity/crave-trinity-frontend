@@ -1,76 +1,69 @@
-// LogCravingView.swift
-// Core/Presentation/Views/Craving
-// Description: Displays UI for logging cravings, including a marquee text at the top.
-// Updated by ChatGPT
+//
+//  LogCravingView.swift
+//  CravePhone
+//
+//  Directory: CravePhone/Core/Presentation/Views/Craving/LogCravingView.swift
+//
+//  Description:
+//    An ultra‑minimal SwiftUI view for logging cravings. Binds to LogCravingViewModel and uses our
+//    unified CraveTheme for consistency. The async call is wrapped in a Task to ensure proper concurrency.
+//
 
 import SwiftUI
 
-/// LogCravingView displays the UI for logging cravings, including a marquee text at the top.
 struct LogCravingView: View {
     @ObservedObject var viewModel: LogCravingViewModel
-    @FocusState private var isFocused: Bool
-
+    
     var body: some View {
-        VStack(spacing: CRAVEDesignSystem.Layout.mediumSpacing) {
-            // Infinite scrolling marquee text
-            InfiniteMarqueeTextView(lines: ["Welcome to Crave!", "Stay strong!", "Keep going!"])
-                .padding(.top, 10)
-
-            // TextField for craving input with custom placeholder
-            ZStack(alignment: .leading) {
-                // Placeholder Text
-                if viewModel.cravingText.isEmpty {
-                    Text("Enter craving details...")
-                        .foregroundColor(CRAVEDesignSystem.Colors.placeholderPrimary)
-                        .font(CRAVEDesignSystem.Typography.body)
-                        .padding(.horizontal, CRAVEDesignSystem.Layout.standardPadding)
-                        .padding(.top, 10)
-                }
+        NavigationView {
+            ZStack {
+                CraveTheme.Colors.primaryBackground
+                    .ignoresSafeArea()
                 
-                // Actual TextField
-                TextField("", text: $viewModel.cravingText)
-                    .focused($isFocused)
-                    .padding()
-                    .background(CRAVEDesignSystem.Colors.cardBackground)
-                    .cornerRadius(CRAVEDesignSystem.Layout.cornerRadius)
-                    .foregroundColor(CRAVEDesignSystem.Colors.textPrimary)
-                    .font(CRAVEDesignSystem.Typography.body)
-                    .padding(.horizontal, CRAVEDesignSystem.Layout.standardPadding)
-            }
-
-            // Log Craving Button
-            Button(action: {
-                Task {
-                    await viewModel.logCraving()
+                VStack(alignment: .leading, spacing: CraveTheme.Spacing.medium) {
+                    Text("What's on your mind?")
+                        .font(CraveTheme.Typography.heading)
+                        .foregroundColor(CraveTheme.Colors.primaryText)
+                    
+                    // Custom text editor for the craving description.
+                    CraveTextEditor(text: $viewModel.cravingDescription)
+                        .frame(height: 120)
+                        .background(CraveTheme.Colors.textFieldBackground)
+                        .cornerRadius(8)
+                    
+                    Text("Craving Intensity: \(Int(viewModel.cravingIntensity))")
+                        .font(CraveTheme.Typography.subheading)
+                        .foregroundColor(CraveTheme.Colors.secondaryText)
+                    
+                    // Minimal slider for intensity.
+                    CravingIntensitySlider(value: $viewModel.cravingIntensity)
+                    
+                    Text("Any triggers?")
+                        .font(CraveTheme.Typography.subheading)
+                        .foregroundColor(CraveTheme.Colors.primaryText)
+                    
+                    // Custom text editor for triggers.
+                    CraveTextEditor(text: $viewModel.cravingTrigger)
+                        .frame(height: 80)
+                        .background(CraveTheme.Colors.textFieldBackground)
+                        .cornerRadius(8)
+                    
+                    // Minimal button wrapped in a Task to support async calls.
+                    CraveMinimalButton(action: {
+                        Task {
+                            await viewModel.logCraving()
+                        }
+                    }) {
+                        Text("Log Craving")
+                            .font(CraveTheme.Typography.body)
+                    }
+                    
+                    Spacer()
                 }
-            }) {
-                Text("Log Craving")
-                    .font(CRAVEDesignSystem.Typography.buttonLarge)
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(CRAVEDesignSystem.Colors.cravingOrangeGradient)
-                    .cornerRadius(CRAVEDesignSystem.Layout.cornerRadius)
-                    .foregroundColor(CRAVEDesignSystem.Colors.textOnPrimary)
+                .padding()
             }
-
-            // Displaying loading state or error message
-            if viewModel.isLoading {
-                ProgressView()
-                    .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                    .padding(.top, CRAVEDesignSystem.Layout.smallSpacing)
-            }
-
-            if let alertInfo = viewModel.alertInfo {
-                Text(alertInfo.message)
-                    .foregroundColor(CRAVEDesignSystem.Colors.danger)
-                    .font(CRAVEDesignSystem.Typography.body)
-            }
-
-            Spacer()
+            .navigationBarTitle("Log Your Craving", displayMode: .inline)
         }
-        .padding(CRAVEDesignSystem.Layout.standardPadding)
-        .background(CRAVEDesignSystem.Colors.background)
-        .cornerRadius(CRAVEDesignSystem.Layout.cornerRadius)
-        .shadow(radius: 10)
+        .navigationViewStyle(StackNavigationViewStyle())
     }
 }

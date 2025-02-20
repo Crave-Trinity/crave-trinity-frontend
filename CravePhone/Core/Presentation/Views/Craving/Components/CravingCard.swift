@@ -2,8 +2,14 @@
 //  CravingCard.swift
 //  CravePhone
 //
-//  Created by ...
-//  Updated by ChatGPT on ...
+//  Directory: CravePhone/Core/Presentation/Views/Craving/Components/CravingCard.swift
+//
+//  Description:
+//    A minimal card view displaying a CravingEntity. Utilizes the unified CraveTheme
+//    for styling. Follows MVVM and SOLID (single responsibility: show one craving).
+//
+//  Created by <Your Name> on <date>.
+//  Updated by ChatGPT on <today's date>.
 //
 
 import SwiftUI
@@ -16,29 +22,29 @@ public struct CravingCard: View {
     }
     
     public var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: CraveTheme.Spacing.small) {
             Text(craving.text)
-                .font(CRAVEDesignSystem.Typography.heading)
+                .font(CraveTheme.Typography.heading)
                 .lineLimit(2)
-                .foregroundColor(CRAVEDesignSystem.Colors.textPrimary)
+                .foregroundColor(CraveTheme.Colors.primaryText)
             
             HStack {
                 Text(craving.timestamp.formatted(date: .abbreviated, time: .shortened))
-                    .font(CRAVEDesignSystem.Typography.subheading)
-                    .foregroundColor(CRAVEDesignSystem.Colors.textSecondary)
+                    .font(CraveTheme.Typography.subheading)
+                    .foregroundColor(CraveTheme.Colors.secondaryText)
                 
                 Spacer()
                 
                 if craving.isArchived {
                     Label("Archived", systemImage: "archivebox")
-                        .font(CRAVEDesignSystem.Typography.subheading)
-                        .foregroundColor(CRAVEDesignSystem.Colors.textSecondary)
+                        .font(CraveTheme.Typography.subheading)
+                        .foregroundColor(CraveTheme.Colors.secondaryText)
                 }
             }
         }
-        .padding()
-        .background(CRAVEDesignSystem.Colors.cardBackground)
-        .cornerRadius(CRAVEDesignSystem.Layout.cornerRadius)
-        .shadow(color: .black.opacity(0.15), radius: 2, x: 0, y: 1)
+        .padding(CraveTheme.Spacing.medium)
+        .background(CraveTheme.Colors.cardBackground)
+        .cornerRadius(CraveTheme.Layout.cornerRadius)
+        .shadow(color: Color.black.opacity(0.15), radius: 2, x: 0, y: 1)
     }
 }

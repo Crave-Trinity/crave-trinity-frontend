@@ -138,8 +138,6 @@
 				Core/Domain/UseCases/Analytics/AnalyticsProcessor.swift = (ios, );
 				Core/Domain/UseCases/Analytics/PatternDetectionService.swift = (ios, );
 				Core/Domain/UseCases/Craving/CravingAnalyzer.swift = (ios, );
-				Core/Presentation/Common/DesignSystem/CRAVEDesignSystem.swift = (ios, );
-				Core/Presentation/Common/DesignSystem/Components/BeveledButton.swift = (ios, );
 				Core/Presentation/Common/DesignSystem/Components/CraveTextEditor.swift = (ios, );
 				Core/Presentation/Common/DesignSystem/CraveTheme.swift = (ios, );
 				"Core/Presentation/Common/Extensions/Date+Extensions.swift" = (ios, );
