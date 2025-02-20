@@ -1,14 +1,8 @@
+// CravingListView.swift
+// CravePhone
 //
-//  CravingListView.swift
-//  CravePhone
-//
-//  Description:
-//    A simple list of cravings, each row is a CravingCard.
-//    Uses navigationTitle("Cravings") and refreshable.
-//
-//  Created by ...
-//  Updated by ChatGPT on ...
-//
+// Description: A simple list of cravings, each row is a CravingCard.
+// Uses navigationTitle("Cravings") and refreshable.
 
 import SwiftUI
 
@@ -22,7 +16,6 @@ public struct CravingListView: View {
     public var body: some View {
         NavigationView {
             ZStack {
-                // Main list
                 List {
                     ForEach(viewModel.cravings, id: \.id) { craving in
                         CravingCard(craving: craving)
@@ -42,7 +35,6 @@ public struct CravingListView: View {
                     Task { await viewModel.fetchCravings() }
                 }
                 
-                // Loading overlay
                 if viewModel.isLoading {
                     ProgressView("Loading...")
                         .padding(40)
@@ -68,7 +60,6 @@ public struct CravingListView: View {
     }
 }
 
-// MARK: - Preview
 #if DEBUG
 struct CravingListView_Previews: PreviewProvider {
     static var previews: some View {
@@ -81,7 +72,6 @@ struct CravingListView_Previews: PreviewProvider {
     }
 }
 
-// Example mocks
 fileprivate class MockFetchCravingsUseCase: FetchCravingsUseCaseProtocol {
     func execute() async throws -> [CravingEntity] {
         [
