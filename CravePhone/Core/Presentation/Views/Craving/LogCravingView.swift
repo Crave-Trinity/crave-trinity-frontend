@@ -3,15 +3,19 @@
 //  CravePhone
 //
 //  Description:
-//    Displays a dark background, gradient button, and “TRIGGER” style
-//    to match the watch’s design. It uses LogCravingViewModel to handle
-//    logging, and shows an alert if there's an error.
+//    An iOS phone view that mimics the watch layout. The only "Log Craving"
+//    text now appears inside the text editor placeholder.
+//
+//  Created by John H Jung on <date>.
+//  Updated by ChatGPT on <today's date>.
 //
 
 import SwiftUI
 
 @MainActor
 public struct LogCravingView: View {
+    
+    // The ViewModel that holds user input and handles "log" action
     @ObservedObject var viewModel: LogCravingViewModel
     
     public init(viewModel: LogCravingViewModel) {
@@ -21,88 +25,89 @@ public struct LogCravingView: View {
     public var body: some View {
         NavigationView {
             ZStack {
-                // Match the watch’s dark background
-                Color.black
+                // Main black background
+                CRAVEDesignSystem.Colors.background
                     .edgesIgnoringSafeArea(.all)
                 
-                VStack(spacing: 16) {
+                VStack(spacing: CRAVEDesignSystem.Layout.mediumSpacing) {
                     
-                    // 1) TRIGGER Title
+                    // 1) TRIGGER Title at top
                     Text("TRIGGER")
-                        .font(.system(size: 20, weight: .bold))
-                        .foregroundColor(.white)
+                        .font(CRAVEDesignSystem.Typography.heading)
+                        .foregroundColor(CRAVEDesignSystem.Colors.textPrimary)
+                        .padding(.top, CRAVEDesignSystem.Layout.standardPadding)
                     
-                    // 2) Top triggers: Hungry / Angry
+                    // 2) Top triggers: "Hungry" / "Angry"
                     HStack {
                         Text("Hungry")
                         Spacer()
                         Text("Angry")
                     }
-                    .font(.system(size: 16, weight: .semibold))
-                    .foregroundColor(.white.opacity(0.85))
-                    .padding(.horizontal, 16)
+                    .font(CRAVEDesignSystem.Typography.triggerLabel)
+                    .foregroundColor(CRAVEDesignSystem.Colors.textPrimary.opacity(0.85))
+                    .padding(.horizontal, CRAVEDesignSystem.Layout.standardPadding)
                     
-                    // 3) Text editor
-                    CraveTextEditor(
-                        text: $viewModel.cravingText,
-                        primaryPlaceholder: "Log Craving",
-                        secondaryPlaceholder: "200 chars",  // Optional: replicate watch style
-                        characterLimit: 280
-                    )
-                    .frame(minHeight: 120)
-                    .padding()
-                    .background(Color.white.opacity(0.08))
-                    .cornerRadius(8)
-                    .foregroundColor(.white)
-                    .padding(.horizontal, 16)
+                    // 3) Text block: CraveTextEditor with placeholders
+                    ZStack {
+                        CRAVEDesignSystem.Colors.cardBackground
+                            .cornerRadius(CRAVEDesignSystem.Layout.cornerRadius)
+                        
+                        CraveTextEditor(
+                            text: $viewModel.cravingText,
+                            characterLimit: 280
+                        )
+                        .padding(CRAVEDesignSystem.Layout.smallSpacing)
+                    }
+                    .padding(.horizontal, CRAVEDesignSystem.Layout.standardPadding)
                     
-                    // 4) Bottom triggers: Lonely / Tired
+                    // 4) Bottom triggers: "Lonely" / "Tired"
                     HStack {
                         Text("Lonely")
                         Spacer()
                         Text("Tired")
                     }
-                    .font(.system(size: 16, weight: .semibold))
-                    .foregroundColor(.white.opacity(0.85))
-                    .padding(.horizontal, 16)
+                    .font(CRAVEDesignSystem.Typography.triggerLabel)
+                    .foregroundColor(CRAVEDesignSystem.Colors.textPrimary.opacity(0.85))
+                    .padding(.horizontal, CRAVEDesignSystem.Layout.standardPadding)
                     
-                    // 5) Gradient “Log” Button
-                    Button(action: {
-                        Task {
-                            await viewModel.logCraving()
+                    // 5) "Log" button
+                    CraveButton(
+                        title: "Log",
+                        action: {
+                            Task {
+                                await viewModel.logCraving()
+                            }
                         }
-                    }) {
-                        Text("Log")
-                            .font(.system(size: 16, weight: .semibold))
-                            .foregroundColor(.white)
-                            .frame(maxWidth: .infinity, minHeight: 44)
-                            .background(premiumBlueGradient)
-                            .cornerRadius(8)
-                    }
-                    .buttonStyle(.plain)
-                    .padding(.horizontal, 16)
+                    )
+                    .frame(minHeight: 50)
+                    .padding(.horizontal, CRAVEDesignSystem.Layout.standardPadding)
                     .disabled(viewModel.cravingText.isEmpty)
+                    
+                    Spacer()
                 }
-                .padding(.vertical, 16)
+                .padding(.vertical, CRAVEDesignSystem.Layout.standardPadding)
             }
-            .navigationTitle("")            // Hide default nav title
-            .navigationBarHidden(true)      // So it’s more “watch-like”
+            .navigationTitle("")
+            .navigationBarHidden(true)
+            // Show alert if there's an error
             .alert("Error",
                    isPresented: $viewModel.showingAlert,
-                   actions: { Button("OK", role: .cancel) {} },
-                   message: { Text(viewModel.alertMessage) }
+                   actions: {
+                       Button("OK", role: .cancel) {}
+                   },
+                   message: {
+                       Text(viewModel.alertMessage)
+                   }
             )
         }
     }
 }
 
-// MARK: - Premium Blue Gradient
-fileprivate let premiumBlueGradient = LinearGradient(
-    gradient: Gradient(colors: [
-        Color(hue: 0.58, saturation: 0.8, brightness: 0.7),
-        Color(hue: 0.58, saturation: 0.9, brightness: 0.4)
-    ]),
-    startPoint: .top,
-    endPoint: .bottom
-)
-
+// Example preview usage
+struct LogCravingView_Previews: PreviewProvider {
+    static var previews: some View {
+        LogCravingView(
+            viewModel: LogCravingViewModel(addCravingUseCase: DummyAddCravingUseCase())
+        )
+    }
+}

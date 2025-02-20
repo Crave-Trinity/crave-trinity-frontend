@@ -133,6 +133,7 @@
 				Core/Domain/Interfaces/Repositories/CravingRepository.swift = (ios, );
 				Core/Domain/Interfaces/UseCases/AnalyticsUseCases.swift = (ios, );
 				Core/Domain/Interfaces/UseCases/CravingUseCases.swift = (ios, );
+				Core/Domain/Interfaces/UseCases/DummyAddCravingUseCase.swift = (ios, );
 				Core/Domain/UseCases/Analytics/AnalyticsAggregator.swift = (ios, );
 				Core/Domain/UseCases/Analytics/AnalyticsProcessor.swift = (ios, );
 				Core/Domain/UseCases/Analytics/PatternDetectionService.swift = (ios, );

@@ -3,58 +3,97 @@
 //  CravePhone
 //
 //  Description:
-//    A UI component representing a text editor styled using CRAVEDesignSystem.
-//    Handles character limits and placeholder display.
-//    Created by John H Jung on 2/12/25.
-//    Updated by ChatGPT on <today’s date> to remove duplicate declarations.
+//    A custom TextEditor with a centered, watch-inspired placeholder.
+//    Shows placeholders in this order:
+//      1) What are you craving?
+//      2) Why?
+//      3) Log Craving (gradient)
+//      4) With who?
+//      5) Where?
+//
+//  Created by John H Jung on <date>.
+//  Updated by ChatGPT on <today's date>.
 //
 
 import SwiftUI
 
+/// Helper view for applying a gradient fill to text on iOS 15+.
+/// (On iOS 16+, you could do `.foregroundStyle(gradient)` directly.)
+public struct GradientText: View {
+    let text: String
+    let font: Font
+    let gradient: LinearGradient
+    
+    public var body: some View {
+        Text(text)
+            .font(font)
+            .overlay {
+                gradient
+                    .mask(
+                        Text(text)
+                            .font(font)
+                    )
+            }
+    }
+}
+
 public struct CraveTextEditor: View {
-    // Binding to the text content.
+    // The user-entered text
     @Binding var text: String
     
-    // Primary and secondary placeholders shown when text is empty.
-    let primaryPlaceholder: String
-    let secondaryPlaceholder: String
-    
-    // Character limit for the text input.
+    // Character limit for the text
     let characterLimit: Int
     
-    // Focus state to manage keyboard interaction.
+    // Whether the TextEditor is currently focused
     @FocusState private var isFocused: Bool
     
+    // MARK: - Initializer
     public init(
         text: Binding<String>,
-        primaryPlaceholder: String,
-        secondaryPlaceholder: String,
         characterLimit: Int
     ) {
         self._text = text
-        self.primaryPlaceholder = primaryPlaceholder
-        self.secondaryPlaceholder = secondaryPlaceholder
         self.characterLimit = characterLimit
     }
     
     public var body: some View {
         ZStack(alignment: .topLeading) {
-            // Display placeholders when the text is empty.
+            
+            // Show this VStack only if text is empty
             if text.isEmpty {
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(primaryPlaceholder)
-                        .foregroundColor(CRAVEDesignSystem.Colors.placeholderPrimary)
-                        .font(CRAVEDesignSystem.Typography.subheading)
-                    Text(secondaryPlaceholder)
-                        .foregroundColor(CRAVEDesignSystem.Colors.placeholderSecondary)
-                        .font(CRAVEDesignSystem.Typography.placeholder)
+                VStack(spacing: 8) {
+                    // 1) What are you craving?
+                    Text("What are you craving?")
+                        .font(.system(size: 16, weight: .semibold))
+                    
+                    // 2) Why?
+                    Text("Why?")
+                        .font(.system(size: 16, weight: .semibold))
+                    
+                    // 3) Log Craving (gradient)
+                    GradientText(
+                        text: "Log Craving",
+                        font: CRAVEDesignSystem.Typography.largestCraving,
+                        gradient: CRAVEDesignSystem.Colors.cravingOrangeGradient
+                    )
+                    
+                    // 4) With who?
+                    Text("With who?")
+                        .font(.system(size: 16, weight: .semibold))
+                    
+                    // 5) Where?
+                    Text("Where?")
+                        .font(.system(size: 16, weight: .semibold))
                 }
-                .padding(.leading, 4)
+                .multilineTextAlignment(.center)
+                .foregroundColor(CRAVEDesignSystem.Colors.placeholderSecondary)
                 .padding(.top, 8)
+                .frame(maxWidth: .infinity) // Center horizontally
             }
             
-            // Use the onChange handler based on iOS version.
+            // The actual TextEditor
             if #available(iOS 18, *) {
+                // iOS 18+ allows .onChange(of: text, initial: true)
                 TextEditor(text: $text)
                     .focused($isFocused)
                     .font(CRAVEDesignSystem.Typography.body)
@@ -66,6 +105,7 @@ public struct CraveTextEditor: View {
                         }
                     }
             } else {
+                // For iOS 15 - 17
                 TextEditor(text: $text)
                     .focused($isFocused)
                     .font(CRAVEDesignSystem.Typography.body)
@@ -79,8 +119,22 @@ public struct CraveTextEditor: View {
             }
         }
         .frame(minHeight: CRAVEDesignSystem.Layout.textEditorMinHeight)
+        // Tapping inside the editor should focus it
         .onTapGesture {
             isFocused = true
+        }
+        // Hide the default scroll background on iOS 16+
+        .modifier(ScrollBackgroundClearModifier())
+    }
+}
+
+// MARK: - iOS 16 Scroll Background Clear
+struct ScrollBackgroundClearModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        if #available(iOS 16.0, *) {
+            content.scrollContentBackground(.hidden)
+        } else {
+            content
         }
     }
 }

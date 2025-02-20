@@ -4,10 +4,11 @@
 //
 //  Description:
 //    Manages the craving log flow on the phone side.
-//    Uses the AddCravingUseCase to validate and log a new craving,
-//    and handles errors by showing alerts.
+//    Uses an AddCravingUseCaseProtocol to validate and log a new craving,
+//    and shows an alert if there's an error.
 //
-
+//  Created by John H Jung on 2/12/25.
+ 
 import SwiftUI
 import Combine
 
@@ -42,3 +43,4 @@ public final class LogCravingViewModel: ObservableObject {
         }
     }
 }
+
