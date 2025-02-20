@@ -1,20 +1,22 @@
+//==============================================================
+//  File E: VerticalToggleBar.swift (Optional)
+//  Description:
+//    A single vertical bar that toggles between two "modes" (e.g. Intensity
+//    and Resistance). Each mode has a separate 0..10 value. The user can
+//    tap the label at the bottom to switch modes.
 //
-//  VerticalToggleBar.swift
-//  CraveWatch
-//
-//  Created by [Your Name] on [Date].
-//  Description: A single vertical bar that toggles between "Intensity" and "Resistance" modes.
-//               - No 0 or 10 labels (minimal design).
-//               - The current value (0..10) appears in the middle of the fill, starting at 5.
-//               - Tap the bar to focus for Digital Crown input.
-//               - Tap the label at the bottom to toggle the mode.
-//
+//  Usage:
+//    - Insert <VerticalToggleBar> in your SwiftUI layout if you want a
+//      quick toggle bar that can represent two distinct numeric values.
+//    - If not needed, remove this file entirely.
+//==============================================================
 
 import SwiftUI
+import WatchKit
 
 struct VerticalToggleBar: View {
     
-    // The bar can be in one of two modes:
+    // The bar can be in one of two modes
     enum Mode: String {
         case intensity = "Intensity"
         case resistance = "Resistance"
@@ -23,11 +25,11 @@ struct VerticalToggleBar: View {
     // Current mode
     @State private var mode: Mode = .intensity
     
-    // We store separate values for each mode (0..10)
+    // Separate values for each mode
     @State private var intensityValue: Int = 5
     @State private var resistanceValue: Int = 5
     
-    // For Digital Crown rotation
+    // For Digital Crown rotation (0..10)
     @State private var crownValue: Double = 5
     
     // Dimensions
@@ -48,7 +50,7 @@ struct VerticalToggleBar: View {
                     .frame(width: barWidth, height: fillHeight())
                     .animation(.easeInOut, value: currentValue())
                 
-                // The current numeric value in the middle of the fill
+                // Numeric label in the middle of the fill
                 Text("\(currentValue())")
                     .font(.caption2)
                     .fontWeight(.bold)
@@ -56,7 +58,6 @@ struct VerticalToggleBar: View {
                     .offset(y: labelOffset())
                     .animation(.easeInOut, value: currentValue())
             }
-            // Make the bar focusable for Digital Crown
             .focusable(true)
             .digitalCrownRotation(
                 $crownValue,
@@ -79,7 +80,7 @@ struct VerticalToggleBar: View {
                 }
             }
             
-            // Tap the label at the bottom to toggle modes
+            // Tap the label to toggle modes
             Text(mode.rawValue)
                 .font(.caption2)
                 .foregroundColor(.gray)
@@ -88,41 +89,39 @@ struct VerticalToggleBar: View {
                 }
         }
         .onAppear {
-            // Ensure the crownValue matches the starting mode's value
+            // Match crownValue to whichever mode is active
             crownValue = Double(currentValue())
         }
     }
     
     /// Returns the integer value of the currently active mode
     private func currentValue() -> Int {
-        mode == .intensity ? intensityValue : resistanceValue
+        (mode == .intensity) ? intensityValue : resistanceValue
     }
     
-    /// The fraction of fill from 0..1
+    /// Fraction of fill from 0..1
     private func fillFraction() -> CGFloat {
         CGFloat(currentValue()) / 10.0
     }
     
-    /// The fill height (0..barHeight)
+    /// The fill height in points
     private func fillHeight() -> CGFloat {
-        fillFraction() * barHeight
+        barHeight * fillFraction()
     }
     
-    /// Position the numeric label in the middle of the fill
+    /// Position the label in the middle of the fill
     private func labelOffset() -> CGFloat {
         let halfFill = fillHeight() * 0.5
         // alignment is .bottom => offset=0 is the bottom
         return halfFill - (barHeight / 2)
     }
     
-    /// Toggle between Intensity and Resistance modes
+    /// Toggle between Intensity and Resistance
     private func toggleMode() {
-        if mode == .intensity {
-            mode = .resistance
-        } else {
-            mode = .intensity
-        }
+        mode = (mode == .intensity) ? .resistance : .intensity
         crownValue = Double(currentValue())
         WatchHapticManager.shared.play(.selection)
     }
 }
+
+

@@ -2,11 +2,11 @@
 //  CravingLogViewModel.swift
 //  CraveWatch
 //
-//  Created by [Your Name] on [Date].
-//  Description: A ViewModel for watch-based craving logging.
-//               Validates user input, creates a local SwiftData entity,
-//               sends it to iPhone, and resets UI on success.
+//  Description:
+//    A ViewModel for watch-based craving logging. It validates user input,
+//    creates a SwiftData entity, sends it to the phone, and resets UI on success.
 //
+
 
 import Foundation
 import SwiftData
@@ -16,39 +16,70 @@ import Combine
 final class CravingLogViewModel: ObservableObject {
     
     // MARK: - Published UI State
-    @Published var cravingDescription: String = ""
+    
+    /// The text the user enters describing the craving.
+    @Published var cravingText: String = ""
+    
+    /// The user-selected intensity (e.g., 1..10).
     @Published var intensity: Int = 5
+    
+    /// Controls whether a success confirmation is displayed.
     @Published var showConfirmation: Bool = false
+    
+    /// Stores an optional error message if validation fails.
     @Published var errorMessage: String? = nil
     
     // MARK: - Dependencies
+    
+    /// Service for sending data to the phone (WatchConnectivity).
     private let connectivityService: WatchConnectivityService
+    
+    // MARK: - Initialization
     
     init(connectivityService: WatchConnectivityService) {
         self.connectivityService = connectivityService
     }
     
     // MARK: - Public Methods
+    
+    /// Logs a craving by creating a `WatchCravingEntity` in SwiftData
+    /// and sending it to the phone.
+    ///
+    /// - Parameter context: The SwiftData `ModelContext` for insertion.
     func logCraving(context: ModelContext) {
-        let trimmed = cravingDescription.trimmingCharacters(in: .whitespacesAndNewlines)
+        // 1) Trim whitespace
+        let trimmedText = cravingText.trimmingCharacters(in: .whitespacesAndNewlines)
         
-        guard !trimmed.isEmpty else {
+        // 2) Validate that the user actually typed something
+        guard !trimmedText.isEmpty else {
             errorMessage = "Please enter a craving description."
             return
         }
         
-        let newCraving = WatchCravingEntity(text: trimmed, intensity: intensity)
+        // 3) Create a new SwiftData entity with current date/time
+        let newCraving = WatchCravingEntity(
+            text: trimmedText,
+            intensity: intensity,
+            timestamp: Date()
+        )
+        
+        // 4) Insert into SwiftData
         context.insert(newCraving)
         
+        // 5) Send the new craving to the phone
         connectivityService.sendCravingToPhone(craving: newCraving)
         
-        // Reset UI state
-        cravingDescription = ""
+        // 6) Reset UI state
+        cravingText = ""
         intensity = 5
         errorMessage = nil
         showConfirmation = true
+        
+        // 7) Optional haptic feedback on success
+        WatchHapticManager.shared.play(.success)
     }
     
+    /// Dismisses any error message by setting it to nil.
     func dismissError() {
         errorMessage = nil
     }

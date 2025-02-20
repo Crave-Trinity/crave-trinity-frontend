@@ -1,9 +1,14 @@
+//==============================================================
+//  File B: WatchConnectivityService.swift
+//  Description:
+//    Manages WCSession to send messages from the watch to the iPhone.
 //
-//  WatchConnectivityService.swift
-//  CraveWatch
-//
-//  Created by [Your Name] on [Date].
-//  Description: Manages WCSession to send messages to the iPhone.
+//  Usage:
+//    1. Create an instance (e.g., @StateObject var connectivityService = WatchConnectivityService()).
+//    2. Call sendCravingToPhone(craving:) to transmit a new craving.
+//    3. The iPhone side must implement WCSessionDelegate to handle incoming messages.
+//==============================================================
+
 import Foundation
 import WatchConnectivity
 
@@ -13,6 +18,7 @@ class WatchConnectivityService: NSObject, ObservableObject, WCSessionDelegate {
 
     override init() {
         super.init()
+        // Ensure WatchConnectivity is supported
         if WCSession.isSupported() {
             session = WCSession.default
             session?.delegate = self
@@ -20,18 +26,18 @@ class WatchConnectivityService: NSObject, ObservableObject, WCSessionDelegate {
         }
     }
     
-    /// Sends a message dictionary to the iPhone.
+    /// Sends a dictionary to the iPhone, if reachable.
     func sendMessageToPhone(_ message: [String: Any]) {
         guard let session = session, session.isReachable else {
-            print("Phone not reachable or session not available.")
+            print("Phone not reachable or WCSession not available.")
             return
         }
         session.sendMessage(message, replyHandler: nil) { error in
-            print("Error sending message: \(error.localizedDescription)")
+            print("Error sending message to phone: \(error.localizedDescription)")
         }
     }
     
-    /// Convenience method to send a craving.
+    /// Convenience method to send a WatchCravingEntity to the phone.
     func sendCravingToPhone(craving: WatchCravingEntity) {
         let message: [String: Any] = [
             "action": "logCraving",
@@ -49,9 +55,9 @@ class WatchConnectivityService: NSObject, ObservableObject, WCSessionDelegate {
                              error: Error?) {
         Task { @MainActor in
             if let error = error {
-                print("Session activation error: \(error.localizedDescription)")
+                print("WCSession activation error: \(error.localizedDescription)")
             } else {
-                print("WCSession activated, state: \(activationState.rawValue)")
+                print("WCSession activated with state: \(activationState.rawValue)")
             }
         }
     }
@@ -62,3 +68,4 @@ class WatchConnectivityService: NSObject, ObservableObject, WCSessionDelegate {
         }
     }
 }
+

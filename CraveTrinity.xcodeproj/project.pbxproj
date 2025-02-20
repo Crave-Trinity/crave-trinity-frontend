@@ -121,7 +121,7 @@
 				Core/Data/Repositories/CravingRepositoryImpl.swift = (ios, );
 				Core/Data/Services/AnalyticsService.swift = (ios, );
 				Core/Data/Services/EventTrackingService.swift = (ios, );
-				Core/Data/Services/PhoneWatchConnectivityService.swift = (ios, );
+				Core/Data/Services/PhoneConnectivityService.swift = (ios, );
 				Core/Domain/Entities/Analytics/AnalyticsEntity.swift = (ios, );
 				Core/Domain/Entities/Analytics/AnalyticsEvent.swift = (ios, );
 				Core/Domain/Entities/Analytics/AnalyticsManager.swift = (ios, );
@@ -221,6 +221,7 @@
 				Core/Presentation/ViewModels/CravingLogViewModel.swift = (watchos, );
 				Core/Presentation/Views/Components/VerticalToggleBar.swift = (watchos, );
 				Core/Presentation/Views/CravingLogView.swift = (watchos, );
+				Core/Services/WatchConnectivityService.swift = (watchos, );
 				Core/Services/WatchHapticManager.swift = (watchos, );
 			};
 			target = 28A3F8C82D65973300D8DE44 /* CraveWatch Watch App */;

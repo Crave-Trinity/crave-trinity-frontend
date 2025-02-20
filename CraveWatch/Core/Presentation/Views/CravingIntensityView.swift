@@ -1,7 +1,15 @@
+//==============================================================
+//  File F: CravingIntensityView.swift
+//  Description:
+//    A watchOS SwiftUI screen for adjusting two values, "Intensity"
+//    and "Resistance," each with a vertical slider. The user can
+//    tap "Done" to dismiss.
 //
-//  CravingIntensityView.swift
-//  CraveWatch
+//  Usage:
+//    - This is navigated to from CravingLogView if showAdjustScreen == true.
+//    - Binds to @State ints in the parent, so changes persist.
 //
+//==============================================================
 
 import SwiftUI
 import WatchKit
@@ -9,41 +17,52 @@ import WatchKit
 struct CravingIntensityView: View {
     @Environment(\.dismiss) private var dismiss
     
+    // Bound properties from CravingLogView
     @Binding var intensity: Int
     @Binding var resistance: Int
     
     var body: some View {
         NavigationStack {
             ZStack {
-                Color.black.edgesIgnoringSafeArea(.all)
+                // 1) Black background
+                Color.black
+                    .edgesIgnoringSafeArea(.all)
                 
+                // 2) Basic watch layout constants
                 let watchWidth = WKInterfaceDevice.current().screenBounds.width
                 let contentWidth = watchWidth * 0.80
                 let sliderHeight: CGFloat = 90
                 let buttonHeight: CGFloat = 28
                 
                 VStack(spacing: 10) {
-                    // Two sliders side by side
+                    
+                    // A) Two vertical sliders side by side
                     HStack(spacing: 24) {
+                        
+                        // Left slider block
                         VStack(spacing: 6) {
                             Text("Intensity")
                                 .font(.system(size: 15, weight: .semibold))
                                 .foregroundColor(.white)
                             
-                            // vertical slider from the previous final snippet
-                            VerticalIntensityBar(value: $intensity, barWidth: 4, barHeight: sliderHeight)
+                            VerticalIntensityBar(value: $intensity,
+                                                 barWidth: 4,
+                                                 barHeight: sliderHeight)
                         }
                         
+                        // Right slider block
                         VStack(spacing: 6) {
                             Text("Resistance")
                                 .font(.system(size: 15, weight: .semibold))
                                 .foregroundColor(.white)
                             
-                            VerticalIntensityBar(value: $resistance, barWidth: 4, barHeight: sliderHeight)
+                            VerticalIntensityBar(value: $resistance,
+                                                 barWidth: 4,
+                                                 barHeight: sliderHeight)
                         }
                     }
                     
-                    // Done button
+                    // B) Done button to dismiss
                     Button {
                         dismiss()
                     } label: {
@@ -62,7 +81,7 @@ struct CravingIntensityView: View {
             }
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarBackButtonHidden(true)
-            // Smaller custom back button top-left
+            // C) Smaller custom back button top-left
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button(action: { dismiss() }) {
@@ -86,12 +105,14 @@ struct CravingIntensityView: View {
     }
 }
 
-// Same premiumBlueGradient as in CravingLogView
+// MARK: - Shared gradient for the Done button
 fileprivate let premiumBlueGradient = LinearGradient(
     gradient: Gradient(colors: [
+        // Tweak to your brand colors if desired
         Color(hue: 0.58, saturation: 0.8, brightness: 0.7), // top
         Color(hue: 0.58, saturation: 0.9, brightness: 0.4)  // bottom
     ]),
     startPoint: .top,
     endPoint: .bottom
 )
+

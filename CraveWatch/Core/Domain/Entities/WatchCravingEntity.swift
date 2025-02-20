@@ -2,20 +2,26 @@
 //  WatchCravingEntity.swift
 //  CraveWatch
 //
+//  Description:
+//  SwiftData model for storing a single craving.
+//  Note: Currently SwiftData requires using a class and providing an initializer.
+//
 //  Created by [Your Name] on [Date].
-//  Description: A SwiftData model representing a craving on the watch side.
+//
+
 import Foundation
 import SwiftData
 
 @Model
-public class WatchCravingEntity {
-    public var text: String
-    public var intensity: Int
-    public var timestamp: Date
-    
-    public init(text: String, intensity: Int, timestamp: Date = Date()) {
+final class WatchCravingEntity {
+    var text: String      // The craving text
+    var intensity: Int    // E.g. 1...10
+    var timestamp: Date   // The date/time when logged
+
+    init(text: String, intensity: Int, timestamp: Date) {
         self.text = text
         self.intensity = intensity
         self.timestamp = timestamp
     }
 }
+
