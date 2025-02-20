@@ -1,5 +1,12 @@
+//
+//  AppCoordinator.swift
+//  CravePhone
+//
+//  Description:
+//    A simple coordinator that tracks which tab is selected
+//    and orchestrates navigation across tabs.
+//
 
-// AppCoordinator.swift
 import SwiftUI
 import Combine
 
@@ -16,4 +23,3 @@ public class AppCoordinator: ObservableObject {
         CRAVETabView(container: container)
     }
 }
-
