@@ -30,6 +30,7 @@ struct CravingIntensityView: View {
                                 .font(.system(size: 15, weight: .semibold))
                                 .foregroundColor(.white)
                             
+                            // vertical slider from the previous final snippet
                             VerticalIntensityBar(value: $intensity, barWidth: 4, barHeight: sliderHeight)
                         }
                         
@@ -42,7 +43,7 @@ struct CravingIntensityView: View {
                         }
                     }
                     
-                    // “Done” button with same 2-stop “premium” gradient
+                    // Done button
                     Button {
                         dismiss()
                     } label: {
@@ -85,7 +86,7 @@ struct CravingIntensityView: View {
     }
 }
 
-// Reuse the same gradient
+// Same premiumBlueGradient as in CravingLogView
 fileprivate let premiumBlueGradient = LinearGradient(
     gradient: Gradient(colors: [
         Color(hue: 0.58, saturation: 0.8, brightness: 0.7), // top
