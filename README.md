@@ -25,7 +25,7 @@
 📍 CRAVE has the potential to scale from simple B2C to aggregated population level data analytics 
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/The-Obstacle-Is-The-Way/crave-trinity/main/CravePhone/Resources/Images/high-vision-one-png.png" alt="CRAVE Vision" width="70%"/>
+    <img src="https://raw.githubusercontent.com/The-Obstacle-Is-The-Way/crave-trinity/main/CravePhone/Resources/Images/high-vision-one-png.png" alt="CRAVE Vision" width="65%"/>
 </p>
 
 ---
