@@ -86,6 +86,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Resources/Images/CraveyWatchDemo.gif,
+				"Resources/Images/high-vision-one-png.png",
 				"Resources/Images/high-vision-one.svg",
 				"Resources/Images/high-vision-two.svg",
 				Tests/AnalyticsTests/Data/AnalyticsAggregatorTests.swift,
