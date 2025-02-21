@@ -2,15 +2,13 @@
 //  CraveTheme.swift
 //  CravePhone
 //
-//  Directory: CravePhone/Core/Presentation/Common/DesignSystem/CraveTheme.swift
-//
 //  Description:
-//    A unified design system for CRAVE. This file centralizes colors, typography,
-//    spacing, and layout metrics to maintain consistency across the app.
-//    Adheres to SOLID and Clean Architecture principles, referencing one source of truth.
+//    A refined design system for CRAVE. Centralizes brand colors, typography,
+//    spacing, and layout metrics. Minimal but polished to Steve Jobs-level.
 //
-//  Created by <Your Name> on <date>.
-//  Updated by ChatGPT on <today's date>.
+//  Uncle Bob notes:
+//    - Single Responsibility: This struct is your one source of truth for design.
+//    - Open/Closed: Extend with new substructures (e.g., Animations) without modifying existing code.
 //
 
 import SwiftUI
@@ -19,39 +17,50 @@ public struct CraveTheme {
     
     // MARK: - Colors
     public struct Colors {
-        // Primary backgrounds
-        public static let primaryBackground = Color.black
-        public static let secondaryBackground = Color("SecondaryBackground")
-          // If you want a custom color, define "SecondaryBackground" in Assets.xcassets.
-
-        // Accents & text
-        public static let accent = Color.blue
+        /// A luxurious background gradient reminiscent of a sunrise, giving a hopeful vibe.
+        public static let primaryGradient = LinearGradient(
+            gradient: Gradient(colors: [Color(red: 0.05, green: 0.05, blue: 0.1),
+                                        Color(red: 0.1, green: 0.1, blue: 0.25)]),
+            startPoint: .top,
+            endPoint: .bottom
+        )
+        
+        /// For elevated cards and surfaces
+        public static let cardBackground = Color("CardBackground").opacity(0.8)
+        
+        /// Accent color across the app
+        public static let accent = Color.orange
+        
+        /// Button text color
         public static let buttonText = Color.white
+        
+        /// Primary text color
         public static let primaryText = Color.white
+        
+        /// Secondary text color
         public static let secondaryText = Color.gray
         
-        // Form elements
-        public static let textFieldBackground = Color(UIColor.secondarySystemBackground)
+        /// Subtle backgrounds
+        public static let textFieldBackground = Color(UIColor.secondarySystemBackground).opacity(0.9)
         
-        // Additional elements
-        public static let cardBackground = Color("CardBackground")
-          // Define "CardBackground" in Assets.xcassets or replace with a default, e.g. Color(UIColor.systemGray6).
-        
-        // Placeholders & gradients
-        public static let placeholderSecondary = Color.gray.opacity(0.5)
+        /// A more subtle gradient for placeholders or overlay highlights
         public static let cravingOrangeGradient = LinearGradient(
             colors: [.orange, .red],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
+            startPoint: .leading,
+            endPoint: .trailing
         )
+        
+        /// Placeholder color
+        public static let placeholderSecondary = Color.gray.opacity(0.5)
     }
     
     // MARK: - Typography
     public struct Typography {
+        public static let largestCraving = Font.system(size: 30, weight: .heavy)
         public static let heading = Font.system(size: 24, weight: .bold)
         public static let subheading = Font.system(size: 18, weight: .semibold)
         public static let body = Font.system(size: 16, weight: .regular)
-        public static let largestCraving = Font.system(size: 28, weight: .heavy)
+        public static let caption = Font.system(size: 14, weight: .light)
     }
     
     // MARK: - Spacing
@@ -59,11 +68,21 @@ public struct CraveTheme {
         public static let small: CGFloat = 8
         public static let medium: CGFloat = 16
         public static let large: CGFloat = 24
+        
+        /// Minimum height for text editors
         public static let textEditorMinHeight: CGFloat = 120
     }
     
     // MARK: - Layout
     public struct Layout {
-        public static let cornerRadius: CGFloat = 10
+        public static let cornerRadius: CGFloat = 12
+        public static let cardCornerRadius: CGFloat = 16
+        public static let cardPadding: CGFloat = 20
+    }
+    
+    // MARK: - Animations (Optional)
+    public struct Animations {
+        public static let smooth = Animation.easeInOut(duration: 0.25)
+        public static let snappy = Animation.spring(response: 0.4, dampingFraction: 0.7, blendDuration: 0.1)
     }
 }

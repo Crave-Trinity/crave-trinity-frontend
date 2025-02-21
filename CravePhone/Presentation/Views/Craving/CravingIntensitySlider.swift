@@ -1,10 +1,16 @@
+
 //
 //  CravingIntensitySlider.swift
-//  A minimal SwiftUI slider for craving intensity.
+//  CravePhone
 //
-//  - Single Responsibility Principle: only handles the display and
-//    binding of the intensity slider.
+//  Description:
+//    A refined slider with a subtle glow effect for the selected intensity.
 //
+//  Uncle Bob notes:
+//    - Single Responsibility: Only displays and binds craving intensity.
+//    - Open for extension: Could add haptics or custom styling easily.
+//
+
 import SwiftUI
 
 struct CravingIntensitySlider: View {
@@ -25,5 +31,8 @@ struct CravingIntensitySlider: View {
             step: step
         )
         .accentColor(CraveTheme.Colors.accent)
+        .shadow(color: CraveTheme.Colors.accent.opacity(0.3),
+                radius: 4, x: 0, y: 2)
+        .padding(.horizontal, CraveTheme.Spacing.small)
     }
 }

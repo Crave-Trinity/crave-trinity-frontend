@@ -1,8 +1,4 @@
-//
-//  LogCravingViewModel.swift
-//  CravePhone
-//
-//  Directory: CravePhone/Core/Presentation/ViewModels/Craving/LogCravingViewModel.swift
+// LogCravingViewModel.swift
 //
 //  Description:
 //    The ViewModel for logging cravings, responsible for handling UI logic, state management,
