@@ -24,14 +24,18 @@
 ### **The Biopsychosocial Vision of CRAVE**  
 📍 CRAVE starts as a simple app, but can scale; integrating personalized care with the gold-standard biopsychosocial framework of modern medicine. 
 
-<img src="https://github.com/The-Obstacle-Is-The-Way/crave-trinity/blob/main/CravePhone/Resources/Images/high-vision-one.svg" alt="CRAVE Vision" width="100%"/>
+<p align="center">
+    <img src="https://raw.githubusercontent.com/The-Obstacle-Is-The-Way/crave-trinity/main/CravePhone/Resources/Images/high-vision-one-png.png" alt="CRAVE Vision" width="100%" style="background:white; padding:10px; border-radius:10px;"/>
+</p>
 
 ---
 
 ### **From Individual Recovery to Public Health Impact**  
 📍 CRAVE Scales from Personal Craving Logs to Aggregated Population-Level Insights
 
-<img src="https://raw.githubusercontent.com/The-Obstacle-Is-The-Way/crave-trinity/main/CravePhone/Resources/Images/high-vision-two.svg" alt="CRAVE Impact" width="100%"/>
+<p align="center">
+    <img src="https://raw.githubusercontent.com/The-Obstacle-Is-The-Way/crave-trinity/main/CravePhone/Resources/Images/high-vision-two-png.png" alt="CRAVE Impact" width="100%" style="background:white; padding:10px; border-radius:10px;"/>
+</p>
 
 ---
 
