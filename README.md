@@ -1,6 +1,6 @@
-# CRAVE 🍒 MVP — Modern Cravings Management App
+# CRAVE 🍒 MVP — Personalized Cravings Management App
 
-**CRAVE** is an iOS application built with **SwiftUI** and **SwiftData**, helping you track and manage your cravings through a clean, intuitive interface. Whether it’s late-night snacks or midday munchies, CRAVE ensures you stay in control.
+**CRAVE** is an iOS application built with **SwiftUI**/**SwiftData**, helping you track and manage your cravings through a clean, intuitive interface. Whether it’s late-night snacks or midday munchies, CRAVE ensures you stay in control.
 
 📄 YC MVP Planning Document → https://docs.google.com/document/d/1kcK9C_-ynso44XMNej9MHrC_cZi7T8DXjF1hICOXOD4/edit?tab=t.0 
 
@@ -10,99 +10,87 @@
 * 📌 **Feb 16–18:** [**isolated-crave-watch** (Apple Watch MVP)](https://github.com/The-Obstacle-Is-The-Way/isolated-crave-watch) – On-wrist craving logging, watch-to-phone sync.  
 * 📌 **Feb 19:** [**crave-trinity** (Unified iOS + Watch + Vision)](https://github.com/The-Obstacle-Is-The-Way/crave-trinity) – Single codebase with AR/VR hooks for future expansion.
 
-**Over 200 commits in 7 days**—fast iteration, real SwiftData challenges solved. Every commit mattered. Execution speed: from blank slate to multi-platform synergy in **one week**. Billionaires Build... no excuses. The marathon continues.
+💡 Built in 7 days from scratch while learning Swift with AI acceleration and basecode abstraction. The commit history proves my iteration speed—over 200 solving real programming problems. It wasn’t just spaghetti copy-pasta; I debugged, refactored, and solved SwiftData issues. I can learn, execute fast, and build something real. The marathon continues.
 
-* Leveraged AI to accelerate but made critical planning and logic decisions myself. 
+---
 
-💡 This was built in 7 days from scratch while learning Swift with AI assistance. The commit history proves my iteration speed—over 200 commits solving real programming problems. It wasn’t just AI-generated code; I debugged, refactored, and solved SwiftData persistence issues. I can execute fast, learn fast, and build something real. The marathon continues.
+### **The Biopsychosocial Vision of CRAVE**  
+**Integrating Behavioral, Physiological, and Environmental Data for Addiction Management**  
+
+📍 **CRAVE isn'st just an app; it's an end-to-end system combining real-time vitals, psychological insights, and social context to drive proactive addiction intervention.**  
+
+<img src="https://raw.githubusercontent.com/The-Obstacle-Is-The-Way/crave-trinity/main/CravePhone/Resources/Images/high-vision-one.svg" alt="CRAVE Vision" width="100%"/>
+
+---
+
+### **From Individual Recovery to Public Health Impact**  
+**CRAVE Scales from Personal Craving Logs to Population-Level Insights**  
+
+📍 **A single craving log can trigger real-time interventions. Aggregated over thousands, this data fuels public health initiatives, policy changes, and systemic overdose prevention.**  
+
+<img src="https://raw.githubusercontent.com/The-Obstacle-Is-The-Way/crave-trinity/main/CravePhone/Resources/Images/high-vision-two.svg" alt="CRAVE Impact" width="100%"/>
+
+---
 
 📂 Project Structure
 
 ```bash
-118 directories, 148 files
-jj@Johns-MacBook-Pro-3 CraveTrinity % tree -I ".git"
+jj@Johns-MacBook-Pro-3 crave-trinity % tree -I ".git"
 .
 ├── CravePhone
-│   ├── Core
-│   │   ├── Data
-│   │   │   ├── DTOs
-│   │   │   │   ├── AnalyticsDTO.swift
-│   │   │   │   └── CravingDTO.swift
-│   │   │   ├── DataSources
-│   │   │   │   ├── Local
-│   │   │   │   │   ├── AnalyticsStorage.swift
-│   │   │   │   │   ├── AnalyticsStorageProtocol.swift
-│   │   │   │   │   └── CravingManger.swift
-│   │   │   │   └── Remote
-│   │   │   │       ├── APIClient.swift
-│   │   │   │       └── ModelContainer.swift
-│   │   │   ├── Mappers
-│   │   │   │   ├── AnalyticsMapper.swift
-│   │   │   │   └── CravingMapper.swift
-│   │   │   ├── Repositories
-│   │   │   │   ├── AnalyticsRepositoryImpl.swift
-│   │   │   │   └── CravingRepositoryImpl.swift
-│   │   │   └── Services
-│   │   │       ├── AnalyticsService.swift
-│   │   │       ├── EventTrackingService.swift
-│   │   │       └── PhoneConnectivityService.swift
-│   │   ├── Domain
-│   │   │   ├── Entities
-│   │   │   │   ├── Analytics
-│   │   │   │   │   ├── AnalyticsEntity.swift
-│   │   │   │   │   ├── AnalyticsEvent.swift
-│   │   │   │   │   ├── AnalyticsManager.swift
-│   │   │   │   │   ├── AnalyticsMetadata.swift
-│   │   │   │   │   └── BasicAnalyticsResult.swift
-│   │   │   │   └── Craving
-│   │   │   │       ├── CravingEntity.swift
-│   │   │   │       └── CravingEvent.swift
-│   │   │   ├── Interfaces
-│   │   │   │   ├── Repositories
-│   │   │   │   │   ├── AnalyticsRepository.swift
-│   │   │   │   │   └── CravingRepository.swift
-│   │   │   │   └── UseCases
-│   │   │   │       ├── AnalyticsUseCases.swift
-│   │   │   │       └── CravingUseCases.swift
-│   │   │   └── UseCases
-│   │   │       ├── Analytics
-│   │   │       │   ├── AnalyticsAggregator.swift
-│   │   │       │   ├── AnalyticsProcessor.swift
-│   │   │       │   └── PatternDetectionService.swift
-│   │   │       └── Craving
-│   │   │           └── CravingAnalyzer.swift
-│   │   └── Presentation
-│   │       ├── Common
-│   │       │   ├── DesignSystem
-│   │       │   │   ├── CRAVEDesignSystem.swift
-│   │       │   │   ├── Components
-│   │       │   │   │   ├── CraveButton.swift
-│   │       │   │   │   └── CraveTextEditor.swift
-│   │       │   │   └── Theme.swift
-│   │       │   └── Extensions
-│   │       │       ├── Date+Extensions.swift
-│   │       │       └── View+Extensions.swift
-│   │       ├── Configuration
-│   │       │   ├── AnalyticsConfiguration+Defaults.swift
-│   │       │   └── AnalyticsConfiguration.swift
-│   │       ├── ViewModels
-│   │       │   ├── Analytics
-│   │       │   │   ├── AnalyticsDashboardViewModel.swift
-│   │       │   │   └── AnalyticsViewModel.swift
-│   │       │   └── Craving
-│   │       │       ├── CravingListViewModel.swift
-│   │       │       └── LogCravingViewModel.swift
-│   │       └── Views
-│   │           ├── Analytics
-│   │           │   ├── AnalyticsDashboardView.swift
-│   │           │   └── Components
-│   │           │       ├── AnalyticsCharts.swift
-│   │           │       └── AnalyticsInsight.swift
-│   │           └── Craving
-│   │               ├── Components
-│   │               │   └── CravingCard.swift
-│   │               ├── CravingListView.swift
-│   │               └── LogCravingView.swift
+│   ├── Data
+│   │   ├── DTOs
+│   │   │   ├── AnalyticsDTO.swift
+│   │   │   └── CravingDTO.swift
+│   │   ├── DataSources
+│   │   │   ├── Local
+│   │   │   │   └── AnalyticsStorage.swift
+│   │   │   └── Remote
+│   │   │       ├── APIClient.swift
+│   │   │       └── ModelContainer.swift
+│   │   ├── Mappers
+│   │   │   ├── AnalyticsMapper.swift
+│   │   │   └── CravingMapper.swift
+│   │   └── Repositories
+│   │       ├── AnalyticsAggregatorImpl.swift
+│   │       ├── AnalyticsRepositoryImpl.swift
+│   │       ├── CravingManager.swift
+│   │       ├── CravingRepositoryImpl.swift
+│   │       └── PatternDetectionServiceImpl.swift
+│   ├── Domain
+│   │   ├── Entities
+│   │   │   ├── Analytics
+│   │   │   │   ├── AnalyticsEntity.swift
+│   │   │   │   ├── AnalyticsEvent.swift
+│   │   │   │   ├── AnalyticsMetadata.swift
+│   │   │   │   └── BasicAnalyticsResult.swift
+│   │   │   └── Craving
+│   │   │       ├── CravingEntity.swift
+│   │   │       └── CravingEvent.swift
+│   │   ├── Interfaces
+│   │   │   ├── Analytics
+│   │   │   │   ├── AnalyticsAggregatorProtocol.swift
+│   │   │   │   ├── AnalyticsRepositoryProtocol.swift
+│   │   │   │   ├── AnalyticsStorageProtocol.swift
+│   │   │   │   └── PatternDetectionServiceProtocol.swift
+│   │   │   └── Repositories
+│   │   │       ├── AnalyticsRepository.swift
+│   │   │       └── CravingRepository.swift
+│   │   ├── Services
+│   │   └── UseCases
+│   │       ├── Analytics
+│   │       │   ├── AnalyticsAggregator.swift
+│   │       │   ├── AnalyticsManager.swift
+│   │       │   ├── AnalyticsProcessor.swift
+│   │       │   ├── AnalyticsService.swift
+│   │       │   ├── AnalyticsUseCases.swift
+│   │       │   ├── EventTrackingService.swift
+│   │       │   └── PatternDetectionService.swift
+│   │       ├── Craving
+│   │       │   ├── CravingAnalyzer.swift
+│   │       │   ├── CravingUseCases.swift
+│   │       │   └── DummyAddCravingUseCase.swift
+│   │       └── PhoneConnectivityService.swift
 │   ├── PhoneApp
 │   │   ├── DI
 │   │   │   └── DependencyContainer.swift
@@ -110,6 +98,42 @@ jj@Johns-MacBook-Pro-3 CraveTrinity % tree -I ".git"
 │   │   │   ├── AppCoordinator.swift
 │   │   │   └── CRAVETabView.swift
 │   │   └── PhoneApp.swift
+│   ├── Presentation
+│   │   ├── Common
+│   │   │   ├── AlertInfo.swift
+│   │   │   ├── DesignSystem
+│   │   │   │   ├── Components
+│   │   │   │   │   ├── CraveHaptics.swift
+│   │   │   │   │   ├── CraveMinimalButton.swift
+│   │   │   │   │   └── CraveTextEditor.swift
+│   │   │   │   └── CraveTheme.swift
+│   │   │   └── Extensions
+│   │   │       ├── Date+Extensions.swift
+│   │   │       └── View+Extensions.swift
+│   │   ├── Configuration
+│   │   │   ├── AnalyticsConfiguration+Defaults.swift
+│   │   │   └── AnalyticsConfiguration.swift
+│   │   ├── ViewModels
+│   │   │   ├── Analytics
+│   │   │   │   ├── AnalyticsDashboardViewModel.swift
+│   │   │   │   └── AnalyticsViewModel.swift
+│   │   │   └── Craving
+│   │   │       ├── CravingListViewModel.swift
+│   │   │       └── LogCravingViewModel.swift
+│   │   └── Views
+│   │       ├── Analytics
+│   │       │   ├── AnalyticsDashboardView.swift
+│   │       │   └── Components
+│   │       │       ├── AnalyticsCharts.swift
+│   │       │       ├── AnalyticsInsight.swift
+│   │       │       └── InfiniteMarqueeTextView.swift
+│   │       └── Craving
+│   │           ├── Components
+│   │           │   └── CravingCard.swift
+│   │           ├── CoordinatorHostView.swift
+│   │           ├── CravingIntensitySlider.swift
+│   │           ├── CravingListView.swift
+│   │           └── LogCravingView.swift
 │   ├── Resources
 │   │   ├── Assets.xcassets
 │   │   │   ├── AccentColor.colorset
@@ -125,7 +149,9 @@ jj@Johns-MacBook-Pro-3 CraveTrinity % tree -I ".git"
 │   │   │   ├── crave-architecture.svg
 │   │   │   ├── crave-execution-flow.svg
 │   │   │   ├── crave-logging-flow.svg
-│   │   │   └── crave-navigation-states.svg
+│   │   │   ├── crave-navigation-states.svg
+│   │   │   ├── high-vision-one.svg
+│   │   │   └── high-vision-two.svg
 │   │   └── Preview Content
 │   │       └── Preview Assets.xcassets
 │   │           └── Contents.json
@@ -168,7 +194,6 @@ jj@Johns-MacBook-Pro-3 CraveTrinity % tree -I ".git"
 │   │   │       └── configuration
 │   │   └── xcuserdata
 │   │       └── jj.xcuserdatad
-│   │           ├── IDEFindNavigatorScopes.plist
 │   │           └── UserInterfaceState.xcuserstate
 │   ├── xcshareddata
 │   │   └── xcschemes
@@ -287,33 +312,30 @@ jj@Johns-MacBook-Pro-3 CraveTrinity % tree -I ".git"
 │       │   └── WatchCoordinator.swift
 │       └── WatchApp.swift
 └── README.md
-118 directories, 148 files
-jj@Johns-MacBook-Pro-3 CraveTrinity % 
-
 ```
 ---
 
 ## Architecture
 
-<img src="https://github.com/The-Obstacle-Is-The-Way/CRAVE/blob/main/CRAVEApp/Resources/Docs/Images/crave-architecture.svg" alt="CRAVE Architecture" width="800"/>
+<img src="https://github.com/The-Obstacle-Is-The-Way/CRAVE/blob/main/CRAVEApp/Resources/Docs/Images/crave-architecture.svg" alt="CRAVE Architecture" width="100%"/>
 
 ---
 
 ## Logging Flow
 
-<img src="https://github.com/The-Obstacle-Is-The-Way/CRAVE/blob/main/CRAVEApp/Resources/Docs/Images/crave-logging-flow.svg" alt="CRAVE Logging Flow" width="800"/>
+<img src="https://github.com/The-Obstacle-Is-The-Way/CRAVE/blob/main/CRAVEApp/Resources/Docs/Images/crave-logging-flow.svg" alt="CRAVE Logging Flow" width="100%"/>
 
 ---
 
 ## Navigation States
 
-<img src="https://github.com/The-Obstacle-Is-The-Way/CRAVE/blob/main/CRAVEApp/Resources/Docs/Images/crave-navigation-states.svg" alt="CRAVE Navigation States" width="800"/>
+<img src="https://github.com/The-Obstacle-Is-The-Way/CRAVE/blob/main/CRAVEApp/Resources/Docs/Images/crave-navigation-states.svg" alt="CRAVE Navigation States" width="100%"/>
 
 ---
 
 ## Code Execution Flow 
 
-<img src="https://github.com/The-Obstacle-Is-The-Way/CRAVE/blob/main/CRAVEApp/Resources/Docs/Images/crave-execution-flow.svg" alt="CRAVE Execution Flow" width="800"/>
+<img src="https://github.com/The-Obstacle-Is-The-Way/CRAVE/blob/main/CRAVEApp/Resources/Docs/Images/crave-execution-flow.svg" alt="CRAVE Execution Flow" width="100%"/>
 
 ---
 
