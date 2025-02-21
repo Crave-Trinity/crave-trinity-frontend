@@ -10,9 +10,27 @@
 * 📌 **Feb 16–18:** [**isolated-crave-watch** (Apple Watch MVP)](https://github.com/The-Obstacle-Is-The-Way/isolated-crave-watch) – On-wrist craving logging, watch-to-phone sync.  
 * 📌 **Feb 19:** [**crave-trinity** (Unified iOS + Watch + Vision)](https://github.com/The-Obstacle-Is-The-Way/crave-trinity) – Single codebase with AR/VR hooks for future expansion.
 
-* Leveraged AI to accelerate but made critical planning and logic decisions myself. 
+💡 Built in 7 days from scratch while learning Swift with AI acceleration and basecode abstraction. The commit history proves my iteration speed—over 200 solving real programming problems. It wasn’t just spaghetti copy-pasta; I debugged, refactored, and solved SwiftData issues. I can learn, execute fast, and build something real. The marathon continues.
 
-💡 This was built in 7 days from scratch while learning Swift with AI assistance. The commit history proves my iteration speed—over 200 solving real programming problems. It wasn’t just AI-generated code; I debugged, refactored, and solved SwiftData persistence issues. I can execute fast, learn fast, and build something real. The marathon continues.
+---
+
+### **The Biopsychosocial Vision of CRAVE**  
+**Integrating Behavioral, Physiological, and Environmental Data for Addiction Management**  
+
+📍 **CRAVE isn'st just an app; it's an end-to-end system combining real-time vitals, psychological insights, and social context to drive proactive addiction intervention.**  
+
+<img src="https://raw.githubusercontent.com/The-Obstacle-Is-The-Way/crave-trinity/main/CravePhone/Resources/Images/high-vision-one.svg" alt="CRAVE Vision" width="100%"/>
+
+---
+
+### **From Individual Recovery to Public Health Impact**  
+**CRAVE Scales from Personal Craving Logs to Population-Level Insights**  
+
+📍 **A single craving log can trigger real-time interventions. Aggregated over thousands, this data fuels public health initiatives, policy changes, and systemic overdose prevention.**  
+
+<img src="https://raw.githubusercontent.com/The-Obstacle-Is-The-Way/crave-trinity/main/CravePhone/Resources/Images/high-vision-two.svg" alt="CRAVE Impact" width="100%"/>
+
+---
 
 📂 Project Structure
 
@@ -299,25 +317,25 @@ jj@Johns-MacBook-Pro-3 crave-trinity % tree -I ".git"
 
 ## Architecture
 
-<img src="https://github.com/The-Obstacle-Is-The-Way/CRAVE/blob/main/CRAVEApp/Resources/Docs/Images/crave-architecture.svg" alt="CRAVE Architecture" width="800"/>
+<img src="https://github.com/The-Obstacle-Is-The-Way/CRAVE/blob/main/CRAVEApp/Resources/Docs/Images/crave-architecture.svg" alt="CRAVE Architecture" width="100%"/>
 
 ---
 
 ## Logging Flow
 
-<img src="https://github.com/The-Obstacle-Is-The-Way/CRAVE/blob/main/CRAVEApp/Resources/Docs/Images/crave-logging-flow.svg" alt="CRAVE Logging Flow" width="800"/>
+<img src="https://github.com/The-Obstacle-Is-The-Way/CRAVE/blob/main/CRAVEApp/Resources/Docs/Images/crave-logging-flow.svg" alt="CRAVE Logging Flow" width="100%"/>
 
 ---
 
 ## Navigation States
 
-<img src="https://github.com/The-Obstacle-Is-The-Way/CRAVE/blob/main/CRAVEApp/Resources/Docs/Images/crave-navigation-states.svg" alt="CRAVE Navigation States" width="800"/>
+<img src="https://github.com/The-Obstacle-Is-The-Way/CRAVE/blob/main/CRAVEApp/Resources/Docs/Images/crave-navigation-states.svg" alt="CRAVE Navigation States" width="100%"/>
 
 ---
 
 ## Code Execution Flow 
 
-<img src="https://github.com/The-Obstacle-Is-The-Way/CRAVE/blob/main/CRAVEApp/Resources/Docs/Images/crave-execution-flow.svg" alt="CRAVE Execution Flow" width="800"/>
+<img src="https://github.com/The-Obstacle-Is-The-Way/CRAVE/blob/main/CRAVEApp/Resources/Docs/Images/crave-execution-flow.svg" alt="CRAVE Execution Flow" width="100%"/>
 
 ---
 
