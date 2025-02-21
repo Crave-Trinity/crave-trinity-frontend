@@ -19,7 +19,7 @@
 
 📍 **CRAVE starts as a simple app, but can scale to combine real-time vitals, psychological insights, and social context to drive proactive addiction intervention.**  
 
-<img src="https://raw.githubusercontent.com/The-Obstacle-Is-The-Way/crave-trinity/main/CravePhone/Resources/Images/high-vision-one.svg" alt="CRAVE Vision" width="100%"/>
+<img src="https://github.com/The-Obstacle-Is-The-Way/crave-trinity/blob/main/CravePhone/Resources/Images/Untitled%20diagram-2025-02-21-024527.svg" alt="CRAVE Vision" width="100%"/>
 
 ---
 
