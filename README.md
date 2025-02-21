@@ -21,7 +21,7 @@
 
 ---
 
-### **The Biopsychosocial Vision of CRAVE**  
+### **From humble MVP to Unicorn**  
 📍 CRAVE has the potential to scale from simple B2C to aggregated population level data analytics 
 
 <p align="center">
@@ -30,8 +30,8 @@
 
 ---
 
-### **From Individual Recovery to Public Health Impact**  
-📍 CRAVE starts as a simple app, but can integrate personalized care in the biopsychosocial framework of modern medicine. 
+### **Individualized care & a biopsychosocial framework**
+📍 CRAVE starts as a simple app, but can integrate personalized care within the biopsychosocial framework of modern medicine. 
 
 <p align="center">
     <img src="https://raw.githubusercontent.com/The-Obstacle-Is-The-Way/crave-trinity/main/CravePhone/Resources/Images/high-vision-two-png.png" alt="CRAVE Impact" width="70%"/>
