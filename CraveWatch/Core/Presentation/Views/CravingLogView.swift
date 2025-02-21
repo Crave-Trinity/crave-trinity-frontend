@@ -36,29 +36,23 @@ struct CravingLogView: View {
 
                 // MARK: - PAGE 1: LOG CRAVING
                 VStack(spacing: 8) {
-                    Text("TRIGGER")
-                        .font(.system(size: 16, weight: .bold))
-                        .foregroundColor(.white)
+                    // "Trigger" in sentence case, slightly gray
+                    Text("Trigger")
+                        .font(.system(size: 16, weight: .semibold))
+                        .foregroundColor(.white.opacity(0.7)) // Less bright white
 
-                    Text("Hungry         Angry")
-                        .font(.system(size: 14, weight: .semibold))
-                        .foregroundColor(.white.opacity(0.85))
-
+                    // Your custom text editor
                     WatchCraveTextEditor(
                         text: $viewModel.cravingText,
                         primaryPlaceholder: "Log Craving",
-                        secondaryPlaceholder: "200 chars",
+                        secondaryPlaceholder: "", // Removed "200 chars"
                         isFocused: $isEditorFocused,
                         characterLimit: 200
                     )
-                    .frame(height: 60)
+                    .frame(height: 80)
 
-                    Text("Lonely         Tired")
-                        .font(.system(size: 14, weight: .semibold))
-                        .foregroundColor(.white.opacity(0.85))
-
+                    // Next button
                     Button(action: {
-                        // "Next" → go to Intensity (page 2)
                         currentTab = 2
                     }) {
                         Text("Next")
@@ -76,8 +70,6 @@ struct CravingLogView: View {
                 .padding(.top, -2)
                 .padding(.bottom, 6)
                 .padding(.horizontal)
-                .frame(width: geometry.size.width)
-                .tag(1)
 
                 // MARK: - PAGE 2: INTENSITY
                 VStack(spacing: 12) {
