@@ -22,10 +22,10 @@
 ---
 
 ### **The Biopsychosocial Vision of CRAVE**  
-📍 CRAVE starts as a simple app, but can scale; integrating personalized care with the gold-standard biopsychosocial framework of modern medicine. 
+📍 CRAVE starts as a simple app, but after scaling can integrate personalized care with the gold-standard biopsychosocial framework of modern medicine. 
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/The-Obstacle-Is-The-Way/crave-trinity/main/CravePhone/Resources/Images/high-vision-one-png.png" alt="CRAVE Vision" width="100%" style="background:white; padding:10px; border-radius:10px;"/>
+    <img src="https://raw.githubusercontent.com/The-Obstacle-Is-The-Way/crave-trinity/main/CravePhone/Resources/Images/high-vision-one-png.png" alt="CRAVE Impact" width="100%" style="background:white; padding:10px; border-radius:10px;"/>
 </p>
 
 ---
