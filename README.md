@@ -30,7 +30,7 @@
 
 ---
 
-### **Individualized care & a biopsychosocial framework**
+### **Individualized care & Biopsychosocial framework**
 📍 CRAVE starts as a simple app, but can integrate personalized care within the biopsychosocial framework of modern medicine. 
 
 <p align="center">
