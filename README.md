@@ -1,6 +1,6 @@
 # CRAVE-TRINITY 🍒 MVP — Personalized Cravings Management App
 
-**CRAVE** is an iOS application built with **SwiftUI**/**SwiftData**, helping you track and manage your cravings through a clean, intuitive interface. Whether it’s late-night snacks or midday munchies, CRAVE ensures you stay in control.
+**CRAVE-Trinity** is a watchOS/iOS/VisonOS stack built with **SwiftUI**/**SwiftData**, helping you track and manage your cravings through a clean, intuitive interface. Whether it’s late-night snacks or midday munchies, CRAVE ensures you stay in control.
 
 <h3 align="center">CraveyWatch Demo</h3>
 <p align="center">
