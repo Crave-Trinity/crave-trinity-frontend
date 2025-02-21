@@ -12,7 +12,7 @@
 
 * Leveraged AI to accelerate but made critical planning and logic decisions myself. 
 
-💡 This was built in 7 days from scratch while learning Swift with AI assistance. The commit history proves my iteration speed—over 200 commits solving real programming problems. It wasn’t just AI-generated code; I debugged, refactored, and solved SwiftData persistence issues. I can execute fast, learn fast, and build something real. The marathon continues.
+💡 This was built in 7 days from scratch while learning Swift with AI assistance. The commit history proves my iteration speed—over 200 solving real programming problems. It wasn’t just AI-generated code; I debugged, refactored, and solved SwiftData persistence issues. I can execute fast, learn fast, and build something real. The marathon continues.
 
 📂 Project Structure
 
