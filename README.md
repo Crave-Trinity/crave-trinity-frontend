@@ -34,7 +34,7 @@
 📍 CRAVE starts as a simple app, but can integrate personalized care within the biopsychosocial framework of modern medicine. 
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/The-Obstacle-Is-The-Way/crave-trinity/main/CravePhone/Resources/Images/high-vision-two-png.png" alt="CRAVE Impact" width="85%"/>
+    <img src="https://raw.githubusercontent.com/The-Obstacle-Is-The-Way/crave-trinity/main/CravePhone/Resources/Images/high-vision-two-png.png" alt="CRAVE Impact" width="90%"/>
 </p>
 
 ---
