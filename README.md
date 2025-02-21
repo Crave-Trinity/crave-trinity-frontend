@@ -31,7 +31,7 @@
 ---
 
 ### **Individualized care & Biopsychosocial framework**
-📍 CRAVE starts as a simple app, but can integrate personalized care in the medical biopsychosocial framework. 
+📍 CRAVE starts as a wellness/analytics app, but can integrate personalized care in the medical biopsychosocial framework. 
 
 <p align="center">
     <img src="https://raw.githubusercontent.com/The-Obstacle-Is-The-Way/crave-trinity/main/CravePhone/Resources/Images/high-vision-two-png.png" alt="CRAVE Impact" width="100%"/>
