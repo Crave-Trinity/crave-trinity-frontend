@@ -1,4 +1,4 @@
-# CRAVE 🍒 MVP — Personalized Cravings Management App
+# CRAVE-TRINITY 🍒 MVP — Personalized Cravings Management App
 
 **CRAVE** is an iOS application built with **SwiftUI**/**SwiftData**, helping you track and manage your cravings through a clean, intuitive interface. Whether it’s late-night snacks or midday munchies, CRAVE ensures you stay in control.
 
