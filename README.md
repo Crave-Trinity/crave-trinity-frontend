@@ -44,6 +44,28 @@
 ```bash
 jj@Johns-MacBook-Pro-3 crave-trinity % tree -I ".git"
 .
+//  CRAVE  
+//  Because No One Should Have to Fight Alone  
+//
+//  In Memoriam  
+//  - Juice WRLD (Jarad Higgins)  
+//  - Pimp C (Chad Butler)  
+//  - Chandler Bing (Matthew Perry)  
+//  - Amy Winehouse  
+//  - Heath Ledger  
+//  - Mac Miller (Malcolm McCormick)  
+//  - Lil Peep (Gustav Åhr)  
+//  - Whitney Houston  
+//  - Chris Farley  
+//  - Jimi Hendrix  
+//
+//  And to all those lost to addiction,  
+//  whose names are remembered in silence.  
+//  
+//  Rest in power.  
+//  This is for you.
+//
+.
 ├── CravePhone
 │   ├── Data
 │   │   ├── DTOs
