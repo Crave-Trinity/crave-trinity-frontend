@@ -1,1 +1,3 @@
 
+//CravingRepositoryProtocol.swift
+//Empty file

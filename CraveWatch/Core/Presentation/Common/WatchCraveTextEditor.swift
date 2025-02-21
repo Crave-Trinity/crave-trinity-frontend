@@ -2,111 +2,97 @@
 //  WatchCraveTextEditor.swift
 //  CraveWatch
 //
-//  Description:
-//  A custom text editor for watchOS that displays placeholder text (with a bright gradient)
+//  A custom watchOS text editor that displays placeholder text (with a bright gradient)
 //  centered within a fixed-height gray box when no text is entered. Enforces a character limit
 //  and provides optional haptic feedback.
 //
-//  Architecture & Principles:
-//  - MVVM: Binds directly to a ViewModel property (`text`) for two-way data flow.
-//  - Single Responsibility (SRP): Manages text input & placeholder rendering.
-//  - Open/Closed (OCP): Easily extend to customize placeholders, haptics, or styling.
-//  - Interface Segregation (ISP): Focuses solely on text editing concerns.
-//  - Dependency Inversion (DIP): Relies on an external WatchHapticManager for haptic behavior.
-//
-//  Created with inspiration from Steve Jobs’s “focus on simplicity” and Uncle Bob’s Clean Code.
+//  NOTE: We have removed the duplicate WatchHapticManager to avoid redeclarations.
+//  This file now relies on your existing WatchHapticManager in Services/WatchHapticManager.swift.
 //
 
 import SwiftUI
 
 struct WatchCraveTextEditor: View {
     // MARK: - Properties
-    
-    /// Two-way binding for the text the user enters.
     @Binding var text: String
     
-    /// The main placeholder text displayed in a bright gradient.
+    /// Shown when the text editor is empty and not focused (larger colorful text).
     let primaryPlaceholder: String
     
-    /// A secondary line of placeholder text (e.g., a brief hint or character limit note).
+    /// Optional smaller text under the main placeholder.
     let secondaryPlaceholder: String
     
-    /// Tracks whether the text field is currently focused.
+    /// Controls if this text editor is focused for input (Scribble or on-screen keyboard).
     @FocusState.Binding var isFocused: Bool
     
-    /// Maximum number of characters allowed in the text field.
+    /// Maximum number of characters allowed before truncation + haptic warning.
     let characterLimit: Int
     
     // MARK: - Body
-    
     var body: some View {
         ZStack(alignment: .center) {
+            // MARK: - Background
+            RoundedRectangle(cornerRadius: 8)
+                .fill(
+                    isFocused
+                    ? Color.gray.opacity(0.2)
+                    : Color.gray.opacity(0.15)
+                )
             
-            // MARK: - Placeholder (centered)
+            // MARK: - Placeholder (only visible if empty + not focused)
             if text.isEmpty && !isFocused {
                 VStack(alignment: .center, spacing: 4) {
                     
-                    // Primary placeholder with bright gradient
+                    // Bright gradient "primary" placeholder
                     Text(primaryPlaceholder)
                         .font(.body)
-                        .foregroundColor(.clear)
+                        .foregroundColor(.clear) // We'll overlay a gradient below
                         .overlay {
                             brightGradient
                         }
                         .mask {
-                            Text(primaryPlaceholder)
-                                .font(.body)
+                            Text(primaryPlaceholder).font(.body)
                         }
                     
-                    // Secondary placeholder
+                    // Secondary placeholder text
                     Text(secondaryPlaceholder)
                         .font(.footnote)
                         .foregroundColor(.gray.opacity(0.8))
                         .multilineTextAlignment(.center)
                 }
-                // Tapping the placeholder focuses the field
-                .onTapGesture {
-                    isFocused = true
-                }
             }
             
-            // MARK: - Actual Text Field
+            // MARK: - Actual TextField
+            // Keep this visible enough that watchOS recognizes it as a text input.
             TextField("", text: $text, axis: .vertical)
                 .multilineTextAlignment(.center)
-                .lineLimit(3)
-                // Swift 5.9+ onChange that provides (oldValue, newValue)
-                .onChange(of: text) { oldValue, newValue in
-                    enforceCharacterLimit(oldValue: oldValue, newValue: newValue)
-                }
                 .focused($isFocused)
-                .opacity(text.isEmpty && !isFocused ? 0 : 1)
+                // If you truly want typed text hidden behind placeholders, do:
+                // .foregroundColor(.clear)
+                // ...but keep .opacity(1.0) so the system sees it for input.
+                .foregroundColor(.white)
+                .onTapGesture {
+                    // Force focus when tapped
+                    isFocused = true
+                }
         }
-        // Fixed height ensures vertical centering works
         .frame(height: 80)
-        // Gray box background
-        .background(isFocused ? Color.gray.opacity(0.2) : Color.gray.opacity(0.15))
-        .cornerRadius(8)
+        .onChange(of: text) { oldValue, newValue in
+            enforceCharacterLimit(oldValue: oldValue, newValue: newValue)
+        }
     }
     
-    // MARK: - Private Helpers
-    
-    /// Enforces the character limit and provides haptic feedback as needed.
+    // MARK: - Character Limit
     private func enforceCharacterLimit(oldValue: String, newValue: String) {
         if newValue.count > characterLimit {
-            // Truncate and optionally provide a haptic warning
-            let truncated = String(newValue.prefix(characterLimit))
-            if truncated != text {
-                text = truncated
-                WatchHapticManager.shared.play(.warning)
-            }
-        } else if newValue.count == 1 && oldValue.isEmpty {
-            // Optional subtle feedback on the first typed character
-            WatchHapticManager.shared.play(.selection)
+            // Trim text to character limit, then use your existing WatchHapticManager
+            text = String(newValue.prefix(characterLimit))
+            WatchHapticManager.shared.play(.warning)
         }
     }
 }
 
-// MARK: - Bright Gradient
+// MARK: - Bright Gradient for the primary placeholder
 fileprivate let brightGradient = LinearGradient(
     gradient: Gradient(colors: [
         Color(hue: 0.12, saturation: 1.0, brightness: 1.0), // Bright orange

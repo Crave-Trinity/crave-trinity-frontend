@@ -225,12 +225,8 @@
 				Core/Presentation/Common/Components/VerticalToggleBar.swift = (watchos, );
 				Core/Presentation/Common/WatchCraveTextEditor.swift = (watchos, );
 				Core/Presentation/ViewModels/CravingLogViewModel.swift = (watchos, );
-				Core/Presentation/ViewModels/EmergencyTriggerViewModel.swift = (watchos, );
 				Core/Presentation/ViewModels/VitalsViewModel.swift = (watchos, );
 				Core/Presentation/Views/CravingLogView.swift = (watchos, );
-				Core/Presentation/Views/EmergencyTriggerView.swift = (watchos, );
-				Core/Presentation/Views/IntensityInputView.swift = (watchos, );
-				Core/Presentation/Views/ResistanceInputView.swift = (watchos, );
 				Core/Presentation/Views/VitalsView.swift = (watchos, );
 				Core/Services/OfflineCravingSyncManager.swift = (watchos, );
 				Core/Services/WatchConnectivityService.swift = (watchos, );

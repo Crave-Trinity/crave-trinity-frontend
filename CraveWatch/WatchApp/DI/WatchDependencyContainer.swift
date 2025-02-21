@@ -1,28 +1,31 @@
-// CraveWatch/WatchApp/DI/WatchDependencyContainer.swift
+//
+//  WatchDependencyContainer.swift
+//  CraveWatch
+//
+
 import SwiftUI
 
-@MainActor // This is crucial
+@MainActor
 final class WatchDependencyContainer: ObservableObject {
     // Shared connectivity service
     @Published var connectivityService: WatchConnectivityService = WatchConnectivityService()
-
-    // Coordinator -- no longer lazy
+    
+    // If you have a watch coordinator, set it up here
     lazy var watchCoordinator: WatchCoordinator = {
         WatchCoordinator(connectivityService: connectivityService)
     }()
-
-    // Use Cases
+    
+    // Create the domain use case
     func makeLogCravingUseCase() -> LogCravingUseCase {
         return LogCravingUseCase(connectivityService: connectivityService)
     }
-
-    // ViewModels
+    
+    // Create the CravingLogViewModel with matching init
     func makeCravingViewModel() -> CravingLogViewModel {
-        let logCravingUseCase = makeLogCravingUseCase()
-        return CravingLogViewModel(connectivityService: connectivityService, logCravingUseCase: logCravingUseCase)
-    }
-
-    func makeEmergencyTriggerViewModel() -> EmergencyTriggerViewModel {
-        return EmergencyTriggerViewModel(watchConnectivityService: connectivityService)
+        let useCase = makeLogCravingUseCase()
+        return CravingLogViewModel(
+            connectivityService: connectivityService,
+            logCravingUseCase: useCase
+        )
     }
 }

@@ -1,10 +1,15 @@
-// CraveWatch/Core/Domain/UseCases/LogCravingUseCase.swift
+//
+//  LogCravingUseCase.swift
+//  CraveWatch
+//
+
 import Foundation
 import Combine
 import SwiftData
 
 protocol LogCravingUseCaseProtocol {
-    func execute(text: String, intensity: Int, resistance: Int) -> AnyPublisher<Void, Error>
+    /// Saves the craving locally (SwiftData) and sends it to the phone.
+    func execute(text: String, intensity: Int, resistance: Int?, context: ModelContext) -> AnyPublisher<Void, Error>
 }
 
 final class LogCravingUseCase: LogCravingUseCaseProtocol {
@@ -14,27 +19,50 @@ final class LogCravingUseCase: LogCravingUseCaseProtocol {
         self.connectivityService = connectivityService
     }
 
-    func execute(text: String, intensity: Int, resistance: Int) -> AnyPublisher<Void, Error> {
-        // Create the entity.
-        let newCraving = WatchCravingEntity(text: text, intensity: intensity, resistance: resistance, timestamp: Date())
+    /// Perform local save + phone sync. Returns a publisher so the ViewModel can
+    /// show loading, success, or errors.
+    func execute(
+        text: String, 
+        intensity: Int,
+        resistance: Int?,
+        context: ModelContext
+    ) -> AnyPublisher<Void, Error> {
 
-        // Create the message dictionary.
-        let message: [String: Any] = [
-            "action": "logCraving",
-            "id": String(describing: newCraving.id), // Convert PersistentIdentifier to String
-            "text": newCraving.text,
-            "intensity": newCraving.intensity,
-            "resistance": newCraving.resistance ?? NSNull(),
-            "timestamp": newCraving.timestamp.timeIntervalSince1970
-        ]
+        // We'll return a Future that does the local insert & phone message.
+        return Future { promise in
+            // 1. Insert local SwiftData model
+            let newCraving = WatchCravingEntity(
+                text: text,
+                intensity: intensity,
+                resistance: resistance,
+                timestamp: Date()
+            )
 
-        // Send the craving to the phone.
-        connectivityService.sendMessageToPhone(message)
+            context.insert(newCraving)
 
-        // Simulate success.
-        return Just(())
-            .setFailureType(to: Error.self)
-            .eraseToAnyPublisher()
+            do {
+                // Attempt to save locally
+                try context.save()
+            } catch {
+                // If saving fails, end the publisher with .failure
+                return promise(.failure(error))
+            }
+
+            // 2. Send message to phone
+            let message: [String: Any] = [
+                "action": "logCraving",
+                "id": String(describing: newCraving.id),
+                "text": newCraving.text,
+                "intensity": newCraving.intensity,
+                "resistance": newCraving.resistance ?? NSNull(),
+                "timestamp": newCraving.timestamp.timeIntervalSince1970
+            ]
+
+            self.connectivityService.sendMessageToPhone(message)
+
+            // 3. Promise success
+            promise(.success(()))
+        }
+        .eraseToAnyPublisher()
     }
 }
-
