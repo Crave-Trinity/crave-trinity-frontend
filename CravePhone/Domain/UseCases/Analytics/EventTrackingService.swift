@@ -1,4 +1,4 @@
-// Core/Data/Services/EventTrackingService.swift
+//EventTrackingService.swift
 import Foundation
 import Combine
 

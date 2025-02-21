@@ -1,4 +1,5 @@
-// Core/Data/DataSources/Local/CravingManager.swift
+//CravingManager.swift
+
 import Foundation
 import SwiftData
 

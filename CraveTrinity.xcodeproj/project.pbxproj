@@ -85,6 +85,8 @@
 		28A3F8C22D65971B00D8DE44 /* Exceptions for "CravePhone" folder in "CravePhone" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				"Resources/Images/high-vision-one.svg",
+				"Resources/Images/high-vision-two.svg",
 				Tests/AnalyticsTests/Data/AnalyticsAggregatorTests.swift,
 				Tests/AnalyticsTests/Data/AnalyticsConfigurationTests.swift,
 				Tests/AnalyticsTests/Data/AnalyticsCoordinatorTests.swift,
@@ -127,17 +129,17 @@
 				Domain/Interfaces/Analytics/AnalyticsStorageProtocol.swift = (ios, );
 				Domain/Interfaces/Repositories/AnalyticsRepository.swift = (ios, );
 				Domain/Interfaces/Repositories/CravingRepository.swift = (ios, );
-				Domain/Services/AnalyticsService.swift = (ios, );
-				Domain/Services/EventTrackingService.swift = (ios, );
-				Domain/Services/PhoneConnectivityService.swift = (ios, );
 				Domain/UseCases/Analytics/AnalyticsAggregator.swift = (ios, );
 				Domain/UseCases/Analytics/AnalyticsManager.swift = (ios, );
 				Domain/UseCases/Analytics/AnalyticsProcessor.swift = (ios, );
+				Domain/UseCases/Analytics/AnalyticsService.swift = (ios, );
 				Domain/UseCases/Analytics/AnalyticsUseCases.swift = (ios, );
+				Domain/UseCases/Analytics/EventTrackingService.swift = (ios, );
 				Domain/UseCases/Analytics/PatternDetectionService.swift = (ios, );
 				Domain/UseCases/Craving/CravingAnalyzer.swift = (ios, );
 				Domain/UseCases/Craving/CravingUseCases.swift = (ios, );
 				Domain/UseCases/Craving/DummyAddCravingUseCase.swift = (ios, );
+				Domain/UseCases/PhoneConnectivityService.swift = (ios, );
 				PhoneApp/DI/DependencyContainer.swift = (ios, );
 				PhoneApp/Navigation/AppCoordinator.swift = (ios, );
 				PhoneApp/Navigation/CRAVETabView.swift = (ios, );
