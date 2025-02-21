@@ -15,18 +15,14 @@
 ---
 
 ### **The Biopsychosocial Vision of CRAVE**  
-**Integrating Behavioral, Physiological, and Environmental Data for Addiction Management**  
-
-📍 **CRAVE starts as a simple app, but can scale to combine real-time vitals, psychological insights, and social context to drive proactive addiction intervention.**  
+📍 CRAVE starts as a simple app, but can scale Integrating Behavioral, Physiological, and Environmental Data for Personalized Behavioral Management
 
 <img src="https://github.com/The-Obstacle-Is-The-Way/crave-trinity/blob/main/CravePhone/Resources/Images/high-vision-one.svg" alt="CRAVE Vision" width="100%"/>
 
 ---
 
 ### **From Individual Recovery to Public Health Impact**  
-**CRAVE Scales from Personal Craving Logs to Population-Level Insights**  
-
-📍 **A single craving log can trigger real-time interventions. Aggregated over thousands, HIPPA-compliant data fuels public health initiatives, policy changes, and systemic overdose prevention.**  
+📍 CRAVE Scales from Personal Craving Logs to Aggregated Population-Level Insights
 
 <img src="https://raw.githubusercontent.com/The-Obstacle-Is-The-Way/crave-trinity/main/CravePhone/Resources/Images/high-vision-two.svg" alt="CRAVE Impact" width="100%"/>
 
