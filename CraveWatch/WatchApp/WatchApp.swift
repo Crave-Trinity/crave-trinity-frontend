@@ -1,25 +1,23 @@
-//
-//  WatchApp.swift
-//  CraveWatch
-//
-//  Created by [Your Name] on [Date].
-//  Description: The main entry point for the watch app. Sets up SwiftData and top-level navigation via a dependency container.
+// CraveWatch/WatchApp/WatchApp.swift (CORRECTED - TabView)
 import SwiftUI
-import WatchKit
-import SwiftData
 
 @main
 struct WatchApp: App {
     @StateObject private var dependencyContainer = WatchDependencyContainer()
-    
+
     var body: some Scene {
         WindowGroup {
-            NavigationView {
-                // Set CravingPagesView as the root view.
-                CravingPagesView(connectivityService: dependencyContainer.connectivityService)
+            // Use TabView as the root
+            TabView {
+                NavigationView{ //wrap in navigation
+                    dependencyContainer.watchCoordinator.rootView
+                }
+                .tabItem {
+                    Label("Log", systemImage: "pencil.line") // Add a tab item
+                }
+                // Add other tabs here later (Emergency, Voice)
             }
-            .modelContainer(for: [WatchCravingEntity.self])
+            .environmentObject(dependencyContainer) // Pass the dependency container
         }
     }
 }
-

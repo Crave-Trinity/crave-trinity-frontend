@@ -1,4 +1,4 @@
-
+//  CraveWatch/Core/Presentation/ViewModels/EmergencyTriggerViewModel.swift (CORRECTED)
 
 import Foundation
 
@@ -28,9 +28,8 @@ class EmergencyTriggerViewModel: ObservableObject {
             "timestamp": Date().timeIntervalSince1970
         ]
         
-        watchConnectivityService.sendMessageToPhone(message)
+        watchConnectivityService.sendMessageToPhone(message) // Corrected method name
         showConfirmation = false
         showSuccessAlert = true
     }
 }
-

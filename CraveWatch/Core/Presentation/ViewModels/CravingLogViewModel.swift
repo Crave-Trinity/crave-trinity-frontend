@@ -1,91 +1,109 @@
-//
-//  CravingLogViewModel.swift
-//  CraveWatch
-//
-//  Description:
-//    A ViewModel for watch-based craving logging. It validates user input,
-//    creates a SwiftData entity, sends it to the phone, and resets UI on success.
-//    It now includes both intensity and resistance values.
-//
-//  Created by [Your Name] on [Date]
-//
-
+// CraveWatch/Core/Presentation/ViewModels/CravingLogViewModel.swift
 import Foundation
 import SwiftData
 import Combine
+import SwiftUI
 
 @MainActor
 final class CravingLogViewModel: ObservableObject {
-    
-    // MARK: - Published UI State
-    
-    /// The text the user enters describing the craving.
+
     @Published var cravingText: String = ""
-    
-    /// The user-selected intensity (e.g., 1..10).
     @Published var intensity: Int = 5
-    
-    /// The user-selected resistance (e.g., 1..10).
     @Published var resistance: Int = 5
-    
-    /// Controls whether a success confirmation is displayed.
     @Published var showConfirmation: Bool = false
-    
-    /// Stores an optional error message if validation fails.
     @Published var errorMessage: String? = nil
-    
-    // MARK: - Dependencies
-    
-    /// Service for sending data to the phone (WatchConnectivity).
+    @Published var isResistanceViewActive: Bool = false
+    @Published var isLoading = false
+
     private let connectivityService: WatchConnectivityService
-    
-    // MARK: - Initialization
-    
-    init(connectivityService: WatchConnectivityService) {
+    private let logCravingUseCase: LogCravingUseCase
+    private var cancellables = Set<AnyCancellable>()
+    private let hapticManager = WatchHapticManager()
+    private let localStore = LocalCravingStore()
+
+    init(connectivityService: WatchConnectivityService, logCravingUseCase: LogCravingUseCase) {
         self.connectivityService = connectivityService
+        self.logCravingUseCase = logCravingUseCase
     }
-    
-    // MARK: - Public Methods
-    
-    /// Logs a craving by creating a `WatchCravingEntity` in SwiftData and sending it to the phone.
-    /// - Parameter context: The SwiftData ModelContext for insertion.
+
     func logCraving(context: ModelContext) {
-        // 1) Trim whitespace
         let trimmedText = cravingText.trimmingCharacters(in: .whitespacesAndNewlines)
-        
-        // 2) Validate input
+
         guard !trimmedText.isEmpty else {
             errorMessage = "Please enter a craving."
             return
         }
         
-        // 3) Create a new SwiftData entity with the current date/time
-        let newCraving = WatchCravingEntity(
-            text: trimmedText,
-            intensity: intensity,
-            timestamp: Date()
-        )
-        
-        // 4) Insert the entity into SwiftData
-        context.insert(newCraving)
-        
-        // 5) Send the new craving to the phone
-        connectivityService.sendCravingToPhone(craving: newCraving)
-        
-        // 6) Reset UI state
-        cravingText = ""
-        intensity = 5
-        resistance = 5
-        errorMessage = nil
-        showConfirmation = true
-        
-        // 7) Provide success haptic feedback
-        WatchHapticManager.shared.play(.success)
+        self.isLoading = true
+
+        if connectivityService.phoneReachable {
+            logCravingUseCase.execute(text: trimmedText, intensity: intensity, resistance: resistance)
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] completion in
+                    guard let self = self else { return }
+                    self.isLoading = false
+                    switch completion {
+                    case .failure(let error):
+                        self.errorMessage = error.localizedDescription
+                        print("Error logging craving: \(error)")
+                    case .finished:
+                        print("Craving logged successfully.")
+                        self.resetForm() // Use a helper function
+                        self.showConfirmation = true
+                        self.isResistanceViewActive = false
+                        self.hapticManager.play(.success)
+                    }
+                } receiveValue: { _ in
+                    // Void output from the publisher; no further action needed.
+                }
+                .store(in: &cancellables)
+        } else {
+            Task { // Use Task for async operation
+                self.localStore.setContext(context: context) // self was missing
+                await self.addCravingOffline(cravingDescription: trimmedText, intensity: self.intensity, resistance: self.resistance) // self was missing
+                self.resetForm() // Use helper function, self was missing
+                self.showConfirmation = true //self was missing
+                self.isResistanceViewActive = false // self was missing
+                self.hapticManager.play(.success) // self was missing
+                self.isLoading = false // self was missing
+            }
+        }
     }
     
-    /// Dismisses any error message.
+    private func resetForm() {
+        self.cravingText = ""
+        self.intensity = 5
+        self.resistance = 5
+        self.errorMessage = nil
+    }
+
     func dismissError() {
         errorMessage = nil
     }
-}
 
+    func intensityChanged() {
+        hapticManager.play(.selection)
+    }
+
+    func resistanceChanged() {
+        hapticManager.play(.selection)
+    }
+
+    func nextAction() {
+        if isResistanceViewActive {
+            // context is passed as function argument
+        } else {
+            isResistanceViewActive = true
+            hapticManager.play(.notification) // Consider a different haptic here, maybe .start
+        }
+    }
+
+    func addCravingOffline(cravingDescription: String, intensity: Int, resistance: Int) async {
+        do {
+            try await localStore.addCraving(cravingDescription: cravingDescription,
+                                             intensity: intensity, resistance: resistance)
+        } catch {
+            print("🔴 Error adding craving offline: \(error)")
+        }
+    }
+}

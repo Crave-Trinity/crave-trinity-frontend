@@ -6,28 +6,35 @@
 //               a character limit, and focus state handling. It displays a bright gradient
 //               on the primary placeholder when no text is entered.
 //
+
 import SwiftUI
 
 struct WatchCraveTextEditor: View {
+    // MARK: - Bindings and Properties
+
+    /// The text entered by the user.
     @Binding var text: String
     /// The main placeholder text (e.g., "Tap to log craving")
     var primaryPlaceholder: String
     /// A secondary prompt (e.g., "200 chars")
     var secondaryPlaceholder: String
+    /// Binding to track the focus state of the text editor.
     @FocusState.Binding var isFocused: Bool
-    /// Maximum number of characters allowed
+    /// Maximum number of characters allowed.
     var characterLimit: Int
+
+    // MARK: - Body
 
     var body: some View {
         ZStack(alignment: .top) {
-            // Placeholder view: appears only when text is empty and not focused.
+            // MARK: Placeholder View
             if text.isEmpty && !isFocused {
-                VStack(alignment: .center, spacing: 8) {
+                VStack(alignment: .center, spacing: 4) {
                     Text(primaryPlaceholder)
                         .font(.body)
-                        .foregroundColor(.clear) // hide actual text
+                        .foregroundColor(.clear)
                         .overlay {
-                            brightGradient // overlay the bright gradient
+                            brightGradient
                         }
                         .mask {
                             Text(primaryPlaceholder)
@@ -45,36 +52,31 @@ struct WatchCraveTextEditor: View {
                 }
             }
             
-            // The actual text editor.
+            // MARK: Actual Text Editor
             TextField("", text: $text, axis: .vertical)
                 .multilineTextAlignment(.center)
                 .lineLimit(3)
-                .onChange(of: text) { oldValue, newValue in
-                    // Enforce character limit
+                .onChange(of: text, perform: { newValue in
                     if newValue.count > characterLimit {
-                        text = String(newValue.prefix(characterLimit))
-                        WatchHapticManager.shared.play(.warning)
-                    }
-                    // Provide haptic feedback when the user starts typing
-                    else if oldValue.isEmpty && !newValue.isEmpty {
+                        let truncated = String(newValue.prefix(characterLimit))
+                        if text != truncated {
+                            text = truncated
+                            WatchHapticManager.shared.play(.warning)
+                        }
+                    } else if newValue.count == 1 {
+                        // Updated to `.selection` instead of `.click`
                         WatchHapticManager.shared.play(.selection)
                     }
-                }
+                })
                 .frame(minHeight: 60)
-                .background(text.isEmpty && !isFocused ? .clear : Color.gray.opacity(0.2))
+                .background(isFocused ? Color.gray.opacity(0.2) : .clear)
                 .cornerRadius(8)
                 .focused($isFocused)
-                .onTapGesture {
-                    isFocused = true
-                    WatchHapticManager.shared.play(.selection)
-                }
-                .opacity(text.isEmpty && !isFocused ? 0.7 : 1)
         }
     }
 }
 
 // MARK: - Bright Gradient
-/// A bright orange-to-yellow gradient for the primary placeholder text.
 fileprivate let brightGradient = LinearGradient(
     gradient: Gradient(colors: [
         Color(hue: 0.12, saturation: 1.0, brightness: 1.0), // bright orange

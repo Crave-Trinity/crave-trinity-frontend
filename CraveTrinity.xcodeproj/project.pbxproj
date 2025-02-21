@@ -222,13 +222,23 @@
 				Core/Tests/Unit/VitalsViewModelTests.swift,
 			);
 			platformFiltersByRelativePath = {
+				Core/Presentation/Common/Components/VerticalIntensityBar.swift = (watchos, );
 				Core/Presentation/Common/Components/VerticalToggleBar.swift = (watchos, );
 				Core/Presentation/Common/WatchCraveTextEditor.swift = (watchos, );
 				Core/Presentation/ViewModels/CravingLogViewModel.swift = (watchos, );
+				Core/Presentation/ViewModels/EmergencyTriggerViewModel.swift = (watchos, );
+				Core/Presentation/ViewModels/VitalsViewModel.swift = (watchos, );
 				Core/Presentation/Views/CravingLogView.swift = (watchos, );
-				Core/Presentation/Views/CravingPagesView.swift = (watchos, );
+				Core/Presentation/Views/EmergencyTriggerView.swift = (watchos, );
+				Core/Presentation/Views/IntensityInputView.swift = (watchos, );
+				Core/Presentation/Views/ResistanceInputView.swift = (watchos, );
+				Core/Presentation/Views/VitalsView.swift = (watchos, );
+				Core/Services/OfflineCravingSyncManager.swift = (watchos, );
 				Core/Services/WatchConnectivityService.swift = (watchos, );
 				Core/Services/WatchHapticManager.swift = (watchos, );
+				WatchApp/DI/WatchDependencyContainer.swift = (watchos, );
+				WatchApp/Navigation/WatchCoordinator.swift = (watchos, );
+				WatchApp/WatchApp.swift = (watchos, );
 			};
 			target = 28A3F8C82D65973300D8DE44 /* CraveWatch Watch App */;
 		};

@@ -5,9 +5,8 @@
 //  Description:
 //  SwiftData model with a soft-deletion field `deletedAt`.
 //
-//  Created by [Your Name] on [Date]
-//
 
+// CraveWatch/Core/Domain/Entities/WatchCravingEntity.swift (MODIFIED)
 import Foundation
 import SwiftData
 
@@ -15,16 +14,17 @@ import SwiftData
 final class WatchCravingEntity {
     var text: String
     var intensity: Int
+    var resistance: Int? // ADDED - Make optional
     var timestamp: Date
-    
-    // Soft deletion: if not nil, treat as "deleted"
     var deletedAt: Date?
-    
-    init(text: String, intensity: Int, timestamp: Date, deletedAt: Date? = nil) {
+
+    init(text: String, intensity: Int, resistance: Int? = nil, timestamp: Date, deletedAt: Date? = nil) {
         self.text = text
         self.intensity = intensity
+        self.resistance = resistance // Set the resistance
         self.timestamp = timestamp
         self.deletedAt = deletedAt
     }
 }
+
 

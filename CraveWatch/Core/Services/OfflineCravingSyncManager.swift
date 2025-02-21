@@ -1,14 +1,8 @@
-//
-//  OfflineCravingSyncManager.swift
-//  CraveWatch
-//
-//  Created by [Your Name] on [Date].
-//  Description: Monitors phone reachability and synchronizes offline cravings stored in local SwiftData.
-//               When the phone becomes reachable, it iterates through unsynced cravings, sends them to the iPhone,
-//               and deletes them locally upon success.
+// CraveWatch/Core/Services/OfflineCravingSyncManager.swift
 import Foundation
 import Combine
 import WatchConnectivity
+import SwiftData
 
 @MainActor
 class OfflineCravingSyncManager: NSObject, ObservableObject {
@@ -23,12 +17,12 @@ class OfflineCravingSyncManager: NSObject, ObservableObject {
         self.watchConnectivityService = watchConnectivityService
         super.init()
         
-        // Observe changes in phone reachability. The closure parameter is explicitly typed as Bool.
+        // Observe changes in phone reachability.
         reachabilityCancellable = watchConnectivityService.$phoneReachable
-            .sink { (isReachable: Bool) in
+            .sink { [weak self] isReachable in
                 if isReachable {
                     Task {
-                        await self.syncOfflineCravings()
+                        await self?.syncOfflineCravings()
                     }
                 }
             }
@@ -39,20 +33,16 @@ class OfflineCravingSyncManager: NSObject, ObservableObject {
     }
     
     /// Adds a craving to the local SwiftData store when offline.
-    /// - Parameters:
-    ///   - cravingDescription: The craving text.
-    ///   - intensity: The intensity value.
-    func addCravingOffline(cravingDescription: String, intensity: Int) async {
+    func addCravingOffline(cravingDescription: String, intensity: Int, resistance: Int) async {
         do {
             try await localStore.addCraving(cravingDescription: cravingDescription,
-                                            intensity: intensity)
+                                             intensity: intensity, resistance: resistance)
         } catch {
             print("🔴 Error adding craving offline: \(error)")
         }
     }
     
-    /// Synchronizes all unsynced cravings by sending them to the iPhone.
-    /// After a successful send, the local craving is deleted.
+    /// Synchronizes all unsynced cravings.
     func syncOfflineCravings() async {
         do {
             let cravings = try await localStore.fetchAllCravings()
@@ -60,13 +50,14 @@ class OfflineCravingSyncManager: NSObject, ObservableObject {
                 // Build the message dictionary.
                 let message: [String: Any] = [
                     "action": "logCraving",
-                    "id": String(describing: entity.id),  // Convert id to String.
-                    "description": entity.text,           // Use 'text' property.
+                    "id": String(describing: entity.id), // Convert PersistentIdentifier to String
+                    "text": entity.text,
                     "intensity": entity.intensity,
+                    "resistance": entity.resistance ?? NSNull(), // Include resistance
                     "timestamp": entity.timestamp.timeIntervalSince1970
                 ]
                 watchConnectivityService.sendMessageToPhone(message)
-                
+
                 // For a robust flow, you'd wait for an acknowledgment.
                 try await localStore.deleteCraving(entity)
             }
@@ -76,3 +67,4 @@ class OfflineCravingSyncManager: NSObject, ObservableObject {
         }
     }
 }
+
