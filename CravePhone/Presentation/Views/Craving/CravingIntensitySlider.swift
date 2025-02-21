@@ -1,4 +1,3 @@
-
 //
 //  CravingIntensitySlider.swift
 //  CravePhone
@@ -31,7 +30,7 @@ struct CravingIntensitySlider: View {
             step: step
         )
         .accentColor(CraveTheme.Colors.accent)
-        .shadow(color: CraveTheme.Colors.accent.opacity(0.3),
+        .shadow(color: CraveTheme.Colors.accent.opacity(0.4),
                 radius: 4, x: 0, y: 2)
         .padding(.horizontal, CraveTheme.Spacing.small)
     }

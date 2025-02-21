@@ -2,15 +2,13 @@
 //  CRAVETabView.swift
 //  CravePhone
 //
-//  Directory: CravePhone/PhoneApp/Navigation/CRAVETabView.swift
-//
 //  Description:
-//    A TabView that references the AppCoordinator's factory methods to create screens.
-//    Demonstrates Inversion of Control: the coordinator handles building each view.
-//    This adheres to MVVM + Coordinator pattern for navigation.
+//    A TabView referencing the AppCoordinator's factory methods.
+//    Sets the tab bar background to black for a stealthy look.
 //
-//  Created by <Your Name> on <date>.
-//  Updated by ChatGPT on <today's date>.
+//  Uncle Bob notes:
+//    - Single Responsibility: Main tab navigation, delegating view creation to coordinator.
+//    - Inversion of Control: The coordinator creates the views.
 //
 
 import SwiftUI
@@ -20,6 +18,17 @@ public struct CRAVETabView: View {
     @ObservedObject var coordinator: AppCoordinator
     
     public init(coordinator: AppCoordinator) {
+        // Configure tab bar appearance
+        let appearance = UITabBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = UIColor.black
+        
+        UITabBar.appearance().standardAppearance = appearance
+        
+        if #available(iOS 15.0, *) {
+            UITabBar.appearance().scrollEdgeAppearance = appearance
+        }
+        
         self.coordinator = coordinator
     }
     
@@ -41,5 +50,8 @@ public struct CRAVETabView: View {
             //         Label("Analytics", systemImage: "chart.bar")
             //     }
         }
+        // Optionally force dark mode if you want everything to be black-based:
+        // .preferredColorScheme(.dark)
     }
 }
+

@@ -1,109 +1,106 @@
-
 //
 //  LogCravingView.swift
 //  CravePhone
 //
 //  Description:
-//    A brand-new, modern logging view for cravings. Emphasizes minimal but sleek UI,
-//    advanced SwiftUI transitions, and builds on a card-based approach.
+//    A modern logging view for cravings. Emphasizes minimal but sleek UI,
+//    advanced SwiftUI transitions, and a card-based approach.
 //
 //  Uncle Bob notes:
-//    - Single Responsibility: Renders the logging screen & binds to the LogCravingViewModel.
-//    - Separation of Concerns: All data transformations happen in the VM, this is just UI.
+//    - Single Responsibility: Renders the logging screen & binds to the VM.
+//    - Separation of Concerns: Data transformations in the VM, UI logic here.
+//
 
 import SwiftUI
 
 struct LogCravingView: View {
     @ObservedObject var viewModel: LogCravingViewModel
     
+    // This toggles a success overlay on successful log
     @State private var showConfirmation = false
     
     var body: some View {
         NavigationView {
             ZStack {
-                // Gorgeous gradient background
+                // Subtle black/dark gradient background
                 CraveTheme.Colors.primaryGradient
                     .ignoresSafeArea()
                 
-                // Main Card
-                VStack(spacing: CraveTheme.Spacing.medium) {
-                    
-                    // Card container for a refined pop effect
-                    VStack(alignment: .leading, spacing: CraveTheme.Spacing.medium) {
+                ScrollView {
+                    VStack(spacing: CraveTheme.Spacing.large) {
                         
-                        // Title
-                        Text("Log Your Craving")
-                            .font(CraveTheme.Typography.heading)
-                            .foregroundColor(CraveTheme.Colors.primaryText)
-                            .padding(.bottom, 4)
-                        
-                        // Body / instructions
-                        Text("Share what you're craving and track triggers for better insights.")
-                            .font(CraveTheme.Typography.body)
-                            .foregroundColor(CraveTheme.Colors.secondaryText)
-                            .multilineTextAlignment(.leading)
-                        
-                        Divider()
-                            .background(CraveTheme.Colors.secondaryText.opacity(0.3))
-                        
-                        // Description input
-                        CraveTextEditor(text: $viewModel.cravingDescription)
-                            .frame(height: 120)
-                            .background(CraveTheme.Colors.textFieldBackground)
-                            .cornerRadius(CraveTheme.Layout.cornerRadius)
-                        
-                        // Intensity
-                        HStack {
-                            Text("Intensity: \(Int(viewModel.cravingIntensity))")
+                        VStack(alignment: .leading, spacing: CraveTheme.Spacing.medium) {
+                            Text("🦊 Log Your Craving")
+                                .font(CraveTheme.Typography.heading)
+                                .foregroundColor(CraveTheme.Colors.primaryText)
+                            
+                            Text("Share what you're craving and track triggers for better insights.")
+                                .font(CraveTheme.Typography.body)
                                 .foregroundColor(CraveTheme.Colors.secondaryText)
-                            Spacer()
-                        }
-                        CravingIntensitySlider(value: $viewModel.cravingIntensity)
-                        
-                        // Triggers
-                        Text("Triggers")
-                            .font(CraveTheme.Typography.subheading)
-                            .foregroundColor(CraveTheme.Colors.primaryText)
-                        CraveTextEditor(text: $viewModel.cravingTrigger,
-                                        characterLimit: 150,
-                                        placeholderLines: [.plain("e.g. stress, social setting, etc.")])
-                            .frame(height: 80)
+                                .multilineTextAlignment(.leading)
+                            
+                            Divider()
+                                .background(CraveTheme.Colors.secondaryText.opacity(0.3))
+                            
+                            // Description field
+                            CraveTextEditor(
+                                text: $viewModel.cravingDescription,
+                                characterLimit: 300
+                            )
                             .background(CraveTheme.Colors.textFieldBackground)
                             .cornerRadius(CraveTheme.Layout.cornerRadius)
-                        
-                        // Button
-                        CraveMinimalButton(action: {
-                            Task {
-                                await viewModel.logCraving()
-                                if viewModel.alertInfo == nil {
-                                    // Only show confirmation on success
-                                    withAnimation(CraveTheme.Animations.smooth) {
-                                        showConfirmation = true
+                            
+                            // Craving Intensity
+                            HStack {
+                                Text("Intensity: \(Int(viewModel.cravingIntensity))")
+                                    .foregroundColor(CraveTheme.Colors.secondaryText)
+                                Spacer()
+                            }
+                            CravingIntensitySlider(value: $viewModel.cravingIntensity)
+                            
+                            // Triggers
+                            Text("Triggers")
+                                .font(CraveTheme.Typography.subheading)
+                                .foregroundColor(CraveTheme.Colors.primaryText)
+                            
+                            CraveTextEditor(
+                                text: $viewModel.cravingTrigger,
+                                characterLimit: 150,
+                                placeholderLines: [.plain("e.g. stress, social setting, etc.")]
+                            )
+                            .background(CraveTheme.Colors.textFieldBackground)
+                            .cornerRadius(CraveTheme.Layout.cornerRadius)
+                            .frame(minHeight: 120)
+                            
+                            // Log Button
+                            CraveMinimalButton(action: {
+                                Task {
+                                    await viewModel.logCraving()
+                                    if viewModel.alertInfo == nil {
+                                        withAnimation(CraveTheme.Animations.smooth) {
+                                            showConfirmation = true
+                                        }
                                     }
                                 }
+                            }) {
+                                Text("Log Craving")
+                                    .font(CraveTheme.Typography.body.weight(.semibold))
                             }
-                        }) {
-                            Text("Log Craving")
-                                .font(CraveTheme.Typography.body.weight(.semibold))
+                            .padding(.top, CraveTheme.Spacing.small)
                         }
-                        .padding(.top, CraveTheme.Spacing.small)
+                        .padding(CraveTheme.Layout.cardPadding)
+                        .background(CraveTheme.Colors.cardBackground)
+                        .cornerRadius(CraveTheme.Layout.cardCornerRadius)
+                        .shadow(color: Color.black.opacity(0.3), radius: 16, x: 0, y: 8)
+                        .padding(.horizontal, CraveTheme.Spacing.medium)
                         
+                        Spacer(minLength: 50)
                     }
-                    .padding(CraveTheme.Layout.cardPadding)
-                    .background(CraveTheme.Colors.cardBackground)
-                    .cornerRadius(CraveTheme.Layout.cardCornerRadius)
-                    .padding()
-                    .shadow(color: Color.black.opacity(0.3),
-                            radius: 16,
-                            x: 0, y: 8)
-                    
-                    // Spacer to push the card up slightly
-                    Spacer()
                 }
                 
-                // Confirmation overlay
+                // Success overlay
                 if showConfirmation {
-                    successOverlay
+                    confirmationOverlay
                 }
             }
             .navigationBarHidden(true)
@@ -114,35 +111,32 @@ struct LogCravingView: View {
         .navigationViewStyle(StackNavigationViewStyle())
     }
     
-    /// A custom overlay that shows when a craving is successfully logged.
-    @ViewBuilder
-    private var successOverlay: some View {
+    /// Confirmation overlay displayed upon successful logging
+    private var confirmationOverlay: some View {
         VStack(spacing: CraveTheme.Spacing.small) {
             Image(systemName: "checkmark.seal.fill")
                 .resizable()
                 .scaledToFit()
-                .frame(width: 60, height: 60)
+                .frame(width: 64, height: 64)
                 .foregroundStyle(.green.gradient)
             
-            Text("Craving Logged!")
-                .font(.title2.weight(.bold))
+            Text("Logged!")
+                .font(CraveTheme.Typography.subheading)
                 .foregroundColor(.white)
             
-            Text("Keep going—every log helps you build awareness.")
+            Text("Keep going—every log builds awareness.")
                 .font(CraveTheme.Typography.body)
                 .foregroundColor(.white.opacity(0.9))
                 .multilineTextAlignment(.center)
             
             Button {
-                // Hide the overlay
                 withAnimation(CraveTheme.Animations.smooth) {
                     showConfirmation = false
                 }
             } label: {
-                Text("Cool")
-                    .font(CraveTheme.Typography.subheading)
+                Text("AWESOME")
                     .foregroundColor(CraveTheme.Colors.buttonText)
-                    .padding(.horizontal, 24)
+                    .padding(.horizontal, 20)
                     .padding(.vertical, 8)
                     .background(CraveTheme.Colors.accent)
                     .cornerRadius(CraveTheme.Layout.cornerRadius)
@@ -157,5 +151,4 @@ struct LogCravingView: View {
         .transition(.scale.combined(with: .opacity))
     }
 }
-
 

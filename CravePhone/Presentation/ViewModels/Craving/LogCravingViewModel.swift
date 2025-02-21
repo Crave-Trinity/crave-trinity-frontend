@@ -34,8 +34,8 @@ public final class LogCravingViewModel: ObservableObject {
 
         // Validation: Ensure the craving description is long enough.
         guard trimmed.count >= 3 else {
-            alertInfo = AlertInfo(title: "Validation Error",
-                                  message: "Craving text must be at least 3 characters.")
+            alertInfo = AlertInfo(title: "Error",
+                                  message: "Craving must be at least 3 characters.")
             return
         }
 

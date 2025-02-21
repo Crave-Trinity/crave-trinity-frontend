@@ -3,9 +3,10 @@
 //  CravePhone
 //
 //  Description:
-//    Simple gradient text overlay.
+//    Simple gradient text overlay for a bold, modern style.
+//
 //  Uncle Bob notes:
-//    - Single Responsibility: Just draws text with a mask gradient.
+//    - Single Responsibility: Draws text with a mask gradient.
 //
 
 import SwiftUI
@@ -19,7 +20,8 @@ public struct GradientText: View {
         Text(text)
             .font(font)
             .overlay {
-                gradient.mask(Text(text).font(font))
+                gradient
+                    .mask(Text(text).font(font))
             }
     }
 }
