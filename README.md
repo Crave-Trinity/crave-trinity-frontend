@@ -25,7 +25,7 @@
 📍 CRAVE has the potential to scale from simple B2C to aggregated population level data analytics 
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/The-Obstacle-Is-The-Way/crave-trinity/main/CravePhone/Resources/Images/high-vision-one-png.png" alt="CRAVE Vision" width="65%"/>
+    <img src="https://raw.githubusercontent.com/The-Obstacle-Is-The-Way/crave-trinity/main/CravePhone/Resources/Images/high-vision-one-png.png" alt="CRAVE Vision" width="100%"/>
 </p>
 
 ---
@@ -34,7 +34,7 @@
 📍 CRAVE starts as a simple app, but can integrate personalized care in the modern biopsychosocial framework of medicine. 
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/The-Obstacle-Is-The-Way/crave-trinity/main/CravePhone/Resources/Images/high-vision-two-png.png" alt="CRAVE Impact" width="90%"/>
+    <img src="https://raw.githubusercontent.com/The-Obstacle-Is-The-Way/crave-trinity/main/CravePhone/Resources/Images/high-vision-two-png.png" alt="CRAVE Impact" width="100%"/>
 </p>
 
 ---
