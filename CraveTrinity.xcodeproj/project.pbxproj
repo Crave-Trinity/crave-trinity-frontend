@@ -88,7 +88,6 @@
 				Resources/Images/CraveyWatchDemo.gif,
 				"Resources/Images/high-vision-one.svg",
 				"Resources/Images/high-vision-two.svg",
-				"Resources/Images/Untitled diagram-2025-02-21-024527.svg",
 				Tests/AnalyticsTests/Data/AnalyticsAggregatorTests.swift,
 				Tests/AnalyticsTests/Data/AnalyticsConfigurationTests.swift,
 				Tests/AnalyticsTests/Data/AnalyticsCoordinatorTests.swift,
