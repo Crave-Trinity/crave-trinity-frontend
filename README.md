@@ -1,6 +1,6 @@
-# CRAVE 🍒 MVP — Personalized Cravings Management App
+# CRAVE-TRINITY 🍒 MVP — Personalized Cravings Management App
 
-**CRAVE** is an iOS application built with **SwiftUI**/**SwiftData**, helping you track and manage your cravings through a clean, intuitive interface. Whether it’s late-night snacks or midday munchies, CRAVE ensures you stay in control.
+**CRAVE-Trinity** is a watchOS/iOS/VisonOS stack built with **SwiftUI**/**SwiftData**, helping you track and manage your cravings through a clean, intuitive interface. Whether it’s late-night snacks or midday munchies, CRAVE ensures you stay in control.
 
 <h3 align="center">CraveyWatch Demo</h3>
 <p align="center">
@@ -21,20 +21,20 @@
 
 ---
 
-### **The Biopsychosocial Vision of CRAVE**  
-📍 CRAVE starts as a simple app, but after scaling can integrate personalized care with the gold-standard biopsychosocial framework of modern medicine. 
+### **From humble MVP to Unicorn**  
+📍 CRAVE has the potential to scale from simple B2C to aggregated population level data analytics 
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/The-Obstacle-Is-The-Way/crave-trinity/main/CravePhone/Resources/Images/high-vision-one-png.png" alt="CRAVE Impact" width="100%" style="background:white; padding:10px; border-radius:10px;"/>
+    <img src="https://raw.githubusercontent.com/The-Obstacle-Is-The-Way/crave-trinity/main/CravePhone/Resources/Images/high-vision-one-png.png" alt="CRAVE Vision" width="100%"/>
 </p>
 
 ---
 
-### **From Individual Recovery to Public Health Impact**  
-📍 CRAVE Scales from Personal Craving Logs to Aggregated Population-Level Insights
+### **Individualized care & Biopsychosocial framework**
+📍 CRAVE starts as a simple app, but can integrate personalized care in the modern biopsychosocial framework of medicine. 
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/The-Obstacle-Is-The-Way/crave-trinity/main/CravePhone/Resources/Images/high-vision-two-png.png" alt="CRAVE Impact" width="100%" style="background:white; padding:10px; border-radius:10px;"/>
+    <img src="https://raw.githubusercontent.com/The-Obstacle-Is-The-Way/crave-trinity/main/CravePhone/Resources/Images/high-vision-two-png.png" alt="CRAVE Impact" width="100%"/>
 </p>
 
 ---
