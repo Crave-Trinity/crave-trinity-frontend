@@ -56,18 +56,18 @@ struct WatchCraveTextEditor: View {
             TextField("", text: $text, axis: .vertical)
                 .multilineTextAlignment(.center)
                 .lineLimit(3)
-                .onChange(of: text, perform: { newValue in
+                // Two-parameter closure: (oldValue, newValue)
+                .onChange(of: text) { oldValue, newValue in
                     if newValue.count > characterLimit {
                         let truncated = String(newValue.prefix(characterLimit))
-                        if text != truncated {
+                        if truncated != text {
                             text = truncated
                             WatchHapticManager.shared.play(.warning)
                         }
                     } else if newValue.count == 1 {
-                        // Updated to `.selection` instead of `.click`
                         WatchHapticManager.shared.play(.selection)
                     }
-                })
+                }
                 .frame(minHeight: 60)
                 .background(isFocused ? Color.gray.opacity(0.2) : .clear)
                 .cornerRadius(8)

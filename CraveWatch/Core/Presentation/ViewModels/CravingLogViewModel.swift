@@ -1,4 +1,8 @@
-// CraveWatch/Core/Presentation/ViewModels/CravingLogViewModel.swift
+//
+//  CravingLogViewModel.swift
+//  CraveWatch
+//
+
 import Foundation
 import SwiftData
 import Combine
@@ -12,7 +16,6 @@ final class CravingLogViewModel: ObservableObject {
     @Published var resistance: Int = 5
     @Published var showConfirmation: Bool = false
     @Published var errorMessage: String? = nil
-    @Published var isResistanceViewActive: Bool = false
     @Published var isLoading = false
 
     private let connectivityService: WatchConnectivityService
@@ -28,16 +31,16 @@ final class CravingLogViewModel: ObservableObject {
 
     func logCraving(context: ModelContext) {
         let trimmedText = cravingText.trimmingCharacters(in: .whitespacesAndNewlines)
-
         guard !trimmedText.isEmpty else {
             errorMessage = "Please enter a craving."
             return
         }
-        
-        self.isLoading = true
+        isLoading = true
 
         if connectivityService.phoneReachable {
-            logCravingUseCase.execute(text: trimmedText, intensity: intensity, resistance: resistance)
+            logCravingUseCase.execute(text: trimmedText,
+                                      intensity: intensity,
+                                      resistance: resistance)
                 .receive(on: DispatchQueue.main)
                 .sink { [weak self] completion in
                     guard let self = self else { return }
@@ -48,33 +51,32 @@ final class CravingLogViewModel: ObservableObject {
                         print("Error logging craving: \(error)")
                     case .finished:
                         print("Craving logged successfully.")
-                        self.resetForm() // Use a helper function
+                        self.resetForm()
                         self.showConfirmation = true
-                        self.isResistanceViewActive = false
                         self.hapticManager.play(.success)
                     }
                 } receiveValue: { _ in
-                    // Void output from the publisher; no further action needed.
+                    // No output needed
                 }
                 .store(in: &cancellables)
         } else {
-            Task { // Use Task for async operation
-                self.localStore.setContext(context: context) // self was missing
-                await self.addCravingOffline(cravingDescription: trimmedText, intensity: self.intensity, resistance: self.resistance) // self was missing
-                self.resetForm() // Use helper function, self was missing
-                self.showConfirmation = true //self was missing
-                self.isResistanceViewActive = false // self was missing
-                self.hapticManager.play(.success) // self was missing
-                self.isLoading = false // self was missing
+            Task {
+                do {
+                    self.localStore.setContext(context: context)
+                    try await self.localStore.addCraving(cravingDescription: trimmedText,
+                                                         intensity: self.intensity,
+                                                         resistance: self.resistance)
+                } catch {
+                    print("🔴 Error adding craving offline: \(error)")
+                }
+
+                // Wrap up
+                self.resetForm()
+                self.showConfirmation = true
+                self.hapticManager.play(.success)
+                self.isLoading = false
             }
         }
-    }
-    
-    private func resetForm() {
-        self.cravingText = ""
-        self.intensity = 5
-        self.resistance = 5
-        self.errorMessage = nil
     }
 
     func dismissError() {
@@ -89,21 +91,11 @@ final class CravingLogViewModel: ObservableObject {
         hapticManager.play(.selection)
     }
 
-    func nextAction() {
-        if isResistanceViewActive {
-            // context is passed as function argument
-        } else {
-            isResistanceViewActive = true
-            hapticManager.play(.notification) // Consider a different haptic here, maybe .start
-        }
-    }
-
-    func addCravingOffline(cravingDescription: String, intensity: Int, resistance: Int) async {
-        do {
-            try await localStore.addCraving(cravingDescription: cravingDescription,
-                                             intensity: intensity, resistance: resistance)
-        } catch {
-            print("🔴 Error adding craving offline: \(error)")
-        }
+    private func resetForm() {
+        cravingText = ""
+        intensity = 5
+        resistance = 5
+        errorMessage = nil
     }
 }
+

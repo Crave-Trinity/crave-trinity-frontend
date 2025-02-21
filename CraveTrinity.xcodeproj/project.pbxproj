@@ -222,7 +222,6 @@
 				Core/Tests/Unit/VitalsViewModelTests.swift,
 			);
 			platformFiltersByRelativePath = {
-				Core/Presentation/Common/Components/VerticalIntensityBar.swift = (watchos, );
 				Core/Presentation/Common/Components/VerticalToggleBar.swift = (watchos, );
 				Core/Presentation/Common/WatchCraveTextEditor.swift = (watchos, );
 				Core/Presentation/ViewModels/CravingLogViewModel.swift = (watchos, );

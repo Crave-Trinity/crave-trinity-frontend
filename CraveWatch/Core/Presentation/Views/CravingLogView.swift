@@ -1,76 +1,60 @@
-// CraveWatch/Core/Presentation/Views/CravingLogView.swift
+//
+//  CravingLogView.swift
+//  CraveWatch
+//
+
 import SwiftUI
 import SwiftData
 
 struct CravingLogView: View {
     // MARK: - Environment and Observed State
-
-    /// The SwiftData model context from the environment.
     @Environment(\.modelContext) private var context
-    /// The view model managing the business logic and state for this view.
-    @ObservedObject var viewModel: CravingLogViewModel
-    /// Focus state for the custom text editor.
-    @FocusState private var isEditorFocused: Bool
-    /// The scene phase (active, inactive, background) from the environment.
     @Environment(\.scenePhase) private var scenePhase
-    
-    // State for digital crown rotation
+
+    @ObservedObject var viewModel: CravingLogViewModel
+    @FocusState private var isEditorFocused: Bool
+
+    // For the Digital Crown → maps to "viewModel.intensity"
     @State private var crownIntensity: Double = 5.0
 
-    // MARK: - Body
+    // Track which of the three pages (0..2) is showing
+    @State private var currentTab: Int = 0
 
     var body: some View {
         GeometryReader { geometry in
-            ScrollView { // Add ScrollView for scrollability
+            TabView(selection: $currentTab) {
+                // 1) Text input
                 VStack(spacing: 8) {
-                    // Conditionally show the resistance input view if needed.
-                    if viewModel.isResistanceViewActive {
-                        ResistanceInputView(
-                            resistance: $viewModel.resistance,
-                            onResistanceChanged: viewModel.resistanceChanged
-                        )
-                    } else {
-                        // Main craving logging UI
-                        Text("TRIGGER")
-                            .font(.system(size: 16, weight: .bold))
-                            .foregroundColor(.white)
+                    Text("TRIGGER")
+                        .font(.system(size: 16, weight: .bold))
+                        .foregroundColor(.white)
 
-                        Text("Hungry         Angry")
-                            .font(.system(size: 14, weight: .semibold))
-                            .foregroundColor(.white.opacity(0.85))
+                    Text("Hungry         Angry")
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundColor(.white.opacity(0.85))
 
-                        WatchCraveTextEditor(
-                            text: $viewModel.cravingText,
-                            primaryPlaceholder: "Log Craving",
-                            secondaryPlaceholder: "200 chars",
-                            isFocused: $isEditorFocused,
-                            characterLimit: 200
-                        )
-                        .frame(height: 60)
+                    WatchCraveTextEditor(
+                        text: $viewModel.cravingText,
+                        primaryPlaceholder: "Log Craving",
+                        secondaryPlaceholder: "200 chars",
+                        isFocused: $isEditorFocused,
+                        characterLimit: 200
+                    )
+                    .frame(height: 60)
 
-                        Text("Lonely         Tired")
-                            .font(.system(size: 14, weight: .semibold))
-                            .foregroundColor(.white.opacity(0.85))
+                    Text("Lonely         Tired")
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundColor(.white.opacity(0.85))
 
-                        IntensityInputView(
-                            intensity: $viewModel.intensity,
-                            onIntensityChanged: viewModel.intensityChanged
-                        )
-                    }
-
-                    // The main button triggers logging or advances to resistance view.
                     Button(action: {
-                        if viewModel.isResistanceViewActive {
-                            viewModel.logCraving(context: context)
-                        } else {
-                            viewModel.nextAction()
-                        }
+                        // Next → Page 1
+                        currentTab = 1
                     }) {
-                        Text(viewModel.isResistanceViewActive ? "Log" : "Next")
+                        Text("Next")
                             .font(.system(size: 15, weight: .semibold))
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity, minHeight: 26)
-                            .background(viewModel.isResistanceViewActive ? premiumGreenGradient : premiumBlueGradient)
+                            .background(premiumBlueGradient)
                             .cornerRadius(6)
                     }
                     .buttonStyle(.plain)
@@ -80,69 +64,161 @@ struct CravingLogView: View {
                 }
                 .padding(.top, -2)
                 .padding(.bottom, 6)
-                .padding(.horizontal) // Add horizontal padding
-                .frame(width: geometry.size.width) // Use full width
-                // Overlay a progress view if loading.
-                .overlay(alignment: .center) {
-                    if viewModel.isLoading {
-                        ProgressView()
+                .padding(.horizontal)
+                .frame(width: geometry.size.width)
+                .tag(0)
+
+                // 2) Intensity
+                VStack(spacing: 12) {
+                    IntensityInputView(
+                        intensity: $viewModel.intensity,
+                        onIntensityChanged: viewModel.intensityChanged
+                    )
+                    
+                    Button(action: {
+                        // Next → Page 2
+                        currentTab = 2
+                    }) {
+                        Text("Next")
+                            .font(.system(size: 15, weight: .semibold))
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity, minHeight: 26)
+                            .background(premiumOrangeGradient)
+                            .cornerRadius(6)
                     }
+                    .buttonStyle(.plain)
+                    .disabled(viewModel.isLoading)
+                    .frame(maxWidth: .infinity)
                 }
-                // Overlay a confirmation view if needed.
-                .overlay {
-                    if viewModel.showConfirmation {
-                        ConfirmationOverlay(isPresented: $viewModel.showConfirmation)
+                .frame(width: geometry.size.width)
+                .tag(1)
+
+                // 3) Resistance
+                VStack(spacing: 12) {
+                    ResistanceInputView(
+                        resistance: $viewModel.resistance,
+                        onResistanceChanged: viewModel.resistanceChanged
+                    )
+                    
+                    Button(action: {
+                        // Log and show confirmation
+                        viewModel.logCraving(context: context)
+                    }) {
+                        Text("Log")
+                            .font(.system(size: 15, weight: .semibold))
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity, minHeight: 26)
+                            .background(premiumGreenGradient)
+                            .cornerRadius(6)
                     }
+                    .buttonStyle(.plain)
+                    .disabled(viewModel.isLoading)
+                    .frame(maxWidth: .infinity)
                 }
-                // Alert for errors.
-                .alert("Error", isPresented: Binding(
-                    get: { viewModel.errorMessage != nil },
-                    set: { newValue in if !newValue { viewModel.dismissError() } }
-                )) {
-                    Button("OK", role: .cancel) {}
-                } message: {
-                    Text(viewModel.errorMessage ?? "")
-                }
+                .frame(width: geometry.size.width)
+                .tag(2)
             }
+            .tabViewStyle(.page)
+            .frame(width: geometry.size.width, height: geometry.size.height)
             .scrollIndicators(.hidden)
-            .focusable() // Make the ScrollView focusable
-            // Bind digitalCrownRotation to a Double, and update viewModel.intensity
-            .digitalCrownRotation($crownIntensity, from: 1.0, through: 10.0, by: 1.0, sensitivity: .low, isContinuous: false, isHapticFeedbackEnabled: true)
+
+            // Digital crown sync
+            .focusable()
+            .digitalCrownRotation($crownIntensity,
+                                  from: 1.0, through: 10.0, by: 1.0,
+                                  sensitivity: .low,
+                                  isContinuous: false,
+                                  isHapticFeedbackEnabled: true)
             .onChange(of: crownIntensity) { oldValue, newValue in
-                viewModel.intensity = Int(newValue) // Convert Double back to Int
+                viewModel.intensity = Int(newValue)
             }
-            .onChange(of: scenePhase) { oldPhase, newPhase in
-                if newPhase == .inactive || newPhase == .background {
-                    viewModel.isResistanceViewActive = false
-                }
-            }
-            //Important to sync up the crown and viewmodel intensity.
             .onAppear {
                 crownIntensity = Double(viewModel.intensity)
+            }
+            .onChange(of: scenePhase) { _, newPhase in
+                if newPhase == .inactive || newPhase == .background {
+                    // Optionally reset to the first tab:
+                    // currentTab = 0
+                }
+            }
+
+            // Show progress if loading
+            .overlay(alignment: .center) {
+                if viewModel.isLoading {
+                    ProgressView()
+                }
+            }
+            // Confirmation overlay
+            .overlay {
+                if viewModel.showConfirmation {
+                    ConfirmationOverlay(isPresented: $viewModel.showConfirmation)
+                }
+            }
+            // Alert for errors
+            .alert("Error",
+                   isPresented: Binding(
+                    get: { viewModel.errorMessage != nil },
+                    set: { newVal in if !newVal { viewModel.dismissError() } }
+                   )
+            ) {
+                Button("OK", role: .cancel) { }
+            } message: {
+                Text(viewModel.errorMessage ?? "")
+            }
+            // Reset to first tab when confirmation is dismissed using the zero-parameter onChange:
+            .onChange(of: viewModel.showConfirmation) {
+                if !viewModel.showConfirmation {
+                    currentTab = 0
+                }
             }
         }
     }
 }
 
-// MARK: - Confirmation Overlay (No Changes)
+// MARK: - Gradients
 
-/// A simple overlay that confirms a successful action.
+fileprivate let premiumBlueGradient = LinearGradient(
+    gradient: Gradient(colors: [
+        Color(hue: 0.58, saturation: 0.8, brightness: 0.7),
+        Color(hue: 0.58, saturation: 0.9, brightness: 0.4)
+    ]),
+    startPoint: .top,
+    endPoint: .bottom
+)
+
+fileprivate let premiumOrangeGradient = LinearGradient(
+    gradient: Gradient(colors: [
+        Color(hue: 0.10, saturation: 0.8, brightness: 1.0),
+        Color(hue: 0.10, saturation: 0.9, brightness: 0.6)
+    ]),
+    startPoint: .top,
+    endPoint: .bottom
+)
+
+fileprivate let premiumGreenGradient = LinearGradient(
+    gradient: Gradient(colors: [
+        Color(hue: 0.35, saturation: 0.8, brightness: 0.7),
+        Color(hue: 0.35, saturation: 0.9, brightness: 0.4)
+    ]),
+    startPoint: .top,
+    endPoint: .bottom
+)
+
+// MARK: - Confirmation Overlay
 struct ConfirmationOverlay: View {
     @Binding var isPresented: Bool
 
     var body: some View {
         if isPresented {
             ZStack {
-                // Dim the background to focus attention.
                 Color.black.opacity(0.8)
                     .edgesIgnoringSafeArea(.all)
-                // Display a confirmation checkmark.
                 Image(systemName: "checkmark.circle.fill")
                     .font(.system(size: 40))
                     .foregroundColor(.green)
             }
             .onAppear {
-                // Auto-dismiss the confirmation after 1 second.
+                // Auto-dismiss the confirmation after 1 second
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     isPresented = false
                 }
@@ -153,26 +229,3 @@ struct ConfirmationOverlay: View {
     }
 }
 
-// MARK: - Premium Blue Gradient (No Changes)
-
-/// A consistent blue gradient for button backgrounds.
-fileprivate let premiumBlueGradient = LinearGradient(
-    gradient: Gradient(colors: [
-        Color(hue: 0.58, saturation: 0.8, brightness: 0.7),
-        Color(hue: 0.58, saturation: 0.9, brightness: 0.4)
-    ]),
-    startPoint: .top,
-    endPoint: .bottom
-)
-
-// MARK: - Premium Green Gradient (No Changes)
-
-/// A consistent green gradient for button backgrounds.
-fileprivate let premiumGreenGradient = LinearGradient(
-    gradient: Gradient(colors: [
-        Color(hue: 0.35, saturation: 0.8, brightness: 0.7),
-        Color(hue: 0.35, saturation: 0.9, brightness: 0.4)
-    ]),
-    startPoint: .top,
-    endPoint: .bottom
-)
