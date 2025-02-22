@@ -22,7 +22,7 @@
 
 ## **📌 Summary – What We’re Shipping First**  
 
-CRAVE is **an AI-powered craving insights system**, built to provide **personalized behavioral analysis using user logs, AI retrieval, and structured analytics.**  
+CRAVE is **an AI-powered craving insights system**, built to provide **personalized behavioral analysis using user logs, AI/RAG retrieval, and LoRA fine-tuned analytics.**  
 
 ✅ **Apple Watch + iPhone App** → Seamless craving logging.  
 ✅ **Backend that processes & analyzes cravings, not just stores them.**  
