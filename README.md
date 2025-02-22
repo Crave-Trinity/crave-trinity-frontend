@@ -24,11 +24,11 @@
 
 CRAVE is **an AI-powered craving insights system**, built to provide **personalized behavioral analysis using user logs, AI/RAG retrieval, and LoRA fine-tuned analytics.**  
 
-✅ **Apple Watch + iPhone App** → Seamless craving logging.  
-✅ **Backend that processes & analyzes cravings, not just stores them.**  
-✅ **RAG (Retrieval-Augmented Generation) to personalize AI responses without costly fine-tuning.**  
-✅ **LoRA (Low-Rank Adaptation) to fine-tune craving personas with minimal compute costs.**  
-✅ **A scalable backend with fast inference on AWS, using open-source models.**  
+✅ Apple Watch + iPhone App** → Seamless craving logging.  
+✅ Backend that processes & analyzes cravings, not just stores them.
+✅ RAG (Retrieval-Augmented Generation) to personalize AI responses without costly fine-tuning.  
+✅ LoRA (Low-Rank Adaptation) to fine-tune craving personas with minimal compute costs.
+✅ A scalable backend with fast inference on AWS, using open-source models.
 
 ---
 
@@ -78,7 +78,28 @@ CRAVE is **an AI-powered craving insights system**, built to provide **personali
 3. **During inference, we dynamically load the relevant LoRA adapter** onto Llama 2.  
 4. **Final Response = RAG Retrieved Context + LoRA Fine-Tuned Persona + User Query.**  
 
-✅ **This provides "adaptive" AI coaching without massive per-user fine-tuning costs.**  
+✅ **This provides "adaptive" AI insights without massive per-user fine-tuning costs.** 
+
+🚀 How we make real-time LoRA swapping work efficiently:
+
+✅ Step 1: Load the Base Model into GPU Memory
+- Load LLaMA 2 (13B) onto an AWS A100 GPU instance (or H100 if needed).
+
+✅ Step 2: Preload the 2-3 Most Common LoRA Adapters in VRAM
+- Track most-used craving personas and keep them loaded in GPU memory.
+- Store remaining adapters in CPU RAM for fast retrieval.
+  
+✅ Step 3: Implement a Fast Cache System for LoRA Adapters
+- Store adapters in Redis (or in-memory storage) for quick access.
+- If not in VRAM, fetch from CPU RAM before disk.
+
+✅ Step 4: Optimize LoRA Swapping for Concurrency
+- Batch requests when multiple users need the same adapter.
+-  Queue unique adapter loads instead of swapping instantly.
+  
+✅ Step 5: Monitor GPU Usage & Tune for Performance
+Implement profiling to see if we need more VRAM per instance.
+If GPU becomes a bottleneck, scale horizontally by adding more instances.
 
 ---
 
