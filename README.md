@@ -175,9 +175,9 @@ If GPU becomes a bottleneck, scale horizontally by adding more instances.
 💡 Everyone is chasing B2B SaaS and agentic AI.
 ⚡️ We’re building for humans first—scaling to enterprises when the data speaks.  
 
-Investors may think there’s no money in cravings management. **They’re wrong.**  
-- Impulse control isn’t niche—it’s the **core of addiction, stress, dopamine loops, and digital overstimulation.**  
-- **We start where others don’t:** organic traction → AI-driven insights → **B2B, healthcare, and digital therapeutics.**  
+Investors may think there’s no money in cravings management. They’re wrong. 
+- Impulse control isn’t niche—it’s the **core of performance, addiction, stress, dopamine loops, and digital overstimulation.  
+- We start where others don’t: organic traction → AI-driven insights → B2B, healthcare, and digital therapeutics.
 
 ---
 
