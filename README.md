@@ -165,7 +165,7 @@ If GPU becomes a bottleneck, scale horizontally by adding more instances.
 ---
 
 ### **From humble MVP to Unicorn**  
-📍 CRAVE will scale from simple B2C to aggregated, HIPPA-compliant, population level data analytics 
+📍 CRAVE will scale from simple B2C to aggregated, HIPPA-compliant, population level data analytics (DaaS) 
 
 <p align="center">
     <img src="https://raw.githubusercontent.com/The-Obstacle-Is-The-Way/crave-trinity/main/CravePhone/Resources/Images/high-vision-one-png.png" alt="CRAVE Vision" width="100%"/>
