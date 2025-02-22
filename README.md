@@ -693,14 +693,6 @@ A comprehensive analytics module offering users actionable insights into their c
 
 ---
 
-🔥 **Great question—how do we keep CRAVE’s DaaS model ethical while still being highly profitable?**  
-
-💡 **Most DaaS models are structured to maximize revenue, often at the cost of user privacy or ethical concerns.** The challenge is to **build a high-value dataset while ensuring it doesn’t become exploitative.**  
-
-🚀 **The good news? Ethical DaaS is not only possible—it’s a major competitive advantage.**  
-
----
-
 ## ⚙️ Development
 
 Built with:
