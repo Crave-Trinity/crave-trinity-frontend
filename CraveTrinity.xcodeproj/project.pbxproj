@@ -219,7 +219,6 @@
 				Core/Tests/Integration/MockWatchConnectivityService.swift,
 				Core/Tests/Integration/OfflineCravingSyncManagerTests.swift,
 				Core/Tests/Unit/CravingLogViewModelTests.swift,
-				Core/Tests/Unit/EmergencyTriggerViewModelTests.swift,
 				Core/Tests/Unit/VitalsViewModelTests.swift,
 			);
 			platformFiltersByRelativePath = {
@@ -246,7 +245,6 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Core/Tests/Unit/CravingLogViewModelTests.swift,
-				Core/Tests/Unit/EmergencyTriggerViewModelTests.swift,
 				Core/Tests/Unit/VitalsViewModelTests.swift,
 			);
 			target = 28A3F8E12D65973500D8DE44 /* CraveWatch Watch AppUITests */;

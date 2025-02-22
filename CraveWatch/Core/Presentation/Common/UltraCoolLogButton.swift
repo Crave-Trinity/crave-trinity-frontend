@@ -25,7 +25,7 @@ struct UltraCoolLogButton: View {
                 .foregroundColor(.white)
                 .padding(.horizontal, 16)
                 .padding(.vertical, 10)
-                // Unified corner radius
+                // Apply a gradient background with a unified corner radius.
                 .background(
                     LinearGradient(
                         gradient: Gradient(colors: [Color.purple, Color.red]),
@@ -35,7 +35,7 @@ struct UltraCoolLogButton: View {
                 )
                 .cornerRadius(12)
         }
-        // Keep the custom scale effect on press for that subtle "cool" factor.
+        // Use a plain button style and apply a scale effect when pressed.
         .buttonStyle(.plain)
         .scaleEffectOnPress(scale: 0.93)
     }

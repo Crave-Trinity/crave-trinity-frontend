@@ -3,41 +3,49 @@
 //  CraveWatch
 //
 //  A dedicated subview for selecting the "Resistance" level of the craving,
-//  using a minus/plus bar inside a rounded rectangle, and a green color scheme.
-//
+//  using minus/plus controls within a rounded rectangle, accompanied by a green color scheme.
 //  (C) 2030 - Uncle Bob & Steve Jobs Approved
 //
 
 import SwiftUI
 import SwiftData
 
+/// A view for adjusting the "Resistance" level associated with a craving.
+/// This view utilizes both button controls and digital crown input to update the view model.
 struct CravingLogResistancePageView: View {
     // MARK: - Dependencies
+    
+    /// The view model that holds and manages the resistance value.
     @ObservedObject var viewModel: CravingLogViewModel
-
-    // Callback to advance to the next page
+    
+    /// Callback invoked when the user taps the "Next" button to proceed.
     let onNext: () -> Void
-
+    
     // MARK: - Local State
+    
+    /// A local state variable that captures the resistance value controlled by the digital crown.
     @State private var crownResistance: Double = 5.0
-
+    
     // MARK: - Body
+    
     var body: some View {
         VStack(spacing: 16) {
-            // Title
+            // Display the current resistance value.
             Text("Resistance: \(viewModel.resistance)")
                 .font(.system(size: 22, weight: .bold))
                 .foregroundColor(.green)
                 .padding(.top, 4)
-
-            // Minus/Plus Bar
+            
+            // A container for the minus/plus controls with a rounded rectangle background.
             ZStack {
+                // Background for the control bar.
                 RoundedRectangle(cornerRadius: 12, style: .continuous)
                     .fill(Color.white.opacity(0.1))
                     .frame(height: 50)
-
+                
+                // Horizontal stack containing the minus button, visual indicator, and plus button.
                 HStack(spacing: 24) {
-                    // Minus Button
+                    // Minus Button: decreases resistance by 1, if above the minimum.
                     Button {
                         if viewModel.resistance > 0 {
                             viewModel.resistance -= 1
@@ -49,9 +57,11 @@ struct CravingLogResistancePageView: View {
                             .font(.system(size: 20, weight: .medium))
                             .foregroundColor(.white)
                     }
+                    // Prevent watchOS default focus ring and styling.
                     .focusable(false)
-
-                    // Bar of rectangles
+                    .buttonStyle(.plain)
+                    
+                    // Visual indicator: a row of rectangles representing resistance levels 0 to 10.
                     HStack(spacing: 3) {
                         ForEach(0...10, id: \.self) { i in
                             Rectangle()
@@ -60,8 +70,8 @@ struct CravingLogResistancePageView: View {
                                 .cornerRadius(2)
                         }
                     }
-
-                    // Plus Button
+                    
+                    // Plus Button: increases resistance by 1, if below the maximum.
                     Button {
                         if viewModel.resistance < 10 {
                             viewModel.resistance += 1
@@ -74,11 +84,12 @@ struct CravingLogResistancePageView: View {
                             .foregroundColor(.white)
                     }
                     .focusable(false)
+                    .buttonStyle(.plain)
                 }
             }
             .padding(.horizontal, 30)
-
-            // Next button with a green gradient
+            
+            // "Next" button to advance to the subsequent screen.
             Button(action: onNext) {
                 Text("Next")
                     .font(.system(size: 16, weight: .semibold))
@@ -88,12 +99,14 @@ struct CravingLogResistancePageView: View {
                     .background(premiumGreenGradient)
                     .cornerRadius(8)
             }
+            // Remove default focus styling and disable when loading.
             .buttonStyle(.plain)
             .disabled(viewModel.isLoading)
             .focusable(false)
         }
-        // Digital crown
+        // Make the entire VStack focusable to capture digital crown input.
         .focusable()
+        // Configure the digital crown to adjust crownResistance within the range 0 to 10.
         .digitalCrownRotation(
             $crownResistance,
             from: 0.0, through: 10.0, by: 1.0,
@@ -101,14 +114,16 @@ struct CravingLogResistancePageView: View {
             isContinuous: false,
             isHapticFeedbackEnabled: true
         )
+        // Update the view model whenever the digital crown value changes.
         .onChange(of: crownResistance) { _, newVal in
             viewModel.resistance = Int(newVal)
             viewModel.resistanceChanged(viewModel.resistance)
         }
+        // Initialize crownResistance with the view model's resistance when the view appears.
         .onAppear {
             crownResistance = Double(viewModel.resistance)
         }
-        // Layout & background
+        // Apply padding and set a full-screen black background.
         .padding(.horizontal, 8)
         .padding(.bottom, 8)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -116,7 +131,8 @@ struct CravingLogResistancePageView: View {
     }
 }
 
-// MARK: - Example Green Gradient
+// MARK: - Premium Green Gradient
+/// A custom linear gradient used as the background for the "Next" button.
 fileprivate let premiumGreenGradient = LinearGradient(
     gradient: Gradient(colors: [
         Color(hue: 0.33, saturation: 0.9, brightness: 0.7),

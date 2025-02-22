@@ -8,22 +8,35 @@
 
 import SwiftUI
 
+/// The WatchDependencyContainer centralizes shared dependencies for the watch application.
+/// It manages the creation and injection of services, use cases, and view models.
 @MainActor
 final class WatchDependencyContainer: ObservableObject {
-    // Shared connectivity service
+    
+    // MARK: - Shared Services
+    
+    /// Connectivity service for data exchange with the paired iOS device.
     @Published var connectivityService: WatchConnectivityService = WatchConnectivityService()
     
-    // Lazy coordinator with the connectivity service
+    // MARK: - Coordinators
+    
+    /// Lazy initialized WatchCoordinator that uses the connectivity service.
     lazy var watchCoordinator: WatchCoordinator = {
         WatchCoordinator(connectivityService: connectivityService, dependencyContainer: self)
     }()
     
-    // The Use Case
+    // MARK: - Use Case Factory Methods
+    
+    /// Creates an instance of the LogCravingUseCase.
+    /// - Returns: A fully configured `LogCravingUseCase`.
     func makeLogCravingUseCase() -> LogCravingUseCase {
         LogCravingUseCase(connectivityService: connectivityService)
     }
-
-    // The ViewModel for logging cravings
+    
+    // MARK: - ViewModel Factory Methods
+    
+    /// Creates and configures the view model responsible for logging cravings.
+    /// - Returns: A `CravingLogViewModel` ready to be used by the UI.
     func makeCravingViewModel() -> CravingLogViewModel {
         let useCase = makeLogCravingUseCase()
         return CravingLogViewModel(
@@ -32,16 +45,17 @@ final class WatchDependencyContainer: ObservableObject {
         )
     }
     
-    // === NEW AUDIO RECORDING DEPENDENCIES ===
+    // MARK: - Audio Recording Dependencies
     
-    // Repository for handling audio data
+    /// Lazy repository for managing audio data operations.
     lazy var cravingAudioRepository: CravingAudioRepositoryProtocol = CravingAudioRepositoryImpl()
     
-    // Use case to manage audio recordings
+    /// Lazy use case for handling audio recordings.
     lazy var cravingAudioUseCase: CravingAudioRecordingUseCase = CravingAudioRecordingUseCase(repository: cravingAudioRepository)
-
-    // ViewModel for the audio recording screen
+    
+    /// Creates and configures the view model for the audio recording screen.
+    /// - Returns: A `CravingAudioRecordingViewModel` instance.
     func makeCravingAudioRecordingViewModel() -> CravingAudioRecordingViewModel {
-        return CravingAudioRecordingViewModel(useCase: cravingAudioUseCase)
+        CravingAudioRecordingViewModel(useCase: cravingAudioUseCase)
     }
 }

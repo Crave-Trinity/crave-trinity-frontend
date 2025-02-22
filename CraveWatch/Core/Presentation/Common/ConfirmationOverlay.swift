@@ -21,52 +21,62 @@
 
 import SwiftUI
 
-/// A full-screen overlay that confirms an action (e.g. craving logging).
-/// No dismissal button—user taps anywhere to dismiss.
+/// A full-screen overlay that provides visual confirmation for an action, such as logging a craving.
+/// This overlay does not include an explicit dismissal button; instead, it is dismissed when the user taps anywhere.
 struct ConfirmationOverlay: View {
     
-    /// Controls whether the overlay is shown or hidden.
+    // MARK: - Dependencies
+    
+    /// Binding that controls whether the overlay is currently presented.
     @Binding var isPresented: Bool
     
+    // MARK: - View Body
+    
     var body: some View {
+        // Only render the overlay when isPresented is true.
         if isPresented {
             ZStack {
-                // A translucent/blurred background:
+                // Background layer: a translucent, blurred background covering the entire screen.
                 Color.black.opacity(0.3)
                     .ignoresSafeArea()
                     .background(.thinMaterial)
                 
-                // Foreground card with minimal content
+                // Foreground card: a minimal card providing confirmation details.
                 VStack(spacing: 12) {
-                    
+                    // A large checkmark icon to visually indicate success.
                     Image(systemName: "checkmark.seal.fill")
                         .font(.system(size: 42, weight: .bold))
                         .foregroundColor(.green)
                     
+                    // Main confirmation text.
                     Text("Craving Logged!")
                         .font(.headline)
                         .foregroundColor(.white)
                         .multilineTextAlignment(.center)
                     
-                    // Optional sub‐text
+                    // Optional subtext for additional emphasis.
                     Text("AWESOME!")
                         .font(.footnote)
                         .foregroundColor(.white.opacity(0.9))
                         .multilineTextAlignment(.center)
                 }
                 .padding(20)
+                // Background styling for the confirmation card.
                 .background(
                     RoundedRectangle(cornerRadius: 12)
                         .fill(Color.white.opacity(0.1))
                 )
+                // Border styling for subtle emphasis.
                 .overlay(
                     RoundedRectangle(cornerRadius: 12)
                         .stroke(Color.white.opacity(0.2), lineWidth: 1)
                 )
+                // Shadow to add depth to the card.
                 .shadow(color: .black.opacity(0.4), radius: 10, x: 0, y: 6)
             }
+            // Apply an opacity transition for smooth appearance/disappearance.
             .transition(.opacity.animation(.easeInOut))
-            // Taps anywhere on the overlay to dismiss
+            // Allow the user to dismiss the overlay by tapping anywhere on it.
             .onTapGesture {
                 isPresented = false
             }

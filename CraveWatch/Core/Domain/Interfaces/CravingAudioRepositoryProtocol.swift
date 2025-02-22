@@ -11,8 +11,17 @@
 
 import Foundation
 
+/// Protocol defining the interface for handling audio recording operations.
+/// Implementations of this protocol should encapsulate the logic to start, stop,
+/// and persist audio recordings.
 protocol CravingAudioRepositoryProtocol {
+    
+    /// Begins the audio recording process.
     func startRecording()
+    
+    /// Ends the current audio recording session.
     func stopRecording()
+    
+    /// Persists or finalizes the current audio recording.
     func saveRecording()
 }

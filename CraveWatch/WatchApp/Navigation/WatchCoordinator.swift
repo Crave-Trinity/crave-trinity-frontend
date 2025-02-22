@@ -11,14 +11,25 @@
 
 import SwiftUI
 
+/// The WatchCoordinator orchestrates the navigation and overall UI flow for the watch app.
+/// It consolidates the app’s entry view into a single unified screen.
 @MainActor
 final class WatchCoordinator: ObservableObject {
     
     // MARK: - Dependencies
+    
+    /// Service managing connectivity with the paired iOS device.
     let connectivityService: WatchConnectivityService
+    
+    /// The container for shared dependencies.
     let dependencyContainer: WatchDependencyContainer
     
     // MARK: - Initialization
+    
+    /// Initializes the WatchCoordinator with its required dependencies.
+    /// - Parameters:
+    ///   - connectivityService: Manages communication between the watch and its paired device.
+    ///   - dependencyContainer: Provides shared resources and factory methods for creating view models.
     init(connectivityService: WatchConnectivityService,
          dependencyContainer: WatchDependencyContainer) {
         self.connectivityService = connectivityService
@@ -26,11 +37,11 @@ final class WatchCoordinator: ObservableObject {
     }
     
     // MARK: - Root View
+    
+    /// Returns the root view for the watch app's UI.
+    /// This unified view encapsulates all the necessary components, including a tab-based layout for audio recording
+    /// and other related pages.
     var rootView: some View {
-        // Instead of switching between two views, we return one unified view:
-        // CravingLogView now has a TabView containing:
-        //  - AudioRecording as page 0
-        //  - Trigger, Intensity, Resistance, Ally, UltraCool pages as pages 1-5
         AnyView(
             CravingLogView(
                 viewModel: dependencyContainer.makeCravingViewModel()

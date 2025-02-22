@@ -16,22 +16,22 @@ struct WatchCraveTextEditor: View {
     // MARK: - Properties
     @Binding var text: String
     
-    /// Shown when the text editor is empty and not focused (larger colorful text).
+    /// Primary placeholder text shown when the editor is empty and not focused.
     let primaryPlaceholder: String
     
-    /// Optional smaller text under the main placeholder.
+    /// Optional secondary placeholder text.
     let secondaryPlaceholder: String
     
-    /// Controls if this text editor is focused for input (Scribble or on-screen keyboard).
+    /// Controls whether this text editor is focused for input.
     @FocusState.Binding var isFocused: Bool
     
-    /// Maximum number of characters allowed before truncation + haptic warning.
+    /// Maximum number of characters allowed before truncation and haptic feedback.
     let characterLimit: Int
     
     // MARK: - Body
     var body: some View {
         ZStack(alignment: .center) {
-            // MARK: - Background
+            // Background: A rounded rectangle with varying opacity based on focus.
             RoundedRectangle(cornerRadius: 8)
                 .fill(
                     isFocused
@@ -39,14 +39,13 @@ struct WatchCraveTextEditor: View {
                     : Color.gray.opacity(0.15)
                 )
             
-            // MARK: - Placeholder (only visible if empty + not focused)
+            // Placeholder: Visible only when text is empty and the editor is not focused.
             if text.isEmpty && !isFocused {
                 VStack(alignment: .center, spacing: 4) {
-                    
-                    // Bright gradient "primary" placeholder
+                    // Primary placeholder with a bright gradient overlay.
                     Text(primaryPlaceholder)
                         .font(.body)
-                        .foregroundColor(.clear) // We'll overlay a gradient below
+                        .foregroundColor(.clear)
                         .overlay {
                             brightGradient
                         }
@@ -54,7 +53,7 @@ struct WatchCraveTextEditor: View {
                             Text(primaryPlaceholder).font(.body)
                         }
                     
-                    // Secondary placeholder text
+                    // Secondary placeholder text.
                     Text(secondaryPlaceholder)
                         .font(.footnote)
                         .foregroundColor(.gray.opacity(0.8))
@@ -62,17 +61,13 @@ struct WatchCraveTextEditor: View {
                 }
             }
             
-            // MARK: - Actual TextField
-            // Keep this visible enough that watchOS recognizes it as a text input.
+            // Actual text field for input.
             TextField("", text: $text, axis: .vertical)
                 .multilineTextAlignment(.center)
                 .focused($isFocused)
-                // If you truly want typed text hidden behind placeholders, do:
-                // .foregroundColor(.clear)
-                // ...but keep .opacity(1.0) so the system sees it for input.
                 .foregroundColor(.white)
                 .onTapGesture {
-                    // Force focus when tapped
+                    // Ensure the text editor becomes focused when tapped.
                     isFocused = true
                 }
         }
@@ -82,17 +77,18 @@ struct WatchCraveTextEditor: View {
         }
     }
     
-    // MARK: - Character Limit
+    // MARK: - Character Limit Enforcement
     private func enforceCharacterLimit(oldValue: String, newValue: String) {
         if newValue.count > characterLimit {
-            // Trim text to character limit, then use your existing WatchHapticManager
+            // Trim the text to the allowed character limit.
             text = String(newValue.prefix(characterLimit))
+            // Trigger a haptic warning using the shared WatchHapticManager.
             WatchHapticManager.shared.play(.warning)
         }
     }
 }
 
-// MARK: - Bright Gradient for the primary placeholder
+// MARK: - Bright Gradient for the Primary Placeholder
 fileprivate let brightGradient = LinearGradient(
     gradient: Gradient(colors: [
         Color(hue: 0.12, saturation: 1.0, brightness: 1.0), // Bright orange

@@ -35,38 +35,45 @@
 import SwiftUI
 import SwiftData
 
+/// The main entry point for the WatchOS application.
+/// This struct defines the app’s life cycle and manages high-level dependency injection.
 @main
 struct WatchApp: App {
+    /// A shared container for dependencies, injected into the environment.
     @StateObject private var dependencyContainer = WatchDependencyContainer()
-
-    // Create the SwiftData container at launch (watchOS 10+).
-    // We have just ONE SwiftData model: WatchCravingEntity.
+    
+    /// SwiftData model container responsible for persisting and managing the WatchCravingEntity.
+    /// It is initialized at launch for watchOS 10+.
     @State private var modelContainer: ModelContainer? = {
         do {
+            // Attempt to create a ModelContainer for the WatchCravingEntity data model.
             let container = try ModelContainer(for: WatchCravingEntity.self)
             return container
         } catch {
-            // Print the real error to the console to see what's wrong
+            // Log the error with details if initialization fails.
             print("SwiftData creation error: \(error.localizedDescription)")
             return nil
         }
     }()
-
+    
+    /// The main scene of the app.
+    /// If the model container is available, it is injected into the environment so that
+    /// views using @Environment(\.modelContext) can access it.
     var body: some Scene {
         WindowGroup {
             if let container = modelContainer {
-                // Provide the container to the environment so @Environment(\.modelContext) works
                 contentView
                     .modelContainer(container)
                     .environmentObject(dependencyContainer)
             } else {
-                // If we couldn’t init the container, show an error
+                // Display an error message if the data container fails to initialize.
                 Text("Failed to load data store.")
             }
         }
     }
     
-    // The main UI
+    /// The primary user interface of the app, organized as a TabView.
+    /// Currently, it displays a NavigationView that holds the root view provided by the watch coordinator.
     @ViewBuilder
     private var contentView: some View {
         TabView {
@@ -76,11 +83,7 @@ struct WatchApp: App {
             .tabItem {
                 Label("Log", systemImage: "pencil.line")
             }
-            // Add other tabs if needed
+            // Future tabs can be added here as needed.
         }
     }
 }
-
-
-
-
