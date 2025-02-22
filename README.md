@@ -741,9 +741,10 @@ Here’s the **copy-paste-ready, YC-polished** **Contributing** section for your
 For issues, feature requests, or ideas, please [open an issue](https://github.com/The-Obstacle-Is-The-Way/crave-trinity/issues).  
 
 ---
+
 ⚠️ Disclaimer: CRAVE intends to provide analytical **insights** based on user-logged cravings data. 
-It will not offer medical predictions, diagnoses, or treatment prior to FDA SaMD approval.
-Any behavioral insights should be viewed as informational only, and users should consult a healthcare professional for medical or therapeutic guidance.
+- It will not offer medical predictions, diagnoses, or treatment prior to FDA SaMD approval.
+- Any behavioral insights should be viewed as informational only, and users should consult a healthcare professional for medical or therapeutic guidance.
 
 ---
 
