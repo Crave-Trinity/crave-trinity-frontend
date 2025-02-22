@@ -4,7 +4,7 @@
 
 ![Cravey Watch Demo](https://raw.githubusercontent.com/The-Obstacle-Is-The-Way/crave-trinity/main/CravePhone/Resources/Images/Updated-Final-Gif.gif?timestamp=2025-02-22)
 
-🔗 [Full-size GIF](https://drive.google.com/file/d/1OluDCuwnkwV8Bofj7cBRgA2ltiRLjz7I/view?usp=share_link)
+🔗 [Full-size GIF](https://drive.google.com/file/d/1jVHAwH_NwPftw58gKEGCZ4qqlUUyO0uG/view?usp=drive_link)
 
 📄 YC MVP Planning Document → https://docs.google.com/document/d/1kcK9C_-ynso44XMNej9MHrC_cZi7T8DXjF1hICOXOD4/edit?tab=t.0 
 
