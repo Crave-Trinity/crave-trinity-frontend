@@ -1,4 +1,5 @@
 # CRAVE-TRINITY 🍒 MVP — Personalized Cravings Management App
+⚠️ Disclaimer: CRAVE intends to provide analytical insights based on user-logged cravings data. It will not offer medical predictions, diagnoses, or treatment recommendations prior to FDA SaMD approval. Any behavioral insights should be viewed as informational only, and users should consult a healthcare professional for medical or therapeutic guidance.
 
 **CRAVE-Trinity** is a watchOS/iOS/VisonOS stack built with **SwiftUI**/**SwiftData**, helping you track and manage your cravings through a clean, intuitive interface. Whether it’s late-night snacks or midday munchies, CRAVE ensures you stay in control.
 
@@ -21,7 +22,6 @@
 ## **🚀 CRAVE MVP – Finalized Architecture & Execution Plan**  
 
 ## **📌 Summary – What We’re Shipping First**  
-
 CRAVE is **an AI-powered craving insights system**, built to provide **personalized behavioral analysis using user logs, AI/RAG retrieval, and LoRA fine-tuned analytics.**  
 
 ✅ Apple Watch + iPhone App** → Seamless craving logging.  
