@@ -19,18 +19,20 @@ struct CravingLogIntensityPageView: View {
     let onNext: () -> Void
 
     // MARK: - Local State
+    // The crownIntensity property is used to manage the digital crown input,
+    // controlling the displayed intensity in a seamless watchOS-friendly way.
     @State private var crownIntensity: Double = 5.0
 
     // MARK: - Body
     var body: some View {
         VStack(spacing: 16) {
-            // Title
+            // Display the current intensity value
             Text("Intensity: \(viewModel.intensity)")
                 .font(.system(size: 22, weight: .bold))
                 .foregroundColor(.orange)
                 .padding(.top, 4)
 
-            // Minus/Plus Bar in a rounded rectangle
+            // A ZStack to hold the minus/plus bar inside a rounded background
             ZStack {
                 RoundedRectangle(cornerRadius: 12, style: .continuous)
                     .fill(Color.white.opacity(0.1))
@@ -49,9 +51,12 @@ struct CravingLogIntensityPageView: View {
                             .font(.system(size: 20, weight: .medium))
                             .foregroundColor(.white)
                     }
+                    // Prevent watchOS from drawing a focus ring here
                     .focusable(false)
+                    // Remove default button style to avoid crosshairs or outlines
+                    .buttonStyle(.plain)
 
-                    // Row of rectangles to visualize intensity
+                    // Row of rectangles to visualize intensity 1 to 10
                     HStack(spacing: 3) {
                         ForEach(1...10, id: \.self) { i in
                             Rectangle()
@@ -73,12 +78,14 @@ struct CravingLogIntensityPageView: View {
                             .font(.system(size: 20, weight: .medium))
                             .foregroundColor(.white)
                     }
+                    // Same no-focus, plain style to remove watchOS crosshairs
                     .focusable(false)
+                    .buttonStyle(.plain)
                 }
             }
             .padding(.horizontal, 30)
 
-            // Next button
+            // "Next" button to advance to the next page
             Button(action: onNext) {
                 Text("Next")
                     .font(.system(size: 16, weight: .semibold))
@@ -88,12 +95,13 @@ struct CravingLogIntensityPageView: View {
                     .background(premiumOrangeGradient)
                     .cornerRadius(8)
             }
+            // Also remove focus ring from the Next button
             .buttonStyle(.plain)
-            .disabled(viewModel.isLoading)
             .focusable(false)
         }
-        // We attach the focus & crown rotation to the entire VStack
-        .focusable()
+        // Let the **entire** VStack be focusable to capture the Digital Crown rotation
+        .focusable(true)
+        // Map crown rotation to intensity from 1 to 10
         .digitalCrownRotation(
             $crownIntensity,
             from: 1.0, through: 10.0, by: 1.0,
@@ -101,14 +109,16 @@ struct CravingLogIntensityPageView: View {
             isContinuous: false,
             isHapticFeedbackEnabled: true
         )
+        // Update the ViewModel whenever the digital crown value changes
         .onChange(of: crownIntensity) { _, newVal in
             viewModel.intensity = Int(newVal)
             viewModel.intensityChanged(viewModel.intensity)
         }
+        // Make sure crownIntensity is in sync with the initial intensity
         .onAppear {
             crownIntensity = Double(viewModel.intensity)
         }
-        // Layout & background
+        // Fill the available space with a black background
         .padding(.horizontal, 8)
         .padding(.bottom, 8)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
