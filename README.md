@@ -4,7 +4,7 @@
 
 <h3 align="center">CraveyWatch Demo</h3>
 <p align="center">
-    <img src="https://raw.githubusercontent.com/The-Obstacle-Is-The-Way/crave-trinity/main/CravePhone/Resources/Images/CraveyWatchDemo.gif" width="800"/>
+![Cravey Watch Demo](https://raw.githubusercontent.com/The-Obstacle-Is-The-Way/crave-trinity/main/CravePhone/Resources/Images/CraveyWatchDemo.gif)
 </p>
 <p align="center"><em>Seamless craving logging with a tap on your Apple Watch.</em></p>
 
