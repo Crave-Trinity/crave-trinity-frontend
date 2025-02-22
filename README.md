@@ -189,7 +189,7 @@ Investors may think there’s no money in craving management. They’re wrong.
 ---
 
 ### **Individualized care & Biopsychosocial framework**
-📍 CRAVE will begin as a wellness and behavioral analytics platform, then scale into personalized care within a medical biopsychosocial framework.
+📍 CRAVE will launch as a wellness analytics platform, scaling to personalized care in a medical biopsychosocial framework only after product-market validation and ensuring FDA SaMD hurdles are clearly surmountable.
 
 <p align="center">
     <img src="https://raw.githubusercontent.com/The-Obstacle-Is-The-Way/crave-trinity/main/CravePhone/Resources/Images/high-vision-two-privacy.png" alt="CRAVE Impact" width="100%"/>
