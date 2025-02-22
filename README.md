@@ -2,9 +2,9 @@
 
 **CRAVE-Trinity** is a watchOS/iOS/VisonOS stack built with **SwiftUI**/**SwiftData**, helping you track and manage your cravings through a clean, intuitive interface. Whether it’s late-night snacks or midday munchies, CRAVE ensures you stay in control.
 
-![Cravey Watch Demo](https://raw.githubusercontent.com/The-Obstacle-Is-The-Way/crave-trinity/main/CravePhone/Resources/Images/Final-Watch-Demo.gif)
+![Cravey Watch Demo](https://github.com/The-Obstacle-Is-The-Way/crave-trinity/blob/main/CravePhone/Resources/Images/Final-Watch-Demo.gif?raw=true)
 
-🔗 [Full-size GIF](https://www.canva.com/design/DAGf0Py0b0g/ZxXjNWJ230epre8UvPyhZg/edit?utm_content=DAGf0Py0b0g&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
+🔗 [Full-size GIF]![Cravey Watch Demo](https://drive.google.com/file/d/1OluDCuwnkwV8Bofj7cBRgA2ltiRLjz7I/view?usp=share_link)
 
 📄 YC MVP Planning Document → https://docs.google.com/document/d/1kcK9C_-ynso44XMNej9MHrC_cZi7T8DXjF1hICOXOD4/edit?tab=t.0 
 
@@ -36,17 +36,18 @@ CRAVE is an AI-powered craving analytics system, built to provide personalized b
 
 ---
 
-## 🚀 Backend Architecture 
+## 🚀 CRAVE AI - Finalized Tech Stack  
 
 ### **1️⃣ Core Tech Stack**
-| **Component** | **Technology** | **Rationale** |
-|--------------|---------------|--------------|
-| **LLM Model** | **Llama 2 (13B) on AWS** | Best open-source model that supports LoRA fine-tuning. Not restricted like GPT-4. |
-| **Vector Database** | **Pinecone** | Production-grade, built for high-performance retrieval at scale. |
-| **Embeddings** | **OpenAI `text-embedding-ada-002`** | Best semantic search embeddings for RAG. |
+| **Component**            | **Technology**                                      | **Rationale**  |
+|-------------------------|--------------------------------------------------|---------------|
+| **LLM Model**           | **Llama 2 (13B) on AWS**                         | Best open-source model that supports LoRA fine-tuning. Not restricted like GPT-4. |
+| **Vector Database**      | **Pinecone**                                     | Production-grade, built for high-performance retrieval at scale. |
+| **Embeddings**          | **OpenAI `text-embedding-ada-002`**               | Best semantic search embeddings for RAG. |
 | **Fine-Tuning Framework** | **LoRA (Low-Rank Adaptation) via PyTorch + Hugging Face `peft`** | Allows persona-level fine-tuning without massive compute costs. |
-| **RAG Pipeline** | **LangChain** | Provides high-level abstractions for orchestrating retrieval, prompt assembly, and response generation. |
-| **Backend & Deployment** | **Python (FastAPI) on AWS EC2/ECS** | Python for ML, FastAPI for async speed, AWS for scalability. |
+| **RAG Pipeline**        | **LangChain**                                    | Provides high-level abstractions for orchestrating retrieval, prompt assembly, and response generation. |
+| **Backend & Deployment** | **Python (FastAPI) on AWS EC2/ECS**              | Python for ML, FastAPI for async speed, AWS for scalability. |
+| **Structured Database**  | **PostgreSQL (AWS RDS)**                        | Stores craving logs, user metadata, and structured behavioral data for analytics & AI modeling. |
 
 ---
 
