@@ -22,7 +22,7 @@
 
 ## **🚀 CRAVE MVP – Finalized Architecture & Execution Plan**  
 
-## **📌 What We’re Shipping First**  
+### **📌 What We’re Shipping First**  
 CRAVE is an AI-powered craving analytics system, built to provide personalized behavioral analysis by combining user logs, RAG, and LoRA fine-tuning.  
 
 * ✅ Apple Watch + iPhone App → Seamless craving logging.  
@@ -126,7 +126,7 @@ If GPU becomes a bottleneck, scale horizontally by adding more instances.
 
 ---
 
-# **🚀 Step-by-Step Execution Plan**
+## **🚀 Step-by-Step Execution Plan**
 ### **✅ Step 1: Build the Data Pipeline**
 - **Set up FastAPI endpoints** for craving logs.  
 - **Integrate Pinecone** to store craving text data.  
@@ -148,7 +148,7 @@ If GPU becomes a bottleneck, scale horizontally by adding more instances.
 
 ---
 
-# **🚀 Why This Stack Wins**
+## **🚀 Why This Stack Wins**
 ✅ **RAG ensures personalization without training individual models.**  
 ✅ **LoRA makes craving personas possible at low cost.**  
 ✅ **AWS GPU hosting means real-time inference at scale.**  
@@ -158,7 +158,6 @@ If GPU becomes a bottleneck, scale horizontally by adding more instances.
 ---
 
 ## 🚀 Next Steps  
-
 💥 **1️⃣ Find a visionary technical co-founder**  
 💥 **2️⃣ Start implementing this backend architecture**  
 💥 **3️⃣ Ship, Talk to Users, Iterate**  
@@ -749,3 +748,6 @@ This project is licensed under the [MIT License](LICENSE).
 ---
 
 > **CRAVE**: Because understanding your cravings **shouldn’t** be complicated. 🍫  
+⚠️ Disclaimer: CRAVE intends to provide analytical **insights** based on user-logged cravings data. 
+- It will not offer medical predictions, diagnoses, or treatment prior to FDA SaMD approval.
+- Any behavioral insights should be viewed as informational only, and users should consult a healthcare professional for medical or therapeutic guidance.
