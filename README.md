@@ -22,7 +22,7 @@
 ## **🚀 CRAVE MVP – Finalized Architecture & Execution Plan**  
 
 ## **📌 What We’re Shipping First**  
-CRAVE is an AI-powered craving analytics system, built to provide personalized behavioral analysis using user logs, AI/RAG retrieval, and LoRA fine-tuning.  
+CRAVE is an AI-powered craving analytics system, built to provide personalized behavioral analysis by combining user logs, RAG, and LoRA fine-tuning.  
 
 * ✅ Apple Watch + iPhone App → Seamless craving logging.  
 * ✅ Backend that processes & analyzes cravings, not just stores them.
