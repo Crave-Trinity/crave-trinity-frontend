@@ -36,17 +36,18 @@ CRAVE is an AI-powered craving analytics system, built to provide personalized b
 
 ---
 
-## 🚀 Backend Architecture 
+## 🚀 CRAVE AI - Finalized Tech Stack  
 
 ### **1️⃣ Core Tech Stack**
-| **Component** | **Technology** | **Rationale** |
-|--------------|---------------|--------------|
-| **LLM Model** | **Llama 2 (13B) on AWS** | Best open-source model that supports LoRA fine-tuning. Not restricted like GPT-4. |
-| **Vector Database** | **Pinecone** | Production-grade, built for high-performance retrieval at scale. |
-| **Embeddings** | **OpenAI `text-embedding-ada-002`** | Best semantic search embeddings for RAG. |
+| **Component**            | **Technology**                                      | **Rationale**  |
+|-------------------------|--------------------------------------------------|---------------|
+| **LLM Model**           | **Llama 2 (13B) on AWS**                         | Best open-source model that supports LoRA fine-tuning. Not restricted like GPT-4. |
+| **Vector Database**      | **Pinecone**                                     | Production-grade, built for high-performance retrieval at scale. |
+| **Embeddings**          | **OpenAI `text-embedding-ada-002`**               | Best semantic search embeddings for RAG. |
 | **Fine-Tuning Framework** | **LoRA (Low-Rank Adaptation) via PyTorch + Hugging Face `peft`** | Allows persona-level fine-tuning without massive compute costs. |
-| **RAG Pipeline** | **LangChain** | Provides high-level abstractions for orchestrating retrieval, prompt assembly, and response generation. |
-| **Backend & Deployment** | **Python (FastAPI) on AWS EC2/ECS** | Python for ML, FastAPI for async speed, AWS for scalability. |
+| **RAG Pipeline**        | **LangChain**                                    | Provides high-level abstractions for orchestrating retrieval, prompt assembly, and response generation. |
+| **Backend & Deployment** | **Python (FastAPI) on AWS EC2/ECS**              | Python for ML, FastAPI for async speed, AWS for scalability. |
+| **Structured Database**  | **PostgreSQL (AWS RDS)**                        | Stores craving logs, user metadata, and structured behavioral data for analytics & AI modeling. |
 
 ---
 
