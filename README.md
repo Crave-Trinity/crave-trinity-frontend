@@ -157,10 +157,16 @@ If GPU becomes a bottleneck, scale horizontally by adding more instances.
 
 ---
 
-## **Next Steps**
-💥 **1️⃣ Find a technical co-founder** – Someone who can help optimize infrastructure and scaling.  
-💥 **2️⃣ Start implementing this backend architecture ASAP** – The MVP is locked in. 
-💥 **3️⃣ Ship**, Talk to Users, Iterate 
+## 🚀 Next Steps  
+
+💥 **1️⃣ Find a technical co-founder**  
+Someone who can help optimize infrastructure and scaling.  
+
+💥 **2️⃣ Start implementing this backend architecture ASAP**  
+The MVP is locked in.  
+
+💥 **3️⃣ Ship, Talk to Users, Iterate**  
+Execute, gather feedback, and refine.  
 
 ---
 
