@@ -32,7 +32,7 @@ CRAVE is **an AI-powered cravings insights system**, built to provide **personal
 
 ---
 
-## **🚀 Backend Architecture – The Only Stack That Matters**  
+## **🚀 Backend Architecture**  
 
 ### **1️⃣ Core Tech Stack**
 | **Component** | **Technology** | **Rationale** |
