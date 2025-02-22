@@ -3,6 +3,9 @@
 //  CraveWatch
 //
 //  A dedicated subview for selecting the "Intensity" of the craving.
+//  Combines minus/plus controls in a sleek rounded-rectangle container
+//  with an orange title and an orange gradient "Next" button.
+//
 //  (C) 2030 - Uncle Bob & Steve Jobs Approved
 //
 
@@ -13,7 +16,7 @@ struct CravingLogIntensityPageView: View {
     // MARK: - Dependencies
     @ObservedObject var viewModel: CravingLogViewModel
 
-    // Callback to advance to the next tab
+    // Callback to go to the next page
     let onNext: () -> Void
 
     // MARK: - Local State
@@ -21,82 +24,103 @@ struct CravingLogIntensityPageView: View {
 
     // MARK: - Body
     var body: some View {
-        VStack(spacing: 12) {
-            IntensityInputView(
-                intensity: $viewModel.intensity,
-                onChange: {
-                    viewModel.intensityChanged(viewModel.intensity)
-                }
-            )
+        VStack(spacing: 16) {
+            // Title
+            Text("Intensity: \(viewModel.intensity)")
+                .font(.system(size: 22, weight: .bold))
+                .foregroundColor(.orange)
+                .padding(.top, 4)
 
+            // Minus/Plus Bar in a Rounded Rectangle
+            ZStack {
+                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                    .fill(Color.white.opacity(0.1))
+                    .frame(height: 50)
+
+                HStack(spacing: 24) {
+                    // Minus Button
+                    Button {
+                        if viewModel.intensity > 1 {
+                            viewModel.intensity -= 1
+                            viewModel.intensityChanged(viewModel.intensity)
+                            crownIntensity = Double(viewModel.intensity)
+                        }
+                    } label: {
+                        Image(systemName: "minus")
+                            .font(.system(size: 20, weight: .medium))
+                            .foregroundColor(.white)
+                    }
+
+                    // Simple bar of rectangles or partial slider
+                    HStack(spacing: 3) {
+                        ForEach(1...10, id: \.self) { i in
+                            Rectangle()
+                                .fill(i <= viewModel.intensity ? Color.orange : Color.gray.opacity(0.4))
+                                .frame(width: 5, height: 8)
+                                .cornerRadius(2)
+                        }
+                    }
+
+                    // Plus Button
+                    Button {
+                        if viewModel.intensity < 10 {
+                            viewModel.intensity += 1
+                            viewModel.intensityChanged(viewModel.intensity)
+                            crownIntensity = Double(viewModel.intensity)
+                        }
+                    } label: {
+                        Image(systemName: "plus")
+                            .font(.system(size: 20, weight: .medium))
+                            .foregroundColor(.white)
+                    }
+                }
+            }
+            .padding(.horizontal, 30)
+
+            // "Next" button with an orange gradient
             Button(action: onNext) {
                 Text("Next")
-                    .font(.system(size: 15, weight: .semibold))
+                    .font(.system(size: 16, weight: .semibold))
                     .foregroundColor(.white)
-                    .frame(maxWidth: .infinity, minHeight: 26)
+                    .padding(.vertical, 8)
+                    .padding(.horizontal, 18)
                     .background(premiumOrangeGradient)
-                    .cornerRadius(6)
+                    .cornerRadius(8)
             }
             .buttonStyle(.plain)
             .disabled(viewModel.isLoading)
         }
-        // The digital crown rotation
+        // Digital Crown for watch
         .focusable()
         .digitalCrownRotation(
             $crownIntensity,
-            from: 1.0,
-            through: 10.0,
-            by: 1.0,
+            from: 1.0, through: 10.0, by: 1.0,
             sensitivity: .low,
             isContinuous: false,
             isHapticFeedbackEnabled: true
         )
-        // Updated for watchOS 10+:
-        // Now using two-parameter closure: { oldValue, newValue in ... }
         .onChange(of: crownIntensity) { _, newVal in
+            // keep code in sync
             viewModel.intensity = Int(newVal)
+            viewModel.intensityChanged(viewModel.intensity)
         }
         .onAppear {
             crownIntensity = Double(viewModel.intensity)
         }
+        // Layout & background
         .padding(.horizontal, 8)
-        .padding(.top, 4)
+        .padding(.bottom, 8)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.black)
     }
 }
 
-// MARK: - Example `IntensityInputView`
-// For demonstration, assume this is a smaller subview. If you have an `IntensityInputViewModel` planned,
-// you could move logic there. This is a basic placeholder to show how you might structure it.
-struct IntensityInputView: View {
-    @Binding var intensity: Int
-    let onChange: () -> Void
-
-    var body: some View {
-        VStack {
-            Text("Intensity: \(intensity)")
-                .font(.headline)
-                .foregroundColor(.white)
-
-            Slider(value: Binding(
-                get: { Double(intensity) },
-                set: { newVal in
-                    intensity = Int(newVal)
-                    onChange()
-                }
-            ), in: 1...10, step: 1)
-
-            // Additional UI or text can go here
-        }
-        .padding()
-    }
-}
-
-// MARK: - Shared Gradient
+// MARK: - Example Orange Gradient
 fileprivate let premiumOrangeGradient = LinearGradient(
     gradient: Gradient(colors: [
-        Color(hue: 0.10, saturation: 0.8, brightness: 1.0),
-        Color(hue: 0.10, saturation: 0.9, brightness: 0.6)
+        Color(hue: 0.08, saturation: 0.85, brightness: 1.0),
+        Color(hue: 0.10, saturation: 0.95, brightness: 0.7)
     ]),
-    startPoint: .top,
-    endPoint: .bottom
+    startPoint: .topLeading,
+    endPoint: .bottomTrailing
 )
