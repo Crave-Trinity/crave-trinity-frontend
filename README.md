@@ -519,38 +519,67 @@ Built with:
 - iOS 17.0+  
 - Xcode 15.0+
 
-### Setup & Installation
-1. **Clone the repository**:  
-   ```bash
-   git clone https://github.com/YOUR_USERNAME/CRAVE.git
-   cd CRAVE
-   ```
-2. **Open in Xcode**:  
-   Double-click `CRAVE.xcodeproj` or open it via `File > Open...`
-3. **Run the project**:  
-   Select a simulator or device, then press <kbd>Cmd</kbd> + <kbd>R</kbd>.
-4. *(Optional)* **Run Tests**:  
-   <kbd>Cmd</kbd> + <kbd>U</kbd> to execute unit and UI tests.
+Here’s the **banger, YC-ready** README setup section—clean, professional, and high-signal:  
 
 ---
 
-## 🤝 Contributing
-1. **Fork** this repository  
-2. **Create a new branch**:  
+# 🚀 **Setup & Installation**  
+
+### **Clone the Repository**  
+```bash
+git clone https://github.com/The-Obstacle-Is-The-Way/crave-trinity.git
+cd crave-trinity
+```
+
+### **Install Dependencies**  
+If using CocoaPods for package management, run:  
+```bash
+pod install
+```
+
+### **Open the Project in Xcode**  
+Use the `.xcworkspace` file (if applicable, e.g., using CocoaPods or SPM):  
+```bash
+open CraveTrinity.xcworkspace
+```
+Or manually open Xcode and select **File > Open...**  
+
+### **Run the App**  
+1. Select a **simulator** or **device** in Xcode.  
+2. Press **Cmd + R** to build and run.  
+
+---
+
+### **Notes**  
+- `CravePhone` is the iOS app.  
+- `CraveWatch` is the Apple Watch extension.  
+- `CraveVision` handles future AR/VR components.  
+- Backend repo: [TBD or link if separate]  
+- Supports **Swift Package Manager (SPM)** and **MVVM + SOLID** architecture.  
+
+---
+Here’s the **copy-paste-ready, YC-polished** **Contributing** section for your README:  
+
+---
+
+## 🤝 **Contributing**  
+
+1. **Fork** this repository.  
+2. **Create a new branch** *(e.g., `feature/new-ui`, `fix/crash-on-login`)*:  
    ```bash
-   git checkout -b feature-branch
+   git checkout -b feature/your-feature-name
    ```
-3. **Commit your changes**:  
+3. **Make your changes** and commit:  
    ```bash
-   git commit -m "Add new feature"
+   git commit -m "feat: Add [brief description of feature]"
    ```
-4. **Push the branch**:  
+4. **Push your branch**:  
    ```bash
-   git push origin feature-branch
+   git push origin feature/your-feature-name
    ```
-5. **Submit a Pull Request** describing your changes.  
-   
-For issues, feature requests, or ideas, please [open an issue](https://github.com/YOUR_USERNAME/CRAVE/issues).
+5. **Open a Pull Request** with a clear description of your changes.  
+
+For issues, feature requests, or ideas, please [open an issue](https://github.com/The-Obstacle-Is-The-Way/crave-trinity/issues).  
 
 ---
 
