@@ -182,7 +182,7 @@ Investors may think there’s no money in craving management. They’re wrong.
 ---
 
 ### 🔑 **How We Win**  
-✅ **Organic growth → AI-backed coaching → B2B healthcare SaaS**  
+✅ **Organic growth → AI-backed personalized insights → B2B healthcare SaaS**  
 ✅ **Turn cravings data into a next-gen addiction & impulse control platform**  
 ✅ **Make CRAVE as viral as Duolingo streaks—dopamine resilience at scale**  
 
