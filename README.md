@@ -52,9 +52,9 @@ CRAVE is an AI-powered craving analytics system, built to provide personalized b
 ---
 
 ## **🚀 How It Works – End-to-End**
-### **1️⃣ Craving Data Ingestion**  
-- **Apple Watch + iPhone send craving logs** (timestamp, HRV, location, user mood, notes).  
-- **Stored in two places:**  
+### 1️⃣ Craving Data Ingestion
+- Apple Watch + iPhone send craving logs** (timestamp, HRV, location, user mood, notes).  
+- Stored in two places:
   - **PostgreSQL** (structured metadata like timestamps).  
   - **Pinecone** (embedded craving logs for retrieval).  
 
