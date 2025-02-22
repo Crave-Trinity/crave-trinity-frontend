@@ -19,12 +19,13 @@
 
 ---
 
-## **CRAVE - REFINED MVP **  
-
-### **Not Just Another AI Wrapper**
+## **CRAVE MVP **  
 Most AI health startups today are **thin UI wrappers** over an LLM API. They call OpenAI, return a response, and slap a subscription on it. **That’s not CRAVE.**  
 
-CRAVE is **an AI-driven cravings intelligence system, not a chatbot.** This isn’t just about logging cravings—it’s about **understanding them, predicting them, and intervening in real-time.**  
+✅ CRAVE is an AI-powered cravings intelligence system, not just a chatbot. It provides deeper insights into cravings patterns and behaviors—helping users recognize trends and build awareness.
+✅ CRAVE does not provide medical predictions or diagnostics. Due to the stochastic nature of LLMs, all insights remain analytical, not predictive.
+✅ Predictive analytics would require FDA SaMD approval, and as such, features that generate risk-based insights will be sandboxed and clearly onboarded with disclaimers.
+✅ A brief onboarding pictorial will ensure users fully understand the nature and limitations of AI-generated insights before engaging with CRAVE’s analytics.
 
 ### **MVP Goal: Build the First True AI-Powered Cravings Engine**  
 - **Apple Watch + iPhone as the user’s real-time cravings tracker.**  
