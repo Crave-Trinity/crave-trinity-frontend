@@ -159,7 +159,7 @@ If GPU becomes a bottleneck, scale horizontally by adding more instances.
 
 ## 🚀 Next Steps  
 
-💥 **1️⃣ Find a technical co-founder:** Not only someone to optimize infra/scaling, but a true visionary. 
+💥 **1️⃣ Find a technical co-founder:** Not only to optimize infra/scaling, but a visionary. 
 💥 **2️⃣ Start implementing this backend architecture ASAP**  
 💥 **3️⃣ Ship, Talk to Users, Iterate**  
 
