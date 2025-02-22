@@ -4,7 +4,7 @@
 
 <h3 align="center">CraveyWatch Demo</h3>
 <p align="center">
-    <img src="https://raw.githubusercontent.com/The-Obstacle-Is-The-Way/crave-trinity/main/CravePhone/Resources/Images/CraveyWatchDemo.gif" width="350"/>
+    <img src="https://raw.githubusercontent.com/The-Obstacle-Is-The-Way/crave-trinity/main/CravePhone/Resources/Images/CraveyWatchDemo.gif" width="800"/>
 </p>
 <p align="center"><em>Seamless craving logging with a tap on your Apple Watch.</em></p>
 
@@ -34,7 +34,7 @@
 📍 CRAVE starts as a wellness/analytics app, but can integrate personalized care in the medical biopsychosocial framework. 
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/The-Obstacle-Is-The-Way/crave-trinity/main/CravePhone/Resources/Images/high-vision-two-png.png" alt="CRAVE Impact" width="100%"/>
+    <img src="https://raw.githubusercontent.com/The-Obstacle-Is-The-Way/crave-trinity/main/CravePhone/Resources/Images/high-vision-two-privacy.png" alt="CRAVE Impact" width="100%"/>
 </p>
 
 ---
