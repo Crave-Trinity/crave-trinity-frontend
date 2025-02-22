@@ -201,7 +201,7 @@ If GPU becomes a bottleneck, scale horizontally by adding more instances.
 ---
 
 Investors may think there’s no money in craving management. **They’re wrong.**
-💡 In 1-2 years, privacy-first, ethically sourced DaaS will be valuable; the market is shifting to trustworthy data sets. 
+- 💡 In 1-2 years, privacy-first, ethically sourced DaaS will be valuable; the market is shifting to trustworthy data sets. 
 - Impulse control isn’t niche—it’s the **core of performance, addiction, stress, dopamine loops, and digital overstimulation.**  
 - We start where others don’t: grassroots traction → AI-driven insights → B2B, healthcare, and digital therapeutics.
 
