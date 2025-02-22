@@ -160,7 +160,7 @@ If GPU becomes a bottleneck, scale horizontally by adding more instances.
 ## 🚀 Next Steps  
 
 💥 **1️⃣ Find a visionary technical co-founder**  
-💥 **2️⃣ Start implementing this backend architecture ASAP**  
+💥 **2️⃣ Start implementing this backend architecture**  
 💥 **3️⃣ Ship, Talk to Users, Iterate**  
 
 ---
