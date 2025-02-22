@@ -2,60 +2,74 @@
 //  ConfirmationOverlay.swift
 //  CraveWatch
 //
-//  A translucent overlay that appears upon successful craving logging,
-//  or any other "confirmation" scenario.
-//
+//  An ultra-minimal, full-screen overlay for confirming "Craving Logged!"
 //  (C) 2030 - Uncle Bob & Steve Jobs Approved
+//
+//  Usage Example:
+//    @State private var showConfirmation = false
+//
+//    var body: some View {
+//        ZStack {
+//            // ... main content
+//            ConfirmationOverlay(isPresented: $showConfirmation)
+//        }
+//    }
+//
+//    // After logging a craving successfully:
+//    showConfirmation = true
 //
 
 import SwiftUI
 
+/// A full-screen overlay that confirms an action (e.g. craving logging).
+/// No dismissal button—user taps anywhere to dismiss.
 struct ConfirmationOverlay: View {
+    
     /// Controls whether the overlay is shown or hidden.
     @Binding var isPresented: Bool
-
+    
     var body: some View {
         if isPresented {
             ZStack {
-                // Semi-transparent black background
-                Color.black.opacity(0.5)
+                // A translucent/blurred background:
+                Color.black.opacity(0.3)
                     .ignoresSafeArea()
-
-                // Foreground card
-                VStack(spacing: 16) {
+                    .background(.thinMaterial)
+                
+                // Foreground card with minimal content
+                VStack(spacing: 12) {
+                    
                     Image(systemName: "checkmark.seal.fill")
-                        .font(.largeTitle)
+                        .font(.system(size: 42, weight: .bold))
                         .foregroundColor(.green)
-
+                    
                     Text("Craving Logged!")
-                        .font(.title3)
+                        .font(.headline)
                         .foregroundColor(.white)
                         .multilineTextAlignment(.center)
                     
-                    Text("AWESOME.\n\nKeep going—you’ve got this!")
+                    // Optional sub‐text
+                    Text("AWESOME!")
                         .font(.footnote)
-                        .foregroundColor(.white.opacity(0.85))
+                        .foregroundColor(.white.opacity(0.9))
                         .multilineTextAlignment(.center)
-
-                    Button(action: {
-                        // Dismiss overlay
-                        isPresented = false
-                    }) {
-                        Text("OK")
-                            .font(.headline)
-                            .foregroundColor(.white)
-                            .padding(.horizontal, 20)
-                            .padding(.vertical, 8)
-                            .background(Color.green)
-                            .cornerRadius(6)
-                    }
                 }
-                .padding()
-                .background(Color.white.opacity(0.1))
-                .cornerRadius(12)
-                .shadow(radius: 10)
+                .padding(20)
+                .background(
+                    RoundedRectangle(cornerRadius: 12)
+                        .fill(Color.white.opacity(0.1))
+                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(Color.white.opacity(0.2), lineWidth: 1)
+                )
+                .shadow(color: .black.opacity(0.4), radius: 10, x: 0, y: 6)
             }
             .transition(.opacity.animation(.easeInOut))
+            // Taps anywhere on the overlay to dismiss
+            .onTapGesture {
+                isPresented = false
+            }
         }
     }
 }

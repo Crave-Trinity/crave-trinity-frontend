@@ -2,16 +2,20 @@
 //  UltraCoolLogButton.swift
 //  CraveWatch
 //
-//  A fancy button that triggers the final logging action.
+//  A fancy "Log Craving" button using a clean, unified gradient style.
 //  (C) 2030 - Uncle Bob & Steve Jobs Approved
 //
 
 import SwiftUI
 
+/// A fancy button that triggers the final "Log Craving" action.
+/// - Uses a gradient background and a corner radius of 12 for a unified look.
+/// - Hooks into a callback (`onLog`) that the parent view provides.
 struct UltraCoolLogButton: View {
-    /// Action callback triggered when the user taps the button
+    
+    /// Action callback triggered when the user taps the button.
     let onLog: () -> Void
-
+    
     var body: some View {
         Button(action: {
             onLog()
@@ -19,9 +23,9 @@ struct UltraCoolLogButton: View {
             Text("Log Craving")
                 .font(.system(size: 15, weight: .semibold))
                 .foregroundColor(.white)
-                .padding(.horizontal, 12)
-                .padding(.vertical, 8)
-                // Feel free to replace with any fancy gradient or design
+                .padding(.horizontal, 16)
+                .padding(.vertical, 10)
+                // Unified corner radius
                 .background(
                     LinearGradient(
                         gradient: Gradient(colors: [Color.purple, Color.red]),
@@ -29,28 +33,10 @@ struct UltraCoolLogButton: View {
                         endPoint: .bottomTrailing
                     )
                 )
-                .cornerRadius(8)
+                .cornerRadius(12)
         }
+        // Keep the custom scale effect on press for that subtle "cool" factor.
         .buttonStyle(.plain)
-        // Add a simple scale effect when pressed, for "cool" factor
-        .scaleEffectOnPress()
-    }
-}
-
-fileprivate extension View {
-    /// Adds a gentle scaling animation when the user presses the view.
-    func scaleEffectOnPress(scale: CGFloat = 0.95) -> some View {
-        self.buttonStyle(ScaleEffectButtonStyle(scale: scale))
-    }
-}
-
-// MARK: - A custom button style that applies a scale effect on press
-fileprivate struct ScaleEffectButtonStyle: ButtonStyle {
-    let scale: CGFloat
-
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .scaleEffect(configuration.isPressed ? scale : 1.0)
-            .animation(.easeInOut(duration: 0.1), value: configuration.isPressed)
+        .scaleEffectOnPress(scale: 0.93)
     }
 }

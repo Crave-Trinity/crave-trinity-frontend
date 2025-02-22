@@ -1,3 +1,6 @@
+//Cravingmapper.swift
+//cravephone
+
 internal struct CravingMapper {
     func mapToEntity(_ dto: CravingDTO) -> CravingEntity {
         CravingEntity(
