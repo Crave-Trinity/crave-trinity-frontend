@@ -15,7 +15,8 @@
 * 📌 **Feb 19:** [**crave-trinity** (Unified iOS + Watch + Vision)](https://github.com/The-Obstacle-Is-The-Way/crave-trinity) – Single codebase with AR/VR hooks for future expansion.
 
 💡 Built in 7 days from scratch while learning Swift with AI acceleration and basecode abstraction. 
-* Commit history proves my iteration speed—over 200 solving real programming problems. It wasn’t just copy-pasta spaghetti; I debugged, refactored, and solved SwiftData issues. I can learn, execute fast, and build something real. The marathon continues.
+* Commit history proves my iteration speed—over 200 solving real programming problems.
+* It wasn’t just copy-pasta spaghetti; I debugged, refactored, and solved SwiftData issues. I can learn, execute fast, and build something real. The marathon continues.
 
 ---
 ## **🚀 CRAVE MVP – Finalized Architecture & Execution Plan**  
