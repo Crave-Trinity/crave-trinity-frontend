@@ -1,11 +1,3 @@
-//
-//  CravingLogView.swift
-//  CraveWatch
-//
-//  Now including AllyContact & UltraCoolLog pages.
-//  (C) 2030 - Uncle Bob & Steve Jobs Approved
-//
-
 import SwiftUI
 import SwiftData
 
@@ -48,8 +40,7 @@ struct CravingLogView: View {
 
                 // PAGE 4: ALLY CONTACT
                 CravingLogAllyContactPageView(
-                    viewModel: viewModel,
-                    onNext: { currentTab = 5 }
+                    viewModel: viewModel
                 )
                 .tag(4)
 
@@ -65,7 +56,6 @@ struct CravingLogView: View {
             .scrollIndicators(.hidden)
 
             // MARK: - Scene Phase
-            // Updated for watchOS 10+:
             .onChange(of: scenePhase) { _, newPhase in
                 if newPhase == .inactive || newPhase == .background {
                     // e.g. currentTab = 1 or other logic
@@ -104,3 +94,4 @@ struct CravingLogView: View {
         }
     }
 }
+

@@ -13,23 +13,10 @@ struct CravingLogAllyContactPageView: View {
     // MARK: - Dependencies
     @ObservedObject var viewModel: CravingLogViewModel
 
-    // Callback to go to the next tab
-    let onNext: () -> Void
-
     var body: some View {
         VStack(spacing: 12) {
+            // The AllySupportView is still here—no "Next" button
             AllySupportView()
-
-            Button(action: onNext) {
-                Text("Next")
-                    .font(.system(size: 15, weight: .semibold))
-                    .foregroundColor(.white)
-                    .frame(maxWidth: .infinity, minHeight: 26)
-                    .background(Color.blue)
-                    .cornerRadius(6)
-            }
-            .buttonStyle(.plain)
-            .disabled(viewModel.isLoading)
         }
         .padding(.horizontal, 10)
         .padding(.top, 6)
@@ -43,11 +30,11 @@ struct AllySupportView: View {
     @State private var selectedAlly: String = ""
 
     // Example "allies" list
-    let allies = ["Sponsor", "Friend", "Group Chat", "Therapist"]
+    let allies = ["Friend", "Family", "Group Chat", "Sponsor"]
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Reach Out to an Ally")
+            Text("Reach Out")
                 .font(.headline)
                 .foregroundColor(.white)
 
@@ -58,8 +45,7 @@ struct AllySupportView: View {
             }
             .pickerStyle(.navigationLink)
 
-            // Instead of .roundedBorder (unavailable on watchOS)
-            // We'll simply use a Rectangle background or no style:
+            // Watch-friendly text field styling
             TextField("Type a short message", text: $messageText)
                 .padding(.horizontal, 4)
                 .padding(.vertical, 2)

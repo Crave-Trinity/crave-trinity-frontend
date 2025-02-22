@@ -32,7 +32,7 @@ struct ConfirmationOverlay: View {
                         .foregroundColor(.white)
                         .multilineTextAlignment(.center)
                     
-                    Text("Great job logging your craving.\n\nKeep going—you’ve got this!")
+                    Text("AWESOME.\n\nKeep going—you’ve got this!")
                         .font(.footnote)
                         .foregroundColor(.white.opacity(0.85))
                         .multilineTextAlignment(.center)
