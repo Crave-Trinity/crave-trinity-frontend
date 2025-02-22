@@ -538,9 +538,9 @@ pod install
 ```
 
 ### **Open the Project in Xcode**  
-Use the `.xcworkspace` file (if applicable, e.g., using CocoaPods or SPM):  
+Use the `.xcodeproj` file (if applicable, e.g., using CocoaPods or SPM):  
 ```bash
-open CraveTrinity.xcworkspace
+open CraveTrinity.xcodeproj
 ```
 Or manually open Xcode and select **File > Open...**  
 
