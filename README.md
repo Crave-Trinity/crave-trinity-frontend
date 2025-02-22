@@ -19,6 +19,7 @@
 * It wasn’t just copy-pasta spaghetti; I debugged, refactored, and solved SwiftData issues. I can learn, execute fast, and build something real. The marathon continues.
 
 ---
+
 ## **🚀 CRAVE MVP – Finalized Architecture & Execution Plan**  
 
 ## **📌 What We’re Shipping First**  
@@ -84,7 +85,9 @@ CRAVE is an AI-powered craving analytics system, built to provide personalized b
 
 ✅ **This provides "adaptive" AI insights without massive per-user fine-tuning costs.** 
 
-🚀 How we make real-time LoRA swapping work efficiently:
+---
+
+### 🚀 How we make real-time LoRA swapping work efficiently:
 
 ✅ Step 1: Load the Base Model into GPU Memory
 - Load LLaMA 2 (13B) onto an AWS A100 GPU instance (or H100 if needed).
