@@ -166,7 +166,7 @@ If GPU becomes a bottleneck, scale horizontally by adding more instances.
 ---
 
 ### **From humble MVP to Unicorn**  
-📍 CRAVE has the potential to scale from simple B2C to aggregated, HIPPA-compliant, population level data analytics 
+📍 CRAVE will scale from simple B2C to aggregated, HIPPA-compliant, population level data analytics 
 
 <p align="center">
     <img src="https://raw.githubusercontent.com/The-Obstacle-Is-The-Way/crave-trinity/main/CravePhone/Resources/Images/high-vision-one-png.png" alt="CRAVE Vision" width="100%"/>
@@ -189,7 +189,7 @@ Investors may think there’s no money in craving management. They’re wrong.
 ---
 
 ### **Individualized care & Biopsychosocial framework**
-📍 CRAVE starts as a wellness/analytics app, but can integrate personalized care in the medical biopsychosocial framework. 
+📍 CRAVE will begin as a wellness and behavioral analytics platform, then scale into personalized care within a medical biopsychosocial framework.
 
 <p align="center">
     <img src="https://raw.githubusercontent.com/The-Obstacle-Is-The-Way/crave-trinity/main/CravePhone/Resources/Images/high-vision-two-privacy.png" alt="CRAVE Impact" width="100%"/>
