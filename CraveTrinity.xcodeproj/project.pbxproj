@@ -85,12 +85,12 @@
 		28A3F8C22D65971B00D8DE44 /* Exceptions for "CravePhone" folder in "CravePhone" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				"Resources/Images/Final-Watch-Demo.gif",
 				"Resources/Images/high-vision-one-png.png",
 				"Resources/Images/high-vision-one.svg",
 				"Resources/Images/high-vision-two-png.png",
 				"Resources/Images/high-vision-two-privacy.png",
 				"Resources/Images/high-vision-two.svg",
+				"Resources/Images/Updated-Final-Gif.gif",
 				Tests/AnalyticsTests/Data/AnalyticsAggregatorTests.swift,
 				Tests/AnalyticsTests/Data/AnalyticsConfigurationTests.swift,
 				Tests/AnalyticsTests/Data/AnalyticsCoordinatorTests.swift,
