@@ -2,8 +2,10 @@
 
 **CRAVE-Trinity** is a watchOS/iOS/VisonOS stack built with **SwiftUI**/**SwiftData**, helping you track and manage your cravings through a clean, intuitive interface. Whether it’s late-night snacks or midday munchies, CRAVE ensures you stay in control.
 
-![Cravey Watch Demo](https://raw.githubusercontent.com/The-Obstacle-Is-The-Way/crave-trinity/main/CravePhone/Resources/Images/CraveyWatchDemo.gif)
-Seamless craving logging with a tap on your Apple Watch.
+<div align="center">
+    <img src="https://raw.githubusercontent.com/The-Obstacle-Is-The-Way/crave-trinity/main/CravePhone/Resources/Images/CraveyWatchDemo.gif" width="800"/>
+    <p><em>Seamless craving logging with a tap on your Apple Watch.</em></p>
+</div>
 
 📄 YC MVP Planning Document → https://docs.google.com/document/d/1kcK9C_-ynso44XMNej9MHrC_cZi7T8DXjF1hICOXOD4/edit?tab=t.0 
 
