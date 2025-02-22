@@ -25,19 +25,20 @@
 <p align="center">
     <img src="https://raw.githubusercontent.com/The-Obstacle-Is-The-Way/crave-trinity/main/CravePhone/Resources/Images/high-vision-one-png.png" alt="CRAVE Vision" width="100%"/>
 </p>
+
 💡 **Everyone is chasing B2B SaaS and agentic AI.**  
 ⚡️ **We’re building for humans first—scaling to enterprises when the data speaks.**  
 
 Silicon Valley may think there’s no money in cravings management. **They’re wrong.**  
-- Impulse control isn’t niche—it’s the **core of addiction, stress, dopamine loops, and digital overstimulation**.  
-- We start with **organic traction**, refine **AI-driven insights**, and then scale into **B2B, healthcare, and digital therapeutics**.  
+- Impulse control isn’t niche—it’s the **core of addiction, stress, dopamine loops, and digital overstimulation.**  
+- **We start where others don’t:** organic traction → AI-driven insights → **B2B, healthcare, and digital therapeutics.**  
 
 ---
 
-### 🔑 **How We Win:**  
-✅ **Organic growth → Data-backed AI coaching → B2B healthcare SaaS**  
-✅ **Leverage addiction recovery, habit tracking, and impulse control as an untapped market**  
-✅ **Make CRAVE as viral as Duolingo streaks, but for dopamine resilience**  
+### 🔑 **How We Win**  
+✅ **Organic growth → AI-backed coaching → B2B healthcare SaaS**  
+✅ **Turn cravings data into a next-gen addiction & impulse control platform**  
+✅ **Make CRAVE as viral as Duolingo streaks—dopamine resilience at scale**  
 
 ---
 
