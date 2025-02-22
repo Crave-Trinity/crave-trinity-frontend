@@ -143,3 +143,5 @@ class WatchConnectivityService: NSObject, WCSessionDelegate, ObservableObject {
         }
     }
 }
+
+

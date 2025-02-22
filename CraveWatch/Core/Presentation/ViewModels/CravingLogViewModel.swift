@@ -2,6 +2,8 @@
 //  CravingLogViewModel.swift
 //  CraveWatch
 //
+//  (C) 2030
+//
 
 import SwiftUI
 import Combine
@@ -13,20 +15,19 @@ class CravingLogViewModel: ObservableObject {
     private let connectivityService: WatchConnectivityService
     private let logCravingUseCase: LogCravingUseCaseProtocol
 
-    // Keep track of Combine subscriptions
+    // Combine subscriptions
     private var cancellables = Set<AnyCancellable>()
 
-    // MARK: - Published UI state
+    // MARK: - Published UI
     @Published var cravingText: String = ""
     @Published var intensity: Int = 5
     @Published var resistance: Int = 5
 
-    // Loading & error states
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
     @Published var showConfirmation: Bool = false
 
-    // MARK: - Init that matches the container
+    // MARK: - Init
     init(
         connectivityService: WatchConnectivityService,
         logCravingUseCase: LogCravingUseCaseProtocol
@@ -35,55 +36,46 @@ class CravingLogViewModel: ObservableObject {
         self.logCravingUseCase = logCravingUseCase
     }
 
-    // MARK: - Actions
-
-    /// Called when the user taps "Log Craving" on the final watch page
+    // MARK: - Methods
     func logCraving(context: ModelContext) {
         isLoading = true
         errorMessage = nil
         showConfirmation = false
 
-        // Use the domain use case to do local + phone sync
         logCravingUseCase.execute(
             text: cravingText,
             intensity: intensity,
             resistance: resistance,
             context: context
         )
-        .receive(on: DispatchQueue.main)  // Ensure UI updates on main thread
+        .receive(on: DispatchQueue.main)
         .sink { [weak self] completion in
             guard let self = self else { return }
             self.isLoading = false
-
+            
             switch completion {
             case .finished:
-                // Successfully logged, show confirmation
+                // Successful logging => show confirmation and clear text
                 self.showConfirmation = true
-
+                self.cravingText = ""   // <-- Clears the text input
             case .failure(let error):
-                // Show an error
                 self.errorMessage = error.localizedDescription
             }
         } receiveValue: { _ in
-            // We don't need a success value, just an empty ()
+            // No returned data needed
         }
         .store(in: &cancellables)
     }
 
-    /// Dismiss the current error
     func dismissError() {
         errorMessage = nil
     }
 
-    /// Called when intensity changes
     func intensityChanged(_ newValue: Int) {
         intensity = newValue
-        // Additional logic (analytics, validations, etc.) goes here
     }
 
-    /// Called when resistance changes
     func resistanceChanged(_ newValue: Int) {
         resistance = newValue
-        // Additional logic goes here
     }
 }

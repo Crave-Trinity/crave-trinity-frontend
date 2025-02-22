@@ -2,6 +2,9 @@
 //  WatchDependencyContainer.swift
 //  CraveWatch
 //
+//  A simple container for shared watch dependencies.
+//  (C) 2030
+//
 
 import SwiftUI
 
@@ -10,17 +13,17 @@ final class WatchDependencyContainer: ObservableObject {
     // Shared connectivity service
     @Published var connectivityService: WatchConnectivityService = WatchConnectivityService()
     
-    // If you have a watch coordinator, set it up here
+    // Lazy coordinator with the connectivity service
     lazy var watchCoordinator: WatchCoordinator = {
         WatchCoordinator(connectivityService: connectivityService)
     }()
     
-    // Create the domain use case
+    // The Use Case
     func makeLogCravingUseCase() -> LogCravingUseCase {
-        return LogCravingUseCase(connectivityService: connectivityService)
+        LogCravingUseCase(connectivityService: connectivityService)
     }
     
-    // Create the CravingLogViewModel with matching init
+    // The ViewModel
     func makeCravingViewModel() -> CravingLogViewModel {
         let useCase = makeLogCravingUseCase()
         return CravingLogViewModel(

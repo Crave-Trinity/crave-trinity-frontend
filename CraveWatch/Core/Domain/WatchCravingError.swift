@@ -16,3 +16,5 @@ public struct WatchCravingError: Identifiable, Error {
         self.message = message
     }
 }
+
+

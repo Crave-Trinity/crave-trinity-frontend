@@ -1,1 +1,6 @@
 
+//LogVitalUseCase.swift
+
+//needs code!
+
+

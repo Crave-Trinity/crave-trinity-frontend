@@ -66,3 +66,5 @@ final class LogCravingUseCase: LogCravingUseCaseProtocol {
         .eraseToAnyPublisher()
     }
 }
+
+

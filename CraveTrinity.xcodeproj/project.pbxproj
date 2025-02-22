@@ -222,12 +222,11 @@
 				Core/Tests/Unit/VitalsViewModelTests.swift,
 			);
 			platformFiltersByRelativePath = {
-				Core/Presentation/Common/Components/VerticalToggleBar.swift = (watchos, );
+				Core/Presentation/Common/CravingLogFlow/CravingLogView.swift = (watchos, );
 				Core/Presentation/Common/WatchCraveTextEditor.swift = (watchos, );
 				Core/Presentation/ViewModels/CravingLogViewModel.swift = (watchos, );
-				Core/Presentation/ViewModels/VitalsViewModel.swift = (watchos, );
-				Core/Presentation/Views/CravingLogView.swift = (watchos, );
 				Core/Presentation/Views/VitalsView.swift = (watchos, );
+				Core/Presentation/Views/VitalsViewModel.swift = (watchos, );
 				Core/Services/OfflineCravingSyncManager.swift = (watchos, );
 				Core/Services/WatchConnectivityService.swift = (watchos, );
 				Core/Services/WatchHapticManager.swift = (watchos, );

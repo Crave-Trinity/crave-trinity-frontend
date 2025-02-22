@@ -2,42 +2,25 @@
 //  WatchCoordinator.swift
 //  CraveWatch
 //
-//  Created by YourName on SomeDate
-//
-//  Uncle Bob–approved final version
+//  Orchestrates the main watch UI flow.
+//  (C) 2030
 //
 
 import SwiftUI
 
 @MainActor
 final class WatchCoordinator {
-    // MARK: - Properties
-    
     let connectivityService: WatchConnectivityService
-
-    // MARK: - Initialization
     
     init(connectivityService: WatchConnectivityService) {
         self.connectivityService = connectivityService
     }
-
-    // MARK: - Root View
     
-    /// The main entry point for the watch app’s UI.
+    // The main watch UI
     var rootView: some View {
-        // Return ONLY the CravingLogView now.
-        CravingLogView(
-            viewModel: WatchDependencyContainer().makeCravingViewModel() // Create a NEW container here.
-        )
-    }
-
-    // MARK: - Offline Sync Manager
-    
-    /// Creates and returns a main-actor–isolated OfflineCravingSyncManager.
-    func makeOfflineSyncManager() -> OfflineCravingSyncManager {
-        OfflineCravingSyncManager(
-            localStore: LocalCravingStore(),
-            watchConnectivityService: connectivityService
-        )
+        // Typically you'd pass in the container from the environment, but we can
+        // do so from the dependency container for demonstration:
+        let container = WatchDependencyContainer()
+        return CravingLogView(viewModel: container.makeCravingViewModel())
     }
 }
