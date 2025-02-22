@@ -19,23 +19,23 @@
 
 ---
 
-## **CRAVE MVP **  
+## **🦊 CRAVEY MVP **  
 Most AI health startups today are **thin UI wrappers** over an LLM API. They call OpenAI, return a response, and slap a subscription on it. **That’s not CRAVE.**  
 
 - CRAVE is an AI-powered cravings intelligence system, not just a chatbot. It provides deeper insights into cravings patterns and behaviors—helping users recognize trends and build awareness.
 - CRAVE does not provide medical predictions or diagnostics. Due to the stochastic nature of LLMs, all insights remain analytical, not predictive.
 - Predictive analytics would require FDA SaMD approval, and as such, features that generate risk-based insights will be sandboxed and clearly onboarded with disclaimers.
-  - A brief onboarding pictorial will ensure users fully understand the nature and limitations of AI-generated insights before engaging with CRAVE’s analytics.
+- A brief onboarding pictorial will ensure users fully understand the nature and limitations of AI-generated insights before engaging with CRAVE’s analytics.
 
 ### **MVP Goal: Build the First True AI-Powered Cravings Engine**  
-- **Apple Watch + iPhone as the user’s real-time cravings tracker.**  
-- **A backend that actually processes cravings patterns, not just logs them.**  
-- **A personal AI cravings coach that remembers, adapts, and gets smarter over time.**  
+- Apple Watch + iPhone as the user’s real-time cravings tracker.
+- A backend that actually processes cravings patterns, not just logs them.
+- A personal cravings insights engine that helps users recognize patterns over time.
 
 ---
 
-## **🚀 Backend Architecture (MVP)**
-### **1️⃣ Data Pipeline – Logging & Structuring User Data**
+## 🚀 Backend Architecture (MVP)
+### 1️⃣ Data Pipeline – Logging & Structuring User Data
 - **Users log cravings via Watch or iPhone (One-Tap Logging).**  
 - **Data Captured:**  
   - **Timestamp, location, biometric data (HRV, sleep, glucose if available).**  
