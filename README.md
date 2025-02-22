@@ -20,7 +20,7 @@
 ---
 ## **🚀 CRAVE MVP – Finalized Architecture & Execution Plan**  
 
-## **📌 MVP Summary – What We’re Shipping First**  
+## **📌 Summary – What We’re Shipping First**  
 
 CRAVE is **an AI-powered cravings insights system**, built to provide **personalized behavioral analysis using user logs, AI retrieval, and structured analytics.**  
 
