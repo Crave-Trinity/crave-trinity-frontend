@@ -2,25 +2,39 @@
 //  WatchCoordinator.swift
 //  CraveWatch
 //
-//  Orchestrates the main watch UI flow.
+//  Orchestrates the watch UI flow. We no longer toggle between
+//  "audio" and "cravingLog" because CravingLogView already
+//  includes the new audio page inside its TabView.
+//
 //  (C) 2030
 //
 
 import SwiftUI
 
 @MainActor
-final class WatchCoordinator {
-    let connectivityService: WatchConnectivityService
+final class WatchCoordinator: ObservableObject {
     
-    init(connectivityService: WatchConnectivityService) {
+    // MARK: - Dependencies
+    let connectivityService: WatchConnectivityService
+    let dependencyContainer: WatchDependencyContainer
+    
+    // MARK: - Initialization
+    init(connectivityService: WatchConnectivityService,
+         dependencyContainer: WatchDependencyContainer) {
         self.connectivityService = connectivityService
+        self.dependencyContainer = dependencyContainer
     }
     
-    // The main watch UI
+    // MARK: - Root View
     var rootView: some View {
-        // Typically you'd pass in the container from the environment, but we can
-        // do so from the dependency container for demonstration:
-        let container = WatchDependencyContainer()
-        return CravingLogView(viewModel: container.makeCravingViewModel())
+        // Instead of switching between two views, we return one unified view:
+        // CravingLogView now has a TabView containing:
+        //  - AudioRecording as page 0
+        //  - Trigger, Intensity, Resistance, Ally, UltraCool pages as pages 1-5
+        AnyView(
+            CravingLogView(
+                viewModel: dependencyContainer.makeCravingViewModel()
+            )
+        )
     }
 }

@@ -15,20 +15,33 @@ final class WatchDependencyContainer: ObservableObject {
     
     // Lazy coordinator with the connectivity service
     lazy var watchCoordinator: WatchCoordinator = {
-        WatchCoordinator(connectivityService: connectivityService)
+        WatchCoordinator(connectivityService: connectivityService, dependencyContainer: self)
     }()
     
     // The Use Case
     func makeLogCravingUseCase() -> LogCravingUseCase {
         LogCravingUseCase(connectivityService: connectivityService)
     }
-    
-    // The ViewModel
+
+    // The ViewModel for logging cravings
     func makeCravingViewModel() -> CravingLogViewModel {
         let useCase = makeLogCravingUseCase()
         return CravingLogViewModel(
             connectivityService: connectivityService,
             logCravingUseCase: useCase
         )
+    }
+    
+    // === NEW AUDIO RECORDING DEPENDENCIES ===
+    
+    // Repository for handling audio data
+    lazy var cravingAudioRepository: CravingAudioRepositoryProtocol = CravingAudioRepositoryImpl()
+    
+    // Use case to manage audio recordings
+    lazy var cravingAudioUseCase: CravingAudioRecordingUseCase = CravingAudioRecordingUseCase(repository: cravingAudioRepository)
+
+    // ViewModel for the audio recording screen
+    func makeCravingAudioRecordingViewModel() -> CravingAudioRecordingViewModel {
+        return CravingAudioRecordingViewModel(useCase: cravingAudioUseCase)
     }
 }
