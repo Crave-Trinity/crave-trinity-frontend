@@ -2,9 +2,8 @@
 //  CravingLogIntensityPageView.swift
 //  CraveWatch
 //
-//  A dedicated subview for selecting the "Intensity" of the craving.
-//  Combines minus/plus controls in a sleek rounded-rectangle container
-//  with an orange title and an orange gradient "Next" button.
+//  A dedicated subview for selecting "Intensity" with minus/plus controls,
+//  removing watchOS focus crosshairs by only focusing the parent.
 //
 //  (C) 2030 - Uncle Bob & Steve Jobs Approved
 //
@@ -16,7 +15,7 @@ struct CravingLogIntensityPageView: View {
     // MARK: - Dependencies
     @ObservedObject var viewModel: CravingLogViewModel
 
-    // Callback to go to the next page
+    // Callback to advance to the next page
     let onNext: () -> Void
 
     // MARK: - Local State
@@ -31,7 +30,7 @@ struct CravingLogIntensityPageView: View {
                 .foregroundColor(.orange)
                 .padding(.top, 4)
 
-            // Minus/Plus Bar in a Rounded Rectangle
+            // Minus/Plus Bar in a rounded rectangle
             ZStack {
                 RoundedRectangle(cornerRadius: 12, style: .continuous)
                     .fill(Color.white.opacity(0.1))
@@ -50,8 +49,9 @@ struct CravingLogIntensityPageView: View {
                             .font(.system(size: 20, weight: .medium))
                             .foregroundColor(.white)
                     }
+                    .focusable(false)
 
-                    // Simple bar of rectangles or partial slider
+                    // Row of rectangles to visualize intensity
                     HStack(spacing: 3) {
                         ForEach(1...10, id: \.self) { i in
                             Rectangle()
@@ -73,11 +73,12 @@ struct CravingLogIntensityPageView: View {
                             .font(.system(size: 20, weight: .medium))
                             .foregroundColor(.white)
                     }
+                    .focusable(false)
                 }
             }
             .padding(.horizontal, 30)
 
-            // "Next" button with an orange gradient
+            // Next button
             Button(action: onNext) {
                 Text("Next")
                     .font(.system(size: 16, weight: .semibold))
@@ -89,8 +90,9 @@ struct CravingLogIntensityPageView: View {
             }
             .buttonStyle(.plain)
             .disabled(viewModel.isLoading)
+            .focusable(false)
         }
-        // Digital Crown for watch
+        // We attach the focus & crown rotation to the entire VStack
         .focusable()
         .digitalCrownRotation(
             $crownIntensity,
@@ -100,7 +102,6 @@ struct CravingLogIntensityPageView: View {
             isHapticFeedbackEnabled: true
         )
         .onChange(of: crownIntensity) { _, newVal in
-            // keep code in sync
             viewModel.intensity = Int(newVal)
             viewModel.intensityChanged(viewModel.intensity)
         }

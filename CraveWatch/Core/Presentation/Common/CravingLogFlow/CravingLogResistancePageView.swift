@@ -49,6 +49,7 @@ struct CravingLogResistancePageView: View {
                             .font(.system(size: 20, weight: .medium))
                             .foregroundColor(.white)
                     }
+                    .focusable(false)
 
                     // Bar of rectangles
                     HStack(spacing: 3) {
@@ -72,6 +73,7 @@ struct CravingLogResistancePageView: View {
                             .font(.system(size: 20, weight: .medium))
                             .foregroundColor(.white)
                     }
+                    .focusable(false)
                 }
             }
             .padding(.horizontal, 30)
@@ -88,6 +90,7 @@ struct CravingLogResistancePageView: View {
             }
             .buttonStyle(.plain)
             .disabled(viewModel.isLoading)
+            .focusable(false)
         }
         // Digital crown
         .focusable()
