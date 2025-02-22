@@ -19,9 +19,9 @@
 
 ---
 
-# **CRAVE AI – MVP Backend Architecture & Roadmap**  
+## **CRAVE - REFINED MVP **  
 
-## **🚀 Introduction: Not Just Another AI Wrapper**
+### **Not Just Another AI Wrapper**
 Most AI health startups today are **thin UI wrappers** over an LLM API. They call OpenAI, return a response, and slap a subscription on it. **That’s not CRAVE.**  
 
 CRAVE is **an AI-driven cravings intelligence system, not a chatbot.** This isn’t just about logging cravings—it’s about **understanding them, predicting them, and intervening in real-time.**  
