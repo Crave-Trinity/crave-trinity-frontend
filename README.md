@@ -87,7 +87,7 @@ CRAVE is an AI-powered craving analytics system, built to provide personalized b
 2. Each persona has a **lightweight LoRA adapter** fine-tuned on past craving data.  
 3. **During inference**, we dynamically load the relevant LoRA adapter onto Llama 2.  
 4. Final Response = RAG Retrieved Context + LoRA Fine-Tuned Persona + User Query.
-✅ **This provides "adaptive" AI insights without massive per-user fine-tuning costs.** 
+*  ✅  This provides "adaptive" AI insights without massive per-user fine-tuning costs.
 
 ---
 
