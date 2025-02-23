@@ -11,6 +11,9 @@
 📄 YC MVP Planning Document → https://docs.google.com/document/d/1kcK9C_-ynso44XMNej9MHrC_cZi7T8DXjF1hICOXOD4/edit?tab=t.0 
 
 📄 Timeline of commits:
+* 📌 Oct - Nov 2024: Can I do great work? How? Shower thoughts, Write down ideas.
+* 📌 Dec '24: Iterate/refine ideas, start Swift Udemy course. 
+* 📌 Jan - Feb 11: 30% through Swift bootcamp; Completed YC application as a means to an end; forcing iteration, idea refinement 
 * 📌 Feb 12–13: [CRAVE (iOS MVP)](https://github.com/The-Obstacle-Is-The-Way/CRAVECRAVE) – Zero to basic SwiftUI app with UI and logging functions 
 * 📌 Feb 14–15: [crave-refactor (Clean Architecture)](https://github.com/The-Obstacle-Is-The-Way/crave-refactor) – SwiftData + analytics debugging, major refactor.  
 * 📌 Feb 16–18: [isolated-crave-watch (Apple Watch MVP)](https://github.com/The-Obstacle-Is-The-Way/isolated-crave-watch) – On-wrist craving logging, watch-to-phone sync.  
