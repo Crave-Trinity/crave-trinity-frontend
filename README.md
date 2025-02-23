@@ -119,7 +119,7 @@ If GPU becomes a bottleneck, scale horizontally by adding more instances.
 - Recent cravings are fully stored & retrieved. 
 - Older cravings get "trend compressed" (e.g., "In the last 6 months, sugar cravings spiked in winter").  
 - Retrieval automatically prioritizes recent, high-relevance logs. 
-✅ Prevents AI responses from becoming inefficient over time. 
+- Prevents AI responses from becoming inefficient over time. 
 
 ---
 
@@ -146,18 +146,18 @@ If GPU becomes a bottleneck, scale horizontally by adding more instances.
 ---
 
 ## 🚀 Why This Stack Wins
-✅ **RAG ensures personalization without training individual models.**  
-✅ **LoRA makes craving personas possible at low cost.**  
-✅ **AWS GPU hosting means real-time inference at scale.**  
-✅ **Python + FastAPI = Fast iteration speed & flexibility.**  
-✅ **The architecture is built to scale, adapt, and improve.**  
+✅ RAG ensures personalization without training individual models.
+✅ LoRA makes craving personas possible at low cost.
+✅ AWS GPU hosting means real-time inference at scale.
+✅ Python + FastAPI = Fast iteration speed & flexibility.
+✅ The architecture is built to scale, adapt, and improve.
 
 ---
 
 ## 🚀 Next Steps  
-💥 **1️⃣ Find a visionary technical co-founder**  
-💥 **2️⃣ Start implementing this backend architecture**  
-💥 **3️⃣ Ship, Talk to Users, Iterate**  
+💥 1️⃣ Find a visionary technical co-founder
+💥 2️⃣ Start implementing this backend architecture  
+💥 3️⃣ Ship, Talk to Users, Iterate
 
 ---
 
@@ -197,7 +197,7 @@ If GPU becomes a bottleneck, scale horizontally by adding more instances.
 
 ---
 
-Investors may think there’s no money in cravings management--they’re wrong.
+Investors may think there’s no money in cravings management. They’re wrong.
 💡 In 1-2 years, privacy-first, ethically sourced DaaS will be valuable; the market is shifting to trustworthy data sets. 
 - Impulse control isn’t niche—it’s the **core of performance, addiction, stress, dopamine loops, and digital overstimulation.**  
 - We start where others don’t: grassroots traction → AI-driven insights → B2B, healthcare, and digital therapeutics.
