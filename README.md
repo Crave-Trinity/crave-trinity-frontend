@@ -1,4 +1,4 @@
-# CRAVE-TRINITY 🍒 — Personalized Cravings Management App
+# CRAVE-TRINITY 🍒 — Personalized Cravings Management App (Craving Intelligence System) 
 
 **CRAVE-Trinity** is a watchOS/iOS/VisonOS stack built with **SwiftUI**/**SwiftData**, helping you track and manage your cravings through a clean, intuitive interface. Whether it’s late-night snacks or midday munchies, CRAVE ensures you stay in control.
 
