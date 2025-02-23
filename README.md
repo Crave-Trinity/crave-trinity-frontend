@@ -111,9 +111,9 @@ If GPU becomes a bottleneck, scale horizontally by adding more instances.
 ### 4️⃣ Data Retention & Time-Based Prioritization
 🔹 **Problem:** As users log cravings for months or years, **RAG retrieval becomes bloated.**  
 🔹 **Solution:** Implement **time-weighted retrieval:**  
-✅ Last 30 Days = High Priority Logs  
-✅ Older Logs = Summarized & Compressed
-✅ Historical Insights = Only Retrieved When Highly Relevant 
+* ✅ Last 30 Days = High Priority Logs  
+* ✅ Older Logs = Summarized & Compressed
+* ✅ Historical Insights = Only Retrieved When Highly Relevant 
 
 🔹 **How It Works:**  
 - Recent cravings are fully stored & retrieved. 
