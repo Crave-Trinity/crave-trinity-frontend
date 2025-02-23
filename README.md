@@ -146,11 +146,11 @@ If GPU becomes a bottleneck, scale horizontally by adding more instances.
 ---
 
 ## 🚀 Why This Stack Wins
-✅ RAG ensures personalization without training individual models.
-✅ LoRA makes craving personas possible at low cost.
-✅ AWS GPU hosting means real-time inference at scale.
-✅ Python + FastAPI = Fast iteration speed & flexibility.
-✅ The architecture is built to scale, adapt, and improve.
+* ✅ RAG ensures personalization without training individual models.
+* ✅ LoRA makes craving personas possible at low cost.
+* ✅ AWS GPU hosting means real-time inference at scale.
+* ✅ Python + FastAPI = Fast iteration speed & flexibility.
+* ✅ The architecture is built to scale, adapt, and improve.
 
 ---
 
