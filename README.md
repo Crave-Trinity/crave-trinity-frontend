@@ -1,9 +1,9 @@
-# CRAVE-TRINITY 🍒 — Craving Intelligence System (Personalized Cravings Management)
+# CRAVE-TRINITY 🍒 — Personalized Cravings Management App
 
 **CRAVE-Trinity** is a watchOS/iOS/VisonOS stack built with **SwiftUI**/**SwiftData**, helping you track and manage your cravings through a clean, intuitive interface. Whether it’s late-night snacks or midday munchies, CRAVE ensures you stay in control.
 * 🔗 Frontend (SwiftUI + SwiftData + MVVM) → [crave-trinity-frontend](https://github.com/Crave-Trinity/crave-trinity-frontend)
 * 🔗 Backend (FastAPI + PostgreSQL + Pinecone + Llama 2) → [crave-trinity-backend](https://github.com/Crave-Trinity/crave-trinity-backend)
-
+  
 ![Cravey Watch Demo](https://raw.githubusercontent.com/The-Obstacle-Is-The-Way/crave-trinity/main/CravePhone/Resources/Images/Updated-Final-Gif.gif?timestamp=2025-02-22)
 
 🔗 [Full-size GIF](https://drive.google.com/file/d/1jVHAwH_NwPftw58gKEGCZ4qqlUUyO0uG/view?usp=drive_link)
@@ -11,12 +11,15 @@
 📄 YC MVP Planning Document → https://docs.google.com/document/d/1kcK9C_-ynso44XMNej9MHrC_cZi7T8DXjF1hICOXOD4/edit?tab=t.0 
 
 📄 Timeline of commits:
-* 📌 Feb 12–13: [CRAVE (iOS MVP)](https://github.com/The-Obstacle-Is-The-Way/CRAVECRAVE) – Zero to basic SwiftUI app, craving logging.  
+* 📌 Feb 12–13: [CRAVE (iOS MVP)](https://github.com/The-Obstacle-Is-The-Way/CRAVECRAVE) – Zero to basic SwiftUI app with UI and logging functions 
 * 📌 Feb 14–15: [crave-refactor (Clean Architecture)](https://github.com/The-Obstacle-Is-The-Way/crave-refactor) – SwiftData + analytics debugging, major refactor.  
 * 📌 Feb 16–18: [isolated-crave-watch (Apple Watch MVP)](https://github.com/The-Obstacle-Is-The-Way/isolated-crave-watch) – On-wrist craving logging, watch-to-phone sync.  
-* 📌 Feb 19: [crave-trinity (Unified iOS + Watch + Vision)](https://github.com/The-Obstacle-Is-The-Way/crave-trinity) – Single codebase with AR/VR hooks for future expansion.
+* 📌 Feb 19: [crave-trinity (Unified iOS + Watch + Vision)](https://github.com/The-Obstacle-Is-The-Way/crave-trinity) – Unified codebase with AR/VR hooks for future expansion.
+* 📌 Feb 20–21: WatchOS UI + UX Iterations – Refined UI, aesthetics, HIG-compliant intensity and resistance sliders.
+* 📌 Feb 22–23: [CraveWave Backend Integration](https://github.com/Crave-Trinity/crave-trinity-backend) – Integrated backend, improved syncing and UI/UX on iOS and watchOS.
+* 📌 Feb 23–Present: Iteration, Code Analysis, MVP scope ideation refinment
 
-💡 Built in 7 days from scratch while learning Swift with AI acceleration and basecode abstraction. 
+💡 Functional watchOS/iOS MVP - built in 7 days from scratch while learning Swift with AI acceleration and basecode abstraction. 
 * Commit history proves my iteration speed—over 200 solving real programming problems.
 * It wasn’t just copy-pasta spaghetti; I debugged, refactored, and solved SwiftData issues. I can learn, execute fast, and build something real. The marathon continues.
 
@@ -163,8 +166,8 @@ If GPU becomes a bottleneck, scale horizontally by adding more instances.
 
 ---
 
-### From humble MVP to Unicorn 
-📍 CRAVE will scale from simple B2C to aggregated, HIPPA-compliant, population level, ETHICAL (do no harm) data analytics (DaaS) 
+### From Humble MVP to Unicorn 
+📍 CRAVE will scale from simple B2C to aggregated, HIPPA-compliant, population level, ETHICAL data analytics (Do No Harm DaaS) 
 
 <p align="center">
     <img src="https://raw.githubusercontent.com/The-Obstacle-Is-The-Way/crave-trinity/main/CravePhone/Resources/Images/high-vision-one-png.png" alt="CRAVE Vision" width="100%"/>
@@ -739,6 +742,11 @@ Or manually open Xcode and select **File > Open...**
 - `CraveVision` handles future AR/VR components.  
 - [Backend repo](https://github.com/Crave-Trinity/crave-trinity-backend)  
 - Supports **Swift Package Manager (SPM)** and **MVVM + SOLID** architecture.  
+
+---
+
+* 🔗 Frontend (SwiftUI + SwiftData + MVVM) → [crave-trinity-frontend](https://github.com/Crave-Trinity/crave-trinity-frontend)
+* 🔗 Backend (FastAPI + PostgreSQL + Pinecone + Llama 2) → [crave-trinity-backend](https://github.com/Crave-Trinity/crave-trinity-backend)
 
 ---
 
