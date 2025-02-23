@@ -189,25 +189,25 @@ If GPU becomes a bottleneck, scale horizontally by adding more instances.
 
 ✅ 4. Align With Research & Public Health Interests
 - Partner with **NIH, public health agencies, & research orgs** to ensure data benefits addiction science.  
-- **Monetization should come from ethical health/wellness-focused applications**, not impulse-driven consumerism.  
+- Monetization should come from ethical health/wellness-focused applications, not impulse-driven consumerism.  
 
 ✅ 5. No Credit or Risk-Based Consumer Profiling
 - Avoid partnerships where craving data could be **used against individuals** (e.g., credit scoring based on impulsive purchases).  
-- We **don’t sell data to insurers, financial rik assessors, or predatory lenders.**  
+- We don’t sell data to insurers, financial rik assessors, or predatory lenders.
 
 ---
 
 Investors may think there’s no money in cravings management--they’re wrong.
-- 💡 In 1-2 years, privacy-first, ethically sourced DaaS will be valuable; the market is shifting to trustworthy data sets. 
+💡 In 1-2 years, privacy-first, ethically sourced DaaS will be valuable; the market is shifting to trustworthy data sets. 
 - Impulse control isn’t niche—it’s the **core of performance, addiction, stress, dopamine loops, and digital overstimulation.**  
 - We start where others don’t: grassroots traction → AI-driven insights → B2B, healthcare, and digital therapeutics.
 
 ---
 
 ### 🔑 How We Win
-✅ **Organic growth → AI-backed personalized insights → B2B healthcare SaaS**  
-✅ **Turn cravings data into a next-gen addiction & impulse control platform**  
-✅ **Make CRAVE as viral as Duolingo streaks—dopamine resilience at scale**  
+✅ Organic growth → AI-backed personalized insights → B2B healthcare SaaS
+✅ Turn cravings data into a next-gen addiction & impulse control platform
+✅ Make CRAVE as viral as Duolingo streaks—dopamine resilience at scale 
 
 ---
 
@@ -735,7 +735,7 @@ Or manually open Xcode and select **File > Open...**
 - `CravePhone` is the iOS app.  
 - `CraveWatch` is the Apple Watch extension.  
 - `CraveVision` handles future AR/VR components.  
-- Backend repo: [TBD or link if separate]  
+- Backend repo: [github.com/Crave-Trinity/crave-trinity-backend]  
 - Supports **Swift Package Manager (SPM)** and **MVVM + SOLID** architecture.  
 
 ---
