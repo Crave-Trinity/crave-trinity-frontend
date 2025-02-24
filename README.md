@@ -6,7 +6,7 @@
   
 ![Cravey Watch Demo](https://raw.githubusercontent.com/The-Obstacle-Is-The-Way/crave-trinity/main/CravePhone/Resources/Images/Updated-Final-Gif.gif?timestamp=2025-02-22)
 
-🔗 [Full-size GIF](https://drive.google.com/file/d/1jVHAwH_NwPftw58gKEGCZ4qqlUUyO0uG/view?usp=drive_link)
+🔗 [Watch GIF](https://drive.google.com/file/d/1jVHAwH_NwPftw58gKEGCZ4qqlUUyO0uG/view?usp=drive_link)
 
 📄 YC MVP Planning Document → https://docs.google.com/document/d/1kcK9C_-ynso44XMNej9MHrC_cZi7T8DXjF1hICOXOD4/edit?tab=t.0 
 
@@ -142,18 +142,18 @@ If GPU becomes a bottleneck, scale horizontally by adding more instances.
 - Set up PostgreSQL (or DynamoDB) for structured craving metadata.  
 
 ### ✅ Step 2: Implement RAG for Personalized Craving Responses
-- Install **LangChain + Pinecone** for retrieval.  
-- Create a **retrieval chain** that injects user craving logs into AI prompts.  
-- Connect the **retrieval chain to Llama 2** for personalized AI responses.  
+- Install LangChain + Pinecone for retrieval.  
+- Create a retrieval chain that injects user craving logs into AI prompts.  
+- Connect the retrieval chain to Llama 2 for personalized AI responses.  
 
 ### ✅ Step 3: Build LoRA Fine-Tuned Craving Personas
-- Fine-tune **Llama 2 LoRA adapters for different craving archetypes** using Hugging Face `peft`.  
+- Fine-tune Llama 2 LoRA adapters for different craving archetypes using Hugging Face `peft`.  
 - Store LoRA adapters separately and **dynamically load them** per user persona.  
 
 ### ✅ Step 4: Deploy on AWS & Optimize for Real-Time Inference
-- Launch **Llama 2 (13B) on an AWS GPU instance (g5.xlarge or A100-based).**  
-- Set up **API endpoints** for craving insights.  
-- Implement **RAG caching & batching** for efficiency.  
+- Launch Llama 2 (13B) on an AWS GPU instance (g5.xlarge or A100-based).  
+- Set up API endpoints for craving insights.  
+- Implement RAG caching & batching for efficiency.  
 
 ---
 
