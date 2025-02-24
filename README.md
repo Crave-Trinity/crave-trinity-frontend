@@ -72,18 +72,18 @@ CRAVE is an AI-powered craving analytics system, built to provide personalized b
 ### 1️⃣ Craving Data Ingestion
 - Apple Watch + iPhone send craving logs (timestamp, HRV, location, user mood, notes).  
 - Stored in two places:
-  - **PostgreSQL** (structured metadata like timestamps).  
-  - **Pinecone** (embedded craving logs for retrieval).  
+  - PostgreSQL (structured metadata like timestamps).  
+  - Pinecone (embedded craving logs for retrieval).  
 
 ---
 
 ### 2️⃣ RAG Personalization – How AI Feels Personal Without Full Fine-Tuning 
 🔹 **Process:**  
-1. **User Query:** (“Why do I crave sugar at night?”)  
-2. **Backend Embeds Query:** Uses `text-embedding-ada-002`.  
-3. **Retrieves Relevant Logs:** Pinecone finds **most relevant past craving logs**.  
-4. **Compiles Personalized Context:** LangChain **assembles user history + question into a structured prompt.**  
-5. **LLM Generates a Response:** Feeds the **retrieved logs + user’s question** to Llama 2.  
+1. User Query: (“Why do I crave sugar at night?”)  
+2. Backend Embeds Query: Uses `text-embedding-ada-002`.  
+3. Retrieves Relevant Logs: Pinecone finds most relevant past craving logs.  
+4. Compiles Personalized Context: LangChain assembles user history + question into a structured prompt.  
+5. LLM Generates a Response: Feeds the retrieved logs + user’s question to Llama 2.  
 
 ✅ Ensures that AI responses feel personalized, without training a separate model per user.  
 
@@ -95,9 +95,9 @@ CRAVE is an AI-powered craving analytics system, built to provide personalized b
 - LoRA lets us create craving-specific personas for better contextualization. 
 
 🔹 **How It Works:**  
-1. Users are categorized into **craving personas** (e.g., “Nighttime Binger,” “Stress Craver,” “Alcohol Dopamine-Seeker”).  
-2. Each persona has a **lightweight LoRA adapter** fine-tuned on past craving data.  
-3. **During inference**, we dynamically load the relevant LoRA adapter onto Llama 2.  
+1. Users are categorized into craving personas (e.g., “Nighttime Binger,” “Stress Craver,” “Alcohol Dopamine-Seeker”).  
+2. Each persona has a lightweight LoRA adapter fine-tuned on past craving data.  
+3. During inference, we dynamically load the relevant LoRA adapter onto Llama 2.  
 4. Final Response = RAG Retrieved Context + LoRA Fine-Tuned Persona + User Query.
 *  ✅  This provides "adaptive" AI insights without massive per-user fine-tuning costs.
 
@@ -126,8 +126,8 @@ If GPU becomes a bottleneck, scale horizontally by adding more instances.
 ---
 
 ### 4️⃣ Data Retention & Time-Based Prioritization
-🔹 **Problem:** As users log cravings for months or years, **RAG retrieval becomes bloated.**  
-🔹 **Solution:** Implement **time-weighted retrieval:**  
+🔹 Problem: As users log cravings for months or years, RAG retrieval becomes bloated.  
+🔹 Solution: Implement time-weighted retrieval:  
 * ✅ Last 30 Days = High Priority Logs  
 * ✅ Older Logs = Summarized & Compressed
 * ✅ Historical Insights = Only Retrieved When Highly Relevant 
