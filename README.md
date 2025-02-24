@@ -8,8 +8,6 @@
   <img src="https://raw.githubusercontent.com/The-Obstacle-Is-The-Way/crave-trinity/main/CravePhone/Resources/Images/Updated-Final-Gif.gif" width="400" alt="Cravey Watch Demo"/>
   <img src="https://raw.githubusercontent.com/Crave-Trinity/crave-trinity-frontend/main/CravePhone/Resources/Images/Cravey-Phone.gif" width="400" alt="Cravey Phone Demo"/>
 </p>
-  
-![Cravey Watch Demo](https://raw.githubusercontent.com/The-Obstacle-Is-The-Way/crave-trinity/main/CravePhone/Resources/Images/Updated-Final-Gif.gif?timestamp=2025-02-22)
 
 🔗 [Watch GIF](https://drive.google.com/file/d/1jVHAwH_NwPftw58gKEGCZ4qqlUUyO0uG/view?usp=drive_link)
 
