@@ -85,6 +85,7 @@
 		28A3F8C22D65971B00D8DE44 /* Exceptions for "CravePhone" folder in "CravePhone" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				"Resources/Images/Crave-Phone-Final.gif",
 				"Resources/Images/crave-trinity-architecture-fixed.svg",
 				"Resources/Images/high-vision-one-png.png",
 				"Resources/Images/high-vision-one.svg",
