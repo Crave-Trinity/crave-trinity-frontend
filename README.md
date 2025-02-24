@@ -11,9 +11,9 @@
 📄 YC MVP Planning Document → https://docs.google.com/document/d/1kcK9C_-ynso44XMNej9MHrC_cZi7T8DXjF1hICOXOD4/edit?tab=t.0 
 
 📄 Timeline of commits:
-* 📌 Oct - Nov 2024: Can I do great work? Shower thoughts, Write down ideas.
-* 📌 Dec 2024: Refine ideas, start Swift Udemy course. 
-* 📌 Jan - Feb 11: 30% through Swift bootcamp; Completed YC application as a means to an end; forcing iteration, idea refinement 
+* 📌 Oct - Dec: "Can I do great work?" Shower thoughts, Turn ideas into words 
+* 📌 Jan - Feb: Start Swift Udemy course; Complete 30% of Swift bootcamp
+* 📌 Feb 11: Submit YC application to accelerate idea iteration 
 * 📌 Feb 12–13: [CRAVE (iOS MVP)](https://github.com/The-Obstacle-Is-The-Way/CRAVECRAVE) – Zero to basic SwiftUI app with UI and logging functions 
 * 📌 Feb 14–15: [crave-refactor (Clean Architecture)](https://github.com/The-Obstacle-Is-The-Way/crave-refactor) – SwiftData + analytics debugging, major refactor.  
 * 📌 Feb 16–18: [isolated-crave-watch (Apple Watch MVP)](https://github.com/The-Obstacle-Is-The-Way/isolated-crave-watch) – On-wrist craving logging, watch-to-phone sync.  
@@ -21,10 +21,14 @@
 * 📌 Feb 20–21: WatchOS UI + UX Iterations – Refined UI, aesthetics, HIG-compliant intensity and resistance sliders.
 * 📌 Feb 22–23: [CraveWave Backend Integration](https://github.com/Crave-Trinity/crave-trinity-backend) – Integrated backend, improved syncing and UI/UX on iOS and watchOS.
 * 📌 Feb 23–Present: Iteration, Code Analysis, MVP scope refinment
-
+  
 💡 Functional watchOS/iOS MVP - built in 7 days from scratch while learning Swift with AI acceleration and basecode abstraction. 
 * Commit history proves my iteration speed—over 200 solving real programming problems.
 * It wasn’t just copy-pasta spaghetti; I debugged, refactored, and solved SwiftData issues. I can learn, execute fast, and build something real. The marathon continues.
+
+---
+
+* 🫡 "It is not the critic who counts; not the man who points out how the strong man stumbles... The credit belongs to the man who is actually in the arena... who at the best knows in the end the triumph of high achievement, and who at the worst, if he fails, at least fails while daring greatly." - Theodore Roosevelt 
 
 ---
 
