@@ -1,0 +1,148 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">
+  <!-- Background -->
+  <rect width="1000" height="1000" fill="#f7f7f7"/>
+  
+  <!-- Title -->
+  <text x="500" y="40" font-family="Arial" font-size="24" text-anchor="middle" font-weight="bold" fill="#333">CRAVE-TRINITY: Vertical AI Orchestration Architecture</text>
+  
+  <!-- Device Layer -->
+  <rect x="50" y="80" width="900" height="120" rx="10" fill="#2374ab" stroke="#333" stroke-width="2"/>
+  <text x="500" y="110" font-family="Arial" font-size="20" text-anchor="middle" font-weight="bold" fill="white">Device Layer</text>
+  
+  <!-- Devices -->
+  <rect x="80" y="130" width="240" height="50" rx="5" fill="#1c5d8c" stroke="#333" stroke-width="1"/>
+  <text x="200" y="160" font-family="Arial" font-size="14" text-anchor="middle" fill="white">Apple Watch Integration</text>
+  <text x="200" y="175" font-family="Arial" font-size="11" text-anchor="middle" fill="white">HRV via HealthKit and Motion via CoreMotion</text>
+  
+  <rect x="380" y="130" width="240" height="50" rx="5" fill="#1c5d8c" stroke="#333" stroke-width="1"/>
+  <text x="500" y="160" font-family="Arial" font-size="14" text-anchor="middle" fill="white">iPhone Processing</text>
+  <text x="500" y="175" font-family="Arial" font-size="11" text-anchor="middle" fill="white">CoreML Models and SwiftData and SwiftUI</text>
+  
+  <rect x="680" y="130" width="240" height="50" rx="5" fill="#1c5d8c" stroke="#333" stroke-width="1"/>
+  <text x="800" y="160" font-family="Arial" font-size="14" text-anchor="middle" fill="white">VisionOS Components</text>
+  <text x="800" y="175" font-family="Arial" font-size="11" text-anchor="middle" fill="white">Spatial Computing and RealityKit</text>
+  
+  <!-- Vertical AI Stack -->
+  <rect x="50" y="230" width="900" height="320" rx="10" fill="#7b2cbf" stroke="#333" stroke-width="2"/>
+  <text x="500" y="260" font-family="Arial" font-size="20" text-anchor="middle" font-weight="bold" fill="white">Vertical AI Orchestration Stack</text>
+  
+  <!-- AI Orchestrator -->
+  <rect x="100" y="280" width="800" height="60" rx="5" fill="#5a189a" stroke="#333" stroke-width="1"/>
+  <text x="500" y="305" font-family="Arial" font-size="16" text-anchor="middle" font-weight="bold" fill="white">Vertical AI Agent (Autonomous Orchestration)</text>
+  <text x="500" y="325" font-family="Arial" font-size="12" text-anchor="middle" fill="white">Continuous Monitoring - Resource Allocation - Self-Optimization via RLHF - Interface APIs</text>
+
+  <!-- RAG System -->
+  <rect x="100" y="360" width="240" height="170" rx="5" fill="#5a189a" stroke="#333" stroke-width="1"/>
+  <text x="220" y="380" font-family="Arial" font-size="14" text-anchor="middle" font-weight="bold" fill="white">RAG Pipeline</text>
+  
+  <rect x="120" y="395" width="200" height="35" rx="5" fill="#431c72" stroke="#333" stroke-width="1"/>
+  <text x="220" y="417" font-family="Arial" font-size="12" text-anchor="middle" fill="white">Pinecone Vector DB</text>
+  
+  <rect x="120" y="440" width="200" height="35" rx="5" fill="#431c72" stroke="#333" stroke-width="1"/>
+  <text x="220" y="462" font-family="Arial" font-size="12" text-anchor="middle" fill="white">OpenAI Ada-002 Embeddings</text>
+  
+  <rect x="120" y="485" width="200" height="35" rx="5" fill="#431c72" stroke="#333" stroke-width="1"/>
+  <text x="220" y="507" font-family="Arial" font-size="12" text-anchor="middle" fill="white">Time-Weighted RAG Retrieval</text>
+  
+  <!-- LoRA System -->
+  <rect x="380" y="360" width="240" height="170" rx="5" fill="#5a189a" stroke="#333" stroke-width="1"/>
+  <text x="500" y="380" font-family="Arial" font-size="14" text-anchor="middle" font-weight="bold" fill="white">LoRA Dynamic System</text>
+  
+  <rect x="400" y="395" width="200" height="35" rx="5" fill="#431c72" stroke="#333" stroke-width="1"/>
+  <text x="500" y="417" font-family="Arial" font-size="12" text-anchor="middle" fill="white">PEFT Manager (Hot-Swap System)</text>
+  
+  <rect x="400" y="440" width="95" height="35" rx="5" fill="#431c72" stroke="#333" stroke-width="1"/>
+  <text x="447" y="462" font-family="Arial" font-size="10" text-anchor="middle" fill="white">Night Binger</text>
+  
+  <rect x="505" y="440" width="95" height="35" rx="5" fill="#431c72" stroke="#333" stroke-width="1"/>
+  <text x="552" y="462" font-family="Arial" font-size="10" text-anchor="middle" fill="white">Stress Response</text>
+  
+  <rect x="400" y="485" width="200" height="35" rx="5" fill="#431c72" stroke="#333" stroke-width="1"/>
+  <text x="500" y="507" font-family="Arial" font-size="12" text-anchor="middle" fill="white">VRAM Optimization (4-bit Quant)</text>
+  
+  <!-- Base Model -->
+  <rect x="660" y="360" width="240" height="170" rx="5" fill="#5a189a" stroke="#333" stroke-width="1"/>
+  <text x="780" y="380" font-family="Arial" font-size="14" text-anchor="middle" font-weight="bold" fill="white">Base Model System</text>
+  
+  <rect x="680" y="395" width="200" height="35" rx="5" fill="#431c72" stroke="#333" stroke-width="1"/>
+  <text x="780" y="417" font-family="Arial" font-size="12" text-anchor="middle" fill="white">Llama-2 13B (Fine-tuned)</text>
+  
+  <rect x="680" y="440" width="200" height="35" rx="5" fill="#431c72" stroke="#333" stroke-width="1"/>
+  <text x="780" y="462" font-family="Arial" font-size="12" text-anchor="middle" fill="white">vLLM Inference Acceleration</text>
+  
+  <rect x="680" y="485" width="200" height="35" rx="5" fill="#431c72" stroke="#333" stroke-width="1"/>
+  <text x="780" y="507" font-family="Arial" font-size="12" text-anchor="middle" fill="white">Dynamic Batching and Scheduling</text>
+  
+  <!-- Data Processing Layer -->
+  <rect x="50" y="580" width="900" height="100" rx="10" fill="#ff7d00" stroke="#333" stroke-width="2"/>
+  <text x="500" y="610" font-family="Arial" font-size="20" text-anchor="middle" font-weight="bold" fill="white">Data Processing Layer</text>
+  
+  <rect x="100" y="630" width="250" height="35" rx="5" fill="#d66700" stroke="#333" stroke-width="1"/>
+  <text x="225" y="652" font-family="Arial" font-size="12" text-anchor="middle" fill="white">PostgreSQL with PostGIS (Structured Data)</text>
+  
+  <rect x="380" y="630" width="250" height="35" rx="5" fill="#d66700" stroke="#333" stroke-width="1"/>
+  <text x="505" y="652" font-family="Arial" font-size="12" text-anchor="middle" fill="white">TimescaleDB (Time Series Analytics)</text>
+  
+  <rect x="660" y="630" width="250" height="35" rx="5" fill="#d66700" stroke="#333" stroke-width="1"/>
+  <text x="785" y="652" font-family="Arial" font-size="12" text-anchor="middle" fill="white">Redis Streams (Real-time Processing)</text>
+  
+  <!-- Partner Network Layer -->
+  <rect x="50" y="710" width="900" height="250" rx="10" fill="#57a773" stroke="#333" stroke-width="2"/>
+  <text x="500" y="740" font-family="Arial" font-size="20" text-anchor="middle" font-weight="bold" fill="white">Partner Network and Data Monetization ($1M-$10M+ Annual Revenue)</text>
+  
+  <!-- Clinical Partners -->
+  <rect x="80" y="760" width="250" height="180" rx="5" fill="#3e7b52" stroke="#333" stroke-width="1"/>
+  <text x="205" y="780" font-family="Arial" font-size="14" text-anchor="middle" font-weight="bold" fill="white">Clinical Partners</text>
+  
+  <rect x="100" y="795" width="210" height="40" rx="5" fill="#2c5a3c" stroke="#333" stroke-width="1"/>
+  <text x="205" y="815" font-family="Arial" font-size="12" text-anchor="middle" fill="white">Novartis Biome ($2-3M)</text>
+  <text x="205" y="828" font-family="Arial" font-size="10" text-anchor="middle" fill="white">Digital Biomarkers and Clinical Trials</text>
+  
+  <rect x="100" y="845" width="210" height="40" rx="5" fill="#2c5a3c" stroke="#333" stroke-width="1"/>
+  <text x="205" y="865" font-family="Arial" font-size="12" text-anchor="middle" fill="white">J and J Innovation ($1-2M)</text>
+  <text x="205" y="878" font-family="Arial" font-size="10" text-anchor="middle" fill="white">Recovery Platform Integration</text>
+  
+  <rect x="100" y="895" width="210" height="40" rx="5" fill="#2c5a3c" stroke="#333" stroke-width="1"/>
+  <text x="205" y="915" font-family="Arial" font-size="12" text-anchor="middle" fill="white">Genentech/Roche ($1.5-3M)</text>
+  <text x="205" y="928" font-family="Arial" font-size="10" text-anchor="middle" fill="white">Clinical Research and Biomarkers</text>
+  
+  <!-- Research Partners -->
+  <rect x="360" y="760" width="250" height="180" rx="5" fill="#3e7b52" stroke="#333" stroke-width="1"/>
+  <text x="485" y="780" font-family="Arial" font-size="14" text-anchor="middle" font-weight="bold" fill="white">Research Partners</text>
+  
+  <rect x="380" y="795" width="210" height="40" rx="5" fill="#2c5a3c" stroke="#333" stroke-width="1"/>
+  <text x="485" y="815" font-family="Arial" font-size="12" text-anchor="middle" fill="white">NIH/NIDA Grants ($0.5-5M)</text>
+  <text x="485" y="828" font-family="Arial" font-size="10" text-anchor="middle" fill="white">Population Studies and Clinical Trials</text>
+  
+  <rect x="380" y="845" width="210" height="40" rx="5" fill="#2c5a3c" stroke="#333" stroke-width="1"/>
+  <text x="485" y="865" font-family="Arial" font-size="12" text-anchor="middle" fill="white">Johns Hopkins ($0.5-1M)</text>
+  <text x="485" y="878" font-family="Arial" font-size="10" text-anchor="middle" fill="white">Addiction Research and Trials</text>
+  
+  <rect x="380" y="895" width="210" height="40" rx="5" fill="#2c5a3c" stroke="#333" stroke-width="1"/>
+  <text x="485" y="915" font-family="Arial" font-size="12" text-anchor="middle" fill="white">NYU Langone ($0.3-0.8M)</text>
+  <text x="485" y="928" font-family="Arial" font-size="10" text-anchor="middle" fill="white">Addiction Research Partnerships</text>
+  
+  <!-- Enterprise Partners -->
+  <rect x="640" y="760" width="250" height="180" rx="5" fill="#3e7b52" stroke="#333" stroke-width="1"/>
+  <text x="765" y="780" font-family="Arial" font-size="14" text-anchor="middle" font-weight="bold" fill="white">Enterprise Partners</text>
+  
+  <rect x="660" y="795" width="210" height="40" rx="5" fill="#2c5a3c" stroke="#333" stroke-width="1"/>
+  <text x="765" y="815" font-family="Arial" font-size="12" text-anchor="middle" fill="white">Pear Therapeutics ($1-2M)</text>
+  <text x="765" y="828" font-family="Arial" font-size="10" text-anchor="middle" fill="white">Digital Therapeutics Integration</text>
+  
+  <rect x="660" y="845" width="210" height="40" rx="5" fill="#2c5a3c" stroke="#333" stroke-width="1"/>
+  <text x="765" y="865" font-family="Arial" font-size="12" text-anchor="middle" fill="white">Evidation Health ($1-3M)</text>
+  <rect x="660" y="895" width="210" height="40" rx="5" fill="#2c5a3c" stroke="#333" stroke-width="1"/>
+  <text x="765" y="915" font-family="Arial" font-size="12" text-anchor="middle" fill="white">Akili Interactive ($0.5-1M)</text>
+  <text x="765" y="928" font-family="Arial" font-size="10" text-anchor="middle" fill="white">Cognitive Platform Integration</text>
+
+  <!-- Connecting Lines -->
+  <path d="M 500 200 L 500 280" stroke="#333" stroke-width="2" fill="none"/>
+  <path d="M 500 340 L 220 360" stroke="#333" stroke-width="2" fill="none"/>
+  <path d="M 500 340 L 500 360" stroke="#333" stroke-width="2" fill="none"/>
+  <path d="M 500 340 L 780 360" stroke="#333" stroke-width="2" fill="none"/>
+  
+  <path d="M 500 530 L 500 580" stroke="#333" stroke-width="2" fill="none"/>
+  <path d="M 500 680 L 500 710" stroke="#333" stroke-width="2" fill="none"/>
+
+</svg>
