@@ -63,27 +63,27 @@ CRAVE is an AI-powered craving analytics system, built to provide personalized b
 💡 Everyone is chasing B2B SaaS and agentic AI.
 ⚡️ We’re building for humans first—scaling to enterprises when the data speaks.  
 
-## 1️⃣ How to Ensure CRAVE DaaS Is Ethical & “Do No Harm”
-✅ 1. Full Anonymization & Aggregation  
+## 👨‍⚕️ How to Ensure CRAVE DaaS Is Ethical & “Do No Harm”
+✅ **1. Full Anonymization & Aggregation**  
 - We never sell individual user data.  
 - Only aggregate craving insights (e.g., "20% of users log sugar cravings after 8 PM").  
 - Use differential privacy techniques (adding statistical noise) to prevent reverse engineering.  
 
-✅ 2. No Behavioral Manipulation or Addiction Optimization  
+✅ **2. No Behavioral Manipulation or Addiction Optimization**  
 - Some companies use DaaS for exploitative targeting (e.g., increasing fast-food cravings).  
 - CRAVE only licenses data for wellness, behavioral health, and research applications.  
 - We refuse partnerships that explicitly aim to exploit cravings for higher sales.
 
-✅ 3. Transparency & User Control
+✅ **3. Transparency & User Control**
 - Users should always know how their data is used. 
 - Implement an opt-in/opt-out model where users choose whether their anonymized data contributes to research.  
 - Give users insights back—our analytics should benefit the individual as much as the companies using it.  
 
-✅ 4. Align With Research & Public Health Interests
+✅ **4. Align With Research & Public Health Interests**
 - Partner with NIH, public health agencies, & research orgs to ensure data benefits addiction science.  
 - Monetization should come from ethical health/wellness-focused applications, not impulse-driven consumerism.  
 
-✅ 5. No Credit or Risk-Based Consumer Profiling
+✅ **5. No Credit or Risk-Based Consumer Profiling**
 - Avoid partnerships where craving data could be used against individuals (e.g., credit scoring based on impulsive purchases).  
 - We don’t sell data to insurers, financial rik assessors, or predatory lenders.
 
