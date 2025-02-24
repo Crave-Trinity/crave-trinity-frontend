@@ -3,12 +3,15 @@
 **CRAVE-Trinity** is a watchOS/iOS/VisonOS stack built with **SwiftUI**/**SwiftData**, helping you track and manage your cravings through a clean, intuitive interface. Whether it’s late-night snacks or midday munchies, CRAVE ensures you stay in control.
 * 🔗 Frontend (SwiftUI + SwiftData + MVVM) → [crave-trinity-frontend](https://github.com/Crave-Trinity/crave-trinity-frontend)
 * 🔗 Backend (FastAPI + PostgreSQL + Pinecone + Llama 2) → [crave-trinity-backend](https://github.com/Crave-Trinity/crave-trinity-backend)
+
+<p float="left">
+  <img src="https://raw.githubusercontent.com/The-Obstacle-Is-The-Way/crave-trinity/main/CravePhone/Resources/Images/Updated-Final-Gif.gif" width="400" alt="Cravey Watch Demo"/>
+  <img src="https://raw.githubusercontent.com/Crave-Trinity/crave-trinity-frontend/main/CravePhone/Resources/Images/Cravey-Phone.gif" width="400" alt="Cravey Phone Demo"/>
+</p>
   
 ![Cravey Watch Demo](https://raw.githubusercontent.com/The-Obstacle-Is-The-Way/crave-trinity/main/CravePhone/Resources/Images/Updated-Final-Gif.gif?timestamp=2025-02-22)
 
 🔗 [Watch GIF](https://drive.google.com/file/d/1jVHAwH_NwPftw58gKEGCZ4qqlUUyO0uG/view?usp=drive_link)
-
-![Cravey Phone Demo](https://raw.githubusercontent.com/Crave-Trinity/crave-trinity-frontend/main/CravePhone/Resources/Images/Cravey-Phone.gif)
 
 📄 YC MVP Planning Document → https://docs.google.com/document/d/1kcK9C_-ynso44XMNej9MHrC_cZi7T8DXjF1hICOXOD4/edit?tab=t.0 
 
