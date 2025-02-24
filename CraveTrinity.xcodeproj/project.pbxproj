@@ -86,7 +86,6 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				"Resources/Images/crave-trinity-architecture-fixed.svg",
-				"Resources/Images/Cravey-Phone.gif",
 				"Resources/Images/high-vision-one-png.png",
 				"Resources/Images/high-vision-one.svg",
 				"Resources/Images/high-vision-two-png.png",
