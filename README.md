@@ -10,7 +10,7 @@
 </p>
 
 🔗 [Watch GIF](https://drive.google.com/file/d/1jVHAwH_NwPftw58gKEGCZ4qqlUUyO0uG/view?usp=drive_link)
-🔗 [Phone GIF](https://drive.google.com/file/d/1jVHAwH_NwPftw58gKEGCZ4qqlUUyO0uG/view?usp=drive_link)
+🔗 [Phone GIF](https://drive.google.com/file/d/1LGsVmikIZVOqzZihke7NAYTTJdVplB9O/view?usp=sharing)
 
 📄 YC MVP Planning Document → https://docs.google.com/document/d/1kcK9C_-ynso44XMNej9MHrC_cZi7T8DXjF1hICOXOD4/edit?tab=t.0 
 
