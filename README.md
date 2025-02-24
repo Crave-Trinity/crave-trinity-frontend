@@ -105,7 +105,7 @@ CRAVE is an AI-powered craving analytics system, built to provide personalized b
 
 ## 🚀 Next Steps  
 * 💥 1️⃣ Find a visionary technical co-founder
-* 💥 2️⃣ Start implementing this backend architecture  
+* 💥 2️⃣ Start implementing this frontend/backend architecture  
 * 💥 3️⃣ Ship, Talk to Users, Iterate
 
 ---
