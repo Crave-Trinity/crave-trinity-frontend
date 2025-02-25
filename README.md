@@ -85,7 +85,7 @@ CRAVE is an AI-powered craving analytics system, built to provide personalized b
 
 ✅ **5. No Credit or Risk-Based Consumer Profiling**
 - Avoid partnerships where craving data could be used against individuals (e.g., credit scoring based on impulsive purchases).  
-- We don’t sell data to insurers, financial rik assessors, or predatory lenders.
+- We don’t sell data to insurers, financial risk assessors, or predatory lenders.
 
 ---
 
