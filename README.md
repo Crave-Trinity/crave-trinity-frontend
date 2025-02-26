@@ -26,7 +26,7 @@
 * 📌 Feb 19: [crave-trinity (iOS + Watch + Vision)](https://github.com/The-Obstacle-Is-The-Way/crave-trinity) – Unified codebase with AR/VR hooks for the future
 * 📌 Feb 20–21: WatchOS UI + UX Iterations – Refined UI, aesthetics, HIG-compliant intensity/resistance sliders
 * 📌 Feb 22–23: [CraveWave Backend](https://github.com/Crave-Trinity/crave-trinity-backend) – Backend foundation, improved syncing and UI/UX 
-* 📌 Feb 23–Present: Back-End [Live](https://crave-trinity-backend-production.up.railway.app/); Completing endpoints, MVP scope 
+* 📌 Feb 23–Present: Back-End [Live](https://crave-trinity-backend-production.up.railway.app/); Completing endpoints, MVP scope iteration 
   
 💡 Functional watchOS/iOS MVP - built in 7 days from scratch while learning Swift with AI acceleration and basecode abstraction. 
 * It wasn’t just copy-pasta spaghetti; I debugged, refactored, and solved SwiftData issues. I can learn, execute fast, and build something real. The marathon continues.
