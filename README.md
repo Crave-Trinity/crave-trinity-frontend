@@ -20,12 +20,12 @@
 * 📌 Oct - Dec: "Can I do great work?" Shower thoughts; Ideas into words 
 * 📌 Jan - Feb: <30% of Swift bootcamp
 * 📌 Feb 11: Submit YC application to accelerate idea iteration 
-* 📌 Feb 12–13: [CRAVE (iOS MVP)](https://github.com/The-Obstacle-Is-The-Way/CRAVECRAVE) – Zero to basic SwiftUI app + logging functions 
-* 📌 Feb 14–15: [crave-refactor](https://github.com/The-Obstacle-Is-The-Way/crave-refactor) – SwiftData + analytics debugging, clean refactor
-* 📌 Feb 16–18: [isolated-crave-watch (Apple Watch MVP)](https://github.com/The-Obstacle-Is-The-Way/isolated-crave-watch) – On-wrist craving logging, watch-to-phone sync  
-* 📌 Feb 19: [crave-trinity (Unified iOS + Watch + Vision)](https://github.com/The-Obstacle-Is-The-Way/crave-trinity) – Unified codebase with AR/VR hooks for the future
+* 📌 Feb 12–13: [CRAVE Phone MVP](https://github.com/The-Obstacle-Is-The-Way/CRAVECRAVE) – Zero to basic SwiftUI app + logging functions 
+* 📌 Feb 14–15: [Crave-phone-refactor](https://github.com/The-Obstacle-Is-The-Way/crave-refactor) – SwiftData + analytics debugging, clean refactor
+* 📌 Feb 16–18: [Apple Watch MVP](https://github.com/The-Obstacle-Is-The-Way/isolated-crave-watch) – On-wrist craving logging, watch-to-phone sync  
+* 📌 Feb 19: [crave-trinity (iOS + Watch + Vision)](https://github.com/The-Obstacle-Is-The-Way/crave-trinity) – Unified codebase with AR/VR hooks for the future
 * 📌 Feb 20–21: WatchOS UI + UX Iterations – Refined UI, aesthetics, HIG-compliant intensity/resistance sliders
-* 📌 Feb 22–23: [CraveWave Backend Integration](https://github.com/Crave-Trinity/crave-trinity-backend) – Backend foundation, improved syncing and UI/UX 
+* 📌 Feb 22–23: [CraveWave Backend](https://github.com/Crave-Trinity/crave-trinity-backend) – Backend foundation, improved syncing and UI/UX 
 * 📌 Feb 23–Present: Back-End [Live](https://crave-trinity-backend-production.up.railway.app/); Completing endpoints, MVP scope 
   
 💡 Functional watchOS/iOS MVP - built in 7 days from scratch while learning Swift with AI acceleration and basecode abstraction. 
