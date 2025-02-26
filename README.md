@@ -28,7 +28,6 @@
 * 📌 Feb 23–Present: Iteration, Code Analysis, MVP scope refinment
   
 💡 Functional watchOS/iOS MVP - built in 7 days from scratch while learning Swift with AI acceleration and basecode abstraction. 
-* Commit history proves my iteration speed—over 200 solving real programming problems.
 * It wasn’t just copy-pasta spaghetti; I debugged, refactored, and solved SwiftData issues. I can learn, execute fast, and build something real. The marathon continues.
 
 ---
