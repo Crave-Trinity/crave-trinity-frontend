@@ -18,7 +18,7 @@
 
 📄 Timeline of commits:
 * 📌 Oct - Dec: "Can I do great work?" Shower thoughts; Ideas into words 
-* 📌 Jan - Feb: <30% of Swift bootcamp
+* 📌 Jan - Feb: < 30% of Swift bootcamp
 * 📌 Feb 11: Submit YC application to accelerate idea iteration 
 * 📌 Feb 12–13: [Crave Phone MVP](https://github.com/The-Obstacle-Is-The-Way/CRAVECRAVE) – Zero to basic SwiftUI app + logging functions 
 * 📌 Feb 14–15: [Crave Phone Refactor](https://github.com/The-Obstacle-Is-The-Way/crave-refactor) – SwiftData + analytics debugging, clean refactor
