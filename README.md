@@ -17,7 +17,7 @@
 ---
 
 📄 Timeline of commits:
-* 📌 Oct - Dec: "Can I do great work?" Shower thoughts; Turn ideas into words 
+* 📌 Oct - Dec: "Can I do great work?" Shower thoughts; Ideas into words 
 * 📌 Jan - Feb: Complete 30% of Swift bootcamp
 * 📌 Feb 11: Submit YC application to accelerate idea iteration 
 * 📌 Feb 12–13: [CRAVE (iOS MVP)](https://github.com/The-Obstacle-Is-The-Way/CRAVECRAVE) – Zero to basic SwiftUI app with UI and logging functions 
