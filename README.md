@@ -3,7 +3,7 @@
 **CRAVE-Trinity** is a watchOS/iOS/VisonOS stack built with **SwiftUI**/**SwiftData**, helping you track and manage your cravings through a clean, intuitive interface. Whether it’s late-night snacks or midday munchies, CRAVE ensures you stay in control.
 * 🔗 [Frontend](https://github.com/Crave-Trinity/crave-trinity-frontend) (SwiftUI + SwiftData + MVVM) 
 * 🔗 [Backend](https://github.com/Crave-Trinity/crave-trinity-backend) (FastAPI + PostgreSQL + Pinecone + Llama 2)
-* 🔗 Back-End [Live](https://crave-trinity-backend-production.up.railway.app/)
+* 🔗 [Back-End Live](https://crave-trinity-backend-production.up.railway.app/)
 * 📄 [YC MVP Planning Document](https://docs.google.com/document/d/1kcK9C_-ynso44XMNej9MHrC_cZi7T8DXjF1hICOXOD4/edit?tab=t.0)
 
 <p float="left">
