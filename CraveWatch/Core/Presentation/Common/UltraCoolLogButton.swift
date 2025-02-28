@@ -2,14 +2,14 @@
 //  UltraCoolLogButton.swift
 //  CraveWatch
 //
-//  Redesigned to be elegantly minimal:
-//    - A single, subtle accent or grayscale palette
-//    - Gentle scale effect on press
-//    - Eliminated flashy purple-red gradient
+//  A sleek, modern, Steve Jobs–inspired button:
+//    - Clean grayscale gradient with subtle depth
+//    - Gentle shadow for dimensionality
+//    - Scale effect on press for tactile feedback
 //
 //  Uncle Bob notes:
 //    - Single Responsibility: Provide a "Log Craving" button with minimal styling.
-//    - Clean Code: Easily read and extended if brand colors change.
+//    - Clean Code: Well-structured, easily maintainable.
 //
 //  (C) 2030 - Uncle Bob & Steve Jobs Approved
 //
@@ -30,21 +30,25 @@ struct UltraCoolLogButton: View {
                 .foregroundColor(.white)
                 .padding(.horizontal, 16)
                 .padding(.vertical, 10)
-                // Minimal grayscale gradient
+                // Sleek grayscale gradient background
                 .background(
-                    LinearGradient(
-                        gradient: Gradient(colors: [
-                            Color.gray.opacity(0.30),
-                            Color.gray.opacity(0.50)
-                        ]),
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    )
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(
+                            LinearGradient(
+                                gradient: Gradient(colors: [
+                                    Color(white: 0.20),
+                                    Color(white: 0.35)
+                                ]),
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
+                        )
+                        // Subtle shadow for depth
+                        .shadow(color: .black.opacity(0.4), radius: 2, x: 0, y: 2)
                 )
-                .cornerRadius(10)
         }
         .buttonStyle(.plain)
-        // Subtle scale effect on press: a quick “tap” feedback
+        // Gentle scale effect for tactile feedback
         .scaleEffectOnPress(scale: 0.95)
     }
 }
