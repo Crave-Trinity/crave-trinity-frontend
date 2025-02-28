@@ -12,14 +12,11 @@
 //      6. Record Craving button
 //
 //  Changes:
-//    - Removed the `alignment: .center` param (not supported by CraveTextEditor).
-//    - Added `.multilineTextAlignment(.center)` for a best-effort placeholder centering.
-//    - Renamed “Craving Strength” → “Craving Intensity,” “Confidence to Resist” → “Resistance.”
+//    - Added speech recognition button to text box
+//    - Enhanced text box visibility with border overlay
+//    - Optimized emotion chips layout with reduced spacing
 //
-//  Uncle Bob & Steve Jobs Notes:
-//    - Balanced spacing for a clean, modern look
-//    - Crisp, minimal text with clinically relevant prompts
-//
+
 import SwiftUI
 
 public struct LogCravingView: View {
@@ -82,31 +79,54 @@ extension LogCravingView {
                 .font(.system(size: 24, weight: .bold))
                 .foregroundColor(.white)
             
-            Text("Share what you’re craving to gain insights.")
+            Text("Share what you're craving to gain insights.")
                 .font(.subheadline)
                 .foregroundColor(.white.opacity(0.8))
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
     
-    // 2) Text Box
+    // 2) Text Box with Speech Recognition
     private var textBoxSection: some View {
         VStack(alignment: .leading, spacing: 8) {
-            CraveTextEditor(
-                text: $viewModel.cravingDescription,
-                characterLimit: 300,
-                placeholderLines: [
-                    .plain("What are you craving?"),
-                    .plain("Any triggers?"),
-                    .plain("Where are you?"),
-                    .plain("Who are you with?"),
-                ]
-            )
-            // Attempt to center lines horizontally
-            .multilineTextAlignment(.center)
-            .frame(minHeight: 120)
-            .background(Color.black.opacity(0.2))
-            .cornerRadius(8)
+            // ZStack allows us to overlay the mic button on the text field
+            ZStack(alignment: .topTrailing) {
+                // Enhanced text editor with more visible styling
+                CraveTextEditor(
+                    text: $viewModel.cravingDescription,
+                    characterLimit: 300,
+                    placeholderLines: [
+                        .plain("What are you craving?"),
+                        .plain("Any triggers?"),
+                        .plain("Where are you?"),
+                        .plain("Who are you with?"),
+                    ]
+                )
+                // Attempt to center lines horizontally
+                .multilineTextAlignment(.center)
+                .frame(minHeight: 120)
+                // Increased opacity for better visibility
+                .background(Color.black.opacity(0.3))
+                .cornerRadius(8)
+                // Added subtle border for better definition
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(Color.white.opacity(0.3), lineWidth: 1)
+                )
+                
+                // Microphone button overlay - elegant speech integration
+                Button(action: {
+                    viewModel.toggleSpeechRecognition()
+                }) {
+                    Image(systemName: viewModel.isRecordingSpeech ? "waveform" : "mic.fill")
+                        .font(.system(size: 18))
+                        .foregroundColor(viewModel.isRecordingSpeech ? .orange : .white.opacity(0.8))
+                        .padding(8)
+                        .background(Color.black.opacity(0.4))
+                        .clipShape(Circle())
+                }
+                .padding(8)
+            }
         }
     }
     
@@ -132,7 +152,7 @@ extension LogCravingView {
         }
     }
     
-    // 4) Horizontal Chips
+    // 4) Horizontal Chips with improved spacing
     private var emotionChipSection: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text("How are you feeling?")
@@ -140,7 +160,7 @@ extension LogCravingView {
                 .foregroundColor(.white)
             
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 12) {
+                HStack(spacing: 8) { // Reduced from 12 to ensure better visibility
                     // Reorder states as requested: "Hungry", "Angry", "Lonely", "Tired", "Sad"
                     ForEach(["Hungry", "Angry", "Lonely", "Tired", "Sad"], id: \.self) { emotion in
                         OutlinedChip(emotion: emotion,
@@ -150,6 +170,7 @@ extension LogCravingView {
                         }
                     }
                 }
+                .padding(.horizontal, 4) // Ensure chips don't touch screen edge
             }
         }
     }
@@ -208,4 +229,3 @@ fileprivate struct OutlinedChip: View {
             }
     }
 }
-

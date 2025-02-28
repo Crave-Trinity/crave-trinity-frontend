@@ -119,7 +119,8 @@ public final class DependencyContainer: ObservableObject {
     // MARK: - Public Factories
     // (Craving)
     public func makeLogCravingViewModel() -> LogCravingViewModel {
-        LogCravingViewModel(addCravingUseCase: makeAddCravingUseCase())
+        // FIXED: Changed parameter name from addCravingUseCase to cravingUseCase
+        LogCravingViewModel(cravingUseCase: makeAddCravingUseCase())
     }
     
     public func makeCravingListViewModel() -> CravingListViewModel {
@@ -176,4 +177,3 @@ private final class LocalAnalyticsStorage: AnalyticsStorageProtocol {
         // TODO: Delete old data
     }
 }
-
