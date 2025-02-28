@@ -2,9 +2,9 @@
 //  CravingLogTriggerPageView.swift
 //  CraveWatch
 //
-//  A dedicated subview for logging the craving details,
-//  featuring a subtle blue accent and more vertical space
-//  for the text editor.
+//  Final iteration: A clean, centered layout that fills horizontal space.
+//  Title is centered at the top, the text editor expands to fill the width,
+//  and the "Next" button aligns consistently.
 //
 //  (C) 2030 - Uncle Bob & Steve Jobs Approved
 //
@@ -17,10 +17,7 @@ struct CravingLogTriggerPageView: View {
     
     @ObservedObject var viewModel: CravingLogViewModel
 
-    /// Binding controlling whether the text editor is focused.
     @FocusState.Binding var isEditorFocused: Bool
-
-    /// Callback invoked when the user taps the "Next" button.
     let onNext: () -> Void
 
     // MARK: - Body
@@ -28,17 +25,14 @@ struct CravingLogTriggerPageView: View {
     var body: some View {
         VStack(spacing: 12) {
             
-            // Title near the top
+            // Title centered at the top
             Text("Log Your Craving")
                 .font(.system(size: 16, weight: .semibold))
                 .foregroundColor(blueAccent)
-                // Align title to the leading edge if desired
-                .frame(maxWidth: .infinity, alignment: .leading)
-                // Add some top padding to give it breathing room
-                .padding(.horizontal, 12)
+                .frame(maxWidth: .infinity, alignment: .center)
                 .padding(.top, 8)
             
-            // The text editor with a slightly larger frame
+            // Text editor fills the horizontal space minus padding
             MinimalWatchCraveTextEditor(
                 text: $viewModel.cravingText,
                 placeholder: "What triggered it?",
@@ -46,11 +40,10 @@ struct CravingLogTriggerPageView: View {
                 characterLimit: 200
             )
             .modifier(BlueFocusModifier(isFocused: isEditorFocused))
-            // Increased height from ~80 to 100 for more typing space
-            .frame(height: 100)
-            .padding(.horizontal, 12)
+            .frame(maxWidth: .infinity)  // Fill the available width
+            .frame(height: 100)          // Increase if you want more vertical room
             
-            // "Next" Button with a gentle blue gradient
+            // "Next" button also expands horizontally
             Button(action: onNext) {
                 Text("Next")
                     .font(.system(size: 15, weight: .semibold))
@@ -62,21 +55,18 @@ struct CravingLogTriggerPageView: View {
             }
             .buttonStyle(.plain)
             .disabled(viewModel.isLoading)
-            .padding(.horizontal, 12)
-            .padding(.top, 6)
             
             Spacer(minLength: 0)
         }
-        // Overall vertical padding at the bottom if needed
+        // Single horizontal padding for the entire column
+        .padding(.horizontal, 12)
         .padding(.bottom, 8)
     }
     
     // MARK: - Accent Colors & Gradients
     
-    /// A simple, deep-blue accent color reminiscent of classic Apple Aqua
     private let blueAccent = Color(hue: 0.58, saturation: 0.7, brightness: 0.85)
     
-    /// Subtle gradient from a slightly lighter blue to a deeper one
     private var blueGradient: LinearGradient {
         LinearGradient(
             gradient: Gradient(colors: [
@@ -89,9 +79,7 @@ struct CravingLogTriggerPageView: View {
     }
 }
 
-/// A small view modifier that gives the text editor
-/// a faint blue overlay when focused, further unifying
-/// the color scheme for this screen only.
+/// Subtle blue border when focused
 private struct BlueFocusModifier: ViewModifier {
     let isFocused: Bool
     
