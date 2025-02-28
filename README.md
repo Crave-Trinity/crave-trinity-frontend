@@ -1,32 +1,33 @@
 # CRAVE-TRINITY 🍒 — Cravings Intelligence System
 
 **CRAVE-Trinity** is a watchOS/iOS/VisonOS stack built with **SwiftUI**/**SwiftData**, helping you track and manage your cravings through a clean, intuitive interface. Whether it’s late-night snacks or midday munchies, CRAVE ensures you stay in control.
-* 🔗 Frontend (SwiftUI + SwiftData + MVVM) → [crave-trinity-frontend](https://github.com/Crave-Trinity/crave-trinity-frontend)
-* 🔗 Backend (FastAPI + PostgreSQL + Pinecone + Llama 2) → [crave-trinity-backend](https://github.com/Crave-Trinity/crave-trinity-backend)
+* 🔗 [Frontend](https://github.com/Crave-Trinity/crave-trinity-frontend) (SwiftUI + SwiftData + MVVM) 
+* 🔗 [Backend](https://github.com/Crave-Trinity/crave-trinity-backend) (FastAPI + PostgreSQL + Pinecone + Llama 2)
+* 🔗 [Back-End Live](https://crave-trinity-backend-production.up.railway.app/)
 
 <p float="left">
   <img src="https://raw.githubusercontent.com/The-Obstacle-Is-The-Way/crave-trinity/main/CravePhone/Resources/Images/Updated-Final-Gif.gif" width="400" alt="Cravey Watch Demo"/>
-  <img src="https://raw.githubusercontent.com/Crave-Trinity/crave-trinity-frontend/main/CravePhone/Resources/Images/Cravey-Phone.gif" width="400" alt="Cravey Phone Demo"/>
+  <img src="https://raw.githubusercontent.com/Crave-Trinity/crave-trinity-frontend/main/CravePhone/Resources/Images/Crave-Phone-Final.gif" width="400" alt="Cravey Phone Demo"/>
 </p>
 
 🔗 [Watch GIF](https://drive.google.com/file/d/1jVHAwH_NwPftw58gKEGCZ4qqlUUyO0uG/view?usp=drive_link)
+🔗 [Phone GIF](https://drive.google.com/file/d/1LGsVmikIZVOqzZihke7NAYTTJdVplB9O/view?usp=sharing)
 
-📄 YC MVP Planning Document → https://docs.google.com/document/d/1kcK9C_-ynso44XMNej9MHrC_cZi7T8DXjF1hICOXOD4/edit?tab=t.0 
+---
 
 📄 Timeline of commits:
-* 📌 Oct - Dec: "Can I do great work?" Shower thoughts; Turn ideas into words 
-* 📌 Jan - Feb: Start Swift Udemy course; Complete 30% of Swift bootcamp
+* 📌 Oct - Dec: "Can I do great work?" Shower thoughts; Ideas into words 
+* 📌 Jan - Feb: < 30% of Swift bootcamp
 * 📌 Feb 11: Submit YC application to accelerate idea iteration 
-* 📌 Feb 12–13: [CRAVE (iOS MVP)](https://github.com/The-Obstacle-Is-The-Way/CRAVECRAVE) – Zero to basic SwiftUI app with UI and logging functions 
-* 📌 Feb 14–15: [crave-refactor (Clean Architecture)](https://github.com/The-Obstacle-Is-The-Way/crave-refactor) – SwiftData + analytics debugging, major refactor.  
-* 📌 Feb 16–18: [isolated-crave-watch (Apple Watch MVP)](https://github.com/The-Obstacle-Is-The-Way/isolated-crave-watch) – On-wrist craving logging, watch-to-phone sync.  
-* 📌 Feb 19: [crave-trinity (Unified iOS + Watch + Vision)](https://github.com/The-Obstacle-Is-The-Way/crave-trinity) – Unified codebase with AR/VR hooks for future expansion.
-* 📌 Feb 20–21: WatchOS UI + UX Iterations – Refined UI, aesthetics, HIG-compliant intensity and resistance sliders.
-* 📌 Feb 22–23: [CraveWave Backend Integration](https://github.com/Crave-Trinity/crave-trinity-backend) – Integrated backend, improved syncing and UI/UX on iOS and watchOS.
-* 📌 Feb 23–Present: Iteration, Code Analysis, MVP scope refinment
+* 📌 Feb 12–13: [Crave Phone MVP](https://github.com/The-Obstacle-Is-The-Way/CRAVECRAVE) – Zero to basic SwiftUI app + logging functions 
+* 📌 Feb 14–15: [Crave Phone Refactor](https://github.com/The-Obstacle-Is-The-Way/crave-refactor) – SwiftData + analytics debugging, clean refactor
+* 📌 Feb 16–18: [Crave WatchOS MVP](https://github.com/The-Obstacle-Is-The-Way/isolated-crave-watch) – On-wrist craving logging, watch-to-phone sync  
+* 📌 Feb 19: [Crave-trinity (iOS + Watch + Vision)](https://github.com/The-Obstacle-Is-The-Way/crave-trinity) – Unified codebase with AR/VR hooks for the future
+* 📌 Feb 20–21: WatchOS – Refined UI/UX iterations, aesthetics, HIG-compliant intensity/resistance sliders
+* 📌 Feb 22–23: [CraveWave Backend](https://github.com/Crave-Trinity/crave-trinity-backend) – Backend foundation, improved syncing and UI/UX 
+* 📌 Feb 23–Present: Back-End [Live](https://crave-trinity-backend-production.up.railway.app/); Completing endpoints, MVP scope iteration 
   
 💡 Functional watchOS/iOS MVP - built in 7 days from scratch while learning Swift with AI acceleration and basecode abstraction. 
-* Commit history proves my iteration speed—over 200 solving real programming problems.
 * It wasn’t just copy-pasta spaghetti; I debugged, refactored, and solved SwiftData issues. I can learn, execute fast, and build something real. The marathon continues.
 
 ---
@@ -40,7 +41,7 @@
 CRAVE is an AI-powered craving analytics system, built to provide personalized behavioral analysis by combining user logs, RAG, and LoRA fine-tuning.  
 
 * ✅ Apple Watch + iPhone App → Seamless craving logging.  
-* ✅ Backend that processes & analyzes cravings, not just stores them.
+* ✅ [Backend](https://github.com/Crave-Trinity/crave-trinity-backend) that processes & analyzes cravings, not just stores them.
 * ✅ RAG (Retrieval-Augmented Generation) to personalize AI responses without costly fine-tuning.  
 * ✅ LoRA (Low-Rank Adaptation) to fine-tune craving personas with minimal compute costs.
 * ✅ A scalable backend with fast inference on AWS, using open-source models.
@@ -48,131 +49,6 @@ CRAVE is an AI-powered craving analytics system, built to provide personalized b
 ⚠️ Disclaimer: CRAVE intends to provide analytical **insights** based on user-logged cravings data. 
 - It will not offer medical predictions, diagnoses, or treatment prior to FDA SaMD approval.
 - Any behavioral insights should be viewed as informational only, and users should consult a healthcare professional for medical or therapeutic guidance.
-
----
-
-## 🚀 CRAVE AI - Finalized Tech Stack  
-
-### **1️⃣ Core Tech Stack**
-| **Component**            | **Technology**                                      | **Rationale**  |
-|-------------------------|--------------------------------------------------|---------------|
-| **LLM Model**           | **Llama 2 (13B) on AWS**                         | Best open-source model that supports LoRA fine-tuning. Not restricted like GPT-4. |
-| **Vector Database**      | **Pinecone**                                     | Production-grade, built for high-performance retrieval at scale. |
-| **Embeddings**          | **OpenAI `text-embedding-ada-002`**               | Best semantic search embeddings for RAG. |
-| **Fine-Tuning Framework** | **LoRA (Low-Rank Adaptation) via PyTorch + Hugging Face `peft`** | Allows persona-level fine-tuning without massive compute costs. |
-| **RAG Pipeline**        | **LangChain**                                    | Provides high-level abstractions for orchestrating retrieval, prompt assembly, and response generation. |
-| **Backend & Deployment** | **Python (FastAPI) on AWS EC2/ECS**              | Python for ML, FastAPI for async speed, AWS for scalability. |
-| **Structured Database**  | **PostgreSQL (AWS RDS)**                        | Stores craving logs, user metadata, and structured behavioral data for analytics & AI modeling. |
-
----
-
-## 🚀 How It Works – End-to-End
-### 1️⃣ Craving Data Ingestion
-- Apple Watch + iPhone send craving logs (timestamp, HRV, location, user mood, notes).  
-- Stored in two places:
-  - **PostgreSQL** (structured metadata like timestamps).  
-  - **Pinecone** (embedded craving logs for retrieval).  
-
----
-
-### 2️⃣ RAG Personalization – How AI Feels Personal Without Full Fine-Tuning 
-🔹 **Process:**  
-1. **User Query:** (“Why do I crave sugar at night?”)  
-2. **Backend Embeds Query:** Uses `text-embedding-ada-002`.  
-3. **Retrieves Relevant Logs:** Pinecone finds **most relevant past craving logs**.  
-4. **Compiles Personalized Context:** LangChain **assembles user history + question into a structured prompt.**  
-5. **LLM Generates a Response:** Feeds the **retrieved logs + user’s question** to Llama 2.  
-
-✅ Ensures that AI responses feel personalized, without training a separate model per user.  
-
----
-
-### 3️⃣ LoRA Fine-Tuning – Craving Archetypes for Deeper Personalization
-🔹 **Why We Need This:**  
-- RAG personalizes via past data, but doesn’t change how the AI "thinks." 
-- LoRA lets us create craving-specific personas for better contextualization. 
-
-🔹 **How It Works:**  
-1. Users are categorized into **craving personas** (e.g., “Nighttime Binger,” “Stress Craver,” “Alcohol Dopamine-Seeker”).  
-2. Each persona has a **lightweight LoRA adapter** fine-tuned on past craving data.  
-3. **During inference**, we dynamically load the relevant LoRA adapter onto Llama 2.  
-4. Final Response = RAG Retrieved Context + LoRA Fine-Tuned Persona + User Query.
-*  ✅  This provides "adaptive" AI insights without massive per-user fine-tuning costs.
-
----
-
-### 🚀 How we make real-time LoRA swapping work efficiently:
-✅ Step 1: Load the Base Model into GPU Memory
-- Load LLaMA 2 (13B) onto an AWS A100 GPU instance (or H100 if needed).
-
-✅ Step 2: Preload the 2-3 Most Common LoRA Adapters in VRAM
-- Track most-used craving personas and keep them loaded in GPU memory.
-- Store remaining adapters in CPU RAM for fast retrieval.
-  
-✅ Step 3: Implement a Fast Cache System for LoRA Adapters
-- Store adapters in Redis (or in-memory storage) for quick access.
-- If not in VRAM, fetch from CPU RAM before disk.
-
-✅ Step 4: Optimize LoRA Swapping for Concurrency
-- Batch requests when multiple users need the same adapter.
-- Queue unique adapter loads instead of swapping instantly.
-  
-✅ Step 5: Monitor GPU Usage & Tune for Performance
-Implement profiling to see if we need more VRAM per instance.
-If GPU becomes a bottleneck, scale horizontally by adding more instances.
-
----
-
-### 4️⃣ Data Retention & Time-Based Prioritization
-🔹 **Problem:** As users log cravings for months or years, **RAG retrieval becomes bloated.**  
-🔹 **Solution:** Implement **time-weighted retrieval:**  
-* ✅ Last 30 Days = High Priority Logs  
-* ✅ Older Logs = Summarized & Compressed
-* ✅ Historical Insights = Only Retrieved When Highly Relevant 
-
-🔹 **How It Works:**  
-- Recent cravings are fully stored & retrieved. 
-- Older cravings get "trend compressed" (e.g., "In the last 6 months, sugar cravings spiked in winter").  
-- Retrieval automatically prioritizes recent, high-relevance logs. 
-- Prevents AI responses from becoming inefficient over time. 
-
----
-
-## 🚀 Step-by-Step Execution Plan
-### ✅ Step 1: Build the Data Pipeline
-- Set up FastAPI endpoints for craving logs.  
-- Integrate Pinecone to store craving text data.  
-- Set up PostgreSQL (or DynamoDB) for structured craving metadata.  
-
-### ✅ Step 2: Implement RAG for Personalized Craving Responses
-- Install LangChain + Pinecone for retrieval.  
-- Create a retrieval chain that injects user craving logs into AI prompts.  
-- Connect the retrieval chain to Llama 2 for personalized AI responses.  
-
-### ✅ Step 3: Build LoRA Fine-Tuned Craving Personas
-- Fine-tune Llama 2 LoRA adapters for different craving archetypes using Hugging Face `peft`.  
-- Store LoRA adapters separately and **dynamically load them** per user persona.  
-
-### ✅ Step 4: Deploy on AWS & Optimize for Real-Time Inference
-- Launch Llama 2 (13B) on an AWS GPU instance (g5.xlarge or A100-based).  
-- Set up API endpoints for craving insights.  
-- Implement RAG caching & batching for efficiency.  
-
----
-
-## 🚀 Why This Stack Wins
-* ✅ RAG ensures personalization without training individual models.
-* ✅ LoRA makes craving personas possible at low cost.
-* ✅ AWS GPU hosting means real-time inference at scale.
-* ✅ Python + FastAPI = Fast iteration speed & flexibility.
-* ✅ The architecture is built to scale, adapt, and improve.
-
----
-
-## 🚀 Next Steps  
-* 💥 1️⃣ Find a visionary technical co-founder
-* 💥 2️⃣ Start implementing this backend architecture  
-* 💥 3️⃣ Ship, Talk to Users, Iterate
 
 ---
 
@@ -186,43 +62,41 @@ If GPU becomes a bottleneck, scale horizontally by adding more instances.
 💡 Everyone is chasing B2B SaaS and agentic AI.
 ⚡️ We’re building for humans first—scaling to enterprises when the data speaks.  
 
-## 1️⃣ How to Ensure CRAVE DaaS Is Ethical & “Do No Harm”
-✅ 1. Full Anonymization & Aggregation  
-- **We never sell individual user data.**  
-- **Only aggregate craving insights** (e.g., "20% of users log sugar cravings after 8 PM").  
-- Use **differential privacy techniques** (adding statistical noise) to prevent reverse engineering.  
+## 👨‍⚕️ How to Ensure CRAVE DaaS Is Ethical & “Do No Harm”
+✅ **1. Full Anonymization & Aggregation**  
+- We never sell individual user data.  
+- Only aggregate craving insights (e.g., "20% of users log sugar cravings after 8 PM").  
+- Use differential privacy techniques (adding statistical noise) to prevent reverse engineering.  
 
-✅ 2. No Behavioral Manipulation or Addiction Optimization  
-- Some companies use DaaS for **exploitative targeting** (e.g., increasing fast-food cravings).  
-- CRAVE **only licenses data for wellness, behavioral health, and research applications.**  
-- **We refuse partnerships that explicitly aim to exploit cravings for higher sales.**  
+✅ **2. No Behavioral Manipulation or Addiction Optimization**  
+- Some companies use DaaS for exploitative targeting (e.g., increasing fast-food cravings).  
+- CRAVE only licenses data for wellness, behavioral health, and research applications.  
+- We refuse partnerships that explicitly aim to exploit cravings for higher sales.
 
-✅ 3. Transparency & User Control
+✅ **3. Transparency & User Control**
 - Users should always know how their data is used. 
-- Implement an **opt-in/opt-out model** where users choose whether their anonymized data contributes to research.  
-- **Give users insights back**—our analytics should benefit the individual as much as the companies using it.  
+- Implement an opt-in/opt-out model where users choose whether their anonymized data contributes to research.  
+- Give users insights back—our analytics should benefit the individual as much as the companies using it.  
 
-✅ 4. Align With Research & Public Health Interests
-- Partner with **NIH, public health agencies, & research orgs** to ensure data benefits addiction science.  
+✅ **4. Align With Research & Public Health Interests**
+- Partner with NIH, public health agencies, & research orgs to ensure data benefits addiction science.  
 - Monetization should come from ethical health/wellness-focused applications, not impulse-driven consumerism.  
 
-✅ 5. No Credit or Risk-Based Consumer Profiling
-- Avoid partnerships where craving data could be **used against individuals** (e.g., credit scoring based on impulsive purchases).  
-- We don’t sell data to insurers, financial rik assessors, or predatory lenders.
+✅ **5. No Credit or Risk-Based Consumer Profiling**
+- Avoid partnerships where craving data could be used against individuals (e.g., credit scoring based on impulsive purchases).  
+- We don’t sell data to insurers, financial risk assessors, or predatory lenders.
 
 ---
 
 Investors may think there’s no money in cravings management. They’re wrong.
 * 💡 In 1-2 years, privacy-first, ethically sourced DaaS will be valuable; the market is shifting to trustworthy data sets. 
-- Impulse control isn’t niche—it’s the **core of performance, addiction, stress, dopamine loops, and digital overstimulation.**  
-- We start where others don’t: grassroots traction → AI-driven insights → B2B, healthcare, and digital therapeutics.
+- Impulse control isn’t niche—it’s the core of performance, addiction, stress, dopamine loops, and digital overstimulation.
 
 ---
 
 ### 🔑 How We Win
-* ✅ Organic growth → AI-backed personalized insights → B2B healthcare SaaS on Daas 
+* ✅ Organic growth → AI-backed personalized insights → B2B healthcare SaaS on DaaS
 * ✅ Turn cravings data into a next-gen addiction & impulse control platform
-* ✅ Make CRAVE as viral as Duolingo streaks—dopamine resilience at scale 
 
 ---
 
