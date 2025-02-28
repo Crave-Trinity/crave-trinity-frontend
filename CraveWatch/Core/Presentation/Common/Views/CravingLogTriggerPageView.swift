@@ -2,79 +2,109 @@
 //  CravingLogTriggerPageView.swift
 //  CraveWatch
 //
-//  A dedicated subview for logging the "Trigger" text. This view
-//  uses a FocusState binding to control the text editor’s focus,
-//  ensuring smooth user interaction.
+//  A dedicated subview for logging the craving details,
+//  featuring a subtle blue accent and more vertical space
+//  for the text editor.
+//
 //  (C) 2030 - Uncle Bob & Steve Jobs Approved
 //
 
 import SwiftUI
 import SwiftData
 
-/// A view that allows users to log the trigger for their craving.
-/// It provides a text editor with controlled focus, and a button to move to the next step.
 struct CravingLogTriggerPageView: View {
     // MARK: - Dependencies
     
-    /// The view model managing the state and logic for the craving log.
     @ObservedObject var viewModel: CravingLogViewModel
 
-    /// A binding controlling whether the text editor is focused.
-    /// This binding is provided by the parent view.
+    /// Binding controlling whether the text editor is focused.
     @FocusState.Binding var isEditorFocused: Bool
 
-    /// Callback invoked when the user taps the "Next" button to proceed.
+    /// Callback invoked when the user taps the "Next" button.
     let onNext: () -> Void
 
     // MARK: - Body
     
     var body: some View {
-        VStack(spacing: 8) {
-            // Section title indicating the purpose of the text editor.
-            Text("Trigger")
-                .font(.system(size: 16, weight: .semibold))
-                .foregroundColor(.white.opacity(0.7))
+        VStack(spacing: 12) {
             
-            // A custom text editor for logging the craving trigger.
-            // It uses the provided focus binding and enforces a character limit.
-            WatchCraveTextEditor(
+            // Title near the top
+            Text("Log Your Craving")
+                .font(.system(size: 16, weight: .semibold))
+                .foregroundColor(blueAccent)
+                // Align title to the leading edge if desired
+                .frame(maxWidth: .infinity, alignment: .leading)
+                // Add some top padding to give it breathing room
+                .padding(.horizontal, 12)
+                .padding(.top, 8)
+            
+            // The text editor with a slightly larger frame
+            MinimalWatchCraveTextEditor(
                 text: $viewModel.cravingText,
-                primaryPlaceholder: "Log Craving",
-                secondaryPlaceholder: "",
+                placeholder: "What triggered it?",
                 isFocused: $isEditorFocused,
                 characterLimit: 200
             )
-            .frame(height: 80)
+            .modifier(BlueFocusModifier(isFocused: isEditorFocused))
+            // Increased height from ~80 to 100 for more typing space
+            .frame(height: 100)
+            .padding(.horizontal, 12)
             
-            // Button to proceed to the next step in the logging flow.
+            // "Next" Button with a gentle blue gradient
             Button(action: onNext) {
                 Text("Next")
                     .font(.system(size: 15, weight: .semibold))
                     .foregroundColor(.white)
-                    .frame(maxWidth: .infinity, minHeight: 26)
-                    .background(premiumBlueGradient)
-                    .cornerRadius(6)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 6)
+                    .background(blueGradient)
+                    .cornerRadius(8)
             }
-            // Use plain style to remove extra styling.
             .buttonStyle(.plain)
-            // Disable the button when the view model is in a loading state.
             .disabled(viewModel.isLoading)
+            .padding(.horizontal, 12)
+            .padding(.top, 6)
+            
+            Spacer(minLength: 0)
         }
-        // Apply horizontal padding and adjust vertical padding for visual balance.
-        .padding(.horizontal)
-        .padding(.top, -2)
-        .padding(.bottom, 6)
+        // Overall vertical padding at the bottom if needed
+        .padding(.bottom, 8)
+    }
+    
+    // MARK: - Accent Colors & Gradients
+    
+    /// A simple, deep-blue accent color reminiscent of classic Apple Aqua
+    private let blueAccent = Color(hue: 0.58, saturation: 0.7, brightness: 0.85)
+    
+    /// Subtle gradient from a slightly lighter blue to a deeper one
+    private var blueGradient: LinearGradient {
+        LinearGradient(
+            gradient: Gradient(colors: [
+                Color(hue: 0.58, saturation: 0.6, brightness: 0.88),
+                Color(hue: 0.58, saturation: 0.8, brightness: 0.65)
+            ]),
+            startPoint: .top,
+            endPoint: .bottom
+        )
     }
 }
 
-// MARK: - Shared Gradient
-/// A shared blue gradient used for button backgrounds.
-/// Consider moving this gradient definition to a shared file if it is used across multiple views.
-fileprivate let premiumBlueGradient = LinearGradient(
-    gradient: Gradient(colors: [
-        Color(hue: 0.58, saturation: 0.8, brightness: 0.7),
-        Color(hue: 0.58, saturation: 0.9, brightness: 0.4)
-    ]),
-    startPoint: .top,
-    endPoint: .bottom
-)
+/// A small view modifier that gives the text editor
+/// a faint blue overlay when focused, further unifying
+/// the color scheme for this screen only.
+private struct BlueFocusModifier: ViewModifier {
+    let isFocused: Bool
+    
+    func body(content: Content) -> some View {
+        content
+            .overlay(
+                RoundedRectangle(cornerRadius: 8)
+                    .stroke(
+                        Color(hue: 0.58, saturation: 0.7, brightness: 0.85)
+                            .opacity(isFocused ? 0.4 : 0),
+                        lineWidth: 1
+                    )
+            )
+    }
+}
+

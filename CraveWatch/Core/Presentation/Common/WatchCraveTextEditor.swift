@@ -1,99 +1,87 @@
 //
-//  WatchCraveTextEditor.swift
+//  MinimalWatchCraveTextEditor.swift
 //  CraveWatch
 //
-//  A custom watchOS text editor that displays placeholder text (with a bright gradient)
-//  centered within a fixed-height gray box when no text is entered. Enforces a character limit
-//  and provides optional haptic feedback.
+//  A refined watchOS text editor that embodies quiet luxury:
+//    - Uses subdued grayscale hues.
+//    - Removes bright gradients in favor of subtle focus states.
+//    - Clean, center-aligned text with a simple placeholder.
 //
-//  NOTE: We have removed the duplicate WatchHapticManager to avoid redeclarations.
-//  This file now relies on your existing WatchHapticManager in Services/WatchHapticManager.swift.
+//  Uncle Bob notes:
+//    - Single Responsibility: Provide a watch-friendly TextEditor with character limit.
+//    - Clean Code: Well-structured, easy to maintain.
+//
+//  (C) 2030 - Uncle Bob & Steve Jobs Approved
 //
 
 import SwiftUI
 
-struct WatchCraveTextEditor: View {
+struct MinimalWatchCraveTextEditor: View {
     // MARK: - Properties
+    
     @Binding var text: String
     
-    /// Primary placeholder text shown when the editor is empty and not focused.
-    let primaryPlaceholder: String
-    
-    /// Optional secondary placeholder text.
-    let secondaryPlaceholder: String
+    /// Single placeholder line to keep things minimal.
+    let placeholder: String
     
     /// Controls whether this text editor is focused for input.
     @FocusState.Binding var isFocused: Bool
     
-    /// Maximum number of characters allowed before truncation and haptic feedback.
+    /// Maximum number of characters allowed.
     let characterLimit: Int
     
     // MARK: - Body
+    
     var body: some View {
         ZStack(alignment: .center) {
-            // Background: A rounded rectangle with varying opacity based on focus.
-            RoundedRectangle(cornerRadius: 8)
-                .fill(
-                    isFocused
-                    ? Color.gray.opacity(0.2)
-                    : Color.gray.opacity(0.15)
-                )
             
-            // Placeholder: Visible only when text is empty and the editor is not focused.
+            // Background: Subtle rectangle with an even more subtle highlight if focused
+            RoundedRectangle(cornerRadius: 8)
+                .fill(backgroundColor)
+            
+            // Placeholder text—shown only when empty and not focused
             if text.isEmpty && !isFocused {
-                VStack(alignment: .center, spacing: 4) {
-                    // Primary placeholder with a bright gradient overlay.
-                    Text(primaryPlaceholder)
-                        .font(.body)
-                        .foregroundColor(.clear)
-                        .overlay {
-                            brightGradient
-                        }
-                        .mask {
-                            Text(primaryPlaceholder).font(.body)
-                        }
-                    
-                    // Secondary placeholder text.
-                    Text(secondaryPlaceholder)
-                        .font(.footnote)
-                        .foregroundColor(.gray.opacity(0.8))
-                        .multilineTextAlignment(.center)
-                }
+                Text(placeholder)
+                    .foregroundColor(.white.opacity(0.4))
+                    .font(.system(size: 14, weight: .regular))
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 4)
             }
             
-            // Actual text field for input.
+            // Actual input field
             TextField("", text: $text, axis: .vertical)
-                .multilineTextAlignment(.center)
                 .focused($isFocused)
                 .foregroundColor(.white)
+                .font(.system(size: 14, weight: .regular))
+                .multilineTextAlignment(.center)
                 .onTapGesture {
-                    // Ensure the text editor becomes focused when tapped.
                     isFocused = true
                 }
         }
-        .frame(height: 80)
+        // Fixed height so it doesn’t expand uncontrollably.
+        .frame(height: 70)
         .onChange(of: text) { oldValue, newValue in
             enforceCharacterLimit(oldValue: oldValue, newValue: newValue)
         }
+        // A subtle animation whenever focus changes
+        .animation(.easeInOut(duration: 0.2), value: isFocused)
     }
     
-    // MARK: - Character Limit Enforcement
+    // MARK: - Private Helpers
+    
+    private var backgroundColor: Color {
+        // Lighten slightly when focused, remain dark when not.
+        isFocused
+        ? Color(white: 0.20) // slightly lighter background
+        : Color(white: 0.15) // subtle dark
+    }
+    
     private func enforceCharacterLimit(oldValue: String, newValue: String) {
         if newValue.count > characterLimit {
-            // Trim the text to the allowed character limit.
             text = String(newValue.prefix(characterLimit))
-            // Trigger a haptic warning using the shared WatchHapticManager.
+            // Optional: Vibrate a small haptic to warn about limit
             WatchHapticManager.shared.play(.warning)
         }
     }
 }
 
-// MARK: - Bright Gradient for the Primary Placeholder
-fileprivate let brightGradient = LinearGradient(
-    gradient: Gradient(colors: [
-        Color(hue: 0.12, saturation: 1.0, brightness: 1.0), // Bright orange
-        Color(hue: 0.08, saturation: 1.0, brightness: 1.0)  // Bright yellow
-    ]),
-    startPoint: .topLeading,
-    endPoint: .bottomTrailing
-)

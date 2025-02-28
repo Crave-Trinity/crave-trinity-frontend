@@ -2,18 +2,23 @@
 //  UltraCoolLogButton.swift
 //  CraveWatch
 //
-//  A fancy "Log Craving" button using a clean, unified gradient style.
+//  Redesigned to be elegantly minimal:
+//    - A single, subtle accent or grayscale palette
+//    - Gentle scale effect on press
+//    - Eliminated flashy purple-red gradient
+//
+//  Uncle Bob notes:
+//    - Single Responsibility: Provide a "Log Craving" button with minimal styling.
+//    - Clean Code: Easily read and extended if brand colors change.
+//
 //  (C) 2030 - Uncle Bob & Steve Jobs Approved
 //
 
 import SwiftUI
 
-/// A fancy button that triggers the final "Log Craving" action.
-/// - Uses a gradient background and a corner radius of 12 for a unified look.
-/// - Hooks into a callback (`onLog`) that the parent view provides.
 struct UltraCoolLogButton: View {
     
-    /// Action callback triggered when the user taps the button.
+    /// Callback triggered when the user taps the button.
     let onLog: () -> Void
     
     var body: some View {
@@ -25,18 +30,22 @@ struct UltraCoolLogButton: View {
                 .foregroundColor(.white)
                 .padding(.horizontal, 16)
                 .padding(.vertical, 10)
-                // Apply a gradient background with a unified corner radius.
+                // Minimal grayscale gradient
                 .background(
                     LinearGradient(
-                        gradient: Gradient(colors: [Color.purple, Color.red]),
+                        gradient: Gradient(colors: [
+                            Color.gray.opacity(0.30),
+                            Color.gray.opacity(0.50)
+                        ]),
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
                     )
                 )
-                .cornerRadius(12)
+                .cornerRadius(10)
         }
-        // Use a plain button style and apply a scale effect when pressed.
         .buttonStyle(.plain)
-        .scaleEffectOnPress(scale: 0.93)
+        // Subtle scale effect on press: a quick “tap” feedback
+        .scaleEffectOnPress(scale: 0.95)
     }
 }
+
