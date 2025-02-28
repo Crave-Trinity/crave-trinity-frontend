@@ -1,16 +1,4 @@
-//
-//  CRAVETabView.swift
-//  CravePhone
-//
-//  Description:
-//    A TabView referencing the AppCoordinator's factory methods.
-//    Sets the tab bar background to black for a stealthy look.
-//
-//  Uncle Bob notes:
-//    - Single Responsibility: Main tab navigation, delegating view creation to coordinator.
-//    - Inversion of Control: The coordinator creates the views.
-//
-
+// CRAVETabView.swift
 import SwiftUI
 
 public struct CRAVETabView: View {
@@ -24,11 +12,9 @@ public struct CRAVETabView: View {
         appearance.backgroundColor = UIColor.black
         
         UITabBar.appearance().standardAppearance = appearance
-        
         if #available(iOS 15.0, *) {
             UITabBar.appearance().scrollEdgeAppearance = appearance
         }
-        
         self.coordinator = coordinator
     }
     
@@ -44,14 +30,16 @@ public struct CRAVETabView: View {
                     Label("Cravings", systemImage: "list.bullet")
                 }
             
-            // If you have an Analytics tab, uncomment below:
-            // coordinator.makeAnalyticsView()
-            //     .tabItem {
-            //         Label("Analytics", systemImage: "chart.bar")
-            //     }
+            coordinator.makeAnalyticsDashboardView()
+                .tabItem {
+                    Label("Analytics", systemImage: "chart.bar")
+                }
+            
+            coordinator.makeChatView()
+                .tabItem {
+                    Label("AI Chat", systemImage: "bubble.left.and.bubble.right.fill")
+                }
         }
-        // Optionally force dark mode if you want everything to be black-based:
-        // .preferredColorScheme(.dark)
+        .preferredColorScheme(.dark)
     }
 }
-
