@@ -1,57 +1,94 @@
-// LogCravingViewModel.swift
+//
+//  LogCravingViewModel.swift
+//  CravePhone
 //
 //  Description:
-//    The ViewModel for logging cravings, responsible for handling UI logic, state management,
-//    and interfacing with the use cases. Adheres to MVVM, SOLID (SRP, DI), and clean architecture.
-//    Updated to match UI property bindings (cravingDescription, cravingTrigger, and cravingIntensity).
+//    A ViewModel for logging cravings with:
+//      - Craving Strength slider
+//      - Confidence to Resist slider
+//      - Horizontal “Emotion Chips” (e.g., Hungry, Lonely, Angry, Tired, Sad)
+//      - Expandable "Advanced Details" section
+//      - One big text field for triggers/notes
 //
-
+//  Uncle Bob & Steve Jobs Notes:
+//    - Single Responsibility: Manage the logging logic and track user inputs.
+//    - Clear property names, short function for logCraving().
+//
+//  Created by ...
+//  Updated by ChatGPT on ...
+//
 import SwiftUI
 import Combine
 
 @MainActor
 public final class LogCravingViewModel: ObservableObject {
-
-    // Dependency Injection for the use case.
+    
+    // MARK: - Dependencies
     private let addCravingUseCase: AddCravingUseCaseProtocol
     
     // MARK: - Published Properties (Bound to the View)
-    @Published public var cravingDescription: String = ""     // The main input text for the craving.
-    @Published public var cravingTrigger: String = ""           // Optional text for any associated trigger.
-    @Published public var cravingIntensity: Double = 5.0        // Craving intensity (default is mid-level).
-    @Published public var alertInfo: AlertInfo?                 // For displaying error/success messages.
-    @Published public var isLoading: Bool = false               // Loading state during the log operation.
-
-    // MARK: - Initializer (Dependency Injection)
+    @Published public var cravingDescription: String = ""
+    @Published public var cravingStrength: Double = 5.0
+    @Published public var confidenceToResist: Double = 5.0
+    
+    // For the horizontal chips:
+    public let allEmotionalStates: [String] = ["Hungry", "Lonely", "Angry", "Tired", "Sad"]
+    @Published public var selectedEmotions: Set<String> = []
+    
+    // Expandable details toggler
+    @Published public var showAdvanced: Bool = false
+    
+    // UI feedback states
+    @Published public var alertInfo: AlertInfo?
+    @Published public var isLoading: Bool = false
+    
+    // MARK: - Initializer (DI)
     public init(addCravingUseCase: AddCravingUseCaseProtocol) {
         self.addCravingUseCase = addCravingUseCase
     }
-
-    // MARK: - Business Logic (Action Methods)
+    
+    // MARK: - Action: Toggle Emotional State
+    public func toggleEmotion(_ emotion: String) {
+        if selectedEmotions.contains(emotion) {
+            selectedEmotions.remove(emotion)
+        } else {
+            selectedEmotions.insert(emotion)
+        }
+    }
+    
+    // MARK: - Action: Log Craving
     public func logCraving() async {
         // Trim the craving description to avoid extra spaces.
         let trimmed = cravingDescription.trimmingCharacters(in: .whitespacesAndNewlines)
-
-        // Validation: Ensure the craving description is long enough.
         guard trimmed.count >= 3 else {
             alertInfo = AlertInfo(title: "Error",
                                   message: "Craving must be at least 3 characters.")
             return
         }
-
-        // Log the craving asynchronously, handling success or error responses.
         do {
             isLoading = true
-            // Optionally, you could incorporate 'cravingIntensity' and 'cravingTrigger' in the future.
-            _ = try await addCravingUseCase.execute(cravingText: trimmed)
+            // Potentially combine multiple fields into one large “description”
+            // or pass them as separate fields to your domain layer.
+            // For example, you might do:
+            let combinedDescription = """
+            Craving: \(trimmed)
+            Emotions: \(selectedEmotions.joined(separator: ", "))
+            Strength: \(Int(cravingStrength))
+            Confidence: \(Int(confidenceToResist))
+            """
+            _ = try await addCravingUseCase.execute(cravingText: combinedDescription)
+            
             // Clear fields after successful logging.
             cravingDescription = ""
-            cravingTrigger = ""
-        } catch let error as PhoneCravingError {
-            alertInfo = AlertInfo(title: "Error", message: error.errorDescription ?? error.localizedDescription)
+            selectedEmotions.removeAll()
+            // Optionally reset sliders or keep them
+            cravingStrength = 5.0
+            confidenceToResist = 5.0
+            
         } catch {
             alertInfo = AlertInfo(title: "Error", message: error.localizedDescription)
         }
-        isLoading = false // Stop the loading indicator.
+        isLoading = false
     }
 }
+

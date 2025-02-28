@@ -3,23 +3,34 @@
 //  CravePhone
 //
 //  Description:
-//    A modern logging view for cravings. Emphasizes minimal but sleek UI,
-//    advanced SwiftUI transitions, and a card-based approach.
+//    A SwiftUI screen that logs cravings with a top-down flow:
+//      1. 🦊 Title + subtitle
+//      2. Big text box with a multi-line placeholder
+//      3. Craving Intensity slider
+//      4. Resistance slider
+//      5. A horizontal row of emotion chips
+//      6. Record Craving button
 //
-//  Uncle Bob notes:
-//    - Single Responsibility: Renders the logging screen & binds to the VM.
-//    - Separation of Concerns: Data transformations in the VM, UI logic here.
+//  Changes:
+//    - Removed the `alignment: .center` param (not supported by CraveTextEditor).
+//    - Added `.multilineTextAlignment(.center)` for a best-effort placeholder centering.
+//    - Renamed “Craving Strength” → “Craving Intensity,” “Confidence to Resist” → “Resistance.”
 //
-
+//  Uncle Bob & Steve Jobs Notes:
+//    - Balanced spacing for a clean, modern look
+//    - Crisp, minimal text with clinically relevant prompts
+//
 import SwiftUI
 
-struct LogCravingView: View {
+public struct LogCravingView: View {
+    
     @ObservedObject var viewModel: LogCravingViewModel
     
-    // This toggles a success overlay on successful log
-    @State private var showConfirmation = false
+    public init(viewModel: LogCravingViewModel) {
+        self.viewModel = viewModel
+    }
     
-    var body: some View {
+    public var body: some View {
         NavigationView {
             ZStack {
                 // Subtle black/dark gradient background
@@ -27,128 +38,174 @@ struct LogCravingView: View {
                     .ignoresSafeArea()
                 
                 ScrollView {
-                    VStack(spacing: CraveTheme.Spacing.large) {
+                    VStack(spacing: 24) {
+                        // 1) Title + Subtitle
+                        headerSection
                         
-                        VStack(alignment: .leading, spacing: CraveTheme.Spacing.medium) {
-                            Text("🦊 Log Your Craving")
-                                .font(CraveTheme.Typography.heading)
-                                .foregroundColor(CraveTheme.Colors.primaryText)
-                            
-                            Text("Share what you're craving and track triggers for better insights.")
-                                .font(CraveTheme.Typography.body)
-                                .foregroundColor(CraveTheme.Colors.secondaryText)
-                                .multilineTextAlignment(.leading)
-                            
-                            Divider()
-                                .background(CraveTheme.Colors.secondaryText.opacity(0.3))
-                            
-                            // Description field
-                            CraveTextEditor(
-                                text: $viewModel.cravingDescription,
-                                characterLimit: 300
-                            )
-                            .background(CraveTheme.Colors.textFieldBackground)
-                            .cornerRadius(CraveTheme.Layout.cornerRadius)
-                            
-                            // Craving Intensity
-                            HStack {
-                                Text("Intensity: \(Int(viewModel.cravingIntensity))")
-                                    .foregroundColor(CraveTheme.Colors.secondaryText)
-                                Spacer()
-                            }
-                            CravingIntensitySlider(value: $viewModel.cravingIntensity)
-                            
-                            // Triggers
-                            Text("Triggers")
-                                .font(CraveTheme.Typography.subheading)
-                                .foregroundColor(CraveTheme.Colors.primaryText)
-                            
-                            CraveTextEditor(
-                                text: $viewModel.cravingTrigger,
-                                characterLimit: 150,
-                                placeholderLines: [.plain("e.g. stress, social setting, etc.")]
-                            )
-                            .background(CraveTheme.Colors.textFieldBackground)
-                            .cornerRadius(CraveTheme.Layout.cornerRadius)
-                            .frame(minHeight: 120)
-                            
-                            // Log Button
-                            CraveMinimalButton(action: {
-                                Task {
-                                    await viewModel.logCraving()
-                                    if viewModel.alertInfo == nil {
-                                        withAnimation(CraveTheme.Animations.smooth) {
-                                            showConfirmation = true
-                                        }
-                                    }
-                                }
-                            }) {
-                                Text("Log Craving")
-                                    .font(CraveTheme.Typography.body.weight(.semibold))
-                            }
-                            .padding(.top, CraveTheme.Spacing.small)
-                        }
-                        .padding(CraveTheme.Layout.cardPadding)
-                        .background(CraveTheme.Colors.cardBackground)
-                        .cornerRadius(CraveTheme.Layout.cardCornerRadius)
-                        .shadow(color: Color.black.opacity(0.3), radius: 16, x: 0, y: 8)
-                        .padding(.horizontal, CraveTheme.Spacing.medium)
+                        // 2) Text Box (always shown, with multi-line placeholder)
+                        textBoxSection
                         
-                        Spacer(minLength: 50)
+                        // 3) Sliders
+                        cravingIntensitySlider
+                        resistanceSlider
+                        
+                        // 4) Horizontal Chips
+                        emotionChipSection
+                        
+                        // 5) Record Button
+                        recordCravingButton
                     }
-                }
-                
-                // Success overlay
-                if showConfirmation {
-                    confirmationOverlay
+                    .padding(24)
+                    // Extra bottom padding so the button isn't clipped
+                    .padding(.bottom, 40)
                 }
             }
-            .navigationBarHidden(true)
+            .navigationBarTitleDisplayMode(.inline)
+            // Alert Handling
             .alert(item: $viewModel.alertInfo) { info in
-                Alert(title: Text(info.title), message: Text(info.message), dismissButton: .default(Text("OK")))
+                Alert(title: Text(info.title),
+                      message: Text(info.message),
+                      dismissButton: .default(Text("OK")))
             }
         }
         .navigationViewStyle(StackNavigationViewStyle())
     }
+}
+
+// MARK: - Subviews
+extension LogCravingView {
     
-    /// Confirmation overlay displayed upon successful logging
-    private var confirmationOverlay: some View {
-        VStack(spacing: CraveTheme.Spacing.small) {
-            Image(systemName: "checkmark.seal.fill")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 64, height: 64)
-                .foregroundStyle(.green.gradient)
-            
-            Text("Logged!")
-                .font(CraveTheme.Typography.subheading)
+    // 1) Title + Subtitle
+    private var headerSection: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("🦊 Track Your Craving")
+                .font(.system(size: 24, weight: .bold))
                 .foregroundColor(.white)
             
-            Text("Keep going—every log builds awareness.")
-                .font(CraveTheme.Typography.body)
-                .foregroundColor(.white.opacity(0.9))
-                .multilineTextAlignment(.center)
-            
-            Button {
-                withAnimation(CraveTheme.Animations.smooth) {
-                    showConfirmation = false
-                }
-            } label: {
-                Text("AWESOME")
-                    .foregroundColor(CraveTheme.Colors.buttonText)
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 8)
-                    .background(CraveTheme.Colors.accent)
-                    .cornerRadius(CraveTheme.Layout.cornerRadius)
-            }
-            .padding(.top, CraveTheme.Spacing.small)
+            Text("Share what you’re craving to gain insights.")
+                .font(.subheadline)
+                .foregroundColor(.white.opacity(0.8))
         }
-        .padding()
-        .background(Color.black.opacity(0.85))
-        .cornerRadius(16)
-        .shadow(radius: 10)
-        .frame(maxWidth: 300)
-        .transition(.scale.combined(with: .opacity))
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+    
+    // 2) Text Box
+    private var textBoxSection: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            CraveTextEditor(
+                text: $viewModel.cravingDescription,
+                characterLimit: 300,
+                placeholderLines: [
+                    .plain("What are you craving?"),
+                    .plain("Any triggers?"),
+                    .plain("Where are you?"),
+                    .plain("Who are you with?"),
+                ]
+            )
+            // Attempt to center lines horizontally
+            .multilineTextAlignment(.center)
+            .frame(minHeight: 120)
+            .background(Color.black.opacity(0.2))
+            .cornerRadius(8)
+        }
+    }
+    
+    // 3a) Craving Intensity Slider
+    private var cravingIntensitySlider: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text("Craving Intensity: \(Int(viewModel.cravingStrength))")
+                .foregroundColor(.white)
+                .font(.headline)
+            Slider(value: $viewModel.cravingStrength, in: 1...10, step: 1)
+                .accentColor(.orange)
+        }
+    }
+    
+    // 3b) Resistance Slider
+    private var resistanceSlider: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text("Resistance: \(Int(viewModel.confidenceToResist))")
+                .foregroundColor(.white)
+                .font(.headline)
+            Slider(value: $viewModel.confidenceToResist, in: 1...10, step: 1)
+                .accentColor(.orange)
+        }
+    }
+    
+    // 4) Horizontal Chips
+    private var emotionChipSection: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("How are you feeling?")
+                .font(.headline)
+                .foregroundColor(.white)
+            
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 12) {
+                    // Reorder states as requested: "Hungry", "Angry", "Lonely", "Tired", "Sad"
+                    ForEach(["Hungry", "Angry", "Lonely", "Tired", "Sad"], id: \.self) { emotion in
+                        OutlinedChip(emotion: emotion,
+                                     isSelected: viewModel.selectedEmotions.contains(emotion)) {
+                            // Tap toggles selection
+                            viewModel.toggleEmotion(emotion)
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    // 5) Record Craving Button
+    private var recordCravingButton: some View {
+        Button {
+            Task {
+                await viewModel.logCraving()
+            }
+        } label: {
+            HStack {
+                if viewModel.isLoading {
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                } else {
+                    Text("Record Craving")
+                        .fontWeight(.bold)
+                }
+            }
+            .foregroundColor(.white)
+            .padding(.horizontal, 24)
+            .padding(.vertical, 14)
+            .background(Color.orange)
+            .cornerRadius(10)
+        }
+        .padding(.top, 10)
+    }
+}
+
+// MARK: - OutlinedChip Subview
+fileprivate struct OutlinedChip: View {
+    
+    let emotion: String
+    let isSelected: Bool
+    let onTap: () -> Void
+    
+    var body: some View {
+        Text(emotion)
+            .font(.subheadline)
+            .padding(.vertical, 6)
+            .padding(.horizontal, 16)
+            // Outline effect:
+            .overlay(
+                RoundedRectangle(cornerRadius: 16)
+                    .stroke(isSelected ? Color.orange : Color.white.opacity(0.6), lineWidth: 2)
+            )
+            // Subtle fill behind the stroke if selected
+            .background(
+                RoundedRectangle(cornerRadius: 16)
+                    .fill(isSelected ? Color.orange.opacity(0.15) : Color.clear)
+            )
+            .foregroundColor(.white)
+            .onTapGesture {
+                onTap()
+            }
     }
 }
 
