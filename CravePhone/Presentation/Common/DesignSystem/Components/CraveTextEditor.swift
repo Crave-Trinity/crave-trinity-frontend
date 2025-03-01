@@ -4,37 +4,29 @@
 //
 //  Description:
 //    A custom text editor with multi-line placeholders, character limiting,
-//    and an optional microphone overlay for speech input.
-//    Uses conditional API for iOS 17+ onChange handling to stay iOS 16-compatible.
+//    and an optional microphone overlay.
 //
 //  Uncle Bob notes:
-//    - Single Responsibility: Manages text entry + optional mic overlay
-//    - Open/Closed: Placeholders, speech logic can be extended without hacking the rest
-//    - Clean Code: Clear naming, distinct methods, minimal duplication
+//    - Single Responsibility: Manages text input UI with optional mic overlay.
+//    - Open/Closed: We can expand placeholders or speech logic without rewriting everything.
 //
-
 import SwiftUI
 
 struct CraveTextEditor: View {
-    // MARK: - Public Bindings & Callbacks
     @Binding var text: String
     let isRecordingSpeech: Bool
     let onMicTap: () -> Void
     
-    // MARK: - Configurable Properties
     let characterLimit: Int
     let placeholderLines: [PlaceholderLine]
     
-    // MARK: - Focus State
     @FocusState private var isFocused: Bool
     
-    // MARK: - Enum for Placeholder Lines
     enum PlaceholderLine {
         case plain(String)
         case gradient(String)
     }
     
-    // MARK: - Initializer
     init(
         text: Binding<String>,
         isRecordingSpeech: Bool,
@@ -49,11 +41,10 @@ struct CraveTextEditor: View {
         self.placeholderLines = placeholderLines
     }
     
-    // MARK: - Body
     var body: some View {
         ZStack(alignment: .topTrailing) {
             
-            // (A) Placeholder Layer
+            // Placeholder layer
             if text.isEmpty, !placeholderLines.isEmpty {
                 VStack(spacing: 8) {
                     ForEach(placeholderLines.indices, id: \.self) { idx in
@@ -82,7 +73,7 @@ struct CraveTextEditor: View {
                 }
             }
             
-            // (B) Actual TextEditor
+            // Actual TextEditor
             textEditorWithOnChange
                 .frame(minHeight: 120)
                 .background(Color.black.opacity(0.3))
@@ -92,7 +83,7 @@ struct CraveTextEditor: View {
                         .stroke(Color.white.opacity(0.3), lineWidth: 1)
                 )
             
-            // (C) Mic Button Overlay
+            // Mic Button Overlay
             Button(action: {
                 onMicTap()
             }) {
@@ -127,7 +118,7 @@ extension CraveTextEditor {
             )
         } else {
             return AnyView(
-                baseEditor.onChange(of: text) { (newValue: String) in
+                baseEditor.onChange(of: text) { newValue in
                     limitTextIfNeeded(newValue)
                 }
             )

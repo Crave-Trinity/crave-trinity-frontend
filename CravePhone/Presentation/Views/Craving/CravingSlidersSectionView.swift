@@ -3,18 +3,14 @@
 //  CravePhone
 //
 //  Description:
-//    A SwiftUI view that displays two sliders: one for craving intensity and one for resistance.
-//    Each slider is presented with a label and custom styling.
+//    Displays two sliders: craving intensity & resistance.
 //
 //  Uncle Bob notes:
-//    - Single Responsibility: Only displays and binds slider values.
-//    - Open for extension: Easily add haptics or additional styling if needed.
+//    - Single Responsibility: Binds slider values, no other logic.
 //
-
 import SwiftUI
 
 struct CravingSlidersSectionView: View {
-    // Bindings for the slider values.
     @Binding var cravingStrength: Double
     @Binding var resistance: Double
     
@@ -22,7 +18,7 @@ struct CravingSlidersSectionView: View {
         VStack(spacing: 24) {
             // Craving Intensity Slider
             VStack(alignment: .leading, spacing: 6) {
-                Text("Craving Intensity: \(Int(cravingStrength))")
+                Text("Intensity: \(Int(cravingStrength))")
                     .foregroundColor(.white)
                     .font(.headline)
                 Slider(value: $cravingStrength, in: 1...10, step: 1)

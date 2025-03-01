@@ -3,13 +3,15 @@
 //  CravePhone
 //
 //  Description:
-//    The main SwiftUI entry point for the app.
-//    Creates the DependencyContainer, passes it to CoordinatorHostView.
+//    The main SwiftUI entry point for the iOS app. Sets up the container,
+//    passes it to CoordinatorHostView.
 //
-//  Created by ...
-//  Updated by ChatGPT on ...
+//  Uncle Bob notes:
+//    - Single Responsibility: Bootstraps the app, no business logic here.
+//  GoF & SOLID:
+//    - High-level module: depends on abstractions (DependencyContainer) not concretions.
+//    - Open/Closed: We can expand the app with new modules, doesn't break current load.
 //
-
 import SwiftUI
 import SwiftData
 

@@ -3,16 +3,16 @@
 //  CravePhone
 //
 //  Description:
-//    A minimalistic chat interface where the user can type a craving-related query,
-//    send it to the AI (using the RAG pipeline), and view the response in a chat-like format.
-//    This view uses the new iOS 17 onChange API (zero-parameter closure) to scroll automatically to the latest message.
+//    Minimalistic chat interface for AI Q&A.
 //
-//  Uncle Bob & Steve Jobs Notes:
-//    - Clear separation of concerns: the ViewModel handles business logic,
-//      while the view manages presentation.
-//    - The updated onChange modifier now uses a zero-parameter closure, which captures the new state.
-//    - Minimal and elegant design for a seamless user experience.
+//  Uncle Bob & Steve Jobs notes:
+//    - Single Responsibility: Renders chat messages, input field, sends to VM.
+//    - Open/Closed: We can add advanced chat features or other UI states without rewriting everything.
+//  GoF & SOLID:
+//    - MVVM: The View depends on ChatViewModel for data & logic.
+//    - Clear separation: The bubble rendering is a sub-function, not tangled with VM logic.
 //
+
 import SwiftUI
 
 public struct ChatView: View {
@@ -26,24 +26,20 @@ public struct ChatView: View {
     public var body: some View {
         NavigationView {
             ZStack {
-                // Use a sleek gradient background defined in your design system.
                 CraveTheme.Colors.primaryGradient
                     .ignoresSafeArea()
                 
                 VStack {
-                    // ScrollViewReader enables programmatic scrolling.
+                    // Scrollable chat messages
                     ScrollViewReader { scrollProxy in
                         ScrollView {
-                            VStack(spacing: 12) {
+                            VStack(spacing: CraveTheme.Spacing.small) {
                                 ForEach(viewModel.messages) { message in
                                     messageBubble(message)
                                 }
                             }
                             .padding()
                         }
-                        // Updated onChange modifier (iOS 17+):
-                        // Using the zero-parameter version: when the message count changes,
-                        // perform the closure without passing old/new values.
                         .onChange(of: viewModel.messages.count) {
                             withAnimation(.easeOut) {
                                 if let lastMessageId = viewModel.messages.last?.id {
@@ -53,13 +49,15 @@ public struct ChatView: View {
                         }
                     }
                     
-                    // Input area with text field and send button.
-                    HStack(spacing: 8) {
+                    // Input area
+                    HStack(spacing: CraveTheme.Spacing.small) {
                         TextField("Ask about your cravings…", text: $viewModel.userInput)
-                            .padding(.horizontal, 12)
+                            .padding(.horizontal, CraveTheme.Spacing.small)
                             .frame(minHeight: 40)
-                            .background(.thinMaterial)
-                            .cornerRadius(8)
+                            .background(CraveTheme.Colors.textFieldBackground)
+                            .cornerRadius(CraveTheme.Layout.cornerRadius)
+                            .foregroundColor(CraveTheme.Colors.primaryText)
+                            .font(CraveTheme.Typography.body)
                         
                         if viewModel.isLoading {
                             ProgressView()
@@ -73,9 +71,9 @@ public struct ChatView: View {
                             } label: {
                                 Image(systemName: "paperplane.fill")
                                     .foregroundColor(.white)
-                                    .padding()
-                                    .background(Color.blue)
-                                    .cornerRadius(8)
+                                    .padding(8)
+                                    .background(CraveTheme.Colors.accent)
+                                    .cornerRadius(CraveTheme.Layout.cornerRadius)
                             }
                         }
                     }
@@ -83,8 +81,9 @@ public struct ChatView: View {
                     .padding(.bottom, 10)
                 }
             }
+            // Force full screen usage
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .navigationBarTitle("AI Insights", displayMode: .inline)
-            // Alert for errors and notifications.
             .alert(item: $viewModel.alertInfo) { info in
                 Alert(title: Text(info.title),
                       message: Text(info.message),
@@ -95,20 +94,21 @@ public struct ChatView: View {
     }
     
     // MARK: - Message Bubble View
-    /// Renders a chat bubble for each message in the conversation.
     @ViewBuilder
     private func messageBubble(_ message: ChatViewModel.Message) -> some View {
         HStack {
-            if message.isUser { Spacer(minLength: 20) }
+            if message.isUser { Spacer(minLength: CraveTheme.Spacing.small) }
             Text(message.content)
+                .font(CraveTheme.Typography.body)
+                .foregroundColor(CraveTheme.Colors.primaryText)
                 .padding(10)
-                .background(message.isUser ? Color.blue.opacity(0.7) : Color.gray.opacity(0.3))
-                .foregroundColor(.white)
-                .cornerRadius(10)
-            if !message.isUser { Spacer(minLength: 20) }
+                .background(message.isUser
+                            ? CraveTheme.Colors.accent.opacity(0.7)
+                            : Color.gray.opacity(0.3))
+                .cornerRadius(CraveTheme.Layout.cornerRadius)
+            if !message.isUser { Spacer(minLength: CraveTheme.Spacing.small) }
         }
         .frame(maxWidth: .infinity, alignment: message.isUser ? .trailing : .leading)
         .id(message.id)
     }
 }
-

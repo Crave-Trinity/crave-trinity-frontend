@@ -2,15 +2,16 @@
 //  CravingListView.swift
 //  CravePhone
 //
-//  Directory: CravePhone/Core/Presentation/Views/Craving/CravingListView.swift
-//
 //  Description:
-//    A simple list of cravings, each row is a CravingCard. Uses a ViewModel to fetch
-//    cravings, and refreshable for pull-to-refresh. Adheres to MVVM, SOLID, and
-//    Single Responsibility: displaying a list of CravingEntities.
+//    Displays a List of cravings. Each row is a CravingCard.
+//    Adheres to MVVM & SOLID by offloading data fetching to the VM.
 //
-//  Created by <Your Name> on <date>.
-//  Updated by ChatGPT on <today's date>.
+//  Uncle Bob notes:
+//    - Single Responsibility: Just a list + some refresh logic, no data logic in the View.
+//    - Open/Closed: We can easily add new sections, custom row styling, etc.
+//  GoF & SOLID:
+//    - The list is user interface logic; the actual data is from 'CravingListViewModel'.
+//    - Follows "Dependency Inversion": The view depends on an abstracted VM, not direct data sources.
 //
 
 import SwiftUI
@@ -25,17 +26,24 @@ public struct CravingListView: View {
     public var body: some View {
         NavigationView {
             ZStack {
-                // Main content
+                // Gradient behind the list
+                CraveTheme.Colors.primaryGradient
+                    .ignoresSafeArea()
+                
                 List {
                     ForEach(viewModel.cravings, id: \.id) { craving in
                         CravingCard(craving: craving)
+                            .listRowBackground(Color.clear) // Let the gradient show
                     }
                     .onDelete(perform: deleteCraving)
                 }
+                .scrollContentBackground(.hidden) // iOS 16+ hides default list bg
                 .navigationTitle("Cravings")
+                .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         EditButton()
+                            .foregroundColor(CraveTheme.Colors.primaryText)
                     }
                 }
                 .refreshable {
@@ -47,13 +55,16 @@ public struct CravingListView: View {
                 
                 // Loading overlay
                 if viewModel.isLoading {
-                    ProgressView("Loading...")
+                    ProgressView("Loading…")
                         .padding(40)
                         .background(Color.black.opacity(0.6))
                         .cornerRadius(12)
+                        .foregroundColor(CraveTheme.Colors.primaryText)
+                        .font(CraveTheme.Typography.body)
                 }
             }
-            // Alerts
+            // Force full screen usage
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .alert(item: $viewModel.alertInfo) { info in
                 Alert(
                     title: Text(info.title),
@@ -73,30 +84,3 @@ public struct CravingListView: View {
         }
     }
 }
-
-#if DEBUG
-// MARK: - Preview & Mocks
-struct CravingListView_Previews: PreviewProvider {
-    static var previews: some View {
-        CravingListView(
-            viewModel: CravingListViewModel(
-                fetchCravingsUseCase: MockFetchCravingsUseCase(),
-                archiveCravingUseCase: MockArchiveCravingUseCase()
-            )
-        )
-    }
-}
-
-fileprivate class MockFetchCravingsUseCase: FetchCravingsUseCaseProtocol {
-    func execute() async throws -> [CravingEntity] {
-        [
-            CravingEntity(text: "Sample Craving #1"),
-            CravingEntity(text: "Sample Craving #2")
-        ]
-    }
-}
-
-fileprivate class MockArchiveCravingUseCase: ArchiveCravingUseCaseProtocol {
-    func execute(_ craving: CravingEntity) async throws {}
-}
-#endif

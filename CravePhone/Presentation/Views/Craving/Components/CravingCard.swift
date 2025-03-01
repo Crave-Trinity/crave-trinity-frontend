@@ -2,16 +2,13 @@
 //  CravingCard.swift
 //  CravePhone
 //
-//  Directory: CravePhone/Core/Presentation/Views/Craving/Components/CravingCard.swift
-//
 //  Description:
-//    A minimal card view displaying a CravingEntity. Utilizes the unified CraveTheme
-//    for styling. Follows MVVM and SOLID (single responsibility: show one craving).
+//    A minimal card view displaying a CravingEntity.
 //
-//  Created by <Your Name> on <date>.
-//  Updated by ChatGPT on <today's date>.
+//  Uncle Bob notes:
+//    - Single Responsibility: Show one craving's info, no domain logic.
+//    - Clean Code: Minimal duplication, uses CraveTheme consistently.
 //
-
 import SwiftUI
 
 public struct CravingCard: View {

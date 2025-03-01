@@ -1,24 +1,34 @@
-//ModelContainer
-//CravePhone
-
+//
+//  ModelContainer.swift
+//  CravePhone
+//
+//  Description:
+//  Creates the SwiftData container, referencing our model types.
+//
 import SwiftData
 import Foundation
 
 @MainActor
-let modelConfiguration: ModelConfiguration = {
-    let config = ModelConfiguration()
-
-    return config
-}()
-
 let sharedModelContainer: ModelContainer = {
+    // 1) Define the schema from your @Model classes:
     let schema = Schema([
-        CravingEntity.self, AnalyticsMetadata.self // Add other entities here if you have more
+        CravingEntity.self,
+        AnalyticsMetadata.self
     ])
-    let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-
+    
+    // 2) Provide any configuration you need:
+    //    isStoredInMemoryOnly = false means "persist on disk".
+    let modelConfiguration = ModelConfiguration(
+        schema: schema,
+        isStoredInMemoryOnly: false
+    )
+    
+    // 3) Build and return the container:
     do {
-        return try ModelContainer(for: schema, configurations: [modelConfiguration])
+        return try ModelContainer(
+            for: schema,
+            configurations: [modelConfiguration]
+        )
     } catch {
         fatalError("Could not create ModelContainer: \(error)")
     }

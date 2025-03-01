@@ -3,25 +3,20 @@
 //  CravePhone
 //
 //  Description:
-//    A subview that manages the text input portion of logging a craving,
-//    including an optional microphone button (speech-to-text).
+//    Subview for the text input portion of logging a craving.
 //
-//  Uncle Bob notes:
-//    - Single Responsibility: Only deals with the description + mic recording UI
-//    - Open/Closed: Additional placeholders or design changes can be added
-//      without changing the rest of the app
-//    - Clean Code: Minimal duplication, clear naming
+//  Uncle Bob & SOLID notes:
+//    - Single Responsibility: Only deals with text + mic UI.
+//    - Open/Closed: We can add placeholders or advanced logic without changing the rest of the app.
 //
 
 import SwiftUI
 
 struct CravingDescriptionSectionView: View {
-    // MARK: - Bindings
-    @Binding var text: String             // The user's typed or voice-transcribed text
-    let isRecordingSpeech: Bool           // Whether speech recognition is active
-    let onToggleSpeech: () -> Void        // Callback to start/stop speech
+    @Binding var text: String
+    let isRecordingSpeech: Bool
+    let onToggleSpeech: () -> Void
     
-    // MARK: - Body
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text("Craving Description")

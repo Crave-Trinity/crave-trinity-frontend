@@ -3,44 +3,34 @@
 //  CravePhone
 //
 //  Description:
-//    Main view for logging a new craving. Demonstrates Uncle Bob's
-//    Single Responsibility by delegating sub-components (description, sliders, etc.)
-//    to separate views.
+//    Main view for logging a new craving.
 //
 //  Uncle Bob notes:
-//    - Single Responsibility: This file orchestrates the "Log Craving" screen
-//      without burying all details (like text editing) in the same file.
-//    - Open/Closed: We can add new sections (like location tags, images, etc.)
-//      without breaking the existing code.
-//
-//  Additional Info:
-//    - If you don't have CravingSlidersSectionView or CravingEmotionChipsView
-//      defined, comment those lines out or define them similarly.
+//    - Single Responsibility: Orchestrates subviews, holds no domain logic itself.
+//    - Open/Closed: Additional sections (location, mood, triggers) can be added as separate subviews.
+//  GoF & SOLID:
+//    - Compositional approach for subviews, each has a single focus (sliders, description).
+//    - The 'ViewModel' is injected, not created here (Dependency Inversion).
 //
 
 import SwiftUI
 
 public struct LogCravingView: View {
     
-    // MARK: - Observed Object
     @ObservedObject var viewModel: LogCravingViewModel
     
-    // MARK: - Initialization
     public init(viewModel: LogCravingViewModel) {
         self.viewModel = viewModel
     }
     
-    // MARK: - Body
     public var body: some View {
         NavigationView {
             ZStack {
-                // Subtle black/dark gradient background
                 CraveTheme.Colors.primaryGradient
                     .ignoresSafeArea()
                 
-                // ScrollView to support smaller devices
                 ScrollView {
-                    VStack(spacing: 24) {
+                    VStack(spacing: CraveTheme.Spacing.large) {
                         
                         // (1) Header
                         headerSection
@@ -52,25 +42,27 @@ public struct LogCravingView: View {
                             onToggleSpeech: { viewModel.toggleSpeechRecognition() }
                         )
                         
-                        // (3) Sliders (make sure you have this component)
+                        // (3) Sliders
                         CravingSlidersSectionView(
                             cravingStrength: $viewModel.cravingStrength,
                             resistance: $viewModel.confidenceToResist
                         )
                         
-                        // (4) Emotion Chips (make sure you have this component)
+                        // (4) Emotions
                         CravingEmotionChipsView(
                             selectedEmotions: viewModel.selectedEmotions,
                             onToggleEmotion: { viewModel.toggleEmotion($0) }
                         )
 
-                        // (5) “Record Craving” button
+                        // (5) Button
                         recordCravingButton
                     }
-                    .padding(24)
-                    .padding(.bottom, 40) // Extra spacing at the bottom
+                    .padding(CraveTheme.Spacing.large)
+                    .padding(.bottom, 40)
                 }
             }
+            // Force full screen usage
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .navigationBarTitleDisplayMode(.inline)
             .alert(item: $viewModel.alertInfo) { info in
                 Alert(
@@ -88,14 +80,14 @@ public struct LogCravingView: View {
 extension LogCravingView {
     
     private var headerSection: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: CraveTheme.Spacing.small) {
             Text("🦊 Track Your Craving")
-                .font(.system(size: 24, weight: .bold))
-                .foregroundColor(.white)
+                .font(CraveTheme.Typography.heading)
+                .foregroundColor(CraveTheme.Colors.primaryText)
             
             Text("Share what you're craving to gain insights.")
-                .font(.subheadline)
-                .foregroundColor(.white.opacity(0.8))
+                .font(CraveTheme.Typography.subheading)
+                .foregroundColor(CraveTheme.Colors.primaryText.opacity(0.8))
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
@@ -112,14 +104,15 @@ extension LogCravingView {
                         .progressViewStyle(CircularProgressViewStyle(tint: .white))
                 } else {
                     Text("Record Craving")
+                        .font(CraveTheme.Typography.subheading)
                         .fontWeight(.bold)
                 }
             }
-            .foregroundColor(.white)
+            .foregroundColor(CraveTheme.Colors.buttonText)
             .padding(.horizontal, 24)
             .padding(.vertical, 14)
-            .background(Color.orange)
-            .cornerRadius(10)
+            .background(CraveTheme.Colors.accent)
+            .cornerRadius(CraveTheme.Layout.cornerRadius)
         }
         .padding(.top, 10)
     }

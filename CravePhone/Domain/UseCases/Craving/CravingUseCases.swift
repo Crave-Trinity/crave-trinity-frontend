@@ -3,10 +3,15 @@
 //  CravePhone
 //
 //  Created by John H Jung on <date>.
-//  Description: Use cases for phone-based craving features.
-//               Defines a phone-specific error enum (PhoneCravingError) to avoid conflicts.
+//  Description:
+//    Use cases for phone-based craving features.
+//    Defines a phone-specific error enum (PhoneCravingError) to avoid conflicts.
 //
-
+//  Uncle Bob & SOLID:
+//    - Single Responsibility: Each use case has one clear job.
+//    - Open/Closed: New use cases can be added without modifying existing ones.
+//    - Clean Code: Dependencies are injected and the domain model is used consistently.
+//
 import Foundation
 
 public enum PhoneCravingError: LocalizedError {
@@ -35,6 +40,9 @@ public protocol ArchiveCravingUseCaseProtocol {
     func execute(_ craving: CravingEntity) async throws
 }
 
+/// Use case for adding a new craving.
+/// This implementation validates input and creates a new CravingEntity,
+/// injecting default values for the new properties.
 public final class AddCravingUseCase: AddCravingUseCaseProtocol {
     private let cravingRepository: CravingRepository
 
@@ -47,13 +55,14 @@ public final class AddCravingUseCase: AddCravingUseCaseProtocol {
         guard !trimmed.isEmpty, trimmed.count >= 3 else {
             throw PhoneCravingError.invalidInput
         }
-
-        let newCraving = CravingEntity(text: trimmed)
+        // Create a new CravingEntity with default values for 'confidenceToResist' and 'cravingStrength'
+        let newCraving = CravingEntity(text: trimmed, confidenceToResist: 0.0, cravingStrength: 0.0)
         try await cravingRepository.addCraving(newCraving)
         return newCraving
     }
 }
 
+/// Use case for fetching all active cravings.
 public final class FetchCravingsUseCase: FetchCravingsUseCaseProtocol {
     private let cravingRepository: CravingRepository
 
@@ -66,6 +75,7 @@ public final class FetchCravingsUseCase: FetchCravingsUseCaseProtocol {
     }
 }
 
+/// Use case for archiving a craving.
 public final class ArchiveCravingUseCase: ArchiveCravingUseCaseProtocol {
     private let cravingRepository: CravingRepository
 

@@ -3,13 +3,16 @@
 //  CravePhone
 //
 //  Description:
-//    A SwiftUI screen displaying aggregated craving analytics and insights,
-//    reintroduced for the main tab navigation.
+//    A SwiftUI screen displaying aggregated craving analytics and insights.
 //
 //  Uncle Bob + Steve Jobs notes:
-//    - Clear data flow from the ViewModel (MVVM).
-//    - Minimal, Apple-like design with crisp colors and spacing.
+//    - Single Responsibility: Displays analytics info from the VM, minimal logic.
+//    - Open/Closed: We can add more analytics cards, charts, etc. without changing existing code.
+//  GoF & SOLID:
+//    - The 'View' depends on an 'AnalyticsViewModel' abstraction for data, no direct DB calls.
+//    - Use of SwiftUI's composition for subviews (headerSection, statsSection).
 //
+
 import SwiftUI
 
 public struct AnalyticsDashboardView: View {
@@ -23,24 +26,28 @@ public struct AnalyticsDashboardView: View {
     public var body: some View {
         NavigationView {
             ZStack {
-                // Background color or gradient
+                // Use theme’s gradient
                 CraveTheme.Colors.primaryGradient
                     .ignoresSafeArea()
                 
+                // Loading or main content
                 if viewModel.isLoading {
-                    ProgressView("Loading Analytics...")
-                        .foregroundColor(.white)
+                    ProgressView("Loading Analytics…")
+                        .foregroundColor(CraveTheme.Colors.primaryText)
+                        .font(CraveTheme.Typography.subheading)
                 } else {
                     ScrollView {
-                        VStack(spacing: 16) {
+                        VStack(spacing: CraveTheme.Spacing.medium) {
                             headerSection
                             statsSection
                             Spacer(minLength: 50)
                         }
-                        .padding()
+                        .padding(CraveTheme.Spacing.medium)
                     }
                 }
             }
+            // Force the content to stretch
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .navigationTitle("Analytics")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -51,14 +58,16 @@ public struct AnalyticsDashboardView: View {
                         }
                     }) {
                         Image(systemName: "arrow.clockwise.circle")
-                            .foregroundColor(.white)
+                            .foregroundColor(CraveTheme.Colors.primaryText)
                     }
                 }
             }
             .alert(item: $viewModel.alertInfo) { info in
-                Alert(title: Text(info.title),
-                      message: Text(info.message),
-                      dismissButton: .default(Text("OK")))
+                Alert(
+                    title: Text(info.title),
+                    message: Text(info.message),
+                    dismissButton: .default(Text("OK"))
+                )
             }
         }
         .onAppear {
@@ -70,43 +79,47 @@ public struct AnalyticsDashboardView: View {
     
     // MARK: - Subviews
     private var headerSection: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: CraveTheme.Spacing.small) {
             Text("📊 Craving Analytics")
-                .font(.largeTitle.weight(.bold))
-                .foregroundColor(.white)
+                .font(CraveTheme.Typography.heading)
+                .foregroundColor(CraveTheme.Colors.primaryText)
+            
             Text("Explore patterns, frequencies, and personal insights.")
-                .font(.subheadline)
-                .foregroundColor(.white.opacity(0.8))
+                .font(CraveTheme.Typography.subheading)
+                .foregroundColor(CraveTheme.Colors.primaryText.opacity(0.8))
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.bottom, 8)
+        .padding(.bottom, CraveTheme.Spacing.small)
     }
     
     private var statsSection: some View {
-        VStack(spacing: 12) {
+        VStack(spacing: CraveTheme.Spacing.small) {
             if let stats = viewModel.basicStats {
-                // Example UI for average intensity & count
+                // Example metrics
                 Text("Average Intensity: \(String(format: "%.1f", stats.averageIntensity))")
-                    .font(.title2)
-                    .foregroundColor(.white)
+                    .font(CraveTheme.Typography.subheading)
+                    .foregroundColor(CraveTheme.Colors.primaryText)
+                
+                Text("Average Resistance: \(String(format: "%.1f", stats.averageResistance))")
+                    .font(CraveTheme.Typography.subheading)
+                    .foregroundColor(CraveTheme.Colors.primaryText)
                 
                 Text("Total Cravings: \(stats.totalCravings)")
-                    .font(.title2)
-                    .foregroundColor(.white)
+                    .font(CraveTheme.Typography.subheading)
+                    .foregroundColor(CraveTheme.Colors.primaryText)
                 
-                // Additional metrics or charts
-                // e.g., Time-of-day chart or line graph
-                // AnalyticsCharts(data: stats.distributionData)
+                // Potential place for charts, distribution data, etc.
                 
             } else {
                 Text("No analytics available yet.")
-                    .foregroundColor(.white)
+                    .font(CraveTheme.Typography.body)
+                    .foregroundColor(CraveTheme.Colors.primaryText)
                     .padding()
             }
         }
         .padding()
         .background(Color.black.opacity(0.2))
-        .cornerRadius(12)
+        .cornerRadius(CraveTheme.Layout.cornerRadius)
         .shadow(radius: 4)
     }
 }

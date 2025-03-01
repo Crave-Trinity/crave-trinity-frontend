@@ -1,4 +1,19 @@
-// CRAVETabView.swift
+//
+//  CRAVETabView.swift
+//  CravePhone
+//
+//  Description:
+//    A tab-based container for the entire phone app. Each tab calls coordinator
+//    methods to produce a specialized View.
+//
+//  Uncle Bob notes:
+//    - Single Responsibility: Defines how tabs appear & the default styling.
+//    - Open/Closed: We can add more tabs without rewriting the existing ones.
+//  GoF & SOLID:
+//    - The “Factory Methods” in AppCoordinator produce each view; CRAVETabView simply organizes them.
+//    - We separate object creation (coordinator) from object usage (the tab UI).
+//
+
 import SwiftUI
 
 public struct CRAVETabView: View {

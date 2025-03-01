@@ -1,35 +1,35 @@
-// File: AnalyticsMetadata.swift
-// Description:
-// This file defines the AnalyticsMetadata model used for analytics storage.
-// It is marked public so it can be used in public API methods (e.g., in AnalyticsStorageProtocol).
-// The nested UserAction struct is also explicitly marked public, ensuring that all types used
-// in public method signatures are public, thus preventing any access level issues.
-
+//
+//  AnalyticsMetadata.swift
+//  CravePhone
+//
+//  Description:
+//  Example SwiftData model for analytics metadata, also as a final class.
+//
 import SwiftData
 import Foundation
 
 @Model
 public final class AnalyticsMetadata {
-    // Unique identifier for the metadata.
-    @Attribute(.unique) public var id: UUID
     
-    // An optional array of user actions associated with this metadata.
-    // UserAction is a public nested type.
+    // Unique identifier for the metadata.
+    @Attribute(.unique)
+    public var id: UUID
+    
+    // Optional array of user actions. Must be Codable if we want to store them as transformable.
     public var userActions: [UserAction]?
     
-    // Public initializer.
+    // Required public initializer for a final class with custom stored properties.
     public init(id: UUID, userActions: [UserAction]? = nil) {
         self.id = id
         self.userActions = userActions
     }
     
-    // Public nested type representing a user action.
+    // Nested struct representing a user action. It's Codable so SwiftData can persist it.
     public struct UserAction: Codable {
         public var actionType: String
         public var timestamp: Date
         public var details: String?
         
-        // Public initializer for UserAction.
         public init(actionType: String, timestamp: Date, details: String? = nil) {
             self.actionType = actionType
             self.timestamp = timestamp

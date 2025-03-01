@@ -1,7 +1,13 @@
-//CravingManager.swift
-
-import Foundation
+//
+//  CravingManager.swift
+//  CravePhone
+//
+//  Description:
+//  Sample manager demonstrating fetch / insert / archive / delete in SwiftData.
+//  We rely on 'isArchived' and 'timestamp' from CravingEntity.
+//
 import SwiftData
+import Foundation
 
 @MainActor
 final class CravingManager {
@@ -11,6 +17,7 @@ final class CravingManager {
         self.modelContext = modelContext
     }
 
+    // Fetch cravings that have NOT been archived, sorted reverse-chronologically.
     func fetchActiveCravings() async throws -> [CravingEntity] {
         let descriptor = FetchDescriptor<CravingEntity>(
             predicate: #Predicate<CravingEntity> { !$0.isArchived },
@@ -19,15 +26,17 @@ final class CravingManager {
         return try modelContext.fetch(descriptor)
     }
 
+    // Insert a new craving entity and save.
     func insert(_ entity: CravingEntity) async throws {
         modelContext.insert(entity)
         try await save()
     }
 
+    // Archive the given craving (set isArchived = true).
     func archive(_ entity: CravingEntity) async throws {
-        let entityId = entity.id // Extract the ID here
+        let entityId = entity.id
         let descriptor = FetchDescriptor<CravingEntity>(
-            predicate: #Predicate<CravingEntity> { $0.id == entityId } // Use the local constant
+            predicate: #Predicate<CravingEntity> { $0.id == entityId }
         )
         if let existing = try modelContext.fetch(descriptor).first {
             existing.isArchived = true
@@ -35,10 +44,11 @@ final class CravingManager {
         }
     }
 
+    // Permanently delete an entity from the store.
     func delete(_ entity: CravingEntity) async throws {
-        let entityId = entity.id // Extract the ID here
+        let entityId = entity.id
         let descriptor = FetchDescriptor<CravingEntity>(
-            predicate: #Predicate<CravingEntity> { $0.id == entityId } // Use the local constant
+            predicate: #Predicate<CravingEntity> { $0.id == entityId }
         )
         if let existing = try modelContext.fetch(descriptor).first {
             modelContext.delete(existing)
@@ -46,8 +56,8 @@ final class CravingManager {
         }
     }
 
+    // Helper function to explicitly save.
     private func save() async throws {
         try modelContext.save()
     }
 }
-

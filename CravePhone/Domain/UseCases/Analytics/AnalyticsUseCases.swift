@@ -1,3 +1,5 @@
+//AnalyticsUseCases.swift
+
 import Foundation
 
 public protocol GetBasicAnalyticsUseCaseProtocol {
