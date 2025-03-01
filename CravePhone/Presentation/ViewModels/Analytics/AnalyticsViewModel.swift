@@ -2,11 +2,13 @@
 //  AnalyticsViewModel.swift
 //  CravePhone
 //
-//  ViewModel for analytics data processing and visualization.
+//  Uncle Bob & Clean Architecture
+//  - Provides analytics data to the UI (AnalyticsDashboardView).
+//  - Depends on an AnalyticsManager to fetch or process real analytics behind the scenes.
 //
 
-import Foundation
 import SwiftUI
+import Foundation
 
 @MainActor
 public class AnalyticsViewModel: ObservableObject {
@@ -38,7 +40,6 @@ public class AnalyticsViewModel: ObservableObject {
     @Published var recommendations: [String] = []
     
     // MARK: - Initialization
-    
     public init(manager: AnalyticsManager) {
         self.manager = manager
         loadSampleData()
@@ -48,11 +49,9 @@ public class AnalyticsViewModel: ObservableObject {
     
     func fetchAnalytics(timeFrame: AnalyticsDashboardView.TimeFrame) async {
         // This would normally fetch real data from the analytics manager
-        // For now, we'll just use our sample data
+        // For now, we'll just use sample data:
         
-        // Simulate network delay
         try? await Task.sleep(nanoseconds: 500_000_000) // 0.5 seconds
-        
         loadSampleData()
     }
     
@@ -71,7 +70,7 @@ public class AnalyticsViewModel: ObservableObject {
         intensityTrend = createSampleDataPoints(count: 30, labels: (1...30).map { "Day \($0)" })
         resistanceTrend = createSampleDataPoints(count: 30, labels: (1...30).map { "Day \($0)" })
         weekdayHourHeatmap = createSampleHeatmapData(rows: 7, cols: 24)
-        monthlyTrend = createSampleDataPoints(count: 12, labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"])
+        monthlyTrend = createSampleDataPoints(count: 12, labels: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"])
         topTriggers = createSampleDataPoints(count: 5, labels: ["Stress", "Boredom", "Social", "Anxiety", "Routine"])
         emotionDistribution = createSampleDataPoints(count: 6, labels: ["Stress", "Boredom", "Anxiety", "Social", "Tired", "Hungry"])
         

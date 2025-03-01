@@ -6,10 +6,6 @@
 //   - Provides methods for creating major feature views (Log Craving, Craving List, Analytics, AI Chat).
 //   - Each method returns a SwiftUI view, using your DependencyContainer.
 //
-//  Usage:
-//   - CRAVETabView calls these methods to render the correct tab contents.
-//   - Confirm that "DependencyContainer" has the necessary "makeXYZViewModel()" methods.
-//
 
 import SwiftUI
 
@@ -24,7 +20,6 @@ public final class AppCoordinator: ObservableObject {
     // MARK: - View Constructors
     
     public func makeLogCravingView() -> some View {
-        // Example: build the VM from your container, then return the view
         let vm = container.makeLogCravingViewModel()
         return LogCravingView(viewModel: vm)
     }
@@ -44,10 +39,9 @@ public final class AppCoordinator: ObservableObject {
         return ChatView(viewModel: vm)
     }
     
-    // MARK: - Optional “start()” if needed
-    // If you still use CoordinatorHostView, you could do:
+    // If you still use a root coordinator approach:
     public func start() -> some View {
-        // e.g. return a NavigationView wrapping a main menu, or CRAVETabView
+        // Return a tab view or main NavView
         CRAVETabView(coordinator: self)
     }
 }

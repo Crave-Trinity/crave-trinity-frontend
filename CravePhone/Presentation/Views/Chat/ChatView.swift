@@ -2,24 +2,31 @@
 //  ChatView.swift
 //  CravePhone
 //
-//  Created by Developer on 3/1/2025.
+//  Single Responsibility:
+//   - Provide a chat UI with message bubbles, a send field, and optional loading overlay.
 //
 
 import SwiftUI
 
 struct ChatView: View {
+    // The view model driving the chat UI
     @ObservedObject var viewModel: ChatViewModel
-    @State private var messageText = ""
+    @State private var messageText: String = ""
     @FocusState private var isInputFocused: Bool
+
+    // Explicit initializer to avoid ambiguity in the synthesized initializer
+    init(viewModel: ChatViewModel) {
+        self.viewModel = viewModel
+    }
     
     var body: some View {
         ZStack {
-            // Background
+            // Background using the app's primary gradient
             CraveTheme.Colors.primaryGradient
                 .ignoresSafeArea()
             
             VStack(spacing: 0) {
-                // Messages list
+                // Messages list with auto scrolling
                 ScrollViewReader { scrollProxy in
                     ScrollView {
                         LazyVStack(spacing: 12) {
@@ -32,7 +39,8 @@ struct ChatView: View {
                         .padding(.top, 16)
                         .padding(.bottom, 8)
                     }
-                    .onChange(of: viewModel.messages.count) { _ in
+                    // Renamed to .onChangeBackport if you rely on passing old/new values
+                    .onChangeBackport(of: viewModel.messages.count, initial: false) { _, _ in
                         if let lastMessage = viewModel.messages.last {
                             withAnimation {
                                 scrollProxy.scrollTo(lastMessage.id, anchor: .bottom)
@@ -46,7 +54,7 @@ struct ChatView: View {
                     }
                 }
                 
-                // Input area
+                // Input area for typing messages
                 VStack(spacing: 0) {
                     Divider()
                         .background(Color.gray.opacity(0.3))
@@ -58,16 +66,18 @@ struct ChatView: View {
                             .cornerRadius(20)
                             .focused($isInputFocused)
                             .submitLabel(.send)
-                            .onSubmit {
-                                sendMessage()
-                            }
+                            .onSubmit { sendMessage() }
                         
                         Button {
                             sendMessage()
                         } label: {
                             Image(systemName: "arrow.up.circle.fill")
                                 .font(.system(size: 32))
-                                .foregroundColor(messageText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? .gray : CraveTheme.Colors.accent)
+                                .foregroundColor(
+                                    messageText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+                                    ? .gray
+                                    : CraveTheme.Colors.accent
+                                )
                         }
                         .disabled(messageText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || viewModel.isLoading)
                     }
@@ -77,7 +87,7 @@ struct ChatView: View {
                 }
             }
             
-            // Loading overlay
+            // Loading overlay if messages are being processed
             if viewModel.isLoading {
                 LoadingOverlay()
             }
@@ -91,15 +101,11 @@ struct ChatView: View {
         }
     }
     
+    /// Sends the current message if it is non-empty
     private func sendMessage() {
         guard !messageText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return }
-        
-        let text = messageText
         messageText = ""
-        
-        Task {
-            await viewModel.sendMessage()
-        }
+        Task { await viewModel.sendMessage() }
     }
     
     // MARK: - Subviews
@@ -109,37 +115,28 @@ struct ChatView: View {
         
         var body: some View {
             HStack {
-                if message.isUser {
-                    Spacer()
-                }
+                if message.isUser { Spacer() }
                 
                 VStack(alignment: message.isUser ? .trailing : .leading, spacing: 4) {
                     Text(message.content)
                         .font(CraveTheme.Typography.body)
-                        .foregroundColor(message.isUser ? Color.white : CraveTheme.Colors.primaryText)
+                        .foregroundColor(message.isUser ? .white : CraveTheme.Colors.primaryText)
                         .padding(12)
                         .background(
                             message.isUser ?
-                            CraveTheme.Colors.accent.opacity(0.9) :
+                                CraveTheme.Colors.accent.opacity(0.9) :
                                 Color.black.opacity(0.6)
                         )
-                        .clipShape(
-                            RoundedRectangle(
-                                cornerRadius: 16,
-                                style: .continuous
-                            )
-                        )
+                        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
                     
                     Text(message.timestamp.formatted(date: .omitted, time: .shortened))
                         .font(.system(size: 11))
-                        .foregroundColor(Color.gray)
+                        .foregroundColor(.gray)
                         .padding(.horizontal, 8)
                 }
                 .padding(.horizontal, 4)
                 
-                if !message.isUser {
-                    Spacer()
-                }
+                if !message.isUser { Spacer() }
             }
         }
     }
@@ -159,9 +156,9 @@ struct ChatView: View {
     }
     
     struct TypingIndicator: View {
-        @State private var showFirstDot = false
-        @State private var showSecondDot = false
-        @State private var showThirdDot = false
+        @State private var showFirstDot: Bool = false
+        @State private var showSecondDot: Bool = false
+        @State private var showThirdDot: Bool = false
         
         var body: some View {
             HStack(spacing: 4) {
@@ -171,8 +168,7 @@ struct ChatView: View {
                         .frame(width: 8, height: 8)
                         .scaleEffect(dotScale(for: index))
                         .animation(
-                            Animation
-                                .easeInOut(duration: 0.4)
+                            Animation.easeInOut(duration: 0.4)
                                 .repeatForever(autoreverses: true)
                                 .delay(Double(index) * 0.2),
                             value: dotScale(for: index)
@@ -186,12 +182,8 @@ struct ChatView: View {
             )
             .onAppear {
                 showFirstDot = true
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                    showSecondDot = true
-                }
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-                    showThirdDot = true
-                }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { showSecondDot = true }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) { showThirdDot = true }
             }
         }
         
@@ -202,23 +194,6 @@ struct ChatView: View {
             case 2: return showThirdDot ? 1.5 : 1.0
             default: return 1.0
             }
-        }
-    }
-}
-
-// MARK: - Preview
-struct ChatView_Previews: PreviewProvider {
-    static var previews: some View {
-        // Using mock view model for preview
-        let viewModel = ChatViewModel(aiChatUseCase: MockChatUseCase())
-        ChatView(viewModel: viewModel)
-            .preferredColorScheme(.dark)
-    }
-    
-    // Mock use case for preview
-    class MockChatUseCase: AiChatUseCaseProtocol {
-        func execute(userQuery: String) async throws -> String {
-            return "This is a sample response to: \(userQuery)"
         }
     }
 }

@@ -151,9 +151,11 @@
 				PhoneApp/Navigation/AppCoordinator.swift = (ios, );
 				PhoneApp/Navigation/CRAVETabView.swift = (ios, );
 				PhoneApp/PhoneApp.swift = (ios, );
+				Presentation/Common/AlertInfo.swift = (ios, );
 				Presentation/Common/DesignSystem/Components/CraveTextEditor.swift = (ios, );
 				Presentation/Common/DesignSystem/CraveTheme.swift = (ios, );
 				"Presentation/Common/Extensions/Date+Extensions.swift" = (ios, );
+				"Presentation/Common/Extensions/LogCravingViewModel+UIExtensions.swift" = (ios, );
 				"Presentation/Common/Extensions/View+Extensions.swift" = (ios, );
 				"Presentation/Configuration/AnalyticsConfiguration+Defaults.swift" = (ios, );
 				Presentation/Configuration/AnalyticsConfiguration.swift = (ios, );

@@ -5,9 +5,9 @@
 //  Description:
 //     The MVVM ViewModel for the AI chat UI.
 //     Uses a shared "AlertInfo" struct from AlertInfo.swift.
+//  Uncle Bob: keep the class small, focus on chat logic only.
 //
-//  NOTE: We no longer define AlertInfo here.
-//
+
 import SwiftUI
 import Combine
 
@@ -27,7 +27,7 @@ public final class ChatViewModel: ObservableObject {
     @Published public var userInput: String = ""
     @Published public var isLoading: Bool = false
     
-    // Use the master AlertInfo from AlertInfo.swift
+    // Shared AlertInfo from AlertInfo.swift
     @Published public var alertInfo: AlertInfo?
     
     private let aiChatUseCase: AiChatUseCaseProtocol
@@ -42,8 +42,10 @@ public final class ChatViewModel: ObservableObject {
         let query = userInput.trimmingCharacters(in: .whitespacesAndNewlines)
         
         guard !query.isEmpty else {
-            alertInfo = AlertInfo(title: "Empty Input",
-                                  message: "Please type something before sending.")
+            alertInfo = AlertInfo(
+                title: "Empty Input",
+                message: "Please type something before sending."
+            )
             return
         }
         
@@ -54,13 +56,13 @@ public final class ChatViewModel: ObservableObject {
         userInput = ""
         
         do {
-            // 3) Show a loading spinner
+            // 3) Show loading
             isLoading = true
             
-            // 4) Call the use case (which calls the repository / API client)
+            // 4) Call the AI use case
             let aiResponse = try await aiChatUseCase.execute(userQuery: query)
             
-            // 5) Append the bot's response to the chat
+            // 5) Append the bot's response
             appendMessage(aiResponse, isUser: false)
             
         } catch {
@@ -71,19 +73,17 @@ public final class ChatViewModel: ObservableObject {
         isLoading = false
     }
     
-    // MARK: - Private Helpers
-    private func appendMessage(_ content: String, isUser: Bool) {
-        let newMessage = Message(content: content, isUser: isUser)
-        messages.append(newMessage)
-    }
-}
-
-extension ChatViewModel {
-    func sendWelcomeMessage() {
+    public func sendWelcomeMessage() {
         let message = Message(
             content: "Welcome to CRAVE. How can I help you manage your cravings today?",
             isUser: false
         )
         messages.append(message)
+    }
+    
+    // MARK: - Private Helpers
+    private func appendMessage(_ content: String, isUser: Bool) {
+        let newMessage = Message(content: content, isUser: isUser)
+        messages.append(newMessage)
     }
 }
