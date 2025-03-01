@@ -49,30 +49,28 @@ struct CravingListView: View {
                         }
                         .padding()
                     }
-                    // Let the scroll fill the screen
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .alert(item: $viewModel.alertInfo) { info in
-            Alert(title: Text(info.title),
-                  message: Text(info.message),
-                  dismissButton: .default(Text("OK")))
+            Alert(
+                title: Text(info.title),
+                message: Text(info.message),
+                dismissButton: .default(Text("OK"))
+            )
         }
         .onAppear {
             Task { await viewModel.fetchCravings() }
         }
     }
     
-    // MARK: - Filter Logic
     private var filteredCravings: [CravingEntity] {
         let cravings = viewModel.cravings
         let searchFiltered = searchText.isEmpty
             ? cravings
-            : cravings.filter {
-                $0.cravingDescription.lowercased().contains(searchText.lowercased())
-            }
+            : cravings.filter { $0.cravingDescription.lowercased().contains(searchText.lowercased()) }
         switch selectedFilter {
         case .all:
             return searchFiltered
@@ -84,7 +82,6 @@ struct CravingListView: View {
         }
     }
     
-    // MARK: - Subviews
     private var headerView: some View {
         VStack(spacing: 8) {
             HStack {
@@ -138,7 +135,9 @@ struct CravingListView: View {
                             title: filter.rawValue,
                             isSelected: selectedFilter == filter
                         ) {
-                            withAnimation { selectedFilter = filter }
+                            withAnimation {
+                                selectedFilter = filter
+                            }
                             CraveHaptics.shared.selectionChanged()
                         }
                     }
@@ -177,7 +176,6 @@ struct CravingListView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     
-    // MARK: - FilterChip
     struct FilterChip: View {
         let title: String
         let isSelected: Bool
@@ -191,11 +189,9 @@ struct CravingListView: View {
                 .padding(.vertical, 6)
                 .background(
                     RoundedRectangle(cornerRadius: 14)
-                        .fill(
-                            isSelected
-                                ? CraveTheme.Colors.accent.opacity(0.2)
-                                : Color.black.opacity(0.3)
-                        )
+                        .fill(isSelected
+                              ? CraveTheme.Colors.accent.opacity(0.2)
+                              : Color.black.opacity(0.3))
                         .overlay(
                             RoundedRectangle(cornerRadius: 14)
                                 .stroke(

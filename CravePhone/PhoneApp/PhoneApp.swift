@@ -15,10 +15,9 @@ struct CRAVEApp: App {
         WindowGroup {
             CoordinatorHostView(container: container)
                 .environmentObject(container)
-                // Full-screen expansion
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                // Extend background across safe areas if needed
-                .ignoresSafeArea(edges: .all)
+                // We only ignore safe areas for backgrounds if needed
+                .ignoresSafeArea(.container, edges: [])
         }
     }
 }

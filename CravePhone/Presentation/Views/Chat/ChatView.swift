@@ -14,9 +14,8 @@ struct ChatView: View {
     
     var body: some View {
         ZStack {
-            // Full-screen gradient background
+            // Full-screen gradient
             CraveTheme.Colors.primaryGradient
-                .ignoresSafeArea()
             
             VStack(spacing: 0) {
                 // Main scrollable chat area
@@ -35,21 +34,17 @@ struct ChatView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     
                     #if swift(>=5.9)
-                    // New API: Use two-parameter closure with initial: false
+                    // iOS17+ two-parameter .onChange
                     .onChange(of: viewModel.messages.count, initial: false) { oldValue, newValue in
                         if let last = viewModel.messages.last {
-                            withAnimation {
-                                scrollProxy.scrollTo(last.id, anchor: .bottom)
-                            }
+                            withAnimation { scrollProxy.scrollTo(last.id, anchor: .bottom) }
                         }
                     }
                     #else
-                    // Fallback for iOS <17: Use old API which takes one parameter
+                    // Fallback for iOS <17
                     .onChange(of: viewModel.messages.count) { _ in
                         if let last = viewModel.messages.last {
-                            withAnimation {
-                                scrollProxy.scrollTo(last.id, anchor: .bottom)
-                            }
+                            withAnimation { scrollProxy.scrollTo(last.id, anchor: .bottom) }
                         }
                     }
                     #endif
@@ -75,8 +70,8 @@ struct ChatView: View {
                                 .font(.system(size: 32))
                                 .foregroundColor(
                                     messageText.trimmingCharacters(in: .whitespaces).isEmpty
-                                        ? .gray
-                                        : CraveTheme.Colors.accent
+                                    ? .gray
+                                    : CraveTheme.Colors.accent
                                 )
                         }
                         .disabled(
@@ -94,18 +89,14 @@ struct ChatView: View {
                 LoadingOverlay()
             }
         }
-        // Allow keyboard to push the view up while keeping full vertical usage
-        .ignoresSafeArea(.keyboard, edges: .bottom)
+        // Let the system handle safe areas on top & bottom
+        .ignoresSafeArea(.container, edges: [])
         .alert(item: $viewModel.alertInfo) { info in
-            Alert(
-                title: Text(info.title),
-                message: Text(info.message),
-                dismissButton: .default(Text("OK"))
-            )
+            Alert(title: Text(info.title),
+                  message: Text(info.message),
+                  dismissButton: .default(Text("OK")))
         }
     }
-    
-    // MARK: - Send Message Function
     
     private func sendMessage() {
         guard !messageText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return }
@@ -115,8 +106,6 @@ struct ChatView: View {
             await viewModel.sendMessage()
         }
     }
-    
-    // MARK: - Subviews
     
     struct MessageBubble: View {
         let message: ChatViewModel.Message

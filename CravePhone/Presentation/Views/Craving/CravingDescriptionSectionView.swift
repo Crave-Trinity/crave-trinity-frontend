@@ -26,7 +26,6 @@ struct CravingDescriptionSectionView: View {
                     .plain("Where are you?")
                 ]
             )
-            // Use minHeight and let it grow
             .frame(maxWidth: .infinity, minHeight: 120, maxHeight: .infinity)
             
             HStack {
@@ -36,7 +35,7 @@ struct CravingDescriptionSectionView: View {
                     .foregroundColor(
                         text.count > 280
                             ? .red
-                            : (text.count > 250 ? .orange : CraveTheme.Colors.secondaryText)
+                            : text.count > 250 ? .orange : CraveTheme.Colors.secondaryText
                     )
                     .padding(.trailing, 8)
             }

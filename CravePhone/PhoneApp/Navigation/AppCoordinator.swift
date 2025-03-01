@@ -12,7 +12,6 @@ public final class AppCoordinator: ObservableObject {
         self.container = container
     }
     
-    // Basic factories
     public func makeLogCravingView() -> some View {
         LogCravingView(viewModel: container.makeLogCravingViewModel())
             .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -33,7 +32,6 @@ public final class AppCoordinator: ObservableObject {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     
-    // Start
     public func start() -> some View {
         CRAVETabView(coordinator: self)
     }

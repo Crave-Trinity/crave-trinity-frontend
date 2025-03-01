@@ -3,10 +3,10 @@
 //  - Ensure the container can expand
 //  - No hardcoded top-level heights
 
+
 import SwiftUI
 
 struct CravingSlidersSectionView: View {
-    
     @Binding var cravingStrength: Double
     @Binding var resistance: Double
     
@@ -29,9 +29,11 @@ struct CravingSlidersSectionView: View {
                         CraveHaptics.shared.selectionChanged()
                     }
                 HStack {
-                    Text("Mild").font(.caption).foregroundColor(CraveTheme.Colors.secondaryText)
+                    Text("Mild").font(.caption)
+                        .foregroundColor(CraveTheme.Colors.secondaryText)
                     Spacer()
-                    Text("Intense").font(.caption).foregroundColor(CraveTheme.Colors.secondaryText)
+                    Text("Intense").font(.caption)
+                        .foregroundColor(CraveTheme.Colors.secondaryText)
                 }
             }
             
@@ -52,9 +54,11 @@ struct CravingSlidersSectionView: View {
                         CraveHaptics.shared.selectionChanged()
                     }
                 HStack {
-                    Text("Low").font(.caption).foregroundColor(CraveTheme.Colors.secondaryText)
+                    Text("Low").font(.caption)
+                        .foregroundColor(CraveTheme.Colors.secondaryText)
                     Spacer()
-                    Text("High").font(.caption).foregroundColor(CraveTheme.Colors.secondaryText)
+                    Text("High").font(.caption)
+                        .foregroundColor(CraveTheme.Colors.secondaryText)
                 }
             }
         }

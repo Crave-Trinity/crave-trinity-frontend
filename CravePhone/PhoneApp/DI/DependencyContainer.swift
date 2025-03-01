@@ -16,7 +16,7 @@ public final class DependencyContainer: ObservableObject {
     
     @Published private(set) var modelContainer: ModelContainer
     
-    // MARK: - Craving (Phone) Dependencies
+    // MARK: Craving
     private lazy var cravingManager: CravingManager = {
         CravingManager(modelContext: modelContainer.mainContext)
     }()
@@ -25,9 +25,9 @@ public final class DependencyContainer: ObservableObject {
         CravingRepositoryImpl(manager: cravingManager)
     }()
     
-    // MARK: - Analytics + AI Chat (unchanged except for local references)
+    // MARK: Analytics + AI Chat
     private lazy var analyticsStorage: AnalyticsStorageProtocol = {
-        LocalAnalyticsStorage() // or your real implementation
+        LocalAnalyticsStorage()
     }()
     
     private lazy var analyticsMapper: AnalyticsMapper = {
@@ -77,7 +77,7 @@ public final class DependencyContainer: ObservableObject {
         AiChatUseCase(repository: aiChatRepository)
     }()
     
-    // MARK: - SwiftData Initialization
+    // MARK: SwiftData Initialization
     public init() {
         let schema = Schema([CravingEntity.self, AnalyticsMetadata.self])
         do {
@@ -87,7 +87,7 @@ public final class DependencyContainer: ObservableObject {
         }
     }
     
-    // MARK: - Optional Use Cases
+    // MARK: Optional Use Cases
     private func makeAddCravingUseCase() -> AddCravingUseCaseProtocol {
         AddCravingUseCase(cravingRepository: cravingRepository)
     }
@@ -100,7 +100,7 @@ public final class DependencyContainer: ObservableObject {
         ArchiveCravingUseCase(cravingRepository: cravingRepository)
     }
     
-    // MARK: - Public Factories
+    // MARK: Public Factories
     public func makeLogCravingViewModel() -> LogCravingViewModel {
         LogCravingViewModel(cravingRepository: cravingRepository)
     }
@@ -121,7 +121,7 @@ public final class DependencyContainer: ObservableObject {
     }
 }
 
-// MARK: - Sample LocalAnalyticsStorage (Placeholder)
+// Sample LocalAnalyticsStorage (placeholder)
 private final class LocalAnalyticsStorage: AnalyticsStorageProtocol {
     func store(_ event: AnalyticsDTO) async throws {}
     func fetchEvents(from startDate: Date, to endDate: Date) async throws -> [AnalyticsDTO] { [] }
