@@ -18,12 +18,10 @@ public final class DependencyContainer: ObservableObject {
     
     // MARK: - Craving (Phone) Dependencies
     private lazy var cravingManager: CravingManager = {
-        // Pass 'modelContext' directly
         CravingManager(modelContext: modelContainer.mainContext)
     }()
     
     private lazy var cravingRepository: CravingRepository = {
-        // Use 'manager:' instead of 'cravingManager:' to match init signature
         CravingRepositoryImpl(manager: cravingManager)
     }()
     
@@ -31,24 +29,30 @@ public final class DependencyContainer: ObservableObject {
     private lazy var analyticsStorage: AnalyticsStorageProtocol = {
         LocalAnalyticsStorage() // or your real implementation
     }()
+    
     private lazy var analyticsMapper: AnalyticsMapper = {
         AnalyticsMapper()
     }()
+    
     private lazy var analyticsRepository: AnalyticsRepositoryProtocol = {
         AnalyticsRepositoryImpl(storage: analyticsStorage, mapper: analyticsMapper)
     }()
+    
     private lazy var analyticsAggregator: AnalyticsAggregatorProtocol = {
         AnalyticsAggregatorImpl(storage: analyticsStorage)
     }()
+    
     private lazy var analyticsConfig: AnalyticsConfiguration = {
         AnalyticsConfiguration.shared
     }()
+    
     private lazy var patternDetectionService: PatternDetectionServiceProtocol = {
         PatternDetectionServiceImpl(
             storage: analyticsStorage,
             configuration: analyticsConfig
         )
     }()
+    
     private lazy var analyticsManager: AnalyticsManager = {
         AnalyticsManager(
             repository: analyticsRepository,
@@ -60,19 +64,21 @@ public final class DependencyContainer: ObservableObject {
     private lazy var apiClient: APIClient = {
         APIClient()
     }()
+    
     private lazy var baseURL: URL = {
         URL(string: "https://your-crave-backend.com")!
     }()
+    
     private lazy var aiChatRepository: AiChatRepositoryProtocol = {
         AiChatRepositoryImpl(apiClient: apiClient, baseURL: baseURL)
     }()
+    
     private lazy var aiChatUseCase: AiChatUseCaseProtocol = {
         AiChatUseCase(repository: aiChatRepository)
     }()
     
     // MARK: - SwiftData Initialization
     public init() {
-        // Create model container for SwiftData
         let schema = Schema([CravingEntity.self, AnalyticsMetadata.self])
         do {
             self.modelContainer = try ModelContainer(for: schema)
@@ -81,20 +87,21 @@ public final class DependencyContainer: ObservableObject {
         }
     }
     
-    // MARK: - Optional Use Cases (If needed)
+    // MARK: - Optional Use Cases
     private func makeAddCravingUseCase() -> AddCravingUseCaseProtocol {
         AddCravingUseCase(cravingRepository: cravingRepository)
     }
+    
     private func makeFetchCravingsUseCase() -> FetchCravingsUseCaseProtocol {
         FetchCravingsUseCase(cravingRepository: cravingRepository)
     }
+    
     private func makeArchiveCravingUseCase() -> ArchiveCravingUseCaseProtocol {
         ArchiveCravingUseCase(cravingRepository: cravingRepository)
     }
     
     // MARK: - Public Factories
     public func makeLogCravingViewModel() -> LogCravingViewModel {
-        // Pass the repository directly to match the VM init signature
         LogCravingViewModel(cravingRepository: cravingRepository)
     }
     
@@ -114,7 +121,6 @@ public final class DependencyContainer: ObservableObject {
     }
 }
 
-
 // MARK: - Sample LocalAnalyticsStorage (Placeholder)
 private final class LocalAnalyticsStorage: AnalyticsStorageProtocol {
     func store(_ event: AnalyticsDTO) async throws {}
@@ -125,4 +131,3 @@ private final class LocalAnalyticsStorage: AnalyticsStorageProtocol {
     func storeBatch(_ events: [AnalyticsDTO]) async throws {}
     func cleanupData(before date: Date) async throws {}
 }
-

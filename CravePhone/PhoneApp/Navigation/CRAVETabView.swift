@@ -1,4 +1,3 @@
-
 // FILE: CRAVETabView.swift
 // DESCRIPTION:
 //  - Full-screen TabView with safe area adjustments.
@@ -70,7 +69,11 @@ public struct CRAVETabView: View {
                     }
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 12)
-                    .foregroundColor(selectedTab == tab ? CraveTheme.Colors.accent : Color.gray.opacity(0.8))
+                    .foregroundColor(
+                        selectedTab == tab
+                            ? CraveTheme.Colors.accent
+                            : Color.gray.opacity(0.8)
+                    )
                 }
                 .accessibilityLabel("\(tab.rawValue) Tab")
             }

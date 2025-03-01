@@ -33,7 +33,11 @@ struct CravingDescriptionSectionView: View {
                 Spacer()
                 Text("\(text.count)/300")
                     .font(.system(size: 12))
-                    .foregroundColor(text.count > 280 ? .red : (text.count > 250 ? .orange : CraveTheme.Colors.secondaryText))
+                    .foregroundColor(
+                        text.count > 280
+                            ? .red
+                            : (text.count > 250 ? .orange : CraveTheme.Colors.secondaryText)
+                    )
                     .padding(.trailing, 8)
             }
         }

@@ -1,4 +1,3 @@
-
 // FILE: CravingSlidersSectionView.swift
 // DESCRIPTION:
 //  - Ensure the container can expand
