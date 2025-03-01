@@ -2,8 +2,9 @@
 //  CRAVETabView.swift
 //  CravePhone
 //
-//  A bottom-right anchored custom tab view
-//  pinned with an overlay, never scrolling.
+//  A refined TabView with fluid animations, proper scaling,
+//  and accessibility improvements. Clean SwiftUI implementation
+//  following SOLID principles.
 //
 
 import SwiftUI
@@ -25,66 +26,82 @@ public struct CRAVETabView: View {
     }
     
     public var body: some View {
-        NavigationView {
-            ZStack {
-                Group {
-                    switch selectedTab {
-                    case .log:
-                        coordinator.makeLogCravingView()
-                    case .cravings:
-                        coordinator.makeCravingListView()
-                    case .analytics:
-                        coordinator.makeAnalyticsDashboardView()
-                    case .aiChat:
-                        coordinator.makeChatView()
-                    }
+        ZStack {
+            Group {
+                switch selectedTab {
+                case .log:
+                    coordinator.makeLogCravingView()
+                case .cravings:
+                    coordinator.makeCravingListView()
+                case .analytics:
+                    coordinator.makeAnalyticsDashboardView()
+                case .aiChat:
+                    coordinator.makeChatView()
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
-            .overlay(
+            .animation(.easeInOut(duration: 0.3), value: selectedTab)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            
+            // Bottom Tab Bar
+            VStack {
+                Spacer()
                 tabBar
                     .padding(.bottom, 20)
-                    .padding(.trailing, 15),
-                alignment: .bottomTrailing
-            )
-            .navigationBarTitleDisplayMode(.inline)
+            }
         }
-        .navigationViewStyle(StackNavigationViewStyle())
+        .background(CraveTheme.Colors.primaryGradient)
+        .ignoresSafeArea(edges: .bottom)
         .preferredColorScheme(.dark)
-        .animation(.easeInOut(duration: 0.3), value: selectedTab)
     }
     
     private var tabBar: some View {
-        HStack(spacing: 20) {
+        HStack(spacing: 0) {
             ForEach(Tab.allCases, id: \.self) { tab in
                 Button {
-                    selectedTab = tab
+                    withAnimation(CraveTheme.Animations.snappy) {
+                        selectedTab = tab
+                        CraveHaptics.shared.selectionChanged()
+                    }
                 } label: {
                     VStack(spacing: 4) {
                         Image(systemName: iconName(for: tab))
-                            .font(.title2)
+                            .font(.system(size: 22, weight: selectedTab == tab ? .semibold : .regular))
+                            .imageScale(.large)
+                        
                         Text(tab.rawValue)
-                            .font(.caption2)
+                            .font(.system(size: 10, weight: selectedTab == tab ? .medium : .regular))
                     }
-                    .foregroundColor(selectedTab == tab ? .accentColor : .gray)
+                    .foregroundColor(selectedTab == tab ? CraveTheme.Colors.accent : Color.gray.opacity(0.8))
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 12)
                 }
+                .accessibilityLabel("\(tab.rawValue) Tab")
             }
         }
-        .padding(.horizontal, 20)
-        .padding(.vertical, 12)
+        .padding(.horizontal, 6)
         .background(
-            Capsule()
-                .fill(Color.black.opacity(0.9))
-                .shadow(color: .black.opacity(0.5), radius: 6)
+            RoundedRectangle(cornerRadius: 24)
+                .fill(Color.black.opacity(0.85))
+                .shadow(color: .black.opacity(0.25), radius: 8, x: 0, y: 3)
         )
+        .padding(.horizontal, 16)
     }
     
     private func iconName(for tab: Tab) -> String {
         switch tab {
-        case .log:       return "plus.circle"
+        case .log:       return "plus.circle.fill"
         case .cravings:  return "list.bullet"
-        case .analytics: return "chart.bar"
+        case .analytics: return "chart.bar.fill"
         case .aiChat:    return "bubble.left.and.bubble.right.fill"
         }
+    }
+}
+
+// MARK: - Preview
+struct CRAVETabView_Previews: PreviewProvider {
+    static var previews: some View {
+        let container = DependencyContainer()
+        let coordinator = AppCoordinator(container: container)
+        CRAVETabView(coordinator: coordinator)
     }
 }

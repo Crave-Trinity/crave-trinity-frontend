@@ -2,7 +2,7 @@
 //  CravingDescriptionSectionView.swift
 //  CravePhone
 //
-//  Simple text editor section with mic toggle.
+//  Section for capturing craving description with speech input option.
 //
 
 import SwiftUI
@@ -13,25 +13,49 @@ struct CravingDescriptionSectionView: View {
     let onToggleSpeech: () -> Void
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text("Craving Description")
-                .font(.headline)
-                .foregroundColor(.white)
+        VStack(alignment: .leading, spacing: 10) {
+            Text("Describe your craving")
+                .font(CraveTheme.Typography.subheading)
+                .foregroundColor(CraveTheme.Colors.primaryText)
             
             CraveTextEditor(
                 text: $text,
                 isRecordingSpeech: isRecordingSpeech,
                 onMicTap: onToggleSpeech,
-                characterLimit: 300,
                 placeholderLines: [
                     .plain("What are you craving?"),
-                    .plain("Triggers?"),
-                    .plain("Where are you?"),
-                    .plain("Who are you with?")
+                    .plain("When did it start?"),
+                    .plain("Where are you?")
                 ]
             )
-            .frame(minHeight: 100)
+            .frame(height: 120)
+            
+            HStack {
+                Spacer()
+                
+                Text("\(text.count)/300")
+                    .font(.system(size: 12))
+                    .foregroundColor(
+                        text.count > 250 ?
+                            (text.count > 280 ? .red : .orange) :
+                            CraveTheme.Colors.secondaryText
+                    )
+                    .padding(.trailing, 8)
+            }
         }
         .padding(.vertical, 8)
+    }
+}
+
+#Preview {
+    ZStack {
+        Color.black.edgesIgnoringSafeArea(.all)
+        
+        CravingDescriptionSectionView(
+            text: .constant("I've been craving chocolate since lunchtime."),
+            isRecordingSpeech: false,
+            onToggleSpeech: {}
+        )
+        .padding()
     }
 }

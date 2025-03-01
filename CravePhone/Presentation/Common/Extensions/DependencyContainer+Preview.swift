@@ -1,42 +1,61 @@
 //
-//  LogCravingViewModel+UIExtensions.swift
+//  DependencyContainer+Preview.swift
 //  CravePhone
 //
-//  Extensions to add required properties for new UI components.
+//  Extensions to add preview factory methods for SwiftUI previews.
 //
 
 import Foundation
 import SwiftUI
+import SwiftData
 
-// MARK: - Bridge properties for UI components
-extension LogCravingViewModel {
-    // Property for validation in new UI
-    var isValid: Bool {
-        return !cravingDescription.isEmpty && cravingStrength > 0
-    }
-    
-    // Maps internal properties to UI naming
-    var selectedEmotions: Set<String> {
-        return Set(Array(_selectedEmotions))
-    }
-    
-    private var _selectedEmotions: [String] {
-        get {
-            return Array(selectedEmotions)
-        }
-        set {
-            // This is just for compilation, not used since we're using the computed property
-        }
+// MARK: - Preview Factory
+extension DependencyContainer {
+    static var preview: DependencyContainer {
+        let container = DependencyContainer()
+        
+        // We can't modify private properties dynamically, so we'll use a simpler approach
+        // that doesn't require modifying private vars with Objective-C runtime
+        
+        return container
     }
 }
 
-// MARK: - Bridge methods for ChatViewModel
-extension ChatViewModel {
-    func sendWelcomeMessage() {
-        let message = Message(
-            content: "Welcome to CRAVE. How can I help you manage your cravings today?",
-            isUser: false
-        )
-        messages.append(message)
+// MARK: - Mock Repository Implementations for Previews
+class MockCravingRepository: CravingRepository {
+    func addCraving(_ craving: CravingEntity) async throws {
+        // No-op for preview
+    }
+    
+    func fetchActiveCravings() async throws -> [CravingEntity] {
+        return [
+            CravingEntity.preview(description: "Chocolate craving after dinner", intensity: 8.0, resistance: 4.0),
+            CravingEntity.preview(description: "Morning coffee craving", intensity: 6.0, resistance: 7.0),
+            CravingEntity.preview(description: "Social drinking urge", intensity: 9.0, resistance: 3.0)
+        ]
+    }
+    
+    func archiveCraving(_ craving: CravingEntity) async throws {
+        // No-op for preview
+    }
+    
+    func deleteCraving(_ craving: CravingEntity) async throws {
+        // No-op for preview
+    }
+    
+    // Bridge methods from extensions
+    func fetchCravings() async throws -> [CravingEntity] {
+        return try await fetchActiveCravings()
+    }
+    
+    func saveCraving(_ craving: CravingEntity) async throws -> CravingEntity {
+        try await addCraving(craving)
+        return craving
+    }
+}
+
+class MockAiChatRepository: AiChatRepositoryProtocol {
+    func getAiResponse(for userQuery: String) async throws -> String {
+        return "This is a sample AI response to your query: \"\(userQuery)\". In a real implementation, this would be fetched from your AI service."
     }
 }

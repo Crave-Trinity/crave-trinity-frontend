@@ -1,22 +1,17 @@
 //
-//  CravingRepository+UIExtensions.swift
+//  LogCravingViewModel+UIExtensions.swift
 //  CravePhone
 //
-//  Adapter extensions to bridge between repository method names and UI requirements.
+//  Extensions to add required properties for new UI components.
 //
 
 import Foundation
+import SwiftUI
 
-// MARK: - Bridge methods for UI components
-extension CravingRepository {
-    // Maps fetchActiveCravings() to fetchCravings() for UI components
-    func fetchCravings() async throws -> [CravingEntity] {
-        return try await fetchActiveCravings()
-    }
-    
-    // Maps addCraving() to saveCraving() for UI components
-    func saveCraving(_ craving: CravingEntity) async throws -> CravingEntity {
-        try await addCraving(craving)
-        return craving
+// MARK: - Bridge properties for UI components
+extension LogCravingViewModel {
+    // Property for validation in new UI
+    var isValid: Bool {
+        return !cravingDescription.isEmpty && cravingStrength > 0
     }
 }

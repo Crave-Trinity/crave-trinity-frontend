@@ -19,6 +19,7 @@ public final class ChatViewModel: ObservableObject {
         public let id = UUID()
         public let content: String
         public let isUser: Bool
+        public let timestamp: Date = Date()
     }
     
     // MARK: - Published Properties
@@ -74,5 +75,15 @@ public final class ChatViewModel: ObservableObject {
     private func appendMessage(_ content: String, isUser: Bool) {
         let newMessage = Message(content: content, isUser: isUser)
         messages.append(newMessage)
+    }
+}
+
+extension ChatViewModel {
+    func sendWelcomeMessage() {
+        let message = Message(
+            content: "Welcome to CRAVE. How can I help you manage your cravings today?",
+            isUser: false
+        )
+        messages.append(message)
     }
 }
