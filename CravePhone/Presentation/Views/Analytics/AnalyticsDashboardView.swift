@@ -1,17 +1,12 @@
-//
-//  AnalyticsDashboardView.swift
-//  CravePhone
-//
-//  Description:
-//    A SwiftUI screen displaying aggregated craving analytics and insights.
-//
-//  Uncle Bob + Steve Jobs notes:
-//    - Single Responsibility: Displays analytics info from the VM, minimal logic.
-//    - Open/Closed: We can add more analytics cards, charts, etc. without changing existing code.
-//  GoF & SOLID:
-//    - The 'View' depends on an 'AnalyticsViewModel' abstraction for data, no direct DB calls.
-//    - Use of SwiftUI's composition for subviews (headerSection, statsSection).
-//
+/*
+ ┌───────────────────────────────────────────────────────────┐
+ │  Directory: CravePhone/Views/Analytics                  │
+ │  Production-Ready SwiftUI Layout Fix: AnalyticsDashboardView │
+ │  Notes:                                                 │
+ │   - Tightened vertical spacing.                         │
+ │   - Clear section grouping with moderate padding.       │
+ └───────────────────────────────────────────────────────────┘
+*/
 
 import SwiftUI
 
@@ -26,27 +21,24 @@ public struct AnalyticsDashboardView: View {
     public var body: some View {
         NavigationView {
             ZStack {
-                // Use theme’s gradient
                 CraveTheme.Colors.primaryGradient
                     .ignoresSafeArea()
                 
-                // Loading or main content
                 if viewModel.isLoading {
                     ProgressView("Loading Analytics…")
                         .foregroundColor(CraveTheme.Colors.primaryText)
                         .font(CraveTheme.Typography.subheading)
                 } else {
                     ScrollView {
-                        VStack(spacing: CraveTheme.Spacing.medium) {
+                        VStack(spacing: CraveTheme.Spacing.small) {
                             headerSection
                             statsSection
-                            Spacer(minLength: 50)
+                            Spacer(minLength: 40)
                         }
-                        .padding(CraveTheme.Spacing.medium)
+                        .padding(.all, CraveTheme.Spacing.medium)
                     }
                 }
             }
-            // Force the content to stretch
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .navigationTitle("Analytics")
             .navigationBarTitleDisplayMode(.inline)
@@ -77,9 +69,8 @@ public struct AnalyticsDashboardView: View {
         }
     }
     
-    // MARK: - Subviews
     private var headerSection: some View {
-        VStack(alignment: .leading, spacing: CraveTheme.Spacing.small) {
+        VStack(alignment: .leading, spacing: 6) {
             Text("📊 Craving Analytics")
                 .font(CraveTheme.Typography.heading)
                 .foregroundColor(CraveTheme.Colors.primaryText)
@@ -89,13 +80,12 @@ public struct AnalyticsDashboardView: View {
                 .foregroundColor(CraveTheme.Colors.primaryText.opacity(0.8))
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.bottom, CraveTheme.Spacing.small)
+        .padding(.bottom, 10)
     }
     
     private var statsSection: some View {
-        VStack(spacing: CraveTheme.Spacing.small) {
+        VStack(spacing: 8) {
             if let stats = viewModel.basicStats {
-                // Example metrics
                 Text("Average Intensity: \(String(format: "%.1f", stats.averageIntensity))")
                     .font(CraveTheme.Typography.subheading)
                     .foregroundColor(CraveTheme.Colors.primaryText)
@@ -107,9 +97,6 @@ public struct AnalyticsDashboardView: View {
                 Text("Total Cravings: \(stats.totalCravings)")
                     .font(CraveTheme.Typography.subheading)
                     .foregroundColor(CraveTheme.Colors.primaryText)
-                
-                // Potential place for charts, distribution data, etc.
-                
             } else {
                 Text("No analytics available yet.")
                     .font(CraveTheme.Typography.body)
@@ -123,3 +110,4 @@ public struct AnalyticsDashboardView: View {
         .shadow(radius: 4)
     }
 }
+

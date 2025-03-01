@@ -1,3 +1,14 @@
+/*
+ ┌───────────────────────────────────────────────────────┐
+ │  Directory: CravePhone/Views/Craving                 │
+ │  Production-Ready SwiftUI Layout Fix:                │
+ │  CravingEmotionChipsView                             │
+ │  Notes:                                              │
+ │   - Added proportional horizontal padding.           │
+ │   - Maintained simple horizontal scroll.            │
+ └───────────────────────────────────────────────────────┘
+*/
+
 import SwiftUI
 
 struct CravingEmotionChipsView: View {
@@ -22,13 +33,12 @@ struct CravingEmotionChipsView: View {
                         )
                     }
                 }
-                .padding(.horizontal, 4)
+                .padding(.horizontal, UIScreen.main.bounds.width * 0.03)
             }
         }
     }
 }
 
-// We can keep our OutlinedChip in the same file or separate it if you like:
 fileprivate struct OutlinedChip: View {
     let emotion: String
     let isSelected: Bool
@@ -48,6 +58,9 @@ fileprivate struct OutlinedChip: View {
                     .fill(isSelected ? Color.orange.opacity(0.15) : Color.clear)
             )
             .foregroundColor(.white)
-            .onTapGesture { onTap() }
+            .onTapGesture {
+                onTap()
+            }
     }
 }
+

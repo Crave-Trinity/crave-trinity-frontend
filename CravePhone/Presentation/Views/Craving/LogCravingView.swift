@@ -1,18 +1,14 @@
 /*
  ┌───────────────────────────────────────────────────────┐
- │  Directory: CravePhone/Views                          │
- │  Production-Ready SwiftUI Layout Fixes                │
- │  Notes:                                               │
- │   - Implements Uncle Bob, GoF, SOLID principles.      │
- │   - Uses GeometryReader for adaptive layouts.         │
- │   - Minimizes fixed spacing; inserts spacers.         │
- │   - Ensures dynamic scaling across all devices.       │
+ │  Directory: CravePhone/Views/Craving                 │
+ │  Production-Ready SwiftUI Layout Fix: LogCravingView │
+ │  Notes:                                              │
+ │   - Single GeometryReader at top-level.              │
+ │   - Adaptive spacing with geometry.size.             │
+ │   - Removes nested/extra GeometryReader usage.       │
  └───────────────────────────────────────────────────────┘
 */
 
-/* -----------------------------------------
-   LogCravingView.swift
-   ----------------------------------------- */
 import SwiftUI
 
 public struct LogCravingView: View {

@@ -1,21 +1,22 @@
-//
-//  AnalyticsCharts.swift
-//  CravePhone
-//
-//  Created by ...
-//  Updated by ChatGPT on ...
-//
+/*
+ ┌───────────────────────────────────────────────────────────┐
+ │  Directory: CravePhone/Views/Analytics                  │
+ │  Production-Ready SwiftUI Layout Fix: AnalyticsCharts   │
+ │  Notes:                                                 │
+ │   - Height made adaptive for large screens.             │
+ └───────────────────────────────────────────────────────────┘
+*/
 
 import SwiftUI
 import Charts
 
 public struct AnalyticsCharts: View {
     public let data: [Date: Int]
-
+    
     public init(data: [Date: Int]) {
         self.data = data
     }
-
+    
     public var body: some View {
         Chart {
             ForEach(data.keys.sorted(), id: \.self) { date in
@@ -25,6 +26,7 @@ public struct AnalyticsCharts: View {
                 )
             }
         }
-        .frame(height: 200)
+        .frame(height: UIScreen.main.bounds.height * 0.25) // Adaptive height
     }
 }
+

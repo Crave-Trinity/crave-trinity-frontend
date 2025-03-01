@@ -1,8 +1,12 @@
-// CoordinatorHostView.swift
-// CravePhone
-//
-// Description: A simple view that owns an AppCoordinator as a @StateObject.
-// It displays coordinator.start().
+/*
+ ┌───────────────────────────────────────────────────────┐
+ │  Directory: CravePhone/Views/Craving                 │
+ │  Production-Ready SwiftUI Cleanup: CoordinatorHostView│
+ │  Notes:                                              │
+ │   - No nested NavigationView.                        │
+ │   - Simplified hosting for AppCoordinator.           │
+ └───────────────────────────────────────────────────────┘
+*/
 
 import SwiftUI
 
@@ -15,6 +19,8 @@ public struct CoordinatorHostView: View {
     }
     
     public var body: some View {
+        // Single point of navigation hosting
         coordinator.start()
     }
 }
+

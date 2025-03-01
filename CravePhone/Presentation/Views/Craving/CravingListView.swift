@@ -1,6 +1,13 @@
-/* -----------------------------------------
-   CravingListView.swift
-   ----------------------------------------- */
+/*
+ ┌───────────────────────────────────────────────────────┐
+ │  Directory: CravePhone/Views/Craving                 │
+ │  Production-Ready SwiftUI Layout Fix: CravingListView│
+ │  Notes:                                              │
+ │   - Clear List spacing & row background.             │
+ │   - .listRowBackground / .scrollContentBackground.   │
+ └───────────────────────────────────────────────────────┘
+*/
+
 import SwiftUI
 
 public struct CravingListView: View {
@@ -21,6 +28,7 @@ public struct CravingListView: View {
                         ForEach(viewModel.cravings, id: \.id) { craving in
                             CravingCard(craving: craving)
                                 .listRowBackground(Color.clear)
+                                .padding(.vertical, 4)
                         }
                         .onDelete(perform: deleteCraving)
                     }
@@ -72,3 +80,4 @@ public struct CravingListView: View {
         }
     }
 }
+

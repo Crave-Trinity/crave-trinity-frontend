@@ -1,6 +1,14 @@
-/* -----------------------------------------
-   CravingDescriptionSectionView.swift
-   ----------------------------------------- */
+/*
+ ┌───────────────────────────────────────────────────────┐
+ │  Directory: CravePhone/Views/Craving                 │
+ │  Production-Ready SwiftUI Layout Fix:                │
+ │  CravingDescriptionSectionView                       │
+ │  Notes:                                              │
+ │   - GeometryReader removed.                          │
+ │   - Standard padding used for consistency.           │
+ └───────────────────────────────────────────────────────┘
+*/
+
 import SwiftUI
 
 struct CravingDescriptionSectionView: View {
@@ -9,30 +17,26 @@ struct CravingDescriptionSectionView: View {
     let onToggleSpeech: () -> Void
     
     var body: some View {
-        GeometryReader { geometry in
-            VStack(alignment: .leading, spacing: geometry.size.height * 0.02) {
-                Text("Craving Description")
-                    .font(.headline)
-                    .foregroundColor(.white)
-                
-                // Our custom TextEditor (with optional mic overlay)
-                CraveTextEditor(
-                    text: $text,
-                    isRecordingSpeech: isRecordingSpeech,
-                    onMicTap: onToggleSpeech,
-                    characterLimit: 300,
-                    placeholderLines: [
-                        .plain("What are you craving?"),
-                        .plain("Any triggers?"),
-                        .plain("Where are you?"),
-                        .plain("Who are you with?")
-                    ]
-                )
-                Spacer(minLength: 0)
-            }
-            .padding(.vertical, geometry.size.height * 0.01)
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Craving Description")
+                .font(.headline)
+                .foregroundColor(.white)
+            
+            CraveTextEditor(
+                text: $text,
+                isRecordingSpeech: isRecordingSpeech,
+                onMicTap: onToggleSpeech,
+                characterLimit: 300,
+                placeholderLines: [
+                    .plain("What are you craving?"),
+                    .plain("Any triggers?"),
+                    .plain("Where are you?"),
+                    .plain("Who are you with?")
+                ]
+            )
+            .frame(minHeight: 100)
         }
-        .frame(minHeight: 100) // Ensures enough height for text input
+        .padding(.vertical, 8)
     }
 }
 
