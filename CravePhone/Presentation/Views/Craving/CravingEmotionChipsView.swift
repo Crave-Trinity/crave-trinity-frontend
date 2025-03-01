@@ -1,13 +1,10 @@
-/*
- ┌───────────────────────────────────────────────────────┐
- │  Directory: CravePhone/Views/Craving                 │
- │  Production-Ready SwiftUI Layout Fix:                │
- │  CravingEmotionChipsView                             │
- │  Notes:                                              │
- │   - Added proportional horizontal padding.           │
- │   - Maintained simple horizontal scroll.            │
- └───────────────────────────────────────────────────────┘
-*/
+//
+//  CravingEmotionChipsView.swift
+//  CravePhone
+//
+//  Horizontal scroll of emotion chips.
+//  Tappable toggles for user feelings.
+//
 
 import SwiftUI
 
@@ -63,4 +60,3 @@ fileprivate struct OutlinedChip: View {
             }
     }
 }
-

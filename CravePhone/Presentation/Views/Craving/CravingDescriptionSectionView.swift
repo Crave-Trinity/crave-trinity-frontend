@@ -1,13 +1,9 @@
-/*
- ┌───────────────────────────────────────────────────────┐
- │  Directory: CravePhone/Views/Craving                 │
- │  Production-Ready SwiftUI Layout Fix:                │
- │  CravingDescriptionSectionView                       │
- │  Notes:                                              │
- │   - GeometryReader removed.                          │
- │   - Standard padding used for consistency.           │
- └───────────────────────────────────────────────────────┘
-*/
+//
+//  CravingDescriptionSectionView.swift
+//  CravePhone
+//
+//  Simple text editor section with mic toggle.
+//
 
 import SwiftUI
 
@@ -39,4 +35,3 @@ struct CravingDescriptionSectionView: View {
         .padding(.vertical, 8)
     }
 }
-

@@ -1,9 +1,10 @@
-/*
- ┌───────────────────────────────────────────────────────┐
- │  Directory: CravePhone/Views/Craving                 │
- │  Production-Ready SwiftUI Layout Fix: LogCravingView │
-
-*/
+//
+//  LogCravingView.swift
+//  CravePhone
+//
+//  A scrollable form to log cravings,
+//  custom 🦊 heading, no system nav bar.
+//
 
 import SwiftUI
 
@@ -17,55 +18,40 @@ public struct LogCravingView: View {
     
     public var body: some View {
         ZStack {
-            // 1) Full-screen gradient background ignoring the TOP safe area
-            //    but NOT ignoring the bottom. We only specify .top, ensuring
-            //    we still respect the home indicator area at the bottom.
+            // Background behind status bar
             CraveTheme.Colors.primaryGradient
                 .ignoresSafeArea(edges: .top)
             
             ScrollView {
-                // 2) Now your content can sit “under” the status bar,
-                //    so we’ll manually add top padding to keep the heading
-                //    from clashing with the clock/battery area.
                 VStack(alignment: .leading, spacing: 24) {
-                    
-                    // Your custom heading
                     headerSection
-                        .padding(.top, 30)  // Enough so it’s visible below status bar.
+                        .padding(.top, 30)
                     
-                    // (1) Craving Description
                     CravingDescriptionSectionView(
                         text: $viewModel.cravingDescription,
                         isRecordingSpeech: viewModel.isRecordingSpeech,
                         onToggleSpeech: { viewModel.toggleSpeechRecognition() }
                     )
                     
-                    // (2) Sliders
                     CravingSlidersSectionView(
                         cravingStrength: $viewModel.cravingStrength,
                         resistance: $viewModel.confidenceToResist
                     )
                     
-                    // (3) Emotions
                     CravingEmotionChipsView(
                         selectedEmotions: viewModel.selectedEmotions,
                         onToggleEmotion: { viewModel.toggleEmotion($0) }
                     )
                     
-                    // (4) Button
                     recordCravingButton
                         .padding(.top, 8)
                     
-                    // Add extra space so the final content doesn’t hide
-                    // under the custom bottom tab bar:
                     Spacer(minLength: 40)
                 }
-                // Horizontal padding on sides
                 .padding(.horizontal, 16)
-                // Don’t .ignoresSafeArea here; we keep normal scroll insets at the bottom.
             }
         }
-        // 3) Hide the system nav bar, so only your custom 🦊 heading shows
+        // Hide system bar to show your custom heading
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarHidden(true)
         .alert(item: $viewModel.alertInfo) { info in
@@ -78,7 +64,6 @@ public struct LogCravingView: View {
     }
 }
 
-// MARK: - Subviews
 extension LogCravingView {
     
     private var headerSection: some View {

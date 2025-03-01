@@ -2,14 +2,9 @@
 //  CraveTextEditor.swift
 //  CravePhone
 //
-//  Description:
-//    A custom text editor with multi-line placeholders, character limiting,
-//    and an optional microphone overlay.
+//  Custom text editor with mic overlay & placeholders.
 //
-//  Uncle Bob notes:
-//    - Single Responsibility: Manages text input UI with optional mic overlay.
-//    - Open/Closed: We can expand placeholders or speech logic without rewriting everything.
-//
+
 import SwiftUI
 
 struct CraveTextEditor: View {
@@ -44,7 +39,7 @@ struct CraveTextEditor: View {
     var body: some View {
         ZStack(alignment: .topTrailing) {
             
-            // Placeholder layer
+            // Placeholder
             if text.isEmpty, !placeholderLines.isEmpty {
                 VStack(spacing: 8) {
                     ForEach(placeholderLines.indices, id: \.self) { idx in
@@ -67,9 +62,7 @@ struct CraveTextEditor: View {
                 .padding(.top, 8)
                 .frame(maxWidth: .infinity)
                 .onTapGesture {
-                    withAnimation(CraveTheme.Animations.smooth) {
-                        isFocused = true
-                    }
+                    isFocused = true
                 }
             }
             
@@ -83,10 +76,10 @@ struct CraveTextEditor: View {
                         .stroke(Color.white.opacity(0.3), lineWidth: 1)
                 )
             
-            // Mic Button Overlay
-            Button(action: {
+            // Mic overlay
+            Button {
                 onMicTap()
-            }) {
+            } label: {
                 Image(systemName: isRecordingSpeech ? "waveform" : "mic.fill")
                     .font(.system(size: 18))
                     .foregroundColor(isRecordingSpeech ? .orange : .white.opacity(0.8))
@@ -99,26 +92,24 @@ struct CraveTextEditor: View {
     }
 }
 
-// MARK: - Subviews & Helpers
 extension CraveTextEditor {
     
     var textEditorWithOnChange: some View {
-        let baseEditor = TextEditor(text: $text)
+        let base = TextEditor(text: $text)
             .focused($isFocused)
             .font(CraveTheme.Typography.body)
             .foregroundColor(CraveTheme.Colors.primaryText)
-            .background(Color.clear)
             .modifier(ScrollBackgroundClearModifier())
         
         if #available(iOS 17.0, *) {
             return AnyView(
-                baseEditor.onChange(of: text, initial: false) { _, newValue in
+                base.onChange(of: text, initial: false) { _, newValue in
                     limitTextIfNeeded(newValue)
                 }
             )
         } else {
             return AnyView(
-                baseEditor.onChange(of: text) { newValue in
+                base.onChange(of: text) { newValue in
                     limitTextIfNeeded(newValue)
                 }
             )
@@ -132,7 +123,6 @@ extension CraveTextEditor {
     }
 }
 
-/// Clears out the default scroll background on iOS 16+
 struct ScrollBackgroundClearModifier: ViewModifier {
     func body(content: Content) -> some View {
         if #available(iOS 16.0, *) {

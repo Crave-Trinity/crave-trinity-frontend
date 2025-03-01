@@ -1,12 +1,10 @@
-/*
- ┌───────────────────────────────────────────────────────┐
- │  Directory: CravePhone/Views/Craving                 │
- │  Production-Ready SwiftUI Layout Fix: CravingListView│
- │  Notes:                                              │
- │   - Clear List spacing & row background.             │
- │   - .listRowBackground / .scrollContentBackground.   │
- └───────────────────────────────────────────────────────┘
-*/
+//
+//  CravingListView.swift
+//  CravePhone
+//
+//  A simple List to display cravings,
+//  pinned tab bar courtesy of CRAVETabView.
+//
 
 import SwiftUI
 
