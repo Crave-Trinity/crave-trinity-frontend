@@ -18,56 +18,50 @@ public struct CravingListView: View {
     }
     
     public var body: some View {
-        GeometryReader { geometry in
-            NavigationView {
-                ZStack {
-                    CraveTheme.Colors.primaryGradient
-                        .ignoresSafeArea()
-                    
-                    List {
-                        ForEach(viewModel.cravings, id: \.id) { craving in
-                            CravingCard(craving: craving)
-                                .listRowBackground(Color.clear)
-                                .padding(.vertical, 4)
-                        }
-                        .onDelete(perform: deleteCraving)
-                    }
-                    .scrollContentBackground(.hidden)
-                    .listStyle(.plain)
-                    .navigationTitle("Cravings")
-                    .navigationBarTitleDisplayMode(.inline)
-                    .toolbar {
-                        ToolbarItem(placement: .navigationBarTrailing) {
-                            EditButton()
-                                .foregroundColor(CraveTheme.Colors.primaryText)
-                        }
-                    }
-                    .refreshable {
-                        await viewModel.fetchCravings()
-                    }
-                    .onAppear {
-                        Task { await viewModel.fetchCravings() }
-                    }
-                    
-                    if viewModel.isLoading {
-                        ProgressView("Loading…")
-                            .padding(40)
-                            .background(Color.black.opacity(0.6))
-                            .cornerRadius(12)
-                            .foregroundColor(CraveTheme.Colors.primaryText)
-                            .font(CraveTheme.Typography.body)
-                    }
+        ZStack {
+            CraveTheme.Colors.primaryGradient
+                .ignoresSafeArea()
+            
+            List {
+                ForEach(viewModel.cravings, id: \.id) { craving in
+                    CravingCard(craving: craving)
+                        .listRowBackground(Color.clear)
+                        .padding(.vertical, 4)
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .alert(item: $viewModel.alertInfo) { info in
-                    Alert(
-                        title: Text(info.title),
-                        message: Text(info.message),
-                        dismissButton: .default(Text("OK"))
-                    )
+                .onDelete(perform: deleteCraving)
+            }
+            .scrollContentBackground(.hidden)
+            .listStyle(.plain)
+            .navigationTitle("Cravings")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    EditButton()
+                        .foregroundColor(CraveTheme.Colors.primaryText)
                 }
             }
-            .navigationViewStyle(StackNavigationViewStyle())
+            .refreshable {
+                await viewModel.fetchCravings()
+            }
+            .onAppear {
+                Task { await viewModel.fetchCravings() }
+            }
+            
+            if viewModel.isLoading {
+                ProgressView("Loading…")
+                    .padding(40)
+                    .background(Color.black.opacity(0.6))
+                    .cornerRadius(12)
+                    .foregroundColor(CraveTheme.Colors.primaryText)
+                    .font(CraveTheme.Typography.body)
+            }
+        }
+        .alert(item: $viewModel.alertInfo) { info in
+            Alert(
+                title: Text(info.title),
+                message: Text(info.message),
+                dismissButton: .default(Text("OK"))
+            )
         }
     }
     
@@ -80,4 +74,3 @@ public struct CravingListView: View {
         }
     }
 }
-

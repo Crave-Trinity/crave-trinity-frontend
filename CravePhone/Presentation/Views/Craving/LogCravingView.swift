@@ -20,62 +20,55 @@ public struct LogCravingView: View {
     }
     
     public var body: some View {
-        GeometryReader { geometry in
-            NavigationView {
-                ZStack {
-                    CraveTheme.Colors.primaryGradient
-                        .ignoresSafeArea()
+        ZStack {
+            // Background (ignores safe area only for the gradient itself)
+            CraveTheme.Colors.primaryGradient
+                .ignoresSafeArea(edges: .all)
+            
+            ScrollView {
+                VStack(alignment: .leading, spacing: 24) {
                     
-                    ScrollView {
-                        VStack(spacing: geometry.size.height * 0.03) {
-                            
-                            // (1) Header
-                            headerSection
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                            
-                            // (2) Craving Description
-                            CravingDescriptionSectionView(
-                                text: $viewModel.cravingDescription,
-                                isRecordingSpeech: viewModel.isRecordingSpeech,
-                                onToggleSpeech: { viewModel.toggleSpeechRecognition() }
-                            )
-                            .frame(maxWidth: .infinity)
-                            
-                            // (3) Sliders
-                            CravingSlidersSectionView(
-                                cravingStrength: $viewModel.cravingStrength,
-                                resistance: $viewModel.confidenceToResist
-                            )
-                            .frame(maxWidth: .infinity)
-                            
-                            // (4) Emotions
-                            CravingEmotionChipsView(
-                                selectedEmotions: viewModel.selectedEmotions,
-                                onToggleEmotion: { viewModel.toggleEmotion($0) }
-                            )
-                            .frame(maxWidth: .infinity)
-                            
-                            // (5) Button
-                            recordCravingButton
-                            
-                            Spacer(minLength: geometry.size.height * 0.02)
-                        }
-                        .padding(.horizontal, geometry.size.width * 0.05)
-                        .padding(.top, geometry.size.height * 0.02)
-                        .padding(.bottom, geometry.size.height * 0.05)
-                    }
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .navigationBarTitleDisplayMode(.inline)
-                .alert(item: $viewModel.alertInfo) { info in
-                    Alert(
-                        title: Text(info.title),
-                        message: Text(info.message),
-                        dismissButton: .default(Text("OK"))
+                    headerSection
+                        .padding(.top, 16)
+                    
+                    // Craving Description
+                    CravingDescriptionSectionView(
+                        text: $viewModel.cravingDescription,
+                        isRecordingSpeech: viewModel.isRecordingSpeech,
+                        onToggleSpeech: { viewModel.toggleSpeechRecognition() }
                     )
+                    
+                    // Sliders
+                    CravingSlidersSectionView(
+                        cravingStrength: $viewModel.cravingStrength,
+                        resistance: $viewModel.confidenceToResist
+                    )
+                    
+                    // Emotions
+                    CravingEmotionChipsView(
+                        selectedEmotions: viewModel.selectedEmotions,
+                        onToggleEmotion: { viewModel.toggleEmotion($0) }
+                    )
+                    
+                    // Button
+                    recordCravingButton
+                        .padding(.top, 8)
+                    
+                    Spacer(minLength: 20)
                 }
+                .padding(.horizontal, 16)
+                .padding(.bottom, 40) // extra space so button or content isn't blocked by tab bar
             }
-            .navigationViewStyle(StackNavigationViewStyle())
+        }
+        // If you want a custom nav title, you can do:
+        .navigationTitle("Track Your Craving")
+        .navigationBarTitleDisplayMode(.inline)
+        .alert(item: $viewModel.alertInfo) { info in
+            Alert(
+                title: Text(info.title),
+                message: Text(info.message),
+                dismissButton: .default(Text("OK"))
+            )
         }
     }
 }
@@ -84,7 +77,7 @@ public struct LogCravingView: View {
 extension LogCravingView {
     
     private var headerSection: some View {
-        VStack(alignment: .leading, spacing: CraveTheme.Spacing.small) {
+        VStack(alignment: .leading, spacing: 8) {
             Text("🦊 Track Your Craving")
                 .font(CraveTheme.Typography.heading)
                 .foregroundColor(CraveTheme.Colors.primaryText)
@@ -117,7 +110,5 @@ extension LogCravingView {
             .background(CraveTheme.Colors.accent)
             .cornerRadius(CraveTheme.Layout.cornerRadius)
         }
-        .padding(.top, 10)
     }
 }
-
