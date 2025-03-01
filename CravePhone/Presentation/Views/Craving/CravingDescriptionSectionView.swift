@@ -29,7 +29,7 @@ struct CravingDescriptionSectionView: View {
                 characterLimit: 300,
                 placeholderLines: [
                     .plain("What are you craving?"),
-                    .plain("Any triggers?"),
+                    .plain("Triggers?"),
                     .plain("Where are you?"),
                     .plain("Who are you with?")
                 ]
