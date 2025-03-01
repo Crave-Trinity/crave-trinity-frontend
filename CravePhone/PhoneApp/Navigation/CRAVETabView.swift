@@ -1,11 +1,8 @@
-//
-//  CRAVETabView.swift
-//  CravePhone
-//
-//  A refined TabView with fluid animations, proper scaling,
-//  and accessibility improvements. Clean SwiftUI implementation
-//  following SOLID principles.
-//
+
+// FILE: CRAVETabView.swift
+// DESCRIPTION:
+//  - Full-screen TabView with safe area adjustments.
+//  - Custom tab bar pinned at bottom.
 
 import SwiftUI
 
@@ -42,15 +39,17 @@ public struct CRAVETabView: View {
             .animation(.easeInOut(duration: 0.3), value: selectedTab)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             
-            // Bottom Tab Bar
-            VStack {
+            // Custom bottom bar pinned at bottom
+            VStack(spacing: 0) {
                 Spacer()
                 tabBar
                     .padding(.bottom, 20)
             }
         }
+        // Full-screen background + safe area usage
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(CraveTheme.Colors.primaryGradient)
-        .ignoresSafeArea(edges: .bottom)
+        .ignoresSafeArea(edges: .all)
         .preferredColorScheme(.dark)
     }
     
@@ -66,14 +65,12 @@ public struct CRAVETabView: View {
                     VStack(spacing: 4) {
                         Image(systemName: iconName(for: tab))
                             .font(.system(size: 22, weight: selectedTab == tab ? .semibold : .regular))
-                            .imageScale(.large)
-                        
                         Text(tab.rawValue)
                             .font(.system(size: 10, weight: selectedTab == tab ? .medium : .regular))
                     }
-                    .foregroundColor(selectedTab == tab ? CraveTheme.Colors.accent : Color.gray.opacity(0.8))
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 12)
+                    .foregroundColor(selectedTab == tab ? CraveTheme.Colors.accent : Color.gray.opacity(0.8))
                 }
                 .accessibilityLabel("\(tab.rawValue) Tab")
             }
@@ -94,14 +91,5 @@ public struct CRAVETabView: View {
         case .analytics: return "chart.bar.fill"
         case .aiChat:    return "bubble.left.and.bubble.right.fill"
         }
-    }
-}
-
-// MARK: - Preview
-struct CRAVETabView_Previews: PreviewProvider {
-    static var previews: some View {
-        let container = DependencyContainer()
-        let coordinator = AppCoordinator(container: container)
-        CRAVETabView(coordinator: coordinator)
     }
 }

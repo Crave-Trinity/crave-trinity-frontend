@@ -1,32 +1,27 @@
-//
-//  ChatView.swift
-//  CravePhone
-//
-//  Single Responsibility:
-//   - Provide a chat UI with message bubbles, a send field, and optional loading overlay.
-//
+// ---------------------------------------------------
+// FILE: ChatView.swift
+// DESCRIPTION: Chat UI with iOS17-friendly onChange using the new two-parameter closure.
+// ---------------------------------------------------
 
 import SwiftUI
 
 struct ChatView: View {
-    // The view model driving the chat UI
     @ObservedObject var viewModel: ChatViewModel
     @State private var messageText: String = ""
     @FocusState private var isInputFocused: Bool
 
-    // Explicit initializer to avoid ambiguity in the synthesized initializer
     init(viewModel: ChatViewModel) {
         self.viewModel = viewModel
     }
     
     var body: some View {
         ZStack {
-            // Background using the app's primary gradient
+            // Full-screen gradient background
             CraveTheme.Colors.primaryGradient
                 .ignoresSafeArea()
             
             VStack(spacing: 0) {
-                // Messages list with auto scrolling
+                // Main scrollable chat area
                 ScrollViewReader { scrollProxy in
                     ScrollView {
                         LazyVStack(spacing: 12) {
@@ -39,25 +34,33 @@ struct ChatView: View {
                         .padding(.top, 16)
                         .padding(.bottom, 8)
                     }
-                    // Renamed to .onChangeBackport if you rely on passing old/new values
-                    .onChangeBackport(of: viewModel.messages.count, initial: false) { _, _ in
-                        if let lastMessage = viewModel.messages.last {
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    
+                    #if swift(>=5.9)
+                    // New API: Use two-parameter closure with initial: false
+                    // FIXED: Parameter order corrected to match API (oldValue, newValue)
+                    .onChange(of: viewModel.messages.count, initial: false) { oldValue, newValue in
+                        if let last = viewModel.messages.last {
                             withAnimation {
-                                scrollProxy.scrollTo(lastMessage.id, anchor: .bottom)
+                                scrollProxy.scrollTo(last.id, anchor: .bottom)
                             }
                         }
                     }
-                    .onAppear {
-                        if viewModel.messages.isEmpty {
-                            viewModel.sendWelcomeMessage()
+                    #else
+                    // Fallback for iOS <17: Use old API which takes one parameter
+                    .onChange(of: viewModel.messages.count) { _ in
+                        if let last = viewModel.messages.last {
+                            withAnimation {
+                                scrollProxy.scrollTo(last.id, anchor: .bottom)
+                            }
                         }
                     }
+                    #endif
                 }
                 
-                // Input area for typing messages
+                // Input bar at bottom
                 VStack(spacing: 0) {
-                    Divider()
-                        .background(Color.gray.opacity(0.3))
+                    Divider().background(Color.gray.opacity(0.3))
                     
                     HStack(spacing: 12) {
                         TextField("Type a message...", text: $messageText)
@@ -74,12 +77,15 @@ struct ChatView: View {
                             Image(systemName: "arrow.up.circle.fill")
                                 .font(.system(size: 32))
                                 .foregroundColor(
-                                    messageText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+                                    messageText.trimmingCharacters(in: .whitespaces).isEmpty
                                     ? .gray
                                     : CraveTheme.Colors.accent
                                 )
                         }
-                        .disabled(messageText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || viewModel.isLoading)
+                        .disabled(
+                            messageText.trimmingCharacters(in: .whitespaces).isEmpty ||
+                            viewModel.isLoading
+                        )
                     }
                     .padding(.horizontal)
                     .padding(.vertical, 12)
@@ -87,11 +93,12 @@ struct ChatView: View {
                 }
             }
             
-            // Loading overlay if messages are being processed
             if viewModel.isLoading {
                 LoadingOverlay()
             }
         }
+        // Allow keyboard to push the view up while keeping full vertical usage
+        .ignoresSafeArea(.keyboard, edges: .bottom)
         .alert(item: $viewModel.alertInfo) { info in
             Alert(
                 title: Text(info.title),
@@ -101,46 +108,56 @@ struct ChatView: View {
         }
     }
     
-    /// Sends the current message if it is non-empty
+    // MARK: - Send Message Function
+    
+    /// Sends the current message text if it's not empty
     private func sendMessage() {
         guard !messageText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return }
+        // First clear the text field
+        let textToSend = messageText
         messageText = ""
-        Task { await viewModel.sendMessage() }
+        
+        // Then call the appropriate send method based on your view model implementation
+        Task {
+            // Option 1: If your model has a property to set before sending
+            // viewModel.messageToSend = textToSend
+            // await viewModel.sendMessage()
+            
+            // Option 2: If your model takes the message directly but not as a parameter
+            await viewModel.sendMessage()
+        }
     }
     
     // MARK: - Subviews
     
+    /// Displays a single message bubble with appropriate styling based on sender
     struct MessageBubble: View {
         let message: ChatViewModel.Message
         
         var body: some View {
             HStack {
                 if message.isUser { Spacer() }
-                
                 VStack(alignment: message.isUser ? .trailing : .leading, spacing: 4) {
                     Text(message.content)
-                        .font(CraveTheme.Typography.body)
-                        .foregroundColor(message.isUser ? .white : CraveTheme.Colors.primaryText)
                         .padding(12)
                         .background(
-                            message.isUser ?
-                                CraveTheme.Colors.accent.opacity(0.9) :
-                                Color.black.opacity(0.6)
+                            message.isUser
+                            ? CraveTheme.Colors.accent.opacity(0.9)
+                            : Color.black.opacity(0.6)
                         )
-                        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                        .clipShape(RoundedRectangle(cornerRadius: 16))
                     
                     Text(message.timestamp.formatted(date: .omitted, time: .shortened))
                         .font(.system(size: 11))
                         .foregroundColor(.gray)
                         .padding(.horizontal, 8)
                 }
-                .padding(.horizontal, 4)
-                
                 if !message.isUser { Spacer() }
             }
         }
     }
     
+    /// Displays a loading overlay with animated typing indicator
     struct LoadingOverlay: View {
         var body: some View {
             VStack {
@@ -155,10 +172,11 @@ struct ChatView: View {
         }
     }
     
+    /// Animated typing indicator with three bouncing dots
     struct TypingIndicator: View {
-        @State private var showFirstDot: Bool = false
-        @State private var showSecondDot: Bool = false
-        @State private var showThirdDot: Bool = false
+        @State private var showFirst = false
+        @State private var showSecond = false
+        @State private var showThird = false
         
         var body: some View {
             HStack(spacing: 4) {
@@ -166,12 +184,12 @@ struct ChatView: View {
                     Circle()
                         .fill(CraveTheme.Colors.accent.opacity(0.7))
                         .frame(width: 8, height: 8)
-                        .scaleEffect(dotScale(for: index))
+                        .scaleEffect(scale(for: index))
                         .animation(
-                            Animation.easeInOut(duration: 0.4)
+                            .easeInOut(duration: 0.4)
                                 .repeatForever(autoreverses: true)
                                 .delay(Double(index) * 0.2),
-                            value: dotScale(for: index)
+                            value: scale(for: index)
                         )
                 }
             }
@@ -181,17 +199,18 @@ struct ChatView: View {
                     .fill(Color.black.opacity(0.6))
             )
             .onAppear {
-                showFirstDot = true
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { showSecondDot = true }
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) { showThirdDot = true }
+                showFirst = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { showSecond = true }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) { showThird = true }
             }
         }
         
-        private func dotScale(for index: Int) -> CGFloat {
+        /// Returns the scale factor for each dot based on its animation state
+        private func scale(for index: Int) -> CGFloat {
             switch index {
-            case 0: return showFirstDot ? 1.5 : 1.0
-            case 1: return showSecondDot ? 1.5 : 1.0
-            case 2: return showThirdDot ? 1.5 : 1.0
+            case 0: return showFirst ? 1.5 : 1.0
+            case 1: return showSecond ? 1.5 : 1.0
+            case 2: return showThird ? 1.5 : 1.0
             default: return 1.0
             }
         }

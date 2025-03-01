@@ -1,9 +1,7 @@
-//
-//  CravingDescriptionSectionView.swift
-//  CravePhone
-//
-//  Section for capturing craving description with speech input option.
-//
+// FILE: CravingDescriptionSectionView.swift
+// DESCRIPTION:
+//  - Remove hardcoded height
+//  - Expand or scroll as needed
 
 import SwiftUI
 
@@ -28,34 +26,17 @@ struct CravingDescriptionSectionView: View {
                     .plain("Where are you?")
                 ]
             )
-            .frame(height: 120)
+            // Use minHeight and let it grow
+            .frame(maxWidth: .infinity, minHeight: 120, maxHeight: .infinity)
             
             HStack {
                 Spacer()
-                
                 Text("\(text.count)/300")
                     .font(.system(size: 12))
-                    .foregroundColor(
-                        text.count > 250 ?
-                            (text.count > 280 ? .red : .orange) :
-                            CraveTheme.Colors.secondaryText
-                    )
+                    .foregroundColor(text.count > 280 ? .red : (text.count > 250 ? .orange : CraveTheme.Colors.secondaryText))
                     .padding(.trailing, 8)
             }
         }
         .padding(.vertical, 8)
-    }
-}
-
-#Preview {
-    ZStack {
-        Color.black.edgesIgnoringSafeArea(.all)
-        
-        CravingDescriptionSectionView(
-            text: .constant("I've been craving chocolate since lunchtime."),
-            isRecordingSpeech: false,
-            onToggleSpeech: {}
-        )
-        .padding()
     }
 }

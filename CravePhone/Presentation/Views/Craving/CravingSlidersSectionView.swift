@@ -1,101 +1,68 @@
-//
-//  CravingSlidersSectionView.swift
-//  CravePhone
-//
-//  Uncle Bob & Clean Architecture:
-//   - A simple view that shows two sliders for craving intensity
-//     and confidence to resist.
-//   - Avoids iOS 17 deprecation warnings by using
-//     the new zero-parameter .onChange(of:) closure.
-//
+
+// FILE: CravingSlidersSectionView.swift
+// DESCRIPTION:
+//  - Ensure the container can expand
+//  - No hardcoded top-level heights
 
 import SwiftUI
 
 struct CravingSlidersSectionView: View {
     
-    // Two Bindings for the user-selected values
     @Binding var cravingStrength: Double
     @Binding var resistance: Double
     
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
-            
-            // MARK: - Intensity Slider
+            // Intensity
             VStack(alignment: .leading, spacing: 10) {
                 HStack {
                     Text("Intensity")
                         .font(CraveTheme.Typography.subheading)
                         .foregroundColor(CraveTheme.Colors.primaryText)
-                    
                     Spacer()
-                    
                     Text("\(Int(cravingStrength))")
                         .font(CraveTheme.Typography.subheading.weight(.semibold))
                         .foregroundColor(intensityColor)
                 }
-                
-                // iOS 17 solution: zero-parameter onChange closure
                 Slider(value: $cravingStrength, in: 1...10, step: 1)
                     .accentColor(intensityColor)
                     .onChange(of: cravingStrength) {
-                        // No parameters needed
-                        // Just do your side effect
                         CraveHaptics.shared.selectionChanged()
                     }
-                
                 HStack {
-                    Text("Mild")
-                        .font(.caption)
-                        .foregroundColor(CraveTheme.Colors.secondaryText)
-                    
+                    Text("Mild").font(.caption).foregroundColor(CraveTheme.Colors.secondaryText)
                     Spacer()
-                    
-                    Text("Intense")
-                        .font(.caption)
-                        .foregroundColor(CraveTheme.Colors.secondaryText)
+                    Text("Intense").font(.caption).foregroundColor(CraveTheme.Colors.secondaryText)
                 }
             }
             
-            // MARK: - Resistance Slider
+            // Resistance
             VStack(alignment: .leading, spacing: 10) {
                 HStack {
                     Text("Confidence to Resist")
                         .font(CraveTheme.Typography.subheading)
                         .foregroundColor(CraveTheme.Colors.primaryText)
-                    
                     Spacer()
-                    
                     Text("\(Int(resistance))")
                         .font(CraveTheme.Typography.subheading.weight(.semibold))
                         .foregroundColor(resistanceColor)
                 }
-                
-                // Same zero-parameter approach for the second slider
                 Slider(value: $resistance, in: 1...10, step: 1)
                     .accentColor(resistanceColor)
                     .onChange(of: resistance) {
                         CraveHaptics.shared.selectionChanged()
                     }
-                
                 HStack {
-                    Text("Low")
-                        .font(.caption)
-                        .foregroundColor(CraveTheme.Colors.secondaryText)
-                    
+                    Text("Low").font(.caption).foregroundColor(CraveTheme.Colors.secondaryText)
                     Spacer()
-                    
-                    Text("High")
-                        .font(.caption)
-                        .foregroundColor(CraveTheme.Colors.secondaryText)
+                    Text("High").font(.caption).foregroundColor(CraveTheme.Colors.secondaryText)
                 }
             }
         }
-        // Some vertical spacing to keep it clean
         .padding(.vertical, 8)
+        .frame(maxWidth: .infinity)
     }
     
-    // MARK: - Computed Colors
-    // Tweak these as you wish for your intensity color scheme
     private var intensityColor: Color {
         switch Int(cravingStrength) {
         case 1...3: return .green
@@ -112,18 +79,5 @@ struct CravingSlidersSectionView: View {
         case 7...8: return .yellow
         default:    return .green
         }
-    }
-}
-
-// MARK: - Preview
-#Preview {
-    ZStack {
-        Color.black.edgesIgnoringSafeArea(.all)
-        
-        CravingSlidersSectionView(
-            cravingStrength: .constant(7),
-            resistance: .constant(4)
-        )
-        .padding()
     }
 }

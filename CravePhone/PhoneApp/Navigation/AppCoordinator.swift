@@ -1,11 +1,6 @@
-//
-//  AppCoordinator.swift
-//  CravePhone
-//
-//  Purpose:
-//   - Provides methods for creating major feature views (Log Craving, Craving List, Analytics, AI Chat).
-//   - Each method returns a SwiftUI view, using your DependencyContainer.
-//
+// FILE: AppCoordinator.swift
+// DESCRIPTION:
+//  - Ensures each major feature view can expand within the navigation stack or tab setup.
 
 import SwiftUI
 
@@ -17,31 +12,29 @@ public final class AppCoordinator: ObservableObject {
         self.container = container
     }
     
-    // MARK: - View Constructors
-    
+    // Basic factories
     public func makeLogCravingView() -> some View {
-        let vm = container.makeLogCravingViewModel()
-        return LogCravingView(viewModel: vm)
+        LogCravingView(viewModel: container.makeLogCravingViewModel())
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     
     public func makeCravingListView() -> some View {
-        let vm = container.makeCravingListViewModel()
-        return CravingListView(viewModel: vm)
+        CravingListView(viewModel: container.makeCravingListViewModel())
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     
     public func makeAnalyticsDashboardView() -> some View {
-        let vm = container.makeAnalyticsViewModel()
-        return AnalyticsDashboardView(viewModel: vm)
+        AnalyticsDashboardView(viewModel: container.makeAnalyticsViewModel())
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     
     public func makeChatView() -> some View {
-        let vm = container.makeChatViewModel()
-        return ChatView(viewModel: vm)
+        ChatView(viewModel: container.makeChatViewModel())
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     
-    // If you still use a root coordinator approach:
+    // Start
     public func start() -> some View {
-        // Return a tab view or main NavView
         CRAVETabView(coordinator: self)
     }
 }
