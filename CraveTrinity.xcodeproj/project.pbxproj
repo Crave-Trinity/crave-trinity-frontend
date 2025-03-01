@@ -165,10 +165,10 @@
 				Presentation/Views/Analytics/AnalyticsDashboardView.swift = (ios, );
 				Presentation/Views/Analytics/Components/AnalyticsCharts.swift = (ios, );
 				Presentation/Views/Analytics/Components/AnalyticsInsight.swift = (ios, );
-				Presentation/Views/Analytics/Components/InfiniteMarqueeTextView.swift = (ios, );
 				Presentation/Views/Craving/Components/CravingCard.swift = (ios, );
 				Presentation/Views/Craving/CravingListView.swift = (ios, );
 				Presentation/Views/Craving/LogCravingView.swift = (ios, );
+				Secrets.plist = (ios, );
 			};
 			target = 28A3F8582D65962900D8DE44 /* CravePhone */;
 		};
