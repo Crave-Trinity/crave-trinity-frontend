@@ -23,4 +23,3 @@ public struct CoordinatorHostView: View {
         coordinator.start()
     }
 }
-
