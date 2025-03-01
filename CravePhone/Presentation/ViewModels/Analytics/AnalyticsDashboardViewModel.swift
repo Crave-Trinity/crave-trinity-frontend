@@ -1,24 +1,17 @@
-//
-//  AnalyticsDashboardViewModel.swift
-//  CravePhone
-//
-//  Created by ...
-//  Updated for unified SOLID approach
-//
-
+/* -----------------------------------------
+   AnalyticsDashboardViewModel.swift
+   ----------------------------------------- */
 import Foundation
 import SwiftUI
 
 @MainActor
 public final class AnalyticsDashboardViewModel: ObservableObject {
-    // Dependencies
     private let manager: AnalyticsManager
     
-    // Published state
     @Published public var basicStats: BasicAnalyticsResult?
     @Published public var alertInfo: AlertInfo?
     @Published public var isLoading: Bool = false
-
+    
     public init(manager: AnalyticsManager) {
         self.manager = manager
     }
@@ -34,3 +27,4 @@ public final class AnalyticsDashboardViewModel: ObservableObject {
         isLoading = false
     }
 }
+

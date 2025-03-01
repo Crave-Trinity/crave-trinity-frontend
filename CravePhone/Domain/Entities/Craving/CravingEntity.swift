@@ -2,47 +2,40 @@
 //  CravingEntity.swift
 //  CravePhone
 //
-//  Description:
-//  A SwiftData model representing a craving entry, stored as a final class.
+//  Uncle Bob & Steve Jobs Style:
+//   - Renamed 'description' to avoid SwiftData conflict.
+//   - Maintains alignment with "cravingStrength" & "confidenceToResist".
 //
-//  Key points:
-//  - Must be a final class if you want to reference it as a PersistentModel.
-//  - We add 'isArchived' and 'timestamp' to match your CravingManager fetch queries.
-//  - Provide a public init for SwiftData's code generation.
-//
+
 import SwiftData
 import Foundation
 
 @Model
-public final class CravingEntity {
-    
-    // Unique identifier (primary key).
-    @Attribute(.unique)
-    public var id: UUID
-    
-    // Core properties.
-    public var text: String
-    public var confidenceToResist: Double
+public class CravingEntity {
+    @Attribute(.unique) public var id: UUID
+    public var cravingDescription: String
     public var cravingStrength: Double
-    
-    // Additional fields your CravingManager references:
-    public var isArchived: Bool
+    public var confidenceToResist: Double
+    public var emotions: [String]
     public var timestamp: Date
+    public var isArchived: Bool
     
-    // SwiftData requires an initializer for final classes with these stored properties.
     public init(
         id: UUID = UUID(),
-        text: String,
-        confidenceToResist: Double,
+        cravingDescription: String,
         cravingStrength: Double,
-        timestamp: Date = Date(),
-        isArchived: Bool = false
+        confidenceToResist: Double,
+        emotions: [String],
+        timestamp: Date,
+        isArchived: Bool
     ) {
         self.id = id
-        self.text = text
-        self.confidenceToResist = confidenceToResist
+        self.cravingDescription = cravingDescription
         self.cravingStrength = cravingStrength
+        self.confidenceToResist = confidenceToResist
+        self.emotions = emotions
         self.timestamp = timestamp
         self.isArchived = isArchived
     }
 }
+

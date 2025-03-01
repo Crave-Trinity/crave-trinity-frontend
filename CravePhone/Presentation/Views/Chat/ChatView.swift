@@ -1,103 +1,93 @@
-//
-//  ChatView.swift
-//  CravePhone
-//
-//  Description:
-//    Minimalistic chat interface for AI Q&A.
-//
-//  Uncle Bob & Steve Jobs notes:
-//    - Single Responsibility: Renders chat messages, input field, sends to VM.
-//    - Open/Closed: We can add advanced chat features or other UI states without rewriting everything.
-//  GoF & SOLID:
-//    - MVVM: The View depends on ChatViewModel for data & logic.
-//    - Clear separation: The bubble rendering is a sub-function, not tangled with VM logic.
-//
-
+/* -----------------------------------------
+   ChatView.swift
+   ----------------------------------------- */
 import SwiftUI
 
 public struct ChatView: View {
-    
     @ObservedObject var viewModel: ChatViewModel
-    
+
     public init(viewModel: ChatViewModel) {
         self.viewModel = viewModel
     }
-    
+
     public var body: some View {
-        NavigationView {
-            ZStack {
-                CraveTheme.Colors.primaryGradient
-                    .ignoresSafeArea()
-                
-                VStack {
-                    // Scrollable chat messages
-                    ScrollViewReader { scrollProxy in
-                        ScrollView {
-                            VStack(spacing: CraveTheme.Spacing.small) {
-                                ForEach(viewModel.messages) { message in
-                                    messageBubble(message)
-                                }
-                            }
-                            .padding()
-                        }
-                        .onChange(of: viewModel.messages.count) {
-                            withAnimation(.easeOut) {
-                                if let lastMessageId = viewModel.messages.last?.id {
-                                    scrollProxy.scrollTo(lastMessageId, anchor: .bottom)
-                                }
-                            }
-                        }
-                    }
+        GeometryReader { geometry in
+            NavigationView {
+                ZStack {
+                    // Background gradient
+                    CraveTheme.Colors.primaryGradient
+                        .ignoresSafeArea()
                     
-                    // Input area
-                    HStack(spacing: CraveTheme.Spacing.small) {
-                        TextField("Ask about your cravings…", text: $viewModel.userInput)
-                            .padding(.horizontal, CraveTheme.Spacing.small)
-                            .frame(minHeight: 40)
-                            .background(CraveTheme.Colors.textFieldBackground)
-                            .cornerRadius(CraveTheme.Layout.cornerRadius)
-                            .foregroundColor(CraveTheme.Colors.primaryText)
-                            .font(CraveTheme.Typography.body)
-                        
-                        if viewModel.isLoading {
-                            ProgressView()
-                                .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                                .frame(width: 40, height: 40)
-                        } else {
-                            Button {
-                                Task {
-                                    await viewModel.sendMessage()
+                    VStack {
+                        // Scrollable chat messages
+                        ScrollViewReader { scrollProxy in
+                            ScrollView {
+                                VStack(spacing: geometry.size.height * 0.01) {
+                                    ForEach(viewModel.messages) { message in
+                                        messageBubble(message)
+                                    }
                                 }
-                            } label: {
-                                Image(systemName: "paperplane.fill")
-                                    .foregroundColor(.white)
-                                    .padding(8)
-                                    .background(CraveTheme.Colors.accent)
-                                    .cornerRadius(CraveTheme.Layout.cornerRadius)
+                                .padding()
+                            }
+                            // Updated onChange syntax, non-deprecated
+                            .onChange(of: viewModel.messages.count, initial: false) { _, _ in
+                                withAnimation(.easeOut) {
+                                    if let lastID = viewModel.messages.last?.id {
+                                        scrollProxy.scrollTo(lastID, anchor: .bottom)
+                                    }
+                                }
                             }
                         }
+                        
+                        // Input area
+                        HStack(spacing: geometry.size.width * 0.02) {
+                            TextField("Ask about your cravings…", text: $viewModel.userInput)
+                                .padding(.horizontal, geometry.size.width * 0.02)
+                                .frame(minHeight: 40)
+                                .background(CraveTheme.Colors.textFieldBackground)
+                                .cornerRadius(CraveTheme.Layout.cornerRadius)
+                                .foregroundColor(CraveTheme.Colors.primaryText)
+                                .font(CraveTheme.Typography.body)
+
+                            if viewModel.isLoading {
+                                ProgressView()
+                                    .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                                    .frame(width: 40, height: 40)
+                            } else {
+                                Button {
+                                    Task {
+                                        await viewModel.sendMessage()
+                                    }
+                                } label: {
+                                    Image(systemName: "paperplane.fill")
+                                        .foregroundColor(.white)
+                                        .padding(8)
+                                        .background(CraveTheme.Colors.accent)
+                                        .cornerRadius(CraveTheme.Layout.cornerRadius)
+                                }
+                            }
+                        }
+                        .padding(.horizontal, geometry.size.width * 0.03)
+                        .padding(.bottom, geometry.size.height * 0.02)
                     }
-                    .padding(.horizontal)
-                    .padding(.bottom, 10)
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .navigationBarTitle("AI Insights", displayMode: .inline)
+                .alert(item: $viewModel.alertInfo) { info in
+                    Alert(title: Text(info.title),
+                          message: Text(info.message),
+                          dismissButton: .default(Text("OK")))
                 }
             }
-            // Force full screen usage
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .navigationBarTitle("AI Insights", displayMode: .inline)
-            .alert(item: $viewModel.alertInfo) { info in
-                Alert(title: Text(info.title),
-                      message: Text(info.message),
-                      dismissButton: .default(Text("OK")))
-            }
+            .navigationViewStyle(StackNavigationViewStyle())
         }
-        .navigationViewStyle(StackNavigationViewStyle())
     }
-    
+
     // MARK: - Message Bubble View
     @ViewBuilder
     private func messageBubble(_ message: ChatViewModel.Message) -> some View {
         HStack {
-            if message.isUser { Spacer(minLength: CraveTheme.Spacing.small) }
+            if message.isUser { Spacer(minLength: 0) }
             Text(message.content)
                 .font(CraveTheme.Typography.body)
                 .foregroundColor(CraveTheme.Colors.primaryText)
@@ -106,9 +96,10 @@ public struct ChatView: View {
                             ? CraveTheme.Colors.accent.opacity(0.7)
                             : Color.gray.opacity(0.3))
                 .cornerRadius(CraveTheme.Layout.cornerRadius)
-            if !message.isUser { Spacer(minLength: CraveTheme.Spacing.small) }
+            if !message.isUser { Spacer(minLength: 0) }
         }
         .frame(maxWidth: .infinity, alignment: message.isUser ? .trailing : .leading)
         .id(message.id)
     }
 }
+

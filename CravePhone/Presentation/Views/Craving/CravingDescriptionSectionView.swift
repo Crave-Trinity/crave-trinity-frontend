@@ -1,15 +1,6 @@
-//
-//  CravingDescriptionSectionView.swift
-//  CravePhone
-//
-//  Description:
-//    Subview for the text input portion of logging a craving.
-//
-//  Uncle Bob & SOLID notes:
-//    - Single Responsibility: Only deals with text + mic UI.
-//    - Open/Closed: We can add placeholders or advanced logic without changing the rest of the app.
-//
-
+/* -----------------------------------------
+   CravingDescriptionSectionView.swift
+   ----------------------------------------- */
 import SwiftUI
 
 struct CravingDescriptionSectionView: View {
@@ -18,25 +9,30 @@ struct CravingDescriptionSectionView: View {
     let onToggleSpeech: () -> Void
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text("Craving Description")
-                .font(.headline)
-                .foregroundColor(.white)
-            
-            // Our custom TextEditor (with optional mic overlay)
-            CraveTextEditor(
-                text: $text,
-                isRecordingSpeech: isRecordingSpeech,
-                onMicTap: onToggleSpeech,
-                characterLimit: 300,
-                placeholderLines: [
-                    .plain("What are you craving?"),
-                    .plain("Any triggers?"),
-                    .plain("Where are you?"),
-                    .plain("Who are you with?")
-                ]
-            )
+        GeometryReader { geometry in
+            VStack(alignment: .leading, spacing: geometry.size.height * 0.02) {
+                Text("Craving Description")
+                    .font(.headline)
+                    .foregroundColor(.white)
+                
+                // Our custom TextEditor (with optional mic overlay)
+                CraveTextEditor(
+                    text: $text,
+                    isRecordingSpeech: isRecordingSpeech,
+                    onMicTap: onToggleSpeech,
+                    characterLimit: 300,
+                    placeholderLines: [
+                        .plain("What are you craving?"),
+                        .plain("Any triggers?"),
+                        .plain("Where are you?"),
+                        .plain("Who are you with?")
+                    ]
+                )
+                Spacer(minLength: 0)
+            }
+            .padding(.vertical, geometry.size.height * 0.01)
         }
-        .padding(.vertical, 8)
+        .frame(minHeight: 100) // Ensures enough height for text input
     }
 }
+

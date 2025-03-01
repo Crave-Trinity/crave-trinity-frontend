@@ -1,15 +1,7 @@
-//
-//  CravingListViewModel.swift
-//  CravePhone
-//
-//  Description:
-//    Example ViewModel that fetches + archives cravings.
-//    We'll show them in CravingListView.
-//
-//  Created by ...
-//  Updated by ChatGPT on ...
-//
 
+/* -----------------------------------------
+   CravingListViewModel.swift
+   ----------------------------------------- */
 import SwiftUI
 import Combine
 
@@ -50,3 +42,4 @@ public final class CravingListViewModel: ObservableObject {
         isLoading = false
     }
 }
+

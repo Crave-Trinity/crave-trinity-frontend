@@ -2,13 +2,11 @@
 //  CravingCard.swift
 //  CravePhone
 //
-//  Description:
-//    A minimal card view displaying a CravingEntity.
+//  Uncle Bob & Steve Jobs Style:
+//   - Replaced 'craving.text' with 'craving.cravingDescription' to match updated entity.
+//   - Clean, minimal card displaying one craving's info.
 //
-//  Uncle Bob notes:
-//    - Single Responsibility: Show one craving's info, no domain logic.
-//    - Clean Code: Minimal duplication, uses CraveTheme consistently.
-//
+
 import SwiftUI
 
 public struct CravingCard: View {
@@ -20,7 +18,7 @@ public struct CravingCard: View {
     
     public var body: some View {
         VStack(alignment: .leading, spacing: CraveTheme.Spacing.small) {
-            Text(craving.text)
+            Text(craving.cravingDescription)
                 .font(CraveTheme.Typography.heading)
                 .lineLimit(2)
                 .foregroundColor(CraveTheme.Colors.primaryText)
@@ -45,3 +43,4 @@ public struct CravingCard: View {
         .shadow(color: Color.black.opacity(0.15), radius: 2, x: 0, y: 1)
     }
 }
+

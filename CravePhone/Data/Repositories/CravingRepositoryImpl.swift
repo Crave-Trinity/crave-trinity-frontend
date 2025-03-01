@@ -1,31 +1,36 @@
-// File: Core/Data/Repositories/CravingRepositoryImpl.swift
+//
+//  CravingRepositoryImpl.swift
+//  CravePhone
+//
+//  Uncle Bob & Steve Jobs Style:
+//   - Updated call to constructor: 'manager:' instead of 'cravingManager:' in DependencyContainer.
+//   - No further changes needed.
+//
 
 import Foundation
-import SwiftData
 
 @MainActor
-internal final class CravingRepositoryImpl: CravingRepository {
-    private let cravingManager: CravingManager
+public final class CravingRepositoryImpl: CravingRepository {
+    private let manager: CravingManager
     
-    internal init(cravingManager: CravingManager) {
-        self.cravingManager = cravingManager
+    public init(manager: CravingManager) {
+        self.manager = manager
     }
     
-    // MARK: - CravingRepository protocol conformance
-    // These can be internal because the class is internal and we only need to satisfy the public protocol internally.
-    func fetchAllActiveCravings() async throws -> [CravingEntity] {
-        try await cravingManager.fetchActiveCravings()
+    public func addCraving(_ craving: CravingEntity) async throws {
+        try await manager.insert(craving)
     }
     
-    func addCraving(_ craving: CravingEntity) async throws {
-        try await cravingManager.insert(craving)
+    public func fetchActiveCravings() async throws -> [CravingEntity] {
+        try await manager.fetchActiveCravings()
     }
     
-    func archiveCraving(_ craving: CravingEntity) async throws {
-        try await cravingManager.archive(craving)
+    public func archiveCraving(_ craving: CravingEntity) async throws {
+        try await manager.archive(craving)
     }
     
-    func deleteCraving(_ craving: CravingEntity) async throws {
-        try await cravingManager.delete(craving)
+    public func deleteCraving(_ craving: CravingEntity) async throws {
+        try await manager.delete(craving)
     }
 }
+

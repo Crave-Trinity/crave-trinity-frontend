@@ -2,20 +2,12 @@
 //  AnalyticsAggregatorImpl.swift
 //  CravePhone
 //
-//  Description:
-//    Aggregates events for analytics.
-//    Updated to use reduce(into:) and reference CravingEntity fields.
-//
 //  Uncle Bob & SOLID notes:
-//    - Single Responsibility: focuses solely on turning raw CravingEvents into aggregated metrics.
-//    - We assume the "resistance" & "intensity" values come from `cravingEntity.confidenceToResist`
-//      and `cravingEntity.cravingStrength`.
+//    - Uses event.cravingEntity.confidenceToResist / cravingStrength for sums.
+//    - Clean reduce(into:) usage.
+//    - No more missing members due to renamed entity fields.
 //
-//  Fixes:
-//    - Missing argument label 'into:' by explicitly using reduce(into:).
-//    - "Value of type 'CravingEvent' has no member 'resistance'" by
-//      referencing event.cravingEntity.confidenceToResist instead.
-//
+
 import Foundation
 
 public final class AnalyticsAggregatorImpl: AnalyticsAggregatorProtocol {
@@ -27,33 +19,30 @@ public final class AnalyticsAggregatorImpl: AnalyticsAggregatorProtocol {
     }
     
     public func aggregate(events: [CravingEvent]) async throws -> AggregatedData {
-        
-        // (A) Count total events
         let total = events.count
         
-        // (B) Sum "resistance" from cravingEntity.confidenceToResist using reduce(into:)
+        // Sum confidenceToResist
         let sumResistance = events.reduce(into: 0.0) { partial, event in
             partial += event.cravingEntity.confidenceToResist
         }
         let averageResistance = (total > 0) ? (sumResistance / Double(total)) : 0.0
         
-        // (C) Sum "intensity" from cravingEntity.cravingStrength
+        // Sum cravingStrength
         let sumIntensity = events.reduce(into: 0.0) { partial, event in
             partial += event.cravingEntity.cravingStrength
         }
         let averageIntensity = (total > 0) ? (sumIntensity / Double(total)) : 0.0
         
-        // (D) Suppose "resisted" means confidenceToResist > 5.0
+        // Example usage
         let totalResisted = events.filter { $0.cravingEntity.confidenceToResist > 5.0 }.count
         
-        // (E) Placeholders for grouping logic
+        // Placeholders for advanced groupings
         let cravingsByDate: [Date: Int] = [:]
         let cravingsByHour: [Int: Int] = [:]
         let cravingsByWeekday: [Int: Int] = [:]
         let commonTriggers: [String: Int] = [:]
         let timePatterns: [String] = []
         
-        // (F) Return the aggregated data
         return AggregatedData(
             totalCravings: total,
             totalResisted: totalResisted,
@@ -67,3 +56,4 @@ public final class AnalyticsAggregatorImpl: AnalyticsAggregatorProtocol {
         )
     }
 }
+

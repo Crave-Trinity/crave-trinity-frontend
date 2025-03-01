@@ -1,18 +1,18 @@
-//
-//  LogCravingView.swift
-//  CravePhone
-//
-//  Description:
-//    Main view for logging a new craving.
-//
-//  Uncle Bob notes:
-//    - Single Responsibility: Orchestrates subviews, holds no domain logic itself.
-//    - Open/Closed: Additional sections (location, mood, triggers) can be added as separate subviews.
-//  GoF & SOLID:
-//    - Compositional approach for subviews, each has a single focus (sliders, description).
-//    - The 'ViewModel' is injected, not created here (Dependency Inversion).
-//
+/*
+ ┌───────────────────────────────────────────────────────┐
+ │  Directory: CravePhone/Views                          │
+ │  Production-Ready SwiftUI Layout Fixes                │
+ │  Notes:                                               │
+ │   - Implements Uncle Bob, GoF, SOLID principles.      │
+ │   - Uses GeometryReader for adaptive layouts.         │
+ │   - Minimizes fixed spacing; inserts spacers.         │
+ │   - Ensures dynamic scaling across all devices.       │
+ └───────────────────────────────────────────────────────┘
+*/
 
+/* -----------------------------------------
+   LogCravingView.swift
+   ----------------------------------------- */
 import SwiftUI
 
 public struct LogCravingView: View {
@@ -24,55 +24,63 @@ public struct LogCravingView: View {
     }
     
     public var body: some View {
-        NavigationView {
-            ZStack {
-                CraveTheme.Colors.primaryGradient
-                    .ignoresSafeArea()
-                
-                ScrollView {
-                    VStack(spacing: CraveTheme.Spacing.large) {
-                        
-                        // (1) Header
-                        headerSection
-                        
-                        // (2) Craving Description
-                        CravingDescriptionSectionView(
-                            text: $viewModel.cravingDescription,
-                            isRecordingSpeech: viewModel.isRecordingSpeech,
-                            onToggleSpeech: { viewModel.toggleSpeechRecognition() }
-                        )
-                        
-                        // (3) Sliders
-                        CravingSlidersSectionView(
-                            cravingStrength: $viewModel.cravingStrength,
-                            resistance: $viewModel.confidenceToResist
-                        )
-                        
-                        // (4) Emotions
-                        CravingEmotionChipsView(
-                            selectedEmotions: viewModel.selectedEmotions,
-                            onToggleEmotion: { viewModel.toggleEmotion($0) }
-                        )
-
-                        // (5) Button
-                        recordCravingButton
+        GeometryReader { geometry in
+            NavigationView {
+                ZStack {
+                    CraveTheme.Colors.primaryGradient
+                        .ignoresSafeArea()
+                    
+                    ScrollView {
+                        VStack(spacing: geometry.size.height * 0.03) {
+                            
+                            // (1) Header
+                            headerSection
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            
+                            // (2) Craving Description
+                            CravingDescriptionSectionView(
+                                text: $viewModel.cravingDescription,
+                                isRecordingSpeech: viewModel.isRecordingSpeech,
+                                onToggleSpeech: { viewModel.toggleSpeechRecognition() }
+                            )
+                            .frame(maxWidth: .infinity)
+                            
+                            // (3) Sliders
+                            CravingSlidersSectionView(
+                                cravingStrength: $viewModel.cravingStrength,
+                                resistance: $viewModel.confidenceToResist
+                            )
+                            .frame(maxWidth: .infinity)
+                            
+                            // (4) Emotions
+                            CravingEmotionChipsView(
+                                selectedEmotions: viewModel.selectedEmotions,
+                                onToggleEmotion: { viewModel.toggleEmotion($0) }
+                            )
+                            .frame(maxWidth: .infinity)
+                            
+                            // (5) Button
+                            recordCravingButton
+                            
+                            Spacer(minLength: geometry.size.height * 0.02)
+                        }
+                        .padding(.horizontal, geometry.size.width * 0.05)
+                        .padding(.top, geometry.size.height * 0.02)
+                        .padding(.bottom, geometry.size.height * 0.05)
                     }
-                    .padding(CraveTheme.Spacing.large)
-                    .padding(.bottom, 40)
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .navigationBarTitleDisplayMode(.inline)
+                .alert(item: $viewModel.alertInfo) { info in
+                    Alert(
+                        title: Text(info.title),
+                        message: Text(info.message),
+                        dismissButton: .default(Text("OK"))
+                    )
                 }
             }
-            // Force full screen usage
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .navigationBarTitleDisplayMode(.inline)
-            .alert(item: $viewModel.alertInfo) { info in
-                Alert(
-                    title: Text(info.title),
-                    message: Text(info.message),
-                    dismissButton: .default(Text("OK"))
-                )
-            }
+            .navigationViewStyle(StackNavigationViewStyle())
         }
-        .navigationViewStyle(StackNavigationViewStyle())
     }
 }
 
@@ -89,7 +97,6 @@ extension LogCravingView {
                 .font(CraveTheme.Typography.subheading)
                 .foregroundColor(CraveTheme.Colors.primaryText.opacity(0.8))
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
     }
     
     private var recordCravingButton: some View {
@@ -117,3 +124,4 @@ extension LogCravingView {
         .padding(.top, 10)
     }
 }
+

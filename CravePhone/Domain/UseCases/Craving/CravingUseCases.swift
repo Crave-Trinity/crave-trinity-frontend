@@ -2,16 +2,11 @@
 //  CravingUseCases.swift
 //  CravePhone
 //
-//  Created by John H Jung on <date>.
-//  Description:
-//    Use cases for phone-based craving features.
-//    Defines a phone-specific error enum (PhoneCravingError) to avoid conflicts.
+//  Uncle Bob & Steve Jobs Style:
+//   - Unchanged except for referencing new entity field 'cravingDescription'.
+//   - These use cases are optional if you don't call them from the container.
 //
-//  Uncle Bob & SOLID:
-//    - Single Responsibility: Each use case has one clear job.
-//    - Open/Closed: New use cases can be added without modifying existing ones.
-//    - Clean Code: Dependencies are injected and the domain model is used consistently.
-//
+
 import Foundation
 
 public enum PhoneCravingError: LocalizedError {
@@ -40,9 +35,6 @@ public protocol ArchiveCravingUseCaseProtocol {
     func execute(_ craving: CravingEntity) async throws
 }
 
-/// Use case for adding a new craving.
-/// This implementation validates input and creates a new CravingEntity,
-/// injecting default values for the new properties.
 public final class AddCravingUseCase: AddCravingUseCaseProtocol {
     private let cravingRepository: CravingRepository
 
@@ -52,17 +44,29 @@ public final class AddCravingUseCase: AddCravingUseCaseProtocol {
 
     public func execute(cravingText: String) async throws -> CravingEntity {
         let trimmed = cravingText.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !trimmed.isEmpty, trimmed.count >= 3 else {
+        guard trimmed.count >= 3 else {
             throw PhoneCravingError.invalidInput
         }
-        // Create a new CravingEntity with default values for 'confidenceToResist' and 'cravingStrength'
-        let newCraving = CravingEntity(text: trimmed, confidenceToResist: 0.0, cravingStrength: 0.0)
-        try await cravingRepository.addCraving(newCraving)
+        
+        let newCraving = CravingEntity(
+            cravingDescription: trimmed,
+            cravingStrength: 5.0,
+            confidenceToResist: 5.0,
+            emotions: [],
+            timestamp: Date(),
+            isArchived: false
+        )
+        
+        do {
+            try await cravingRepository.addCraving(newCraving)
+        } catch {
+            throw PhoneCravingError.storageError
+        }
+        
         return newCraving
     }
 }
 
-/// Use case for fetching all active cravings.
 public final class FetchCravingsUseCase: FetchCravingsUseCaseProtocol {
     private let cravingRepository: CravingRepository
 
@@ -71,11 +75,10 @@ public final class FetchCravingsUseCase: FetchCravingsUseCaseProtocol {
     }
 
     public func execute() async throws -> [CravingEntity] {
-        try await cravingRepository.fetchAllActiveCravings()
+        try await cravingRepository.fetchActiveCravings()
     }
 }
 
-/// Use case for archiving a craving.
 public final class ArchiveCravingUseCase: ArchiveCravingUseCaseProtocol {
     private let cravingRepository: CravingRepository
 

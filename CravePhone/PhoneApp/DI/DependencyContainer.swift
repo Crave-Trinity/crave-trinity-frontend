@@ -2,15 +2,12 @@
 //  DependencyContainer.swift
 //  CravePhone
 //
-//  Description:
-//    The master container for all dependencies in the phone app.
-//    Updated to fix the missing constructor params for AnalyticsManager.
+//  Uncle Bob & Steve Jobs Style:
+//   - Fixes incorrect argument labels and type mismatches.
+//   - Passes 'manager:' instead of 'cravingManager:' to CravingRepositoryImpl.
+//   - Passes 'cravingRepository' (not an addCravingUseCase) to LogCravingViewModel initializer.
 //
-//  Uncle Bob + Steve Jobs notes:
-//    - Clean architecture: separate construction from usage.
-//    - Minimal, Apple-like design: each dependency is clearly labeled,
-//      so the code is easy to read and expand.
-//
+
 import SwiftUI
 import SwiftData
 
@@ -19,55 +16,39 @@ public final class DependencyContainer: ObservableObject {
     
     @Published private(set) var modelContainer: ModelContainer
     
-    // MARK: - Existing: Craving (Phone) Dependencies
+    // MARK: - Craving (Phone) Dependencies
     private lazy var cravingManager: CravingManager = {
+        // Pass 'modelContext' directly
         CravingManager(modelContext: modelContainer.mainContext)
     }()
     
     private lazy var cravingRepository: CravingRepository = {
-        CravingRepositoryImpl(cravingManager: cravingManager)
+        // Use 'manager:' instead of 'cravingManager:' to match init signature
+        CravingRepositoryImpl(manager: cravingManager)
     }()
     
-    // MARK: - NEW: Analytics + AI Chat
-    // 1) Storage (Placeholder or Real Implementation)
+    // MARK: - Analytics + AI Chat (unchanged except for local references)
     private lazy var analyticsStorage: AnalyticsStorageProtocol = {
-        // If you already have a real class (e.g. `AnalyticsStorage.swift`) that implements
-        // `AnalyticsStorageProtocol`, replace `LocalAnalyticsStorage()` with it:
-        return LocalAnalyticsStorage()
+        LocalAnalyticsStorage() // or your real implementation
     }()
-    
-    // 2) Mapper
     private lazy var analyticsMapper: AnalyticsMapper = {
         AnalyticsMapper()
     }()
-    
-    // 3) Analytics Repository
     private lazy var analyticsRepository: AnalyticsRepositoryProtocol = {
         AnalyticsRepositoryImpl(storage: analyticsStorage, mapper: analyticsMapper)
     }()
-    
-    // 4) Analytics Aggregator
     private lazy var analyticsAggregator: AnalyticsAggregatorProtocol = {
         AnalyticsAggregatorImpl(storage: analyticsStorage)
     }()
-    
-    // 5) Pattern Detection
+    private lazy var analyticsConfig: AnalyticsConfiguration = {
+        AnalyticsConfiguration.shared
+    }()
     private lazy var patternDetectionService: PatternDetectionServiceProtocol = {
         PatternDetectionServiceImpl(
             storage: analyticsStorage,
             configuration: analyticsConfig
         )
     }()
-    
-    // 6) Analytics Configuration
-    private lazy var analyticsConfig: AnalyticsConfiguration = {
-        // Use `AnalyticsConfiguration.shared` or create a fresh instance:
-        //   AnalyticsConfiguration()
-        // but typically you want a single shared config:
-        return AnalyticsConfiguration.shared
-    }()
-    
-    // 7) Analytics Manager
     private lazy var analyticsManager: AnalyticsManager = {
         AnalyticsManager(
             repository: analyticsRepository,
@@ -76,12 +57,10 @@ public final class DependencyContainer: ObservableObject {
         )
     }()
     
-    // MARK: - AI Chat Dependencies
     private lazy var apiClient: APIClient = {
         APIClient()
     }()
     private lazy var baseURL: URL = {
-        // Replace with your actual server URL
         URL(string: "https://your-crave-backend.com")!
     }()
     private lazy var aiChatRepository: AiChatRepositoryProtocol = {
@@ -93,8 +72,7 @@ public final class DependencyContainer: ObservableObject {
     
     // MARK: - SwiftData Initialization
     public init() {
-        // This might differ if you use `sharedModelContainer` from your code;
-        // adjust as needed to create your container properly.
+        // Create model container for SwiftData
         let schema = Schema([CravingEntity.self, AnalyticsMetadata.self])
         do {
             self.modelContainer = try ModelContainer(for: schema)
@@ -103,24 +81,21 @@ public final class DependencyContainer: ObservableObject {
         }
     }
     
-    // MARK: - Factory Methods
+    // MARK: - Optional Use Cases (If needed)
     private func makeAddCravingUseCase() -> AddCravingUseCaseProtocol {
         AddCravingUseCase(cravingRepository: cravingRepository)
     }
-    
     private func makeFetchCravingsUseCase() -> FetchCravingsUseCaseProtocol {
         FetchCravingsUseCase(cravingRepository: cravingRepository)
     }
-    
     private func makeArchiveCravingUseCase() -> ArchiveCravingUseCaseProtocol {
         ArchiveCravingUseCase(cravingRepository: cravingRepository)
     }
     
     // MARK: - Public Factories
-    // (Craving)
     public func makeLogCravingViewModel() -> LogCravingViewModel {
-        // FIXED: Changed parameter name from addCravingUseCase to cravingUseCase
-        LogCravingViewModel(cravingUseCase: makeAddCravingUseCase())
+        // Pass the repository directly to match the VM init signature
+        LogCravingViewModel(cravingRepository: cravingRepository)
     }
     
     public func makeCravingListViewModel() -> CravingListViewModel {
@@ -130,50 +105,24 @@ public final class DependencyContainer: ObservableObject {
         )
     }
     
-    // (Analytics)
     public func makeAnalyticsViewModel() -> AnalyticsViewModel {
         AnalyticsViewModel(manager: analyticsManager)
     }
     
-    // (AI Chat)
     public func makeChatViewModel() -> ChatViewModel {
         ChatViewModel(aiChatUseCase: aiChatUseCase)
     }
 }
 
-// MARK: - Placeholder Implementation for AnalyticsStorageProtocol
-// If you have a real class that implements `AnalyticsStorageProtocol`,
-// remove this and replace with your actual storage.
+
+// MARK: - Sample LocalAnalyticsStorage (Placeholder)
 private final class LocalAnalyticsStorage: AnalyticsStorageProtocol {
-    
-    func store(_ event: AnalyticsDTO) async throws {
-        // TODO: Save the event to SwiftData or a local DB
-    }
-    
-    func fetchEvents(from startDate: Date, to endDate: Date) async throws -> [AnalyticsDTO] {
-        // TODO: Query your local store
-        return []
-    }
-    
-    func fetchEvents(ofType eventType: String) async throws -> [AnalyticsDTO] {
-        // TODO: Query your local store
-        return []
-    }
-    
-    func fetchMetadata(forCravingId cravingId: UUID) async throws -> AnalyticsMetadata? {
-        // TODO: Query your local store
-        return nil
-    }
-    
-    func update(metadata: AnalyticsMetadata) async throws {
-        // TODO: Update metadata
-    }
-    
-    func storeBatch(_ events: [AnalyticsDTO]) async throws {
-        // TODO: Save multiple events
-    }
-    
-    func cleanupData(before date: Date) async throws {
-        // TODO: Delete old data
-    }
+    func store(_ event: AnalyticsDTO) async throws {}
+    func fetchEvents(from startDate: Date, to endDate: Date) async throws -> [AnalyticsDTO] { [] }
+    func fetchEvents(ofType eventType: String) async throws -> [AnalyticsDTO] { [] }
+    func fetchMetadata(forCravingId cravingId: UUID) async throws -> AnalyticsMetadata? { nil }
+    func update(metadata: AnalyticsMetadata) async throws {}
+    func storeBatch(_ events: [AnalyticsDTO]) async throws {}
+    func cleanupData(before date: Date) async throws {}
 }
+
