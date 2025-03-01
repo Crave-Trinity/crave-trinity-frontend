@@ -3,8 +3,10 @@
 //  CravePhone
 //
 //  Description:
-//    MVVM ViewModel that calls AiChatUseCase to get RAG/AI responses.
-//    Holds a conversation array to display a chat-like UI.
+//     The MVVM ViewModel for the AI chat UI.
+//     Uses a shared "AlertInfo" struct from AlertInfo.swift.
+//
+//  NOTE: We no longer define AlertInfo here.
 //
 import SwiftUI
 import Combine
@@ -12,45 +14,65 @@ import Combine
 @MainActor
 public final class ChatViewModel: ObservableObject {
     
-    // Minimal message model
+    // MARK: - Nested Types
     public struct Message: Identifiable {
         public let id = UUID()
         public let content: String
         public let isUser: Bool
     }
     
+    // MARK: - Published Properties
     @Published public var messages: [Message] = []
     @Published public var userInput: String = ""
     @Published public var isLoading: Bool = false
+    
+    // Use the master AlertInfo from AlertInfo.swift
     @Published public var alertInfo: AlertInfo?
     
     private let aiChatUseCase: AiChatUseCaseProtocol
     
+    // MARK: - Init
     public init(aiChatUseCase: AiChatUseCaseProtocol) {
         self.aiChatUseCase = aiChatUseCase
     }
     
+    // MARK: - Public Methods
     public func sendMessage() async {
         let query = userInput.trimmingCharacters(in: .whitespacesAndNewlines)
+        
         guard !query.isEmpty else {
-            alertInfo = AlertInfo(title: "Oops", message: "Please type something first.")
+            alertInfo = AlertInfo(title: "Empty Input",
+                                  message: "Please type something before sending.")
             return
         }
         
-        // Append user message to the chat
-        let userMessage = Message(content: query, isUser: true)
-        messages.append(userMessage)
-        userInput = "" // clear
+        // 1) Add the user's message to local chat
+        appendMessage(query, isUser: true)
         
-        // Call the AI
+        // 2) Clear the user input field
+        userInput = ""
+        
         do {
+            // 3) Show a loading spinner
             isLoading = true
-            let response = try await aiChatUseCase.execute(userQuery: query)
-            let botMessage = Message(content: response, isUser: false)
-            messages.append(botMessage)
+            
+            // 4) Call the use case (which calls the repository / API client)
+            let aiResponse = try await aiChatUseCase.execute(userQuery: query)
+            
+            // 5) Append the bot's response to the chat
+            appendMessage(aiResponse, isUser: false)
+            
         } catch {
             alertInfo = AlertInfo(title: "Error", message: error.localizedDescription)
         }
+        
+        // 6) Done loading
         isLoading = false
+    }
+    
+    // MARK: - Private Helpers
+    private func appendMessage(_ content: String, isUser: Bool) {
+        let newMessage = Message(content: content, isUser: isUser)
+        messages.append(newMessage)
     }
 }
