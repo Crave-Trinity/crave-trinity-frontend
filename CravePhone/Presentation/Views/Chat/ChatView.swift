@@ -1,12 +1,14 @@
-//=========================================
+//
 //  ChatView.swift
 //  CravePhone
 //
 //  BOLD SHIFT: No manual top/bottom padding.
 //  Chat extends behind the notch/home indicator if scrolled.
 //
+//  .onChange references iOS17-safe approach.
+//
 //  LAST UPDATED: <today's date>
-//=========================================
+//
 import SwiftUI
 
 struct ChatView: View {
@@ -20,12 +22,13 @@ struct ChatView: View {
     
     var body: some View {
         ZStack {
-            // Full-bleed gradient + keyboard safe-area fix
+            // Full-bleed gradient that explicitly ignores safe areas
             CraveTheme.Colors.primaryGradient
                 .ignoresSafeArea(.all)
-                .ignoresSafeArea(.keyboard, edges: .bottom)
+                .ignoresSafeArea(.keyboard, edges: .bottom) // <-- Added here
             
             VStack(spacing: 0) {
+                // Scrollable messages
                 ScrollViewReader { scrollProxy in
                     ScrollView {
                         LazyVStack(spacing: 12) {
@@ -97,11 +100,9 @@ struct ChatView: View {
             }
         }
         .alert(item: $viewModel.alertInfo) { info in
-            Alert(
-                title: Text(info.title),
-                message: Text(info.message),
-                dismissButton: .default(Text("OK"))
-            )
+            Alert(title: Text(info.title),
+                  message: Text(info.message),
+                  dismissButton: .default(Text("OK")))
         }
     }
     

@@ -1,4 +1,4 @@
-//=========================================
+//=================================================
 //  CravingListView.swift
 //  CravePhone
 //
@@ -7,41 +7,51 @@
 //    - Entire background ignores safe areas + keyboard edges.
 //
 //  ARCHITECTURE (SOLID):
-//    - Single Responsibility: UI for listing cravings.
+//    - Single Responsibility: Show + filter cravings.
 //
-//  "DESIGNING FOR STEVE JOBS":
-//    - Clear header, minimal filter bar, smooth transitions.
+//  "DESIGNED FOR STEVE JOBS":
+//    - Minimal friction, smooth transitions, clarity.
 //
 //  LAST UPDATED: <today's date>
-//=========================================
+//=================================================
 import SwiftUI
 
 struct CravingListView: View {
+    // MARK: - Observed ViewModel
     @ObservedObject var viewModel: CravingListViewModel
+    
+    // MARK: - Local State
     @State private var searchText = ""
     @State private var selectedFilter: CravingFilter = .all
     
+    // MARK: - Filter Enum
     enum CravingFilter: String, CaseIterable, Identifiable {
-        case all = "All"
-        case high = "High Intensity"
-        case recent = "Recent"
+        case all          = "All"
+        case high         = "High Intensity"
+        case recent       = "Recent"
+        
         var id: String { self.rawValue }
     }
     
+    // MARK: - View Body
     var body: some View {
         ZStack {
-            // Full-bleed gradient + keyboard safe-area fix
+            // Full-bleed gradient background + keyboard safe-area fix
             CraveTheme.Colors.primaryGradient
                 .ignoresSafeArea(.all)
                 .ignoresSafeArea(.keyboard, edges: .bottom)
-            
+
             VStack(spacing: 0) {
+                // Header
                 headerView
+                
+                // Search & Filter Bar
                 searchAndFilterBar
                     .padding(.horizontal)
                     .padding(.top, 8)
                     .padding(.bottom, 4)
                 
+                // Main Content
                 if viewModel.isLoading {
                     loadingView
                 } else if filteredCravings.isEmpty {
@@ -66,6 +76,7 @@ struct CravingListView: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        // Show any alerts triggered by the ViewModel
         .alert(item: $viewModel.alertInfo) { info in
             Alert(
                 title: Text(info.title),
@@ -74,27 +85,40 @@ struct CravingListView: View {
             )
         }
         .onAppear {
+            // Fetch cravings when this view appears
             Task { await viewModel.fetchCravings() }
         }
     }
     
+    // MARK: - Filter Logic
     private var filteredCravings: [CravingEntity] {
         let cravings = viewModel.cravings
+        
+        // 1) Search-based filter
         let searchFiltered = searchText.isEmpty
             ? cravings
-            : cravings.filter { $0.cravingDescription.lowercased().contains(searchText.lowercased()) }
+            : cravings.filter {
+                $0.cravingDescription.lowercased()
+                    .contains(searchText.lowercased())
+            }
         
+        // 2) Additional filter type
         switch selectedFilter {
         case .all:
             return searchFiltered
         case .high:
             return searchFiltered.filter { $0.intensity >= 7.0 }
         case .recent:
-            let oneWeekAgo = Calendar.current.date(byAdding: .day, value: -7, to: Date()) ?? Date()
+            let oneWeekAgo = Calendar.current.date(
+                byAdding: .day,
+                value: -7,
+                to: Date()
+            ) ?? Date()
             return searchFiltered.filter { $0.timestamp >= oneWeekAgo }
         }
     }
     
+    // MARK: - Header View
     private var headerView: some View {
         VStack(spacing: 8) {
             HStack {
@@ -118,18 +142,27 @@ struct CravingListView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
         .padding()
+        // Gradient behind the header
         .background(CraveTheme.Colors.primaryGradient)
     }
     
+    // MARK: - Search & Filter Bar
     private var searchAndFilterBar: some View {
         VStack(spacing: 8) {
             HStack {
-                Image(systemName: "magnifyingglass").foregroundColor(.gray)
+                Image(systemName: "magnifyingglass")
+                    .foregroundColor(.gray)
+                
                 TextField("Search cravings", text: $searchText)
                     .foregroundColor(CraveTheme.Colors.primaryText)
+                
+                // Clear search icon
                 if !searchText.isEmpty {
-                    Button { searchText = "" } label: {
-                        Image(systemName: "xmark.circle.fill").foregroundColor(.gray)
+                    Button {
+                        searchText = ""
+                    } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .foregroundColor(.gray)
                     }
                 }
             }
@@ -137,6 +170,7 @@ struct CravingListView: View {
             .background(Color.black.opacity(0.2))
             .cornerRadius(10)
             
+            // Filter chips
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 8) {
                     ForEach(CravingFilter.allCases) { filter in
@@ -144,7 +178,9 @@ struct CravingListView: View {
                             title: filter.rawValue,
                             isSelected: selectedFilter == filter
                         ) {
-                            withAnimation { selectedFilter = filter }
+                            withAnimation {
+                                selectedFilter = filter
+                            }
                             CraveHaptics.shared.selectionChanged()
                         }
                     }
@@ -154,11 +190,14 @@ struct CravingListView: View {
         }
     }
     
+    // MARK: - Loading View
     private var loadingView: some View {
         VStack {
             Spacer()
             ProgressView()
-                .progressViewStyle(CircularProgressViewStyle(tint: CraveTheme.Colors.accent))
+                .progressViewStyle(
+                    CircularProgressViewStyle(tint: CraveTheme.Colors.accent)
+                )
                 .scaleEffect(1.5)
             Text("Loading cravings...")
                 .font(CraveTheme.Typography.body)
@@ -169,20 +208,28 @@ struct CravingListView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     
+    // MARK: - Empty Cravings View
     private var emptyCravingsView: some View {
         VStack(spacing: 16) {
             Spacer()
             Image(systemName: "doc.text.magnifyingglass")
                 .font(.system(size: 60))
-                .foregroundColor(CraveTheme.Colors.accent.opacity(0.7))
-            Text(searchText.isEmpty ? "No cravings logged yet" : "No matching cravings found")
-                .font(CraveTheme.Typography.subheading)
-                .foregroundColor(CraveTheme.Colors.primaryText)
+                .foregroundColor(
+                    CraveTheme.Colors.accent.opacity(0.7)
+                )
+            Text(
+                searchText.isEmpty
+                    ? "No cravings logged yet"
+                    : "No matching cravings found"
+            )
+            .font(CraveTheme.Typography.subheading)
+            .foregroundColor(CraveTheme.Colors.primaryText)
             Spacer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     
+    // MARK: - Filter Chip
     struct FilterChip: View {
         let title: String
         let isSelected: Bool
@@ -190,8 +237,14 @@ struct CravingListView: View {
         
         var body: some View {
             Text(title)
-                .font(.system(size: 14, weight: isSelected ? .semibold : .regular))
-                .foregroundColor(isSelected ? CraveTheme.Colors.accent : CraveTheme.Colors.primaryText)
+                .font(
+                    .system(size: 14, weight: isSelected ? .semibold : .regular)
+                )
+                .foregroundColor(
+                    isSelected
+                        ? CraveTheme.Colors.accent
+                        : CraveTheme.Colors.primaryText
+                )
                 .padding(.horizontal, 12)
                 .padding(.vertical, 6)
                 .background(
@@ -211,7 +264,9 @@ struct CravingListView: View {
                                 )
                         )
                 )
-                .onTapGesture { onTap() }
+                .onTapGesture {
+                    onTap()
+                }
         }
     }
 }

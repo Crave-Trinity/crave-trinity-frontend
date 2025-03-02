@@ -1,15 +1,15 @@
-//=========================================
+//
 //  LogCravingView.swift
 //  CravePhone
 //
-//  BOLD SHIFT: No extra manual top/bottom padding.
-//  Background & content now physically sits behind notch & home indicator.
+//  BOLD SHIFT: No more manual .padding(.top, 44) or .padding(.bottom, 34).
+//  Background & content physically sits behind the notch & home indicator.
 //
 //  ARCHITECTURE (SOLID):
 //    - Single Responsibility: UI for logging a craving.
 //
 //  LAST UPDATED: <today's date>
-//=========================================
+//
 import SwiftUI
 
 public struct LogCravingView: View {
@@ -22,13 +22,14 @@ public struct LogCravingView: View {
     
     public var body: some View {
         ZStack {
-            // Full-bleed gradient + keyboard safe-area fix
+            // Full-bleed gradient that explicitly ignores safe areas
             CraveTheme.Colors.primaryGradient
                 .ignoresSafeArea(.all)
-                .ignoresSafeArea(.keyboard, edges: .bottom)
+                .ignoresSafeArea(.keyboard, edges: .bottom)  // <-- Added here
             
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
+                    // Description, Sliders, Emotions
                     CravingDescriptionSectionView(
                         text: $viewModel.cravingDescription,
                         isRecordingSpeech: viewModel.isRecordingSpeech,
