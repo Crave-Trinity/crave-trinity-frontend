@@ -62,34 +62,48 @@ struct SafeAreaInsetsEnvironmentReader: ViewModifier {
     func body(content: Content) -> some View {
         GeometryReader { proxy in
             Color.clear
+                // 1) Update insets once on appear
                 .onAppear {
                     updateInsets(proxy: proxy)
                 }
+                // 2) React to changes in proxy.safeAreaInsets
+                #if swift(>=5.9)
+                // iOS 17+ / Swift 5.9+ approach (two-parameter onChange)
+                .onChange(of: proxy.safeAreaInsets, initial: false) { oldValue, newValue in
+                    // We could use oldValue & newValue if needed,
+                    // but we only need to recalc once any change occurs
+                    updateInsets(proxy: proxy)
+                }
+                #else
+                // Fallback for older iOS / Swift versions
                 .onChange(of: proxy.safeAreaInsets) { _ in
                     updateInsets(proxy: proxy)
                 }
-                // The actual content (your real UI) goes *behind* this geometry layer
+                #endif
+                // 3) Overlay the real content, injecting updated safeAreaInsets
                 .overlay(
                     content
                         .environment(\.safeAreaInsets, newInsets)
                 )
         }
+        // Let the container go full bleed, so we can measure insets properly
         .edgesIgnoringSafeArea(.all)
     }
 
     private func updateInsets(proxy: GeometryProxy) {
-        // proxy.safeAreaInsets is available on iOS 14+, but can be zero if parent is ignoring safe area.
-        // If keyWindow is available, we fallback to real device insets from UIKit.
+        // SwiftUI geometry-based insets
         let swiftUIInsets = proxy.safeAreaInsets
+
+        // UIKit fallback insets (in case SwiftUI returns 0 when ignoring safe area)
         let fallbackInsets = UIApplication.keyWindow?.safeAreaInsets.swiftUiInsets ?? .init()
-        
-        // Merge them: If SwiftUI’s geometry gives zero (due to .ignoresSafeArea),
-        // we use the fallback from UIKit keyWindow.
+
+        // Merge them: if SwiftUI geometry is zero, fallback to UIKit
         let finalTop = max(swiftUIInsets.top, fallbackInsets.top)
         let finalBottom = max(swiftUIInsets.bottom, fallbackInsets.bottom)
         let finalLeading = max(swiftUIInsets.leading, fallbackInsets.leading)
         let finalTrailing = max(swiftUIInsets.trailing, fallbackInsets.trailing)
-        
+
+        // Store merged insets
         newInsets = EdgeInsets(
             top: finalTop,
             leading: finalLeading,
