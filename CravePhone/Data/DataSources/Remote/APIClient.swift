@@ -2,10 +2,10 @@
 //  APIClient.swift
 //  CravePhone/Data/DataSources/Remote
 //
-//  GOF/SOLID EXPLANATION:
-//   - Single Responsibility: Only handles networking to OpenAI.
-//   - Open/Closed: Extended for more endpoints without changing core logic.
-//   - Dependency Inversion: Higher layers depend on the protocol, not concrete impl.
+//  GOF/SOLID NOTES:
+//   - Single Responsibility: Only handles networking calls to OpenAI.
+//   - Dependency Inversion: Higher layers reference this via protocols, not concrete classes.
+//   - Open/Closed: We can add new parameters (e.g. temperature, max_tokens) without breaking existing code.
 //
 import Foundation
 
@@ -18,7 +18,7 @@ public struct OpenAICompletionsRequest: Encodable {
     public let stop: [String]?
 }
 
-// The structure matches the OpenAI Chat Completion response
+// Matches the structure of the OpenAI Chat Completion response
 public struct OpenAICompletionsResponse: Decodable {
     public struct Choice: Decodable {
         public struct Message: Decodable {
@@ -34,18 +34,20 @@ public struct OpenAICompletionsResponse: Decodable {
 public final class APIClient {
     
     private let session: URLSession
-    private let baseURL = "https://api.openai.com/v1" // Chat Completions Endpoint
+    // The base path for Chat Completions
+    private let baseURL = "https://api.openai.com/v1"
     
     public init(session: URLSession = .shared) {
         self.session = session
     }
     
-    /// Performs a Chat Completion request to OpenAI using the user prompt.
+    /// Communicates with OpenAI's Chat Completions API to get an AI-generated response
     public func fetchOpenAIResponse(
         prompt: String,
         model: String = "gpt-3.5-turbo"
     ) async throws -> OpenAICompletionsResponse {
         
+        // 1) Construct the URL for the chat completions endpoint
         guard let url = URL(string: baseURL + "/chat/completions") else {
             throw APIError.invalidEndpoint
         }
@@ -53,20 +55,20 @@ public final class APIClient {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         
-        // Grab your API key (ensure SecretsManager is properly configured)
+        // 2) Grab your API key from SecretsManager
         let apiKey = try SecretsManager.openAIAPIKey()
         request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        // System + user messages. The system message shapes the AI’s overall behavior.
+        // 3) Provide a system message that merges disclaimers + cravings focus
         let messages: [[String : String]] = [
             [
                 "role": "system",
                 "content": """
-                You are Cravey, a large language model (LLM) that transforms text into math.
-                You cannot provide medical diagnoses, advice, or management. At all times, 
-                remind users that you are purely informational and that they should consult 
-                a healthcare professional for any personal medical concerns.
+                You are Cravey, a large language model specializing in cravings-related conversations. 
+                However, you do NOT provide medical diagnoses or direct treatment advice. 
+                You must always disclaim that you’re purely informational and that users should 
+                consult healthcare professionals for personal medical concerns.
                 """
             ],
             [
@@ -75,7 +77,7 @@ public final class APIClient {
             ]
         ]
         
-        // Body: includes your model, messages, and other parameters
+        // 4) Build the request body
         let requestBody = OpenAICompletionsRequest(
             model: model,
             messages: messages,
@@ -87,14 +89,17 @@ public final class APIClient {
         
         request.httpBody = try JSONEncoder().encode(requestBody)
         
+        // 5) Execute the request
         let (data, response) = try await session.data(for: request)
         
+        // 6) Validate status code
         guard let httpResponse = response as? HTTPURLResponse,
               (200..<300).contains(httpResponse.statusCode) else {
             let code = (response as? HTTPURLResponse)?.statusCode ?? -1
             throw APIError.unexpectedStatusCode(code)
         }
         
+        // 7) Decode JSON into OpenAICompletionsResponse
         do {
             let decoded = try JSONDecoder().decode(OpenAICompletionsResponse.self, from: data)
             return decoded
