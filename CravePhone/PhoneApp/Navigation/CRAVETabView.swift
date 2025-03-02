@@ -21,7 +21,7 @@ public struct CRAVETabView: View {
         case log       = "Log"
         case cravings  = "Cravings"
         case analytics = "Analytics"
-        case aiChat    = "Cravey Chat"
+        case aiChat    = "Chat"
         
         var iconName: String {
             switch self {
