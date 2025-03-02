@@ -1,24 +1,21 @@
-//
+//=========================================
 //  CraveTextEditor.swift
 //  CravePhone
 //
 //  SINGLE RESPONSIBILITY:
-//    - Provides text input with placeholders, speech mic icon, and character limit.
+//    - Provides text input with placeholders, speech mic icon, char limit.
 //
-//  ARCHITECTURE (Uncle Bob / SOLID):
-//    - No duplication of onChangeBackport. We rely on the version in View+Extensions.swift.
+//  ARCHITECTURE (SOLID):
+//    - All "onChange" logic uses onChangeBackport (View+Extensions).
 //
-//  “DESIGNED FOR STEVE JOBS”:
+//  "DESIGNED FOR STEVE JOBS":
 //    - Minimal friction, fluid animations.
 //
-//  LAST UPDATED: <today’s date>
-//
-
+//  LAST UPDATED: <today's date>
+//=========================================
 import SwiftUI
 
 struct CraveTextEditor: View {
-    
-    // MARK: - Bound & Injected
     @Binding var text: String
     let isRecordingSpeech: Bool
     let onMicTap: () -> Void
@@ -26,7 +23,6 @@ struct CraveTextEditor: View {
     let characterLimit: Int
     let placeholderLines: [PlaceholderLine]
     
-    // MARK: - Local State
     @State private var editorHeight: CGFloat = 120
     @FocusState private var isFocused: Bool
     
@@ -51,7 +47,6 @@ struct CraveTextEditor: View {
     
     var body: some View {
         ZStack(alignment: .topTrailing) {
-            // 1) Placeholder
             if text.isEmpty, !placeholderLines.isEmpty {
                 placeholderContent
                     .padding(.top, 12)
@@ -62,7 +57,6 @@ struct CraveTextEditor: View {
                     .onTapGesture { isFocused = true }
             }
             
-            // 2) Main TextEditor
             textEditorView
                 .focused($isFocused)
                 .frame(height: max(editorHeight, 120))
@@ -79,7 +73,6 @@ struct CraveTextEditor: View {
                         .animation(.easeInOut(duration: 0.2), value: isFocused)
                 )
             
-            // 3) Mic Button
             Button {
                 CraveHaptics.shared.lightImpact()
                 onMicTap()
@@ -93,13 +86,12 @@ struct CraveTextEditor: View {
                     )
                     .padding(8)
                     .background(
-                        Circle()
-                            .fill(
-                                isRecordingSpeech
-                                    ? Color.white.opacity(0.2)
-                                    : Color.black.opacity(0.4)
-                            )
-                            .animation(.easeOut(duration: 0.2), value: isRecordingSpeech)
+                        Circle().fill(
+                            isRecordingSpeech
+                                ? Color.white.opacity(0.2)
+                                : Color.black.opacity(0.4)
+                        )
+                        .animation(.easeOut(duration: 0.2), value: isRecordingSpeech)
                     )
                     .overlay(
                         Circle()
@@ -116,7 +108,6 @@ struct CraveTextEditor: View {
         }
     }
     
-    // MARK: - Placeholder
     private var placeholderContent: some View {
         VStack(alignment: .leading, spacing: 8) {
             ForEach(placeholderLines.indices, id: \.self) { idx in
@@ -136,7 +127,6 @@ struct CraveTextEditor: View {
         }
     }
     
-    // MARK: - Logic
     private func calculateEditorHeight() {
         let linesCount = text.count / 35 + 1
         let newHeight = min(max(120, CGFloat(linesCount) * 20), 300)
@@ -146,20 +136,16 @@ struct CraveTextEditor: View {
             }
         }
     }
-}
-
-extension CraveTextEditor {
+    
     var textEditorView: some View {
         let base = TextEditor(text: $text)
             .font(CraveTheme.Typography.body)
             .foregroundColor(CraveTheme.Colors.primaryText)
             .modifier(ScrollBackgroundClearModifier())
-            .padding(.trailing, 44) // space for mic
+            .padding(.trailing, 44)
         
-        // Use onChangeBackport from View+Extensions
         return AnyView(
             base.onChangeBackport(of: text, initial: false) { oldVal, newVal in
-                // limit text
                 if characterLimit > 0, newVal.count > characterLimit {
                     text = String(newVal.prefix(characterLimit))
                     CraveHaptics.shared.notification(type: .warning)
@@ -170,7 +156,6 @@ extension CraveTextEditor {
     }
 }
 
-// Clears background in older iOS or uses .scrollContentBackground(.hidden)
 struct ScrollBackgroundClearModifier: ViewModifier {
     func body(content: Content) -> some View {
         if #available(iOS 16.0, *) {

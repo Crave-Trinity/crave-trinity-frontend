@@ -1,25 +1,21 @@
-//
+//=========================================
 //  View+Extensions.swift
 //  CravePhone
 //
 //  PURPOSE:
-//    - SwiftUI View extensions for common patterns.
-//    - Holds the single onChangeBackport extension to avoid duplication.
+//    - SwiftUI View extensions for backporting onChange to iOS <17.
 //
-//  UNCLE BOB / SOLID:
-//    - Single Responsibility: Just view extensions, nothing else.
+//  ARCHITECTURE (SOLID):
+//    - Single Responsibility: Only view extensions.
 //
 //  GANG OF FOUR:
-//    - "Adapter" pattern bridging older iOS onChange with the new iOS17 approach.
+//    - "Adapter" bridging older & newer iOS onChange behaviors.
 //
 //  LAST UPDATED: <today’s date>
-//
-
+//=========================================
 import SwiftUI
 
 extension View {
-    /// iOS 17 deprecation fix:
-    /// A single, unified onChange-like modifier capturing (oldValue, newValue).
     @ViewBuilder
     func onChangeBackport<T: Equatable>(
         of value: T,
@@ -34,7 +30,6 @@ extension View {
     }
 }
 
-// MARK: - OldOnChangeWrapper (iOS <17)
 private struct OldOnChangeWrapper<T: Equatable, Content: View>: View {
     let value: T
     let action: (T, T) -> Void
@@ -66,7 +61,6 @@ private struct OnChangeLegacyModifier<T: Equatable>: ViewModifier {
     
     func body(content: Content) -> some View {
         if #available(iOS 17.0, *) {
-            // iOS 17+ => new .onChange signature with two params
             content
                 .onChange(of: value) { oldVal, newVal in
                     if oldVal != newVal {
@@ -75,7 +69,6 @@ private struct OnChangeLegacyModifier<T: Equatable>: ViewModifier {
                     }
                 }
         } else {
-            // iOS <17 => single param onChange not deprecated
             content
                 .onChange(of: value) { newVal in
                     let oldVal = previousValue

@@ -1,4 +1,4 @@
-//
+//=========================================
 //  CoordinatorHostView.swift
 //  CravePhone
 //
@@ -6,11 +6,10 @@
 //    - Hosts the AppCoordinator's main view in SwiftUI.
 //
 //  ARCHITECTURE (SOLID):
-//    - Single Responsibility: Just bootstrapping the coordinator's main content.
+//    - Single Responsibility: Bootstraps the coordinator's main content.
 //
 //  LAST UPDATED: <today's date>
-//
-
+//=========================================
 import SwiftUI
 
 @MainActor

@@ -1,15 +1,12 @@
-//
+//=========================================
 //  ChatView.swift
 //  CravePhone
 //
 //  BOLD SHIFT: No manual top/bottom padding.
-//  This means chat extends behind the notch/home indicator if scrolled.
-//
-//  .onChange references iOS17-safe approach.
+//  Chat extends behind the notch/home indicator if scrolled.
 //
 //  LAST UPDATED: <today's date>
-//
-
+//=========================================
 import SwiftUI
 
 struct ChatView: View {
@@ -23,12 +20,12 @@ struct ChatView: View {
     
     var body: some View {
         ZStack {
-            // Full-bleed gradient that explicitly ignores safe areas
+            // Full-bleed gradient + keyboard safe-area fix
             CraveTheme.Colors.primaryGradient
-                .ignoresSafeArea()
+                .ignoresSafeArea(.all)
+                .ignoresSafeArea(.keyboard, edges: .bottom)
             
             VStack(spacing: 0) {
-                // Scrollable messages
                 ScrollViewReader { scrollProxy in
                     ScrollView {
                         LazyVStack(spacing: 12) {
@@ -41,7 +38,6 @@ struct ChatView: View {
                         .padding(.top, 16)
                         .padding(.bottom, 8)
                     }
-                    // iOS17 onChange fix
                     #if swift(>=5.9)
                     .onChange(of: viewModel.messages.count, initial: false) { oldVal, newVal in
                         if let last = viewModel.messages.last {
@@ -100,11 +96,12 @@ struct ChatView: View {
                 LoadingOverlay()
             }
         }
-        // Alert remains unchanged
         .alert(item: $viewModel.alertInfo) { info in
-            Alert(title: Text(info.title),
-                  message: Text(info.message),
-                  dismissButton: .default(Text("OK")))
+            Alert(
+                title: Text(info.title),
+                message: Text(info.message),
+                dismissButton: .default(Text("OK"))
+            )
         }
     }
     
@@ -119,6 +116,7 @@ struct ChatView: View {
     
     struct MessageBubble: View {
         let message: ChatViewModel.Message
+        
         var body: some View {
             HStack {
                 if message.isUser { Spacer() }

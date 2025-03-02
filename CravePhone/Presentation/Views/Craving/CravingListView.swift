@@ -1,16 +1,19 @@
-//
+//=========================================
 //  CravingListView.swift
 //  CravePhone
 //
 //  PURPOSE:
 //    - Display a searchable list of cravings, with filter chips for intensity/recent.
+//    - Entire background ignores safe areas + keyboard edges.
 //
 //  ARCHITECTURE (SOLID):
-//    - Single Responsibility: UI for listing cravings and optional filters.
+//    - Single Responsibility: UI for listing cravings.
 //
 //  "DESIGNING FOR STEVE JOBS":
 //    - Clear header, minimal filter bar, smooth transitions.
 //
+//  LAST UPDATED: <today's date>
+//=========================================
 import SwiftUI
 
 struct CravingListView: View {
@@ -27,9 +30,10 @@ struct CravingListView: View {
     
     var body: some View {
         ZStack {
-            // Full-bleed gradient that explicitly ignores safe areas
+            // Full-bleed gradient + keyboard safe-area fix
             CraveTheme.Colors.primaryGradient
-                .ignoresSafeArea()
+                .ignoresSafeArea(.all)
+                .ignoresSafeArea(.keyboard, edges: .bottom)
             
             VStack(spacing: 0) {
                 headerView
@@ -61,8 +65,6 @@ struct CravingListView: View {
                 }
             }
         }
-        // No .padding(.top, 44) or .padding(.bottom, 34)
-        // => physically flush top & bottom
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .alert(item: $viewModel.alertInfo) { info in
             Alert(
@@ -76,14 +78,12 @@ struct CravingListView: View {
         }
     }
     
-    // Rest of view components remain unchanged
     private var filteredCravings: [CravingEntity] {
         let cravings = viewModel.cravings
         let searchFiltered = searchText.isEmpty
             ? cravings
-            : cravings.filter {
-                $0.cravingDescription.lowercased().contains(searchText.lowercased())
-            }
+            : cravings.filter { $0.cravingDescription.lowercased().contains(searchText.lowercased()) }
+        
         switch selectedFilter {
         case .all:
             return searchFiltered
@@ -187,6 +187,7 @@ struct CravingListView: View {
         let title: String
         let isSelected: Bool
         let onTap: () -> Void
+        
         var body: some View {
             Text(title)
                 .font(.system(size: 14, weight: isSelected ? .semibold : .regular))

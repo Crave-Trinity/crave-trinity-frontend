@@ -1,7 +1,15 @@
-// FILE: AppCoordinator.swift
-// DESCRIPTION:
-//  - Ensures each major feature view can expand within the navigation stack or tab setup.
-
+//=========================================
+//  AppCoordinator.swift
+//  CravePhone
+//
+//  DESCRIPTION:
+//    - Manages each major feature view in the navigation or tab setup.
+//
+//  ARCHITECTURE (SOLID):
+//    - Single Responsibility: Provide creation for each screen.
+//
+//  LAST UPDATED: <today's date>
+//=========================================
 import SwiftUI
 
 @MainActor

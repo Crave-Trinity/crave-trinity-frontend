@@ -1,10 +1,10 @@
-//
+//=========================================
 //  CRAVETabView.swift
 //  CravePhone
 //
 //  PURPOSE:
 //    - Houses the main TabView for Log, Cravings, Analytics, AI Chat.
-//    - The entire screen already ignores safe areas from the top-level.
+//    - Entire screen ignores safe areas + keyboard edges.
 //
 //  ARCHITECTURE (SOLID):
 //    - Single Responsibility: Provide tabbed navigation.
@@ -13,8 +13,7 @@
 //    - Minimal friction, default tab bar at physical bottom.
 //
 //  LAST UPDATED: <today's date>
-//
-
+//=========================================
 import SwiftUI
 
 public struct CRAVETabView: View {
@@ -43,11 +42,11 @@ public struct CRAVETabView: View {
     
     public var body: some View {
         ZStack {
-            // Full-bleed background gradient that extends beyond all safe areas
+            // Full-bleed gradient + keyboard safe-area fix
             CraveTheme.Colors.primaryGradient
-                .ignoresSafeArea()
-                
-            // Tab navigation with content
+                .ignoresSafeArea(.all)
+                .ignoresSafeArea(.keyboard, edges: .bottom)
+            
             TabView(selection: $selectedTab) {
                 coordinator.makeLogCravingView()
                     .tag(Tab.log)
