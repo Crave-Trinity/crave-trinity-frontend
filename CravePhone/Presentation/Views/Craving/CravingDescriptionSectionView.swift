@@ -2,45 +2,23 @@
 //  CravingDescriptionSectionView.swift
 //  CravePhone
 //
-//  PURPOSE:
-//    - Collect textual description of a craving in a large text editor.
-//
-//  ARCHITECTURE (SOLID):
-//    - Single Responsibility: Just the description subview, no extra logic.
-//
-//  “DESIGNING FOR STEVE JOBS”:
-//    - Minimal friction, placeholders to prompt user input.
-//
-//  UPDATED: <today's date>.
+//  RESPONSIBILITY: Collects text for describing a craving.
 //
 
 import SwiftUI
 
 struct CravingDescriptionSectionView: View {
     @Binding var text: String
-    let isRecordingSpeech: Bool
-    let onToggleSpeech: () -> Void
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text("Describe your craving")
                 .font(CraveTheme.Typography.subheading)
                 .foregroundColor(CraveTheme.Colors.primaryText)
-            
-            CraveTextEditor(
-                text: $text,
-                isRecordingSpeech: isRecordingSpeech,
-                onMicTap: onToggleSpeech,
-                placeholderLines: [
-                    .plain("What are you craving?"),
-                    .plain("Triggers?"),
-                    .plain("Where are you?"),
-                    .plain("What are you dong?"),
-                    .plain("Who are you with?")
-                ]
-            )
-            .frame(maxWidth: .infinity, minHeight: 120, maxHeight: .infinity)
-            
+
+            CraveTextEditor(text: $text)
+                .frame(maxWidth: .infinity, minHeight: 120)
+
             HStack {
                 Spacer()
                 Text("\(text.count)/300")
@@ -58,4 +36,3 @@ struct CravingDescriptionSectionView: View {
         .padding(.vertical, 8)
     }
 }
-

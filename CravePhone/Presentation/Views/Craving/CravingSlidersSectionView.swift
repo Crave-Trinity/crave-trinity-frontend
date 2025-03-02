@@ -2,16 +2,7 @@
 //  CravingSlidersSectionView.swift
 //  CravePhone
 //
-//  PURPOSE:
-//    - Let the user choose “Intensity” and “Confidence to Resist” with SwiftUI Sliders.
-//
-//  ARCHITECTURE (SOLID):
-//    - Single Responsibility: UI for slider inputs (no business logic).
-//
-//  “DESIGNING FOR STEVE JOBS”:
-//    - Simple labeling “Mild/Intense,” “Low/High,” with numeric readouts.
-//
-//  UPDATED: <today’s date>.
+//  RESPONSIBILITY: Lets user pick "Intensity" and "Resistance" with sliders.
 //
 
 import SwiftUI
@@ -19,7 +10,7 @@ import SwiftUI
 struct CravingSlidersSectionView: View {
     @Binding var cravingStrength: Double
     @Binding var resistance: Double
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
             // Intensity
@@ -35,9 +26,13 @@ struct CravingSlidersSectionView: View {
                 }
                 Slider(value: $cravingStrength, in: 1...10, step: 1)
                     .accentColor(intensityColor)
+                    // FIXED: Updated deprecated onChange(of:perform:) to new API
+                    // The new API takes two parameters (oldValue, newValue) or zero parameters
+                    // Note: In this migration we don't need the values, so we use the empty closure variant
                     .onChange(of: cravingStrength) {
                         CraveHaptics.shared.selectionChanged()
                     }
+
                 HStack {
                     Text("Mild").font(.caption)
                         .foregroundColor(CraveTheme.Colors.secondaryText)
@@ -46,7 +41,7 @@ struct CravingSlidersSectionView: View {
                         .foregroundColor(CraveTheme.Colors.secondaryText)
                 }
             }
-            
+
             // Resistance
             VStack(alignment: .leading, spacing: 10) {
                 HStack {
@@ -60,9 +55,13 @@ struct CravingSlidersSectionView: View {
                 }
                 Slider(value: $resistance, in: 1...10, step: 1)
                     .accentColor(resistanceColor)
+                    // FIXED: Updated deprecated onChange(of:perform:) to new API
+                    // The new API takes two parameters (oldValue, newValue) or zero parameters
+                    // Note: In this migration we don't need the values, so we use the empty closure variant
                     .onChange(of: resistance) {
                         CraveHaptics.shared.selectionChanged()
                     }
+
                 HStack {
                     Text("Low").font(.caption)
                         .foregroundColor(CraveTheme.Colors.secondaryText)
@@ -75,7 +74,7 @@ struct CravingSlidersSectionView: View {
         .padding(.vertical, 8)
         .frame(maxWidth: .infinity)
     }
-    
+
     private var intensityColor: Color {
         switch Int(cravingStrength) {
         case 1...3: return .green
@@ -84,7 +83,7 @@ struct CravingSlidersSectionView: View {
         default:    return .red
         }
     }
-    
+
     private var resistanceColor: Color {
         switch Int(resistance) {
         case 1...3: return .red
@@ -95,3 +94,12 @@ struct CravingSlidersSectionView: View {
     }
 }
 
+// MIGRATION NOTES:
+// 1. As of iOS 17.0, the older onChange(of:perform:) modifier was deprecated
+// 2. The new onChange modifier has two forms:
+//    - onChange(of:initial:_:) taking zero parameters in the closure
+//    - onChange(of:initial:_:) taking two parameters (oldValue, newValue) in the closure
+// 3. The new behavior is also different - in the old API, the closure captured the state BEFORE the change
+//    while the new API captures values corresponding to the NEW state
+// 4. Since our haptic feedback doesn't depend on the actual values, we've used the zero-parameter version
+// 5. If you needed the old behavior, you'd need to use the two-parameter version and work with those values

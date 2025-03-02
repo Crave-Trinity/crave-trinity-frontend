@@ -2,48 +2,55 @@
 //  LogCravingView.swift
 //  CravePhone
 //
-//  BOLD SHIFT: No more manual .padding(.top, 44) or .padding(.bottom, 34).
-//  Background & content physically sits behind the notch & home indicator.
+//  RESPONSIBILITY: Displays the Log Craving screen with sections for:
+//  - Description
+//  - Speech Toggle
+//  - Sliders (Intensity, Resistance)
+//  - Emotions
+//  - Submit Button
 //
-//  ARCHITECTURE (SOLID):
-//    - Single Responsibility: UI for logging a craving.
-//
-//  LAST UPDATED: <today's date>
-//
+
 import SwiftUI
 
 public struct LogCravingView: View {
     @ObservedObject var viewModel: LogCravingViewModel
     @State private var isSubmitting: Bool = false
-    
+
     public init(viewModel: LogCravingViewModel) {
         self.viewModel = viewModel
     }
-    
+
     public var body: some View {
         ZStack {
-            // Full-bleed gradient that explicitly ignores safe areas
+            // Full-bleed gradient, ignoring safe areas
             CraveTheme.Colors.primaryGradient
                 .ignoresSafeArea(.all)
-                .ignoresSafeArea(.keyboard, edges: .bottom)  // <-- Added here
-            
+                .ignoresSafeArea(.keyboard, edges: .bottom)
+
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
-                    // Description, Sliders, Emotions
+                    
+                    // Textual description
                     CravingDescriptionSectionView(
-                        text: $viewModel.cravingDescription,
-                        isRecordingSpeech: viewModel.isRecordingSpeech,
-                        onToggleSpeech: {
+                        text: $viewModel.cravingDescription
+                    )
+
+                    // Speech Toggle Button (now a separate view)
+                    CraveSpeechToggleButton(
+                        isRecording: viewModel.isRecordingSpeech,
+                        onToggle: {
                             viewModel.toggleSpeechRecognition()
                             CraveHaptics.shared.mediumImpact()
                         }
                     )
-                    
+
+                    // Intensity / Resistance Sliders
                     CravingSlidersSectionView(
                         cravingStrength: $viewModel.cravingStrength,
                         resistance: $viewModel.confidenceToResist
                     )
-                    
+
+                    // Emotion Chips
                     CravingEmotionChipsView(
                         selectedEmotions: viewModel.selectedEmotions,
                         onToggleEmotion: { emotion in
@@ -51,7 +58,8 @@ public struct LogCravingView: View {
                             CraveHaptics.shared.selectionChanged()
                         }
                     )
-                    
+
+                    // Submit Button
                     submitButton
                         .padding(.top, 12)
                 }
@@ -66,7 +74,8 @@ public struct LogCravingView: View {
             )
         }
     }
-    
+
+    // MARK: - Submit Button
     private var submitButton: some View {
         Button {
             submitCraving()
@@ -102,16 +111,17 @@ public struct LogCravingView: View {
         .animation(CraveTheme.Animations.smooth, value: isSubmitting)
         .animation(CraveTheme.Animations.smooth, value: viewModel.isValid)
     }
-    
+
     private var buttonIsEnabled: Bool {
         !isSubmitting && viewModel.isValid
     }
-    
+
+    // MARK: - Submit Craving Logic
     private func submitCraving() {
         guard buttonIsEnabled else { return }
         withAnimation { isSubmitting = true }
         CraveHaptics.shared.notification(type: .success)
-        
+
         Task {
             await viewModel.logCraving()
             try? await Task.sleep(nanoseconds: 300_000_000)

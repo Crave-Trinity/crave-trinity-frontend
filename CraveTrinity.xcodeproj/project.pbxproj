@@ -170,6 +170,7 @@
 				Presentation/Views/Analytics/Components/AnalyticsInsight.swift = (ios, );
 				Presentation/Views/Craving/Components/CravingCard.swift = (ios, );
 				Presentation/Views/Craving/CoordinatorHostView.swift = (ios, );
+				Presentation/Views/Craving/CraveSpeechToggleButton.swift = (ios, );
 				Presentation/Views/Craving/CravingListView.swift = (ios, );
 				Presentation/Views/Craving/LogCravingView.swift = (ios, );
 				Secrets.plist = (ios, );

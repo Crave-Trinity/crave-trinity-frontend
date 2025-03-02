@@ -2,10 +2,7 @@
 //  LogCravingViewModel.swift
 //  CravePhone
 //
-//  Uncle Bob & Steve Jobs Style
-//  - Clear if-else blocks, single responsibility for toggling emotions,
-//    and form-based logic for logging cravings.
-//  - Removes any ternary confusion for readability.
+//  RESPONSIBILITY: Holds form data & handles speech recognition and saving logic.
 //
 
 import SwiftUI
@@ -15,12 +12,12 @@ import UIKit
 
 @MainActor
 public class LogCravingViewModel: ObservableObject {
-    
+
     // MARK: - Private Dependencies
     private let speechToText = SimpleSpeechToText()
     private let cravingRepository: CravingRepository
-    
-    // MARK: - Published Properties (the actual definitions for these properties)
+
+    // MARK: - Published Properties
     @Published var cravingDescription: String = ""
     @Published var cravingStrength: Double = 5
     @Published var confidenceToResist: Double = 5
@@ -28,22 +25,22 @@ public class LogCravingViewModel: ObservableObject {
     @Published var isLoading: Bool = false
     @Published var alertInfo: AlertInfo?
     @Published var isRecordingSpeech: Bool = false
-    
+
     // MARK: - Initialization
     public init(cravingRepository: CravingRepository) {
         self.cravingRepository = cravingRepository
         
-        // For speech recognition updates:
+        // Listen for speech updates
         speechToText.onTextUpdated = { [weak self] text in
             self?.cravingDescription = text
         }
         
-        // Request microphone / speech permissions:
+        // Request permissions
         speechToText.requestAuthorization { success in
             print("Speech recognition authorization: \(success ? "granted" : "denied")")
         }
     }
-    
+
     // MARK: - Public Methods
     public func logCraving() async {
         isLoading = true
@@ -55,7 +52,7 @@ public class LogCravingViewModel: ObservableObject {
             timestamp: Date(),
             isArchived: false
         )
-        
+
         do {
             try await cravingRepository.addCraving(newCraving)
             alertInfo = AlertInfo(title: "Success", message: "Craving logged.")
@@ -65,21 +62,19 @@ public class LogCravingViewModel: ObservableObject {
         }
         isLoading = false
     }
-    
+
     public func toggleEmotion(_ emotion: String) {
-        // If the emotion is already in the set, remove it; otherwise add it.
         if selectedEmotions.contains(emotion) {
             selectedEmotions.remove(emotion)
         } else {
             selectedEmotions.insert(emotion)
         }
     }
-    
+
     public func toggleSpeechRecognition() {
-        // Toggle: if currently recording, stop; if not, start.
         isRecordingSpeech ? stopSpeechRecognition() : startSpeechRecognition()
     }
-    
+
     // MARK: - Private Helpers
     private func startSpeechRecognition() {
         guard speechToText.startRecording() else {
@@ -92,15 +87,14 @@ public class LogCravingViewModel: ObservableObject {
         isRecordingSpeech = true
         UIImpactFeedbackGenerator(style: .medium).impactOccurred()
     }
-    
+
     private func stopSpeechRecognition() {
         speechToText.stopRecording()
         isRecordingSpeech = false
         UIImpactFeedbackGenerator(style: .medium).impactOccurred()
     }
-    
+
     private func resetForm() {
-        // Clear the form fields to defaults.
         cravingDescription = ""
         cravingStrength = 5
         confidenceToResist = 5
