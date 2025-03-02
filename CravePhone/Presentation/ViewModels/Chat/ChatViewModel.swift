@@ -89,7 +89,7 @@ public final class ChatViewModel: ObservableObject {
                 messages.append(
                     Message(
                         content: """
-                        Hi, welcome to 🦊 Cravey chat!
+                        Hi, Welcome to 🦊 Cravey Chat!
 
                         ⚠️ Disclaimer:
                         I’m an AI assistant that can provide craving analytics. I cannot diagnose or provide medical treatment. For medical questions, please consult a healthcare professional.
