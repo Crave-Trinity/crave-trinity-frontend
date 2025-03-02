@@ -11,8 +11,7 @@
 //  UNCLE BOB / SOLID:
 //    - Single Responsibility: Launch the SwiftUI scene with the coordinator.
 //
-//  LAST UPDATED: <today's date>
-//
+
 import SwiftUI
 import SwiftData
 
