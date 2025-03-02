@@ -92,9 +92,9 @@ public final class ChatViewModel: ObservableObject {
                         Hi, welcome to 🦊 Cravey chat!
 
                         ⚠️ Disclaimer:
-                        I’m an AI assistant providing tailored information about cravings. I cannot diagnose or provide medical treatment. For medical questions, please consult a healthcare professional.
+                        I’m an AI assistant that can provide craving analytics. I cannot diagnose or provide medical treatment. For medical questions, please consult a healthcare professional.
 
-                        How can I help you think about cravings today?
+                        How can I help you process your cravings today?
                         """,
                         isUser: false
                     )
