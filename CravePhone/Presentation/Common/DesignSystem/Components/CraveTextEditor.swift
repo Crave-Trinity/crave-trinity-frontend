@@ -54,11 +54,11 @@ struct CraveTextEditor: View {
     // MARK: - Placeholder
     private var placeholderContent: some View {
         VStack(alignment: .leading, spacing: 6) {
-            Text("What are you craving?")
+            Text("Craving?")
             Text("Triggers?")
-            Text("Where are you?")
-            Text("What are you dong?")
-            Text("Who are you with?")
+            Text("Location?")
+            Text("Activity?")
+            Text("Anyone around?")
         }
         .font(CraveTheme.Typography.body.weight(.medium))
         .foregroundColor(CraveTheme.Colors.placeholderSecondary)
