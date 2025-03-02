@@ -91,12 +91,9 @@ public final class ChatViewModel: ObservableObject {
                         content: """
                         Hi, welcome to 🦊 Cravey chat!
 
-                        ⚠️ Important Disclaimer:
-                        I’m just an LLM that turns text into math. 
-                        I do NOT diagnose, treat, or manage. Please consult a healthcare professional 
-                        for any personal medical questions or concerns.
+                        ⚠️ Disclaimer:
+                        I’m an AI assistant providing tailored information about cravings. I cannot diagnose or provide medical treatment. For medical questions, please consult a healthcare professional.
 
-                        However, I can still chat about cravings in a general sense. 
                         How can I help you think about cravings today?
                         """,
                         isUser: false
