@@ -157,6 +157,7 @@
 				"Presentation/Common/Extensions/Date+Extensions.swift" = (ios, );
 				"Presentation/Common/Extensions/LogCravingViewModel+UIExtensions.swift" = (ios, );
 				"Presentation/Common/Extensions/View+Extensions.swift" = (ios, );
+				Presentation/Common/SafeAreaInsetsEnvironment.swift = (ios, );
 				"Presentation/Configuration/AnalyticsConfiguration+Defaults.swift" = (ios, );
 				Presentation/Configuration/AnalyticsConfiguration.swift = (ios, );
 				Presentation/Utilities/SimpleSpeechToText.swift = (ios, );
@@ -168,6 +169,7 @@
 				Presentation/Views/Analytics/Components/AnalyticsCharts.swift = (ios, );
 				Presentation/Views/Analytics/Components/AnalyticsInsight.swift = (ios, );
 				Presentation/Views/Craving/Components/CravingCard.swift = (ios, );
+				Presentation/Views/Craving/CoordinatorHostView.swift = (ios, );
 				Presentation/Views/Craving/CravingListView.swift = (ios, );
 				Presentation/Views/Craving/LogCravingView.swift = (ios, );
 				Secrets.plist = (ios, );
