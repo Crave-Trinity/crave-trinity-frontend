@@ -55,10 +55,10 @@ struct CraveTextEditor: View {
     private var placeholderContent: some View {
         VStack(alignment: .leading, spacing: 6) {
             Text("Craving?")
-            Text("Triggers?")
+            Text("Trigger?")
             Text("Location?")
             Text("Activity?")
-            Text("Anyone around?")
+            Text("People?")
         }
         .font(CraveTheme.Typography.body.weight(.medium))
         .foregroundColor(CraveTheme.Colors.placeholderSecondary)
