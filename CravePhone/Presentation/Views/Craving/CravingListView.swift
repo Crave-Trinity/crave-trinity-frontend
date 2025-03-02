@@ -136,7 +136,7 @@ struct CravingListView: View {
                         .foregroundColor(CraveTheme.Colors.primaryText)
                 }
             }
-            Text("Track and understand your cravings over time")
+            Text("Track to understand your cravings over time")
                 .font(CraveTheme.Typography.subheading)
                 .foregroundColor(CraveTheme.Colors.secondaryText)
                 .frame(maxWidth: .infinity, alignment: .leading)
