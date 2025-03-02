@@ -54,7 +54,7 @@ public struct AnalyticsDashboardView: View {
                 // Header section
                 VStack(spacing: 8) {
                     HStack {
-                        Text("Analytics Dashboard")
+                        Text("📊 Analytics")
                             .font(CraveTheme.Typography.heading)
                             .foregroundColor(CraveTheme.Colors.primaryText)
                         Spacer()
@@ -81,7 +81,7 @@ public struct AnalyticsDashboardView: View {
                             .foregroundColor(.white)
                         }
                     }
-                    Text("Understand your patterns and gain insights")
+                    Text("🔎 Find patterns and gain insights")
                         .font(CraveTheme.Typography.subheading)
                         .foregroundColor(CraveTheme.Colors.secondaryText)
                         .frame(maxWidth: .infinity, alignment: .leading)
