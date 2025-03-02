@@ -1,7 +1,8 @@
 //=================================================================
-// 4) AiChatUseCase.swift
+// 4) AiChatUseCase.swift (Continued)
 //   CravePhone/Domain/UseCases/AiChatUseCase.swift
 //=================================================================
+
 import Foundation
 
 public protocol AiChatUseCaseProtocol {

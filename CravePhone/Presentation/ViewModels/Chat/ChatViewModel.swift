@@ -53,14 +53,17 @@ public final class ChatViewModel: ObservableObject {
         isLoading = false
     }
 
-
     public func sendWelcomeMessage() {
         // Check if welcome message has already been sent (e.g., using UserDefaults)
         if !UserDefaults.standard.bool(forKey: "welcomeMessageSent") {
-            messages.append(
-                Message(content: "Welcome to CRAVE. How can I help you manage your cravings today?", isUser: false)
-            )
-            UserDefaults.standard.set(true, forKey: "welcomeMessageSent") // Set the flag
+            // Introduce a slight delay using Task
+            Task {
+                try? await Task.sleep(nanoseconds: 100_000_000) // 0.1 seconds
+                messages.append(
+                    Message(content: "Welcome to CRAVE. How can I help you manage your cravings today?", isUser: false)
+                )
+                UserDefaults.standard.set(true, forKey: "welcomeMessageSent") // Set the flag
+            }
         }
     }
 

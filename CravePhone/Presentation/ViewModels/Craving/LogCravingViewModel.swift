@@ -58,7 +58,7 @@ public class LogCravingViewModel: ObservableObject {
             alertInfo = AlertInfo(title: "Success", message: "Craving logged.")
             resetForm()
         } catch {
-            alertInfo = AlertInfo(title: "Error", message: error.localizedDescription)
+          alertInfo = AlertInfo(title: "Error", message: error.localizedDescription)
         }
         isLoading = false
     }
