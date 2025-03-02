@@ -1,6 +1,7 @@
-/* -----------------------------------------
-   AnalyticsDashboardViewModel.swift
-   ----------------------------------------- */
+//=================================================================
+// AnalyticsDashboardViewModel.swift
+// CravePhone/Presentation/ViewModels/Analytics/AnalyticsDashboardViewModel.swift
+//=================================================================
 import Foundation
 import SwiftUI
 
@@ -9,7 +10,7 @@ public final class AnalyticsDashboardViewModel: ObservableObject {
     private let manager: AnalyticsManager
     
     @Published public var basicStats: BasicAnalyticsResult?
-    @Published public var alertInfo: AlertInfo?
+    @Published public var alertInfo: AlertInfo?  // Shared AlertInfo
     @Published public var isLoading: Bool = false
     
     public init(manager: AnalyticsManager) {
@@ -27,4 +28,3 @@ public final class AnalyticsDashboardViewModel: ObservableObject {
         isLoading = false
     }
 }
-

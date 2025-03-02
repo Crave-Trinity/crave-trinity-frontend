@@ -1,14 +1,11 @@
-//
-//  AiChatRepositoryProtocol.swift
-//  CravePhone
-//
-//  Description:
-//    Domain-level interface describing how we get AI chat responses from the backend.
-//
+//=================================================================
+// 4) AiChatRepositoryProtocol.swift
+//    CravePhone/Domain/Interfaces/Repositories/AiChatRepositoryProtocol.swift
+//=================================================================
+
 import Foundation
 
 public protocol AiChatRepositoryProtocol {
-    /// Submits a user query (like "Why do I crave sugar at night?")
-    /// and returns the AI or RAG-based response text.
+    /// Submits a user query and returns the AI response as text.
     func getAiResponse(for userQuery: String) async throws -> String
 }

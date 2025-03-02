@@ -134,8 +134,10 @@
 				Domain/Entities/Craving/CravingEntity.swift = (ios, );
 				Domain/Entities/Craving/CravingEvent.swift = (ios, );
 				Domain/Interfaces/Analytics/AnalyticsStorageProtocol.swift = (ios, );
+				Domain/Interfaces/Repositories/AiChatRepositoryProtocol.swift = (ios, );
 				Domain/Interfaces/Repositories/AnalyticsRepository.swift = (ios, );
 				Domain/Interfaces/Repositories/CravingRepository.swift = (ios, );
+				Domain/UseCases/AiChatUseCase.swift = (ios, );
 				Domain/UseCases/Analytics/AnalyticsAggregator.swift = (ios, );
 				Domain/UseCases/Analytics/AnalyticsManager.swift = (ios, );
 				Domain/UseCases/Analytics/AnalyticsProcessor.swift = (ios, );

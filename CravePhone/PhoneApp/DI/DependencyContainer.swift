@@ -1,33 +1,35 @@
-//
-//  DependencyContainer.swift
-//  CravePhone
-//
-//  Uncle Bob & Steve Jobs Style:
-//   - Fixes incorrect argument labels and type mismatches.
-//   - Passes 'manager:' instead of 'cravingManager:' to CravingRepositoryImpl.
-//   - Passes 'cravingRepository' (not an addCravingUseCase) to LogCravingViewModel initializer.
-//
+//=================================================================
+// DependencyContainer.swift
+// CravePhone/PhoneApp/DI/DependencyContainer.swift
+//=================================================================
 
 import SwiftUI
 import SwiftData
 
 @MainActor
 public final class DependencyContainer: ObservableObject {
-    
+    // 1) Store the container
     @Published private(set) var modelContainer: ModelContainer
     
-    // MARK: Craving
+    // 2) Create a single ModelContext referencing that container
+    private lazy var modelContext: ModelContext = {
+        ModelContext(modelContainer)
+    }()
+
+    // MARK: - Craving
     private lazy var cravingManager: CravingManager = {
-        CravingManager(modelContext: modelContainer.mainContext)
+        // Use modelContext, not modelContainer.context
+        CravingManager(modelContext: modelContext)
     }()
     
     private lazy var cravingRepository: CravingRepository = {
         CravingRepositoryImpl(manager: cravingManager)
     }()
-    
-    // MARK: Analytics + AI Chat
+
+    // MARK: - Analytics
     private lazy var analyticsStorage: AnalyticsStorageProtocol = {
-        LocalAnalyticsStorage()
+        // Pass the same modelContext to AnalyticsStorage
+        AnalyticsStorage(modelContext: modelContext)
     }()
     
     private lazy var analyticsMapper: AnalyticsMapper = {
@@ -61,11 +63,13 @@ public final class DependencyContainer: ObservableObject {
         )
     }()
     
+    // MARK: - AI Chat
     private lazy var apiClient: APIClient = {
         APIClient()
     }()
     
     private lazy var baseURL: URL = {
+        // Adjust this URL if you have a custom server for other endpoints.
         URL(string: "https://your-crave-backend.com")!
     }()
     
@@ -77,30 +81,33 @@ public final class DependencyContainer: ObservableObject {
         AiChatUseCase(repository: aiChatRepository)
     }()
     
-    // MARK: SwiftData Initialization
+    // MARK: - Init
     public init() {
+        // Define the schema from your model classes.
         let schema = Schema([CravingEntity.self, AnalyticsMetadata.self])
+        
+        // Create a ModelConfiguration
+        let modelConfiguration = ModelConfiguration(
+            schema: schema,
+            isStoredInMemoryOnly: false
+        )
+        
         do {
-            self.modelContainer = try ModelContainer(for: schema)
+            // Initialize the container
+            self.modelContainer = try ModelContainer(
+                for: schema,
+                configurations: [modelConfiguration]
+            )
         } catch {
             fatalError("Failed to create ModelContainer: \(error)")
         }
     }
     
-    // MARK: Optional Use Cases
-    private func makeAddCravingUseCase() -> AddCravingUseCaseProtocol {
-        AddCravingUseCase(cravingRepository: cravingRepository)
+    // MARK: - Public Factories
+    public func makeChatViewModel() -> ChatViewModel {
+        ChatViewModel(aiChatUseCase: aiChatUseCase)
     }
     
-    private func makeFetchCravingsUseCase() -> FetchCravingsUseCaseProtocol {
-        FetchCravingsUseCase(cravingRepository: cravingRepository)
-    }
-    
-    private func makeArchiveCravingUseCase() -> ArchiveCravingUseCaseProtocol {
-        ArchiveCravingUseCase(cravingRepository: cravingRepository)
-    }
-    
-    // MARK: Public Factories
     public func makeLogCravingViewModel() -> LogCravingViewModel {
         LogCravingViewModel(cravingRepository: cravingRepository)
     }
@@ -116,18 +123,16 @@ public final class DependencyContainer: ObservableObject {
         AnalyticsViewModel(manager: analyticsManager)
     }
     
-    public func makeChatViewModel() -> ChatViewModel {
-        ChatViewModel(aiChatUseCase: aiChatUseCase)
+    // MARK: - Private Craving-Specific Use Cases
+    private func makeAddCravingUseCase() -> AddCravingUseCaseProtocol {
+        AddCravingUseCase(cravingRepository: cravingRepository)
     }
-}
-
-// Sample LocalAnalyticsStorage (placeholder)
-private final class LocalAnalyticsStorage: AnalyticsStorageProtocol {
-    func store(_ event: AnalyticsDTO) async throws {}
-    func fetchEvents(from startDate: Date, to endDate: Date) async throws -> [AnalyticsDTO] { [] }
-    func fetchEvents(ofType eventType: String) async throws -> [AnalyticsDTO] { [] }
-    func fetchMetadata(forCravingId cravingId: UUID) async throws -> AnalyticsMetadata? { nil }
-    func update(metadata: AnalyticsMetadata) async throws {}
-    func storeBatch(_ events: [AnalyticsDTO]) async throws {}
-    func cleanupData(before date: Date) async throws {}
+    
+    private func makeFetchCravingsUseCase() -> FetchCravingsUseCaseProtocol {
+        FetchCravingsUseCase(cravingRepository: cravingRepository)
+    }
+    
+    private func makeArchiveCravingUseCase() -> ArchiveCravingUseCaseProtocol {
+        ArchiveCravingUseCase(cravingRepository: cravingRepository)
+    }
 }
