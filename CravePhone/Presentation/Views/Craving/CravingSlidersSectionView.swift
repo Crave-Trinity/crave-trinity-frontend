@@ -1,8 +1,18 @@
-// FILE: CravingSlidersSectionView.swift
-// DESCRIPTION:
-//  - Ensure the container can expand
-//  - No hardcoded top-level heights
-
+//
+//  CravingSlidersSectionView.swift
+//  CravePhone
+//
+//  PURPOSE:
+//    - Let the user choose “Intensity” and “Confidence to Resist” with SwiftUI Sliders.
+//
+//  ARCHITECTURE (SOLID):
+//    - Single Responsibility: UI for slider inputs (no business logic).
+//
+//  “DESIGNING FOR STEVE JOBS”:
+//    - Simple labeling “Mild/Intense,” “Low/High,” with numeric readouts.
+//
+//  UPDATED: <today’s date>.
+//
 
 import SwiftUI
 
@@ -84,3 +94,4 @@ struct CravingSlidersSectionView: View {
         }
     }
 }
+

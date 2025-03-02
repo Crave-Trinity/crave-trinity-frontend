@@ -1,7 +1,16 @@
-// FILE: CravingListView.swift
-// DESCRIPTION:
-//  - ScrollView or List fully expands vertically
-//  - Minimal safe-area ignore for gradient backgrounds
+//
+//  CravingListView.swift
+//  CravePhone
+//
+//  PURPOSE:
+//    - Display a searchable list of cravings, with filter chips for intensity/recent.
+//
+//  ARCHITECTURE (SOLID):
+//    - Single Responsibility: UI for listing cravings and optional filters.
+//
+//  “DESIGNING FOR STEVE JOBS”:
+//    - Clear header, minimal filter bar, smooth transitions.
+//
 
 import SwiftUI
 
@@ -14,7 +23,6 @@ struct CravingListView: View {
         case all = "All"
         case high = "High Intensity"
         case recent = "Recent"
-        
         var id: String { self.rawValue }
     }
     
@@ -40,7 +48,7 @@ struct CravingListView: View {
                             ForEach(filteredCravings) { craving in
                                 CravingCard(craving: craving)
                                     .contextMenu {
-                                        Button("View Details") { /* ... */ }
+                                        Button("View Details") {}
                                         Button("Archive") {
                                             Task { await viewModel.archiveCraving(craving) }
                                         }
@@ -52,6 +60,8 @@ struct CravingListView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
             }
+            .padding(.top, 44)
+            .padding(.bottom, 34)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .alert(item: $viewModel.alertInfo) { info in
@@ -68,8 +78,7 @@ struct CravingListView: View {
     
     private var filteredCravings: [CravingEntity] {
         let cravings = viewModel.cravings
-        let searchFiltered = searchText.isEmpty
-            ? cravings
+        let searchFiltered = searchText.isEmpty ? cravings
             : cravings.filter { $0.cravingDescription.lowercased().contains(searchText.lowercased()) }
         switch selectedFilter {
         case .all:
@@ -111,16 +120,12 @@ struct CravingListView: View {
     private var searchAndFilterBar: some View {
         VStack(spacing: 8) {
             HStack {
-                Image(systemName: "magnifyingglass")
-                    .foregroundColor(.gray)
+                Image(systemName: "magnifyingglass").foregroundColor(.gray)
                 TextField("Search cravings", text: $searchText)
                     .foregroundColor(CraveTheme.Colors.primaryText)
                 if !searchText.isEmpty {
-                    Button {
-                        searchText = ""
-                    } label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .foregroundColor(.gray)
+                    Button { searchText = "" } label: {
+                        Image(systemName: "xmark.circle.fill").foregroundColor(.gray)
                     }
                 }
             }
@@ -180,7 +185,6 @@ struct CravingListView: View {
         let title: String
         let isSelected: Bool
         let onTap: () -> Void
-        
         var body: some View {
             Text(title)
                 .font(.system(size: 14, weight: isSelected ? .semibold : .regular))
@@ -189,9 +193,11 @@ struct CravingListView: View {
                 .padding(.vertical, 6)
                 .background(
                     RoundedRectangle(cornerRadius: 14)
-                        .fill(isSelected
-                              ? CraveTheme.Colors.accent.opacity(0.2)
-                              : Color.black.opacity(0.3))
+                        .fill(
+                            isSelected
+                                ? CraveTheme.Colors.accent.opacity(0.2)
+                                : Color.black.opacity(0.3)
+                        )
                         .overlay(
                             RoundedRectangle(cornerRadius: 14)
                                 .stroke(

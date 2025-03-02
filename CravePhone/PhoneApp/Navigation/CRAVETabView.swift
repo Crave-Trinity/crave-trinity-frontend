@@ -1,7 +1,10 @@
-// FILE: CRAVETabView.swift
-// DESCRIPTION:
-//  - Full-screen TabView with safe area adjustments.
-//  - Custom tab bar pinned at bottom.
+//
+//  CRAVETabView.swift
+//  CravePhone
+//
+//  - Houses the TabView for Log, Cravings, Analytics, AI Chat.
+//  - Respects safe area by default (tab bar sits above home indicator).
+//
 
 import SwiftUI
 

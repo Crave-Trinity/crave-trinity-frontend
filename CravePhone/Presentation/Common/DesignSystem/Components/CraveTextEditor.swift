@@ -2,17 +2,23 @@
 //  CraveTextEditor.swift
 //  CravePhone
 //
-//  Single Responsibility:
-//    - Provide a consistent text input experience with placeholders, character limit, speech mic icon.
+//  SINGLE RESPONSIBILITY:
+//    - Provides text input with placeholders, speech mic icon, and character limit.
 //
-//  Uncle Bob & SOLID Principles:
-//    - No duplication of logic that belongs in the ViewModel or global theme.
-//    - Clear function naming for 'limitTextIfNeeded' and 'calculateEditorHeight'.
+//  ARCHITECTURE (Uncle Bob / SOLID):
+//    - No duplication of onChangeBackport. We rely on the version in View+Extensions.swift.
+//
+//  “DESIGNED FOR STEVE JOBS”:
+//    - Minimal friction, fluid animations.
+//
+//  LAST UPDATED: <today’s date>
 //
 
 import SwiftUI
 
 struct CraveTextEditor: View {
+    
+    // MARK: - Bound & Injected
     @Binding var text: String
     let isRecordingSpeech: Bool
     let onMicTap: () -> Void
@@ -20,6 +26,7 @@ struct CraveTextEditor: View {
     let characterLimit: Int
     let placeholderLines: [PlaceholderLine]
     
+    // MARK: - Local State
     @State private var editorHeight: CGFloat = 120
     @FocusState private var isFocused: Bool
     
@@ -44,56 +51,62 @@ struct CraveTextEditor: View {
     
     var body: some View {
         ZStack(alignment: .topTrailing) {
-            // Placeholder logic:
+            // 1) Placeholder
             if text.isEmpty, !placeholderLines.isEmpty {
                 placeholderContent
                     .padding(.top, 12)
                     .padding(.horizontal, 10)
-                    .frame(maxWidth: .infinity)
-                    // Standard SwiftUI .opacity, no custom extension needed
+                    .frame(maxWidth: .infinity, alignment: .leading)
                     .opacity(isFocused ? 0.4 : 0.7)
                     .animation(.easeOut(duration: 0.2), value: isFocused)
                     .onTapGesture { isFocused = true }
             }
             
-            // Main text editor
-            textEditorWithBackport
+            // 2) Main TextEditor
+            textEditorView
                 .focused($isFocused)
-                .frame(height: max(editorHeight, CraveTheme.Spacing.textEditorMinHeight))
-                .background(SwiftUI.Color.black.opacity(0.3))
-                .cornerRadius(CraveTheme.Layout.cornerRadius)
+                .frame(height: max(editorHeight, 120))
+                .background(Color.black.opacity(0.3))
+                .cornerRadius(12)
                 .overlay(
-                    RoundedRectangle(cornerRadius: CraveTheme.Layout.cornerRadius)
+                    RoundedRectangle(cornerRadius: 12)
                         .stroke(
                             isFocused
-                            ? CraveTheme.Colors.accent.opacity(0.5)
-                            : SwiftUI.Color.white.opacity(0.3),
+                                ? CraveTheme.Colors.accent.opacity(0.5)
+                                : Color.white.opacity(0.3),
                             lineWidth: 1
                         )
                         .animation(.easeInOut(duration: 0.2), value: isFocused)
                 )
-                // Use the newly named onChangeBackport extension
-                .onChangeBackport(of: text, initial: false) { _, _ in
-                    calculateEditorHeight()
-                }
             
-            // Speech button with animation
+            // 3) Mic Button
             Button {
                 CraveHaptics.shared.lightImpact()
                 onMicTap()
             } label: {
                 Image(systemName: isRecordingSpeech ? "waveform.circle.fill" : "mic.fill")
                     .font(.system(size: 18, weight: .semibold))
-                    .foregroundColor(isRecordingSpeech ? CraveTheme.Colors.accent : SwiftUI.Color.white.opacity(0.8))
+                    .foregroundColor(
+                        isRecordingSpeech
+                            ? CraveTheme.Colors.accent
+                            : Color.white.opacity(0.8)
+                    )
                     .padding(8)
                     .background(
                         Circle()
-                            .fill(isRecordingSpeech ? SwiftUI.Color.white.opacity(0.2) : SwiftUI.Color.black.opacity(0.4))
+                            .fill(
+                                isRecordingSpeech
+                                    ? Color.white.opacity(0.2)
+                                    : Color.black.opacity(0.4)
+                            )
                             .animation(.easeOut(duration: 0.2), value: isRecordingSpeech)
                     )
                     .overlay(
                         Circle()
-                            .stroke(isRecordingSpeech ? CraveTheme.Colors.accent : Color.clear, lineWidth: 1.5)
+                            .stroke(
+                                isRecordingSpeech ? CraveTheme.Colors.accent : .clear,
+                                lineWidth: 1.5
+                            )
                     )
                     .scaleEffect(isRecordingSpeech ? 1.1 : 1.0)
                     .animation(.spring(response: 0.3, dampingFraction: 0.6), value: isRecordingSpeech)
@@ -103,34 +116,30 @@ struct CraveTextEditor: View {
         }
     }
     
+    // MARK: - Placeholder
     private var placeholderContent: some View {
-        VStack(spacing: 8) {
+        VStack(alignment: .leading, spacing: 8) {
             ForEach(placeholderLines.indices, id: \.self) { idx in
                 switch placeholderLines[idx] {
-                case .plain(let string):
-                    Text(string)
+                case .plain(let line):
+                    Text(line)
                         .font(CraveTheme.Typography.body.weight(.medium))
                         .foregroundColor(CraveTheme.Colors.placeholderSecondary)
-                        .multilineTextAlignment(.center)
-                        .padding(.vertical, 2)
-                case .gradient(let string):
+                case .gradient(let line):
                     GradientText(
-                        text: string,
+                        text: line,
                         font: CraveTheme.Typography.largestCraving,
                         gradient: CraveTheme.Colors.cravingOrangeGradient
                     )
-                    .multilineTextAlignment(.center)
                 }
             }
         }
     }
     
+    // MARK: - Logic
     private func calculateEditorHeight() {
-        let baseHeight: CGFloat = 120
-        // Rough approximation of lines:
-        let estimatedLines = text.count / 35 + 1
-        let newHeight = min(max(baseHeight, CGFloat(estimatedLines) * 20), 300)
-        
+        let linesCount = text.count / 35 + 1
+        let newHeight = min(max(120, CGFloat(linesCount) * 20), 300)
         if editorHeight != newHeight {
             withAnimation(.easeOut(duration: 0.2)) {
                 editorHeight = newHeight
@@ -139,35 +148,29 @@ struct CraveTextEditor: View {
     }
 }
 
-// MARK: - Internal Logic for the TextEditor
-
 extension CraveTextEditor {
-    
-    // Return a wrapped TextEditor that uses our onChangeBackport
-    var textEditorWithBackport: some View {
+    var textEditorView: some View {
         let base = TextEditor(text: $text)
             .font(CraveTheme.Typography.body)
             .foregroundColor(CraveTheme.Colors.primaryText)
             .modifier(ScrollBackgroundClearModifier())
-            .padding(.trailing, 38) // Space for the mic button
+            .padding(.trailing, 44) // space for mic
         
+        // Use onChangeBackport from View+Extensions
         return AnyView(
-            base.onChangeBackport(of: text, initial: false) { _, newValue in
-                limitTextIfNeeded(newValue)
+            base.onChangeBackport(of: text, initial: false) { oldVal, newVal in
+                // limit text
+                if characterLimit > 0, newVal.count > characterLimit {
+                    text = String(newVal.prefix(characterLimit))
+                    CraveHaptics.shared.notification(type: .warning)
+                }
+                calculateEditorHeight()
             }
         )
     }
-    
-    private func limitTextIfNeeded(_ newValue: String) {
-        // Enforce character limit if needed
-        if characterLimit > 0, newValue.count > characterLimit {
-            text = String(newValue.prefix(characterLimit))
-            CraveHaptics.shared.notification(type: .warning)
-        }
-    }
 }
 
-// MARK: - Background Modifier (Pre-iOS 16 fix)
+// Clears background in older iOS or uses .scrollContentBackground(.hidden)
 struct ScrollBackgroundClearModifier: ViewModifier {
     func body(content: Content) -> some View {
         if #available(iOS 16.0, *) {
@@ -175,12 +178,8 @@ struct ScrollBackgroundClearModifier: ViewModifier {
         } else {
             return AnyView(
                 content
-                    .onAppear {
-                        UITextView.appearance().backgroundColor = .clear
-                    }
-                    .onDisappear {
-                        UITextView.appearance().backgroundColor = nil
-                    }
+                    .onAppear { UITextView.appearance().backgroundColor = .clear }
+                    .onDisappear { UITextView.appearance().backgroundColor = nil }
             )
         }
     }

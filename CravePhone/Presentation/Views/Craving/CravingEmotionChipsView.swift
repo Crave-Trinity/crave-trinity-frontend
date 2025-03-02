@@ -2,7 +2,16 @@
 //  CravingEmotionChipsView.swift
 //  CravePhone
 //
-//  Selectable emotion chips for tracking emotional triggers.
+//  PURPOSE:
+//    - Display emotion “chips” that the user can toggle on/off to indicate emotional triggers.
+//
+//  ARCHITECTURE (SOLID):
+//    - Single Responsibility: Manage the emotion selection grid.
+//
+//  “DESIGNING FOR STEVE JOBS”:
+//    - Quick, glanceable emotions. Tapping toggles with minimal friction.
+//
+//  UPDATED: <today's date>.
 //
 
 import SwiftUI
@@ -11,7 +20,6 @@ struct CravingEmotionChipsView: View {
     let selectedEmotions: Set<String>
     let onToggleEmotion: (String) -> Void
     
-    // Standard set of emotion/trigger options
     private let emotionOptions = [
         "Stress", "Boredom", "Anxiety", "Sadness", "Anger",
         "Loneliness", "Celebration", "Hunger", "Habit", "Social",
@@ -53,20 +61,28 @@ struct EmotionChip: View {
     var body: some View {
         Text(title)
             .font(.system(size: 14, weight: isSelected ? .semibold : .regular))
-            .foregroundColor(isSelected ? CraveTheme.Colors.accent : CraveTheme.Colors.primaryText)
+            .foregroundColor(
+                isSelected
+                    ? CraveTheme.Colors.accent
+                    : CraveTheme.Colors.primaryText
+            )
             .padding(.horizontal, 12)
             .padding(.vertical, 8)
             .background(
                 RoundedRectangle(cornerRadius: 16)
-                    .fill(isSelected ?
-                          CraveTheme.Colors.accent.opacity(0.2) :
-                          Color.black.opacity(0.3))
+                    .fill(
+                        isSelected
+                            ? CraveTheme.Colors.accent.opacity(0.2)
+                            : Color.black.opacity(0.3)
+                    )
                     .overlay(
                         RoundedRectangle(cornerRadius: 16)
-                            .stroke(isSelected ?
-                                    CraveTheme.Colors.accent :
-                                    Color.gray.opacity(0.5),
-                                    lineWidth: 1)
+                            .stroke(
+                                isSelected
+                                    ? CraveTheme.Colors.accent
+                                    : Color.gray.opacity(0.5),
+                                lineWidth: 1
+                            )
                     )
             )
             .onTapGesture {
@@ -75,14 +91,3 @@ struct EmotionChip: View {
     }
 }
 
-#Preview {
-    ZStack {
-        Color.black.edgesIgnoringSafeArea(.all)
-        
-        CravingEmotionChipsView(
-            selectedEmotions: ["Stress", "Boredom", "Reward"],
-            onToggleEmotion: { _ in }
-        )
-        .padding()
-    }
-}

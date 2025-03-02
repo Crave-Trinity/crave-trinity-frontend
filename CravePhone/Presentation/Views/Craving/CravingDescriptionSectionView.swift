@@ -1,7 +1,18 @@
-// FILE: CravingDescriptionSectionView.swift
-// DESCRIPTION:
-//  - Remove hardcoded height
-//  - Expand or scroll as needed
+//
+//  CravingDescriptionSectionView.swift
+//  CravePhone
+//
+//  PURPOSE:
+//    - Collect textual description of a craving in a large text editor.
+//
+//  ARCHITECTURE (SOLID):
+//    - Single Responsibility: Just the description subview, no extra logic.
+//
+//  “DESIGNING FOR STEVE JOBS”:
+//    - Minimal friction, placeholders to prompt user input.
+//
+//  UPDATED: <today's date>.
+//
 
 import SwiftUI
 
@@ -35,7 +46,9 @@ struct CravingDescriptionSectionView: View {
                     .foregroundColor(
                         text.count > 280
                             ? .red
-                            : text.count > 250 ? .orange : CraveTheme.Colors.secondaryText
+                            : text.count > 250
+                                ? .orange
+                                : CraveTheme.Colors.secondaryText
                     )
                     .padding(.trailing, 8)
             }
@@ -43,3 +56,4 @@ struct CravingDescriptionSectionView: View {
         .padding(.vertical, 8)
     }
 }
+

@@ -2,14 +2,17 @@
 //  CraveMinimalButton.swift
 //  CravePhone
 //
-//  Description:
-//    A modern, minimal SwiftUI button for CRAVE.
-//    Adheres to the Single Responsibility Principle by focusing
-//    solely on rendering a minimal style button with an action.
-//    Also references the unified CraveTheme for styling.
+//  PURPOSE:
+//    - A minimal SwiftUI button that uses CraveTheme styling.
 //
-//  Created by <Your Name> on <date>.
-//  Updated by ChatGPT on <today's date>.
+//  ARCHITECTURE:
+//    - Single Responsibility: Simple stylized button, no side effects.
+//    - Could reference an external theme or layout config.
+//
+//  GANG OF FOUR:
+//    - "Decorator" pattern (somewhat) if you wrap the label further.
+//
+//  CREATED: <date>.
 //
 
 import SwiftUI
@@ -27,7 +30,7 @@ struct CraveMinimalButton<Label: View>: View {
                 .foregroundColor(CraveTheme.Colors.buttonText)
                 .cornerRadius(12)
         }
-        // Using .plain style to avoid default SwiftUI button styling
         .buttonStyle(.plain)
     }
 }
+
