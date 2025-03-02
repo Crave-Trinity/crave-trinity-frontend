@@ -21,9 +21,9 @@ struct CravingEmotionChipsView: View {
     let onToggleEmotion: (String) -> Void
     
     private let emotionOptions = [
-        "Stress", "Boredom", "Anxiety", "Sadness", "Anger",
-        "Loneliness", "Celebration", "Hunger", "Habit", "Social",
-        "Tiredness", "Excitement", "Fear", "Reward", "Comfort"
+        "Hungry", "Angry", "Lonely", "Tired", "Boredom",
+        "Anxiety", "Celebration", "Stress", "Habit", "Social",
+        "Sad", "Excitement", "Fear", "Reward", "Comfort"
     ]
     
     var body: some View {

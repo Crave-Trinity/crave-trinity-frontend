@@ -33,8 +33,10 @@ struct CravingDescriptionSectionView: View {
                 onMicTap: onToggleSpeech,
                 placeholderLines: [
                     .plain("What are you craving?"),
-                    .plain("When did it start?"),
-                    .plain("Where are you?")
+                    .plain("Triggers?"),
+                    .plain("Where are you?"),
+                    .plain("What are you dong?"),
+                    .plain("Who are you with?")
                 ]
             )
             .frame(maxWidth: .infinity, minHeight: 120, maxHeight: .infinity)
