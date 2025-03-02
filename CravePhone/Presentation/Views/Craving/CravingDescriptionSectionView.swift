@@ -12,7 +12,7 @@ struct CravingDescriptionSectionView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("🦊 What are you craving?")
+            Text("🍫 What are you craving?")
                 .font(CraveTheme.Typography.subheading)
                 .foregroundColor(CraveTheme.Colors.primaryText)
 

@@ -122,7 +122,7 @@ struct CravingListView: View {
     private var headerView: some View {
         VStack(spacing: 8) {
             HStack {
-                Text("Cravings")
+                Text("📝 Cravings")
                     .font(CraveTheme.Typography.heading)
                     .foregroundColor(CraveTheme.Colors.primaryText)
                 Spacer()
