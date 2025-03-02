@@ -54,7 +54,6 @@ struct CraveTextEditor: View {
     // MARK: - Placeholder
     private var placeholderContent: some View {
         VStack(alignment: .leading, spacing: 6) {
-            Text("Craving?")
             Text("Trigger?")
             Text("Location?")
             Text("Activity?")

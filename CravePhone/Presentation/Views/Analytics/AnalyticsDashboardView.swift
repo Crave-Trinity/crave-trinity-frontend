@@ -81,7 +81,7 @@ public struct AnalyticsDashboardView: View {
                             .foregroundColor(.white)
                         }
                     }
-                    Text("🔎 Find patterns and gain insights")
+                    Text("Find patterns and gain insights")
                         .font(CraveTheme.Typography.subheading)
                         .foregroundColor(CraveTheme.Colors.secondaryText)
                         .frame(maxWidth: .infinity, alignment: .leading)
