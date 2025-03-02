@@ -662,7 +662,7 @@ For issues, feature requests, or ideas, please [open an issue](https://github.co
 ---
 
 ## 📄 License
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the [Apache 2.0 License](./LICENSE).
 
 ---
 
