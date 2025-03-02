@@ -50,7 +50,7 @@ struct CravingSlidersSectionView: View {
             // Resistance
             VStack(alignment: .leading, spacing: 10) {
                 HStack {
-                    Text("Confidence to Resist")
+                    Text("Resistance")
                         .font(CraveTheme.Typography.subheading)
                         .foregroundColor(CraveTheme.Colors.primaryText)
                     Spacer()

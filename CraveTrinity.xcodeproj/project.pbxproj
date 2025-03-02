@@ -86,7 +86,6 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
-				PhoneApp/LaunchScreen.storyboard,
 				"Resources/Images/Crave-Phone-Final.gif",
 				"Resources/Images/crave-trinity-architecture-fixed.svg",
 				"Resources/Images/high-vision-one-png.png",
@@ -276,25 +275,11 @@
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
-/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
-		282C468E2D7496EF00E3271E /* Exceptions for "CravePhone" folder in "Compile Sources" phase from "CravePhone" target */ = {
-			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
-			buildPhase = 28A3F8552D65962900D8DE44 /* Sources */;
-			membershipExceptions = (
-				PhoneApp/LaunchScreen.storyboard,
-			);
-			platformFiltersByRelativePath = {
-				PhoneApp/LaunchScreen.storyboard = (ios, );
-			};
-		};
-/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		28A3F85B2D65962900D8DE44 /* CravePhone */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				28A3F8C22D65971B00D8DE44 /* Exceptions for "CravePhone" folder in "CravePhone" target */,
-				282C468E2D7496EF00E3271E /* Exceptions for "CravePhone" folder in "Compile Sources" phase from "CravePhone" target */,
 				28A3F8C32D65971B00D8DE44 /* Exceptions for "CravePhone" folder in "CravePhoneTests" target */,
 				28A3F8C42D65971B00D8DE44 /* Exceptions for "CravePhone" folder in "CravePhoneUITests" target */,
 			);
@@ -923,6 +908,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "'CravePhone/Resources/Preview Content'";
@@ -953,6 +939,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "'CravePhone/Resources/Preview Content'";

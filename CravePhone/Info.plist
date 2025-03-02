@@ -25,6 +25,8 @@
 		<key>UISceneConfigurations</key>
 		<dict/>
 	</dict>
+	<key>UILaunchStoryboardName</key>
+	<string>launchstory</string>
 	<key>UIStatusBarStyle</key>
 	<string>UIStatusBarStyleDarkContent</string>
 	<key>UISupportedInterfaceOrientations</key>
