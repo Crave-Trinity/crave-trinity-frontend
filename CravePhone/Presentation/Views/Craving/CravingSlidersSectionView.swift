@@ -17,7 +17,7 @@ struct CravingSlidersSectionView: View {
             // Intensity Slider
             VStack(alignment: .leading, spacing: 10) {
                 HStack {
-                    Text("Intensity")
+                    Text("🌊 Intensity")
                         .font(CraveTheme.Typography.subheading)
                         .foregroundColor(CraveTheme.Colors.primaryText)
                     Spacer()
@@ -36,7 +36,7 @@ struct CravingSlidersSectionView: View {
             // Resistance Slider
             VStack(alignment: .leading, spacing: 10) {
                 HStack {
-                    Text("Resistance")
+                    Text("🏋️‍♂️ Resistance")
                         .font(CraveTheme.Typography.subheading)
                         .foregroundColor(CraveTheme.Colors.primaryText)
                     Spacer()
