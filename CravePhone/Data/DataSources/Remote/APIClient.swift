@@ -53,14 +53,26 @@ public final class APIClient {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         
-        let apiKey = try SecretsManager.openAIAPIKey() // Retrieve your API key
+        // Grab your API key (ensure SecretsManager is properly configured)
+        let apiKey = try SecretsManager.openAIAPIKey()
         request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        // System + user messages.
+        // System + user messages. The system message shapes the AI’s overall behavior.
         let messages: [[String : String]] = [
-            ["role": "system", "content": "You are a helpful assistant for managing cravings."],
-            ["role": "user",   "content": prompt]
+            [
+                "role": "system",
+                "content": """
+                You are Cravey, a large language model (LLM) that transforms text into math.
+                You cannot provide medical diagnoses, advice, or management. At all times, 
+                remind users that you are purely informational and that they should consult 
+                a healthcare professional for any personal medical concerns.
+                """
+            ],
+            [
+                "role": "user",
+                "content": prompt
+            ]
         ]
         
         // Body: includes your model, messages, and other parameters

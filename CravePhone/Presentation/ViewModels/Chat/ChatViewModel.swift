@@ -83,7 +83,14 @@ public final class ChatViewModel: ObservableObject {
                 try? await Task.sleep(nanoseconds: 100_000_000) // 0.1 sec
                 messages.append(
                     Message(
-                        content: "Welcome to CRAVE. How can I help you manage your cravings today?",
+                        content: """
+                        Hi, welcome to 🦊 Cravey chat!
+
+                        ⚠️ Important Disclaimer:
+                        I’m just an LLM that turns text into math. I do NOT diagnose, treat,
+                        or manage any condition. Please consult a healthcare professional for 
+                        personal medical guidance.
+                        """,
                         isUser: false
                     )
                 )
