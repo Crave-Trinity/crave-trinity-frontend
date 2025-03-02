@@ -1,111 +1,113 @@
-//=================================================================
-// 1) APIClient.swift
-//   CravePhone/Data/DataSources/Remote/APIClient.swift
-//=================================================================
-
+//
+//  APIClient.swift
+//  CravePhone/Data/DataSources/Remote
+//
+//  GOF/SOLID EXPLANATION:
+//   - Single Responsibility: Only handles networking to OpenAI.
+//   - Open/Closed: Extended for more endpoints without changing core logic.
+//   - Dependency Inversion: Higher layers depend on the protocol, not concrete impl.
+//
 import Foundation
 
-// Define the structure for the OpenAI API request (Chat Completions API - /v1/chat/completions)
-public struct OpenAICompletionsRequest: Encodable { // Changed to public
+public struct OpenAICompletionsRequest: Encodable {
     public let model: String
-    public let messages: [[String: String]] // Array of messages for context
-    public let max_tokens: Int? // Optional, but good to control response length
-    public let temperature: Double? // Optional, control randomness
-    public  let n: Int?
+    public let messages: [[String: String]]
+    public let max_tokens: Int?
+    public let temperature: Double?
+    public let n: Int?
     public let stop: [String]?
 }
 
-// Define the structure for the OpenAI API response (Chat Completions API)
-public struct OpenAICompletionsResponse: Decodable { // Changed to public
+// The structure matches the OpenAI Chat Completion response
+public struct OpenAICompletionsResponse: Decodable {
     public struct Choice: Decodable {
         public struct Message: Decodable {
-            public  let role: String
+            public let role: String
             public let content: String
         }
         public let message: Message
-        public let finish_reason: String? // Optional, explains why the generation stopped
+        public let finish_reason: String?
     }
     public let choices: [Choice]
-    // let usage: Usage // You might want to capture usage data (tokens used, etc.)
 }
 
-
 public final class APIClient {
-
+    
     private let session: URLSession
-    private let baseURL = "https://api.openai.com/v1" // Base URL for OpenAI API
-
+    private let baseURL = "https://api.openai.com/v1" // Chat Completions Endpoint
+    
     public init(session: URLSession = .shared) {
         self.session = session
     }
-
-    /// Performs an OpenAI Chat request using the prompt & model.
+    
+    /// Performs a Chat Completion request to OpenAI using the user prompt.
     public func fetchOpenAIResponse(
         prompt: String,
-        model: String = "gpt-3.5-turbo" // Use gpt-3.5-turbo for chat
-    ) async throws -> OpenAICompletionsResponse { // Return the decoded response
-
-        guard let url = URL(string: baseURL + "/chat/completions") else { // Use chat completions endpoint
+        model: String = "gpt-3.5-turbo"
+    ) async throws -> OpenAICompletionsResponse {
+        
+        guard let url = URL(string: baseURL + "/chat/completions") else {
             throw APIError.invalidEndpoint
         }
-
+        
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-
-        let apiKey = try SecretsManager.openAIAPIKey()
+        
+        let apiKey = try SecretsManager.openAIAPIKey() // Retrieve your API key
         request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-
-        // Construct the messages array for the request body. Include a system message.
-        let messages = [
-            ["role": "system", "content": "You are a helpful assistant that helps people manage their cravings."],  // System message
-            ["role": "user", "content": prompt]
+        
+        // System + user messages.
+        let messages: [[String : String]] = [
+            ["role": "system", "content": "You are a helpful assistant for managing cravings."],
+            ["role": "user",   "content": prompt]
         ]
         
-        //Use the request Body, cleaner
+        // Body: includes your model, messages, and other parameters
         let requestBody = OpenAICompletionsRequest(
-              model: model,
-              messages: messages, // Pass the constructed messages
-              max_tokens: 150,  // Control the response length
-              temperature: 0.7,  // Control creativity/randomness
-              n: 1,          // Usually, one response is enough
-              stop: ["\nUser:", "\nAI:"]
+            model: model,
+            messages: messages,
+            max_tokens: 150,
+            temperature: 0.7,
+            n: 1,
+            stop: ["\nUser:", "\nAI:"]
         )
-
+        
         request.httpBody = try JSONEncoder().encode(requestBody)
-
+        
         let (data, response) = try await session.data(for: request)
+        
         guard let httpResponse = response as? HTTPURLResponse,
-              (200..<300).contains(httpResponse.statusCode)
-        else {
+              (200..<300).contains(httpResponse.statusCode) else {
             let code = (response as? HTTPURLResponse)?.statusCode ?? -1
             throw APIError.unexpectedStatusCode(code)
         }
-
-        // Decode the JSON response *before* returning.  This is crucial.
+        
         do {
-            let decodedResponse = try JSONDecoder().decode(OpenAICompletionsResponse.self, from: data)
-            return decodedResponse
+            let decoded = try JSONDecoder().decode(OpenAICompletionsResponse.self, from: data)
+            return decoded
         } catch {
-            print("Decoding error: \(error)") // Log the actual decoding error
-            throw APIError.decodingError(error) // Throw a specific decoding error
+            print("Decoding error: \(error)")
+            throw APIError.decodingError(error)
         }
     }
+}
 
-    // MARK: - Supporting Errors
+// MARK: - API Errors
+extension APIClient {
     public enum APIError: Error, LocalizedError {
         case invalidEndpoint
         case unexpectedStatusCode(Int)
-        case decodingError(Error) // Add a case for decoding errors
-
+        case decodingError(Error)
+        
         public var errorDescription: String? {
             switch self {
             case .invalidEndpoint:
-                return "Invalid OpenAI endpoint URL."
+                return "Invalid endpoint for OpenAI."
             case .unexpectedStatusCode(let code):
                 return "Unexpected HTTP status code: \(code)"
             case .decodingError(let error):
-                return "Failed to decode response: \(error.localizedDescription)" // Provide error details
+                return "Failed to decode OpenAI response: \(error.localizedDescription)"
             }
         }
     }

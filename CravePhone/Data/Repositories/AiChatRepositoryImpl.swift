@@ -1,46 +1,52 @@
-//=================================================================
-// 2) AiChatRepositoryImpl.swift
-//   CravePhone/Data/Repositories/AiChatRepositoryImpl.swift
-//=================================================================
-
+//
+//  AiChatRepositoryImpl.swift
+//  CravePhone/Data/Repositories
+//
+//  GOF/SOLID EXPLANATION:
+//    - Single Responsibility: Only fetches & returns AI responses.
+//    - Liskov Substitution: Conforms to AiChatRepositoryProtocol so it can be replaced by a mock/test repository.
+//    - Error handling ensures minimal leakage of data-layer concerns.
+//
 import Foundation
 
 public final class AiChatRepositoryImpl: AiChatRepositoryProtocol {
-
+    
     private let apiClient: APIClient
-    // Remove baseURL, as it's handled within APIClient
-
-    public init(apiClient: APIClient) { // Simplified initializer
+    
+    public init(apiClient: APIClient) {
         self.apiClient = apiClient
     }
-
-    /// Gets an AI-generated response from the OpenAI service for a user query.
+    
+    /// Invokes the OpenAI Chat Completion API and extracts the first choice.
     public func getAiResponse(for userQuery: String) async throws -> String {
-        // Directly use the decoded response from the API client
+        // Fire the network request
         let response = try await apiClient.fetchOpenAIResponse(prompt: userQuery)
-
-        // Access the content of the first choice's message
+        
+        // Attempt to retrieve the first choice
         guard let firstChoice = response.choices.first else {
-            throw ChatDataError.noResponse // Handle case where no choices are returned
+            throw ChatDataError.noResponse
         }
-        return firstChoice.message.content.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        // Return the trimmed content
+        return firstChoice.message.content
+            .trimmingCharacters(in: .whitespacesAndNewlines)
     }
 }
 
-// MARK: - AiChatRepository Errors
+// MARK: - ChatDataError
 public enum ChatDataError: Error, LocalizedError {
-    case noResponse // Add an error for when OpenAI returns no response
+    case noResponse
     case invalidDataFormat
     case parsingFailed(String)
-
+    
     public var errorDescription: String? {
         switch self {
         case .noResponse:
-            return "The AI did not provide a response."
+            return "The AI did not provide any choices."
         case .invalidDataFormat:
-            return "The response from OpenAI was not in the expected format."
+            return "The AI response was in an unexpected format."
         case .parsingFailed(let details):
-            return "Failed to parse AI response. Details: \(details)"
+            return "Failed to parse AI response: \(details)"
         }
     }
 }
