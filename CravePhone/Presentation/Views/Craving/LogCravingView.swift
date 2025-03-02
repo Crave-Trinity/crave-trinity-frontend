@@ -2,9 +2,13 @@
 //  LogCravingView.swift
 //  CravePhone
 //
-//  - Logging form for cravings (description, sliders, emotions).
-//  - Full-bleed background ignoring safe area.
-//  - Manual .padding(...) for top/bottom if needed.
+//  BOLD SHIFT: No more manual .padding(.top, 44) or .padding(.bottom, 34).
+//  The entire background & content now physically sits behind the notch & home indicator.
+//
+//  ARCHITECTURE (SOLID):
+//    - Single Responsibility: UI for logging a craving.
+//
+//  LAST UPDATED: <today’s date>
 //
 
 import SwiftUI
@@ -20,13 +24,12 @@ public struct LogCravingView: View {
     
     public var body: some View {
         ZStack {
-            // Background behind notch/home
+            // Full-bleed gradient with no safe-area constraints
             CraveTheme.Colors.primaryGradient
-                .ignoresSafeArea()
             
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
-                    // Sections:
+                    // Description, Sliders, Emotions
                     CravingDescriptionSectionView(
                         text: $viewModel.cravingDescription,
                         isRecordingSpeech: viewModel.isRecordingSpeech,
@@ -53,17 +56,15 @@ public struct LogCravingView: View {
                         .padding(.top, 12)
                 }
                 .padding(.horizontal, CraveTheme.Spacing.medium)
-                // Manual offsets if you want extra spacing
-                .padding(.top, 44)
-                .padding(.bottom, 34)
+                // No extra top/bottom padding => content physically extends behind notch/home
             }
         }
+        // Because .ignoresSafeArea() is done at the top App level,
+        // this content is physically flush with top & bottom edges
         .alert(item: $viewModel.alertInfo) { info in
-            Alert(
-                title: Text(info.title),
-                message: Text(info.message),
-                dismissButton: .default(Text("OK"))
-            )
+            Alert(title: Text(info.title),
+                  message: Text(info.message),
+                  dismissButton: .default(Text("OK")))
         }
     }
     
@@ -90,12 +91,9 @@ public struct LogCravingView: View {
                             ? CraveTheme.Colors.accent
                             : CraveTheme.Colors.accent.opacity(0.5)
                     )
-                    .shadow(
-                        color: buttonIsEnabled
-                            ? CraveTheme.Colors.accent.opacity(0.3)
-                            : .clear,
-                        radius: 8, y: 4
-                    )
+                    .shadow(color: buttonIsEnabled ?
+                        CraveTheme.Colors.accent.opacity(0.3) : .clear,
+                        radius: 8, y: 4)
             )
         }
         .disabled(isSubmitting || !viewModel.isValid)

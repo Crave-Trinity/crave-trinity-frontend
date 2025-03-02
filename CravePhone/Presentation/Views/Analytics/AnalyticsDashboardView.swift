@@ -16,7 +16,6 @@
 //  “DESIGNED FOR STEVE JOBS”:
 //    - Clear timeframe menu + tab selector. Minimal friction for user to glean insights.
 //
-
 import SwiftUI
 import Charts
 
@@ -48,7 +47,6 @@ public struct AnalyticsDashboardView: View {
     public var body: some View {
         ZStack {
             CraveTheme.Colors.primaryGradient
-                .ignoresSafeArea()
             
             VStack(spacing: 0) {
                 headerView
@@ -80,9 +78,8 @@ public struct AnalyticsDashboardView: View {
                     .padding()
                 }
             }
-            .padding(.top, 44)
-            .padding(.bottom, 34)
         }
+        // No top/bottom padding => content flush at edges
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear {
             Task { await viewModel.fetchAnalytics(timeFrame: selectedTimeFrame) }
@@ -105,6 +102,7 @@ public struct AnalyticsDashboardView: View {
                     .font(CraveTheme.Typography.heading)
                     .foregroundColor(CraveTheme.Colors.primaryText)
                 Spacer()
+                
                 Menu {
                     ForEach(TimeFrame.allCases) { frame in
                         Button(frame.rawValue) {
@@ -158,6 +156,7 @@ public struct AnalyticsDashboardView: View {
                             )
                             .padding(.horizontal, 4)
                             .padding(.vertical, 8)
+                        
                         Rectangle()
                             .fill(
                                 selectedTab == tab

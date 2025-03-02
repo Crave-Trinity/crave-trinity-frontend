@@ -2,8 +2,17 @@
 //  CRAVETabView.swift
 //  CravePhone
 //
-//  - Houses the TabView for Log, Cravings, Analytics, AI Chat.
-//  - Respects safe area by default (tab bar sits above home indicator).
+//  PURPOSE:
+//    - Houses the main TabView for Log, Cravings, Analytics, AI Chat.
+//    - The entire screen already ignores safe areas from the top-level.
+//
+//  ARCHITECTURE (SOLID):
+//    - Single Responsibility: Provide tabbed navigation.
+//
+//  “DESIGNED FOR STEVE JOBS”:
+//    - Minimal friction, default tab bar at physical bottom.
+//
+//  LAST UPDATED: <today’s date>
 //
 
 import SwiftUI

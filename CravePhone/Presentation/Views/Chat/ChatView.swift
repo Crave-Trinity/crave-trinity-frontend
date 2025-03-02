@@ -2,8 +2,13 @@
 //  ChatView.swift
 //  CravePhone
 //
-//  - Chat interface with manual top/bottom padding.
-//  - .onChange uses #if swift(>=5.9) to avoid deprecation in iOS17.
+//  BOLD SHIFT: No manual top/bottom padding.
+//  This means chat extends behind the notch/home indicator if scrolled.
+//
+//  .onChange references iOS17-safe approach.
+//
+//  LAST UPDATED: <today’s date>
+//
 
 import SwiftUI
 
@@ -18,11 +23,11 @@ struct ChatView: View {
     
     var body: some View {
         ZStack {
-            // Full-bleed gradient
+            // Full-bleed gradient (top-level .ignoresSafeArea)
             CraveTheme.Colors.primaryGradient
-                .ignoresSafeArea()
             
             VStack(spacing: 0) {
+                // Scrollable messages
                 ScrollViewReader { scrollProxy in
                     ScrollView {
                         LazyVStack(spacing: 12) {
@@ -35,8 +40,7 @@ struct ChatView: View {
                         .padding(.top, 16)
                         .padding(.bottom, 8)
                     }
-                    
-                    // iOS 17 fix for .onChange
+                    // iOS17 onChange fix
                     #if swift(>=5.9)
                     .onChange(of: viewModel.messages.count, initial: false) { oldVal, newVal in
                         if let last = viewModel.messages.last {
@@ -46,7 +50,6 @@ struct ChatView: View {
                         }
                     }
                     #else
-                    // iOS <17 fallback, not deprecated there
                     .onChange(of: viewModel.messages.count) { _ in
                         if let last = viewModel.messages.last {
                             withAnimation {
@@ -91,14 +94,12 @@ struct ChatView: View {
                     .background(Color.black.opacity(0.3))
                 }
             }
-            // Manual offset if desired
-            .padding(.top, 44)
-            .padding(.bottom, 34)
             
             if viewModel.isLoading {
                 LoadingOverlay()
             }
         }
+        // No safe area insets => content is physically flush top & bottom
         .alert(item: $viewModel.alertInfo) { info in
             Alert(title: Text(info.title),
                   message: Text(info.message),
@@ -106,7 +107,6 @@ struct ChatView: View {
         }
     }
     
-    // MARK: - Send
     private func sendMessage() {
         guard !messageText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return }
         messageText = ""
@@ -116,7 +116,6 @@ struct ChatView: View {
         }
     }
     
-    // MARK: - Subviews
     struct MessageBubble: View {
         let message: ChatViewModel.Message
         var body: some View {

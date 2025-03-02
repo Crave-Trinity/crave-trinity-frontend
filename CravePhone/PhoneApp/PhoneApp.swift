@@ -2,8 +2,14 @@
 //  PhoneApp.swift
 //  CravePhone
 //
-//  - The @main entry.
-//  - Standard safe area usage here, so each screen can override if needed.
+//  PURPOSE:
+//    - The @main entry point. We ignore safe areas right at the top-level
+//      so everything physically extends behind the notch/home indicator.
+//
+//  UNCLE BOB / SOLID:
+//    - Single Responsibility: Launching the SwiftUI scene with the coordinator.
+//
+//  LAST UPDATED: <today’s date>
 //
 
 import SwiftUI
@@ -17,6 +23,8 @@ struct CRAVEApp: App {
     var body: some Scene {
         WindowGroup {
             CoordinatorHostView(container: container)
+                // BOLD SHIFT: Force entire app to ignore safe areas
+                .ignoresSafeArea(.all)
                 .preferredColorScheme(.dark)
         }
     }

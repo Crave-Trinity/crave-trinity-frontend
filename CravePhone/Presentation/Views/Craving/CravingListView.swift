@@ -11,7 +11,6 @@
 //  “DESIGNING FOR STEVE JOBS”:
 //    - Clear header, minimal filter bar, smooth transitions.
 //
-
 import SwiftUI
 
 struct CravingListView: View {
@@ -29,7 +28,6 @@ struct CravingListView: View {
     var body: some View {
         ZStack {
             CraveTheme.Colors.primaryGradient
-                .ignoresSafeArea()
             
             VStack(spacing: 0) {
                 headerView
@@ -60,9 +58,9 @@ struct CravingListView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
             }
-            .padding(.top, 44)
-            .padding(.bottom, 34)
         }
+        // No .padding(.top, 44) or .padding(.bottom, 34)
+        // => physically flush top & bottom
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .alert(item: $viewModel.alertInfo) { info in
             Alert(
@@ -78,8 +76,11 @@ struct CravingListView: View {
     
     private var filteredCravings: [CravingEntity] {
         let cravings = viewModel.cravings
-        let searchFiltered = searchText.isEmpty ? cravings
-            : cravings.filter { $0.cravingDescription.lowercased().contains(searchText.lowercased()) }
+        let searchFiltered = searchText.isEmpty
+            ? cravings
+            : cravings.filter {
+                $0.cravingDescription.lowercased().contains(searchText.lowercased())
+            }
         switch selectedFilter {
         case .all:
             return searchFiltered
@@ -140,9 +141,7 @@ struct CravingListView: View {
                             title: filter.rawValue,
                             isSelected: selectedFilter == filter
                         ) {
-                            withAnimation {
-                                selectedFilter = filter
-                            }
+                            withAnimation { selectedFilter = filter }
                             CraveHaptics.shared.selectionChanged()
                         }
                     }

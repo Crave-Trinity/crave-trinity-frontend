@@ -2,8 +2,13 @@
 //  CoordinatorHostView.swift
 //  CravePhone
 //
-//  - Hosts the AppCoordinator’s main view in SwiftUI.
-//  - No .ignoresSafeArea(). Each child decides its own approach.
+//  PURPOSE:
+//    - Hosts the AppCoordinator’s main view in SwiftUI.
+//
+//  ARCHITECTURE (SOLID):
+//    - Single Responsibility: Just bootstrapping the coordinator’s main content.
+//
+//  LAST UPDATED: <today’s date>
 //
 
 import SwiftUI
