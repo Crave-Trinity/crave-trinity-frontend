@@ -1,6 +1,6 @@
 //=================================================================
-// DependencyContainer.swift
-// CravePhone/PhoneApp/DI/DependencyContainer.swift
+// 6) DependencyContainer.swift
+//   CravePhone/PhoneApp/DI/DependencyContainer.swift
 //=================================================================
 
 import SwiftUI
@@ -63,18 +63,15 @@ public final class DependencyContainer: ObservableObject {
         )
     }()
     
-    // MARK: - AI Chat
+    // MARK: - AI Chat - No Changes needed here, this is correct
     private lazy var apiClient: APIClient = {
         APIClient()
     }()
-    
-    private lazy var baseURL: URL = {
-        // Adjust this URL if you have a custom server for other endpoints.
-        URL(string: "https://your-crave-backend.com")!
-    }()
+
+    //No longer need baseURL here
     
     private lazy var aiChatRepository: AiChatRepositoryProtocol = {
-        AiChatRepositoryImpl(apiClient: apiClient, baseURL: baseURL)
+        AiChatRepositoryImpl(apiClient: apiClient) // Pass only apiClient
     }()
     
     private lazy var aiChatUseCase: AiChatUseCaseProtocol = {
@@ -136,3 +133,4 @@ public final class DependencyContainer: ObservableObject {
         ArchiveCravingUseCase(cravingRepository: cravingRepository)
     }
 }
+

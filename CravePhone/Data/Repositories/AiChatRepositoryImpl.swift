@@ -1,59 +1,43 @@
-//
-//  ┌───────────────────────────────────────────────────────────────────────┐
-//  │ CravePhone/Data/Repositories/AiChatRepositoryImpl.swift
-//  └───────────────────────────────────────────────────────────────────────┘
-//  Description:
-//     Concrete implementation of `AiChatRepositoryProtocol`.
-//     It delegates the actual network call to `APIClient`.
-//
-//  S.O.L.I.D. in action:
-//   - (S)ingle Responsibility: This repository only deals with how to fetch AI chat data
-//     and transform it into domain-friendly types (String responses).
-//   - (D)ependency Inversion: We rely on an abstract `APIClient` instead of
-//     any ephemeral, direct, or ephemeral usage of secrets.
-//
+
+//=================================================================
+// 2) AiChatRepositoryImpl.swift
+//   CravePhone/Data/Repositories/AiChatRepositoryImpl.swift
+//=================================================================
+
 import Foundation
 
 public final class AiChatRepositoryImpl: AiChatRepositoryProtocol {
-    
+
     private let apiClient: APIClient
-    private let baseURL: URL // optional if your architecture calls for it
-    
-    public init(apiClient: APIClient, baseURL: URL) {
+    // Remove baseURL, as it's handled within APIClient
+
+    public init(apiClient: APIClient) { // Simplified initializer
         self.apiClient = apiClient
-        self.baseURL   = baseURL
     }
-    
+
     /// Gets an AI-generated response from the OpenAI service for a user query.
-    /// - Parameter userQuery: The question or content from the user.
-    /// - Returns: The raw text content from the AI.
     public func getAiResponse(for userQuery: String) async throws -> String {
-        // 1) Fetch data from the API client
-        let data = try await apiClient.fetchOpenAIResponse(prompt: userQuery)
-        
-        // 2) Parse JSON
-        do {
-            if let root = try JSONSerialization.jsonObject(with: data) as? [String: Any],
-               let choices = root["choices"] as? [[String: Any]],
-               let message = choices.first?["message"] as? [String: Any],
-               let responseContent = message["content"] as? String {
-                return responseContent.trimmingCharacters(in: .whitespacesAndNewlines)
-            } else {
-                throw ChatDataError.invalidDataFormat
-            }
-        } catch {
-            throw ChatDataError.parsingFailed(error.localizedDescription)
+        // Directly use the decoded response from the API client
+        let response = try await apiClient.fetchOpenAIResponse(prompt: userQuery)
+
+        // Access the content of the first choice's message
+        guard let firstChoice = response.choices.first else {
+            throw ChatDataError.noResponse // Handle case where no choices are returned
         }
+        return firstChoice.message.content.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 }
 
 // MARK: - AiChatRepository Errors
 public enum ChatDataError: Error, LocalizedError {
+    case noResponse // Add an error for when OpenAI returns no response
     case invalidDataFormat
     case parsingFailed(String)
-    
+
     public var errorDescription: String? {
         switch self {
+        case .noResponse:
+            return "The AI did not provide a response."
         case .invalidDataFormat:
             return "The response from OpenAI was not in the expected format."
         case .parsingFailed(let details):
@@ -61,4 +45,3 @@ public enum ChatDataError: Error, LocalizedError {
         }
     }
 }
-

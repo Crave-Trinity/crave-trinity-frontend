@@ -1,40 +1,7 @@
-//
-//  ChatView.swift
-//  CravePhone/Presentation/Views/Chat
-//
-//  Description:
-//  A SwiftUI view that displays a scrollable list of chat messages and
-//  a text input bar for sending new messages.
-//
-//  Important iOS 17 Update:
-//  • Uses the new onChange(of:initial:) API to detect changes in
-//    viewModel.messages.count with both old and new values.
-//  • Swift 5.8+ prohibits using an Int as a Bool, so we must compare
-//    newCount != 0 when checking for non-empty message arrays.
-//
-//  Uncle Bob–Inspired Notes (SOLID Principles):
-//  • Single Responsibility: ChatView is responsible only for rendering the UI
-//    and forwarding user interaction. The ViewModel handles logic and data operations.
-//  • Open/Closed: The view is open for extension (you can add extra subviews or features),
-//    but closed for modification at core (the main chat logic remains stable).
-//  • Liskov Substitution: Relying on protocols or base classes (via ChatViewModel abstraction)
-//    ensures future expansions can easily integrate without breakage.
-//  • Interface Segregation: The ChatViewModel interface is smaller and more focused; the view
-//    doesn’t directly manipulate other responsibilities (like analytics or data storage).
-//  • Dependency Inversion: We inject the ChatViewModel from outside, so ChatView
-//    is not tightly coupled to any specific implementation.
-//
-//  Why We Check “newCount != 0”:
-//  • Swift once allowed 'if (someInt)' to check for zero, but that was removed to reduce
-//    ambiguity and hidden bugs. Now we must do 'if newCount != 0' for clarity.
-//
-// -------------------------------------------------------------------------------
-//  Usage Example (in your SceneDelegate or equivalent):
-//      let chatVM = ChatViewModel(...)
-//      let chatView = ChatView(viewModel: chatVM)
-//      someNavigationView.push(chatView)
-// -------------------------------------------------------------------------------
-//
+//=================================================================
+// 7) ChatView.swift
+//   CravePhone/Presentation/Views/Chat
+//=================================================================
 import SwiftUI
 
 struct ChatView: View {
@@ -208,4 +175,3 @@ struct ChatView: View {
         }
     }
 }
-

@@ -1,8 +1,7 @@
 //=================================================================
-// 6) AiChatUseCase.swift
-//    CravePhone/Domain/UseCases/AiChatUseCase.swift
+// 4) AiChatUseCase.swift
+//   CravePhone/Domain/UseCases/AiChatUseCase.swift
 //=================================================================
-
 import Foundation
 
 public protocol AiChatUseCaseProtocol {
@@ -21,6 +20,7 @@ public final class AiChatUseCase: AiChatUseCaseProtocol {
         guard !userQuery.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             throw ChatError.emptyQuery
         }
+        // Add any pre or post processing logic here if necessary
         return try await repository.getAiResponse(for: userQuery)
     }
 }

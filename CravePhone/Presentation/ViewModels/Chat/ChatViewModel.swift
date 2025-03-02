@@ -1,6 +1,6 @@
 //=================================================================
-// ChatViewModel.swift
-// CravePhone/Presentation/ViewModels/Chat/ChatViewModel.swift
+// 5) ChatViewModel.swift
+//   CravePhone/Presentation/ViewModels/Chat/ChatViewModel.swift
 //=================================================================
 import SwiftUI
 import Combine
@@ -34,29 +34,34 @@ public final class ChatViewModel: ObservableObject {
     public func sendMessage() async {
         let query = userInput.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !query.isEmpty else {
-            alertInfo = AlertInfo(title: "Empty Input", message: "Please type something before sending.")
-            return
+          alertInfo = AlertInfo(title: "Empty Input", message: "Please type something before sending.")
+          return
         }
 
-        // Append user's message
+        // Append user's message *before* making the API call
         appendMessage(query, isUser: true)
-        userInput = ""
+        userInput = "" // Clear the input field immediately
 
         do {
             isLoading = true
-            // Get AI response
             let aiResponse = try await aiChatUseCase.execute(userQuery: query)
-            appendMessage(aiResponse, isUser: false)
+            appendMessage(aiResponse, isUser: false) // Append AI response
         } catch {
+            print("Error in ChatViewModel: \(error)") // Log the error
             alertInfo = AlertInfo(title: "Error", message: error.localizedDescription)
         }
         isLoading = false
     }
 
+
     public func sendWelcomeMessage() {
-        messages.append(
-            Message(content: "Welcome to CRAVE. How can I help you manage your cravings today?", isUser: false)
-        )
+        // Check if welcome message has already been sent (e.g., using UserDefaults)
+        if !UserDefaults.standard.bool(forKey: "welcomeMessageSent") {
+            messages.append(
+                Message(content: "Welcome to CRAVE. How can I help you manage your cravings today?", isUser: false)
+            )
+            UserDefaults.standard.set(true, forKey: "welcomeMessageSent") // Set the flag
+        }
     }
 
     // MARK: - Private Helpers
@@ -64,5 +69,3 @@ public final class ChatViewModel: ObservableObject {
         messages.append(Message(content: content, isUser: isUser))
     }
 }
-
-// Note: Any duplicate AlertInfo definitions have been removed—this file now uses the one from Common/AlertInfo.swift.

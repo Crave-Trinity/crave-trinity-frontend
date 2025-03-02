@@ -1,6 +1,6 @@
 //=================================================================
-// 4) AiChatRepositoryProtocol.swift
-//    CravePhone/Domain/Interfaces/Repositories/AiChatRepositoryProtocol.swift
+// 3) AiChatRepositoryProtocol.swift
+//   CravePhone/Domain/Interfaces/Repositories/AiChatRepositoryProtocol.swift
 //=================================================================
 
 import Foundation
