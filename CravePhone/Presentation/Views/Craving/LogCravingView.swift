@@ -8,7 +8,7 @@
 //  ARCHITECTURE (SOLID):
 //    - Single Responsibility: UI for logging a craving.
 //
-//  LAST UPDATED: <today’s date>
+//  LAST UPDATED: <today's date>
 //
 
 import SwiftUI
@@ -24,8 +24,9 @@ public struct LogCravingView: View {
     
     public var body: some View {
         ZStack {
-            // Full-bleed gradient with no safe-area constraints
+            // Full-bleed gradient that explicitly ignores safe areas
             CraveTheme.Colors.primaryGradient
+                .ignoresSafeArea()
             
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
@@ -59,8 +60,7 @@ public struct LogCravingView: View {
                 // No extra top/bottom padding => content physically extends behind notch/home
             }
         }
-        // Because .ignoresSafeArea() is done at the top App level,
-        // this content is physically flush with top & bottom edges
+        // Alert remains unchanged
         .alert(item: $viewModel.alertInfo) { info in
             Alert(title: Text(info.title),
                   message: Text(info.message),

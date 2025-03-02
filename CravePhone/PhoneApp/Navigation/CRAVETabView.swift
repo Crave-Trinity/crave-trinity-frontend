@@ -9,10 +9,10 @@
 //  ARCHITECTURE (SOLID):
 //    - Single Responsibility: Provide tabbed navigation.
 //
-//  “DESIGNED FOR STEVE JOBS”:
+//  "DESIGNED FOR STEVE JOBS":
 //    - Minimal friction, default tab bar at physical bottom.
 //
-//  LAST UPDATED: <today’s date>
+//  LAST UPDATED: <today's date>
 //
 
 import SwiftUI
@@ -42,35 +42,42 @@ public struct CRAVETabView: View {
     }
     
     public var body: some View {
-        TabView(selection: $selectedTab) {
-            coordinator.makeLogCravingView()
-                .tag(Tab.log)
-                .tabItem {
-                    Image(systemName: Tab.log.iconName)
-                    Text(Tab.log.rawValue)
-                }
-            
-            coordinator.makeCravingListView()
-                .tag(Tab.cravings)
-                .tabItem {
-                    Image(systemName: Tab.cravings.iconName)
-                    Text(Tab.cravings.rawValue)
-                }
-            
-            coordinator.makeAnalyticsDashboardView()
-                .tag(Tab.analytics)
-                .tabItem {
-                    Image(systemName: Tab.analytics.iconName)
-                    Text(Tab.analytics.rawValue)
-                }
-            
-            coordinator.makeChatView()
-                .tag(Tab.aiChat)
-                .tabItem {
-                    Image(systemName: Tab.aiChat.iconName)
-                    Text(Tab.aiChat.rawValue)
-                }
+        ZStack {
+            // Full-bleed background gradient that extends beyond all safe areas
+            CraveTheme.Colors.primaryGradient
+                .ignoresSafeArea()
+                
+            // Tab navigation with content
+            TabView(selection: $selectedTab) {
+                coordinator.makeLogCravingView()
+                    .tag(Tab.log)
+                    .tabItem {
+                        Image(systemName: Tab.log.iconName)
+                        Text(Tab.log.rawValue)
+                    }
+                
+                coordinator.makeCravingListView()
+                    .tag(Tab.cravings)
+                    .tabItem {
+                        Image(systemName: Tab.cravings.iconName)
+                        Text(Tab.cravings.rawValue)
+                    }
+                
+                coordinator.makeAnalyticsDashboardView()
+                    .tag(Tab.analytics)
+                    .tabItem {
+                        Image(systemName: Tab.analytics.iconName)
+                        Text(Tab.analytics.rawValue)
+                    }
+                
+                coordinator.makeChatView()
+                    .tag(Tab.aiChat)
+                    .tabItem {
+                        Image(systemName: Tab.aiChat.iconName)
+                        Text(Tab.aiChat.rawValue)
+                    }
+            }
+            .accentColor(CraveTheme.Colors.accent)
         }
-        .accentColor(CraveTheme.Colors.accent)
     }
 }

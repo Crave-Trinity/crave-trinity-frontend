@@ -7,7 +7,7 @@
 //
 //  .onChange references iOS17-safe approach.
 //
-//  LAST UPDATED: <today’s date>
+//  LAST UPDATED: <today's date>
 //
 
 import SwiftUI
@@ -23,8 +23,9 @@ struct ChatView: View {
     
     var body: some View {
         ZStack {
-            // Full-bleed gradient (top-level .ignoresSafeArea)
+            // Full-bleed gradient that explicitly ignores safe areas
             CraveTheme.Colors.primaryGradient
+                .ignoresSafeArea()
             
             VStack(spacing: 0) {
                 // Scrollable messages
@@ -99,7 +100,7 @@ struct ChatView: View {
                 LoadingOverlay()
             }
         }
-        // No safe area insets => content is physically flush top & bottom
+        // Alert remains unchanged
         .alert(item: $viewModel.alertInfo) { info in
             Alert(title: Text(info.title),
                   message: Text(info.message),

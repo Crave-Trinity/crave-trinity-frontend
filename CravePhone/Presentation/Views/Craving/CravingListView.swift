@@ -8,7 +8,7 @@
 //  ARCHITECTURE (SOLID):
 //    - Single Responsibility: UI for listing cravings and optional filters.
 //
-//  “DESIGNING FOR STEVE JOBS”:
+//  "DESIGNING FOR STEVE JOBS":
 //    - Clear header, minimal filter bar, smooth transitions.
 //
 import SwiftUI
@@ -27,7 +27,9 @@ struct CravingListView: View {
     
     var body: some View {
         ZStack {
+            // Full-bleed gradient that explicitly ignores safe areas
             CraveTheme.Colors.primaryGradient
+                .ignoresSafeArea()
             
             VStack(spacing: 0) {
                 headerView
@@ -74,6 +76,7 @@ struct CravingListView: View {
         }
     }
     
+    // Rest of view components remain unchanged
     private var filteredCravings: [CravingEntity] {
         let cravings = viewModel.cravings
         let searchFiltered = searchText.isEmpty
