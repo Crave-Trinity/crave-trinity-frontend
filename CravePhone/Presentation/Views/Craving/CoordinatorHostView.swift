@@ -3,12 +3,12 @@
 //  CravePhone
 //
 //  PURPOSE:
-//    - Hosts the AppCoordinator’s main view in SwiftUI.
+//    - Hosts the AppCoordinator's main view in SwiftUI.
 //
 //  ARCHITECTURE (SOLID):
-//    - Single Responsibility: Just bootstrapping the coordinator’s main content.
+//    - Single Responsibility: Just bootstrapping the coordinator's main content.
 //
-//  LAST UPDATED: <today’s date>
+//  LAST UPDATED: <today's date>
 //
 
 import SwiftUI

@@ -22,10 +22,14 @@ struct CRAVEApp: App {
     
     var body: some Scene {
         WindowGroup {
-            CoordinatorHostView(container: container)
-                // BOLD SHIFT: Force entire app to ignore safe areas
-                .ignoresSafeArea(.all)
-                .preferredColorScheme(.dark)
+            ZStack {
+                // This ensures the background color extends everywhere
+                Color.black
+                    .ignoresSafeArea()
+                    
+                CoordinatorHostView(container: container)
+            }
+            .preferredColorScheme(.dark)
         }
     }
 }
