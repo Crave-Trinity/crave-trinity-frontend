@@ -2,34 +2,37 @@
 //  AiChatRepositoryImpl.swift
 //  CravePhone/Data/Repositories
 //
-//  GOF/SOLID EXPLANATION:
-//    - Single Responsibility: Only fetches & returns AI responses.
-//    - Liskov Substitution: Conforms to AiChatRepositoryProtocol so it can be replaced by a mock/test repository.
-//    - Error handling ensures minimal leakage of data-layer concerns.
+//  PURPOSE:
+//  - Single Responsibility: fetch & return chat from our *Railway* backend.
+//  - Uncle Bob & Clean Arch: data layer code, hides backend details from the Domain.
 //
+//  LAST UPDATED: <today's date>
+//
+
 import Foundation
 
 public final class AiChatRepositoryImpl: AiChatRepositoryProtocol {
-    
-    private let apiClient: APIClient
-    
-    public init(apiClient: APIClient) {
-        self.apiClient = apiClient
+
+    // Replace old APIClient with our new CraveBackendAPIClient
+    private let backendClient: CraveBackendAPIClient
+
+    public init(backendClient: CraveBackendAPIClient) {
+        self.backendClient = backendClient
     }
-    
-    /// Invokes the OpenAI Chat Completion API and extracts the first choice.
+
     public func getAiResponse(for userQuery: String) async throws -> String {
-        // Fire the network request
-        let response = try await apiClient.fetchOpenAIResponse(prompt: userQuery)
-        
-        // Attempt to retrieve the first choice
-        guard let firstChoice = response.choices.first else {
+        // 1) Call the backend
+        let responseText = try await backendClient.fetchChatResponse(userQuery: userQuery)
+
+        // 2) Clean or filter the text
+        let cleaned = responseText.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !cleaned.isEmpty else {
+            // If it's empty, throw an error
             throw ChatDataError.noResponse
         }
-        
-        // Return the trimmed content
-        return firstChoice.message.content
-            .trimmingCharacters(in: .whitespacesAndNewlines)
+
+        // 3) Return the cleaned text
+        return cleaned
     }
 }
 
@@ -38,15 +41,15 @@ public enum ChatDataError: Error, LocalizedError {
     case noResponse
     case invalidDataFormat
     case parsingFailed(String)
-    
+
     public var errorDescription: String? {
         switch self {
         case .noResponse:
-            return "The AI did not provide any choices."
+            return "The backend returned an empty message."
         case .invalidDataFormat:
-            return "The AI response was in an unexpected format."
+            return "The chat response wasn't in the format we expected."
         case .parsingFailed(let details):
-            return "Failed to parse AI response: \(details)"
+            return "Failed to parse chat data: \(details)"
         }
     }
 }

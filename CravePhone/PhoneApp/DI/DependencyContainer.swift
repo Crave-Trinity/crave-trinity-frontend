@@ -3,19 +3,22 @@
 //   CravePhone/PhoneApp/DI/DependencyContainer.swift
 //=================================================================
 
+
 import SwiftUI
 import SwiftData
 
 @MainActor
 public final class DependencyContainer: ObservableObject {
     
+    // MARK: - Published Properties
     @Published private(set) var modelContainer: ModelContainer
     
+    // MARK: - ModelContext
     private lazy var modelContext: ModelContext = {
         ModelContext(modelContainer)
     }()
     
-    // MARK: - Craving
+    // MARK: - Craving Dependencies
     private lazy var cravingManager: CravingManager = {
         CravingManager(modelContext: modelContext)
     }()
@@ -24,12 +27,12 @@ public final class DependencyContainer: ObservableObject {
         CravingRepositoryImpl(manager: cravingManager)
     }()
     
-    // MARK: - Speech
+    // MARK: - Speech Dependencies
     private lazy var speechService: SpeechToTextServiceProtocol = {
         SpeechToTextServiceImpl()
     }()
     
-    // MARK: - Analytics
+    // MARK: - Analytics Dependencies
     private lazy var analyticsStorage: AnalyticsStorageProtocol = {
         AnalyticsStorage(modelContext: modelContext)
     }()
@@ -65,13 +68,14 @@ public final class DependencyContainer: ObservableObject {
         )
     }()
     
-    // MARK: - AI Chat
-    private lazy var apiClient: APIClient = {
-        APIClient()
+    // MARK: - AI Chat Dependencies
+    /// Replaces old `APIClient` with the new `CraveBackendAPIClient`
+    private lazy var backendClient: CraveBackendAPIClient = {
+        CraveBackendAPIClient()
     }()
     
     private lazy var aiChatRepository: AiChatRepositoryProtocol = {
-        AiChatRepositoryImpl(apiClient: apiClient)
+        AiChatRepositoryImpl(backendClient: backendClient)
     }()
     
     private lazy var aiChatUseCase: AiChatUseCaseProtocol = {
@@ -80,7 +84,11 @@ public final class DependencyContainer: ObservableObject {
     
     // MARK: - Init
     public init() {
-        let schema = Schema([CravingEntity.self, AnalyticsMetadata.self])
+        // Here we set up SwiftData models
+        let schema = Schema([
+            CravingEntity.self,
+            AnalyticsMetadata.self
+        ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
         
         do {
@@ -90,19 +98,22 @@ public final class DependencyContainer: ObservableObject {
         }
     }
     
-    // MARK: - Public Factories
+    // MARK: - Factory Methods
+    
+    /// Returns the main ChatViewModel
     public func makeChatViewModel() -> ChatViewModel {
         ChatViewModel(aiChatUseCase: aiChatUseCase)
     }
     
+    /// Returns the Craving Log screen ViewModel
     public func makeLogCravingViewModel() -> LogCravingViewModel {
-        // NOTE: We now inject both the cravingRepository AND speechService
         LogCravingViewModel(
             cravingRepository: cravingRepository,
             speechService: speechService
         )
     }
     
+    /// Returns the Craving List screen ViewModel
     public func makeCravingListViewModel() -> CravingListViewModel {
         CravingListViewModel(
             fetchCravingsUseCase: makeFetchCravingsUseCase(),
@@ -110,11 +121,13 @@ public final class DependencyContainer: ObservableObject {
         )
     }
     
+    /// Returns the Analytics Dashboard screen ViewModel
     public func makeAnalyticsViewModel() -> AnalyticsViewModel {
         AnalyticsViewModel(manager: analyticsManager)
     }
     
     // MARK: - Private Craving-Specific Use Cases
+    
     private func makeAddCravingUseCase() -> AddCravingUseCaseProtocol {
         AddCravingUseCase(cravingRepository: cravingRepository)
     }

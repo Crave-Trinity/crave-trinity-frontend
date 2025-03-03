@@ -121,7 +121,7 @@
 				Data/DTOs/AnalyticsDTO.swift = (ios, );
 				Data/DTOs/CravingDTO.swift = (ios, );
 				Data/DataSources/Local/AnalyticsStorage.swift = (ios, );
-				Data/DataSources/Remote/APIClient.swift = (ios, );
+				Data/DataSources/Remote/CraveBackendAPIClient.swift = (ios, );
 				Data/DataSources/Remote/ModelContainer.swift = (ios, );
 				Data/Mappers/AnalyticsMapper.swift = (ios, );
 				Data/Mappers/CravingMapper.swift = (ios, );
