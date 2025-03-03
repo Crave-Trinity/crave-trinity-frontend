@@ -2,9 +2,9 @@
 //  AiChatRepositoryImpl.swift
 //  CravePhone/Data/Repositories
 //
-//  PURPOSE:
-//   - Concrete implementation of AiChatRepositoryProtocol
-//   - Calls CraveBackendAPIClient for chat requests and test-token requests.
+//  PASTE & RUN (No Explanations):
+//   - Adjusted trimmingCharacters(...) to use CharacterSet.whitespacesAndNewlines
+//   - Uses sendMessage(...) & generateTestToken(...) from CraveBackendAPIClient
 //
 
 import Foundation
@@ -16,19 +16,17 @@ public final class AiChatRepositoryImpl: AiChatRepositoryProtocol {
         self.backendClient = backendClient
     }
     
-    // Pass the token along to the backend method
     public func getAiResponse(for userQuery: String, authToken: String) async throws -> String {
         let raw = try await backendClient.sendMessage(userQuery: userQuery, authToken: authToken)
-        let cleaned = raw.trimmingCharacters(in: .whitespacesAndNewlines)
+        let cleaned = raw.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         guard !cleaned.isEmpty else {
             throw ChatDataError.noResponse
         }
         return cleaned
     }
     
-    // Provide a method to retrieve a test token
     public func getTestToken() async throws -> String {
-        return try await backendClient.generateTestToken()
+        try await backendClient.generateTestToken()
     }
 }
 
