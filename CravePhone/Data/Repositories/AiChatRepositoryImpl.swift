@@ -1,34 +1,33 @@
-//=================================================================
-// 2) AiChatRepositoryImpl.swift
-//    CravePhone/Data/Repositories/AiChatRepositoryImpl.swift
+//  AiChatRepositoryImpl.swift
+//  CravePhone/Data/Repositories
 //
-//  PURPOSE:
-//  - Fetch & return chat from our *Railway* backend using CraveBackendAPIClient.
-//  - Clean Architecture: data layer code that hides backend details from Domain.
-//
-//=================================================================
 
 import Foundation
 
 public final class AiChatRepositoryImpl: AiChatRepositoryProtocol {
-    private let backendClient: CraveBackendAPIClient
-    
+    private let backendClient: CraveBackendAPIClient // This was the issue:  Should not be public
+
     public init(backendClient: CraveBackendAPIClient) {
         self.backendClient = backendClient
     }
-    
-    public func getAiResponse(for userQuery: String) async throws -> String {
-        // 1) Call the backend
-        let responseText = try await backendClient.fetchChatResponse(userQuery: userQuery)
-        
+
+    public func getAiResponse(for userQuery: String, authToken: String) async throws -> String {
+        // 1) Call the backend, passing the token
+        let responseText = try await backendClient.sendMessage(userQuery: userQuery, authToken: authToken) // Corrected method name
+
         // 2) Clean or filter the text
-        let cleaned = responseText.trimmingCharacters(in: .whitespacesAndNewlines)
+        let cleaned = responseText.trimmingCharacters(in: .whitespacesAndNewlines) // Corrected this line
         guard !cleaned.isEmpty else {
             throw ChatDataError.noResponse
         }
-        
+
         // 3) Return the cleaned text
         return cleaned
+    }
+
+    // Implement getTestToken in the repository
+    public func getTestToken() async throws -> String {  // Added public
+        try await backendClient.generateTestToken()
     }
 }
 

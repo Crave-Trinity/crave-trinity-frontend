@@ -151,6 +151,7 @@
 				Domain/UseCases/Craving/DummyAddCravingUseCase.swift = (ios, );
 				Domain/UseCases/PhoneConnectivityService.swift = (ios, );
 				PhoneApp/DI/DependencyContainer.swift = (ios, );
+				PhoneApp/KeyChainHelper.swift = (ios, );
 				PhoneApp/Navigation/AppCoordinator.swift = (ios, );
 				PhoneApp/Navigation/CRAVETabView.swift = (ios, );
 				PhoneApp/PhoneApp.swift = (ios, );
