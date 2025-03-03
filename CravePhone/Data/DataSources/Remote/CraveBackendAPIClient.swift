@@ -56,7 +56,7 @@ public struct ChatResponse: Decodable {
 }
 
 public class CraveBackendAPIClient {
-    private let baseURLString = "https://crave-mvp-backend-production.up.railway.app"
+    private let baseURLString = "https://crave-mvp-backend-production-a001.up.railway.app"
 
     public init() {}
 
