@@ -13,7 +13,7 @@ struct ChatView: View {
     
     // MARK: - Properties
     @ObservedObject var viewModel: ChatViewModel
-    @State private var messageText: String = ""            // local textfield binding
+    @State private var messageText: String = ""           // local textfield binding
     @FocusState private var isInputFocused: Bool            // track keyboard focus
     
     // MARK: - Init
@@ -26,9 +26,9 @@ struct ChatView: View {
         ZStack {
             // A black background for the entire safe area
             Color.black.ignoresSafeArea()
-            
-            VStack(spacing: 0) {
                 
+            VStack(spacing: 0) {
+                    
                 // Scrollable area for messages:
                 ScrollViewReader { scrollProxy in
                     ScrollView {
@@ -51,14 +51,29 @@ struct ChatView: View {
                         }
                     }
                 }
-                
+                    
                 // Chat Input Bar
                 inputBar
             }
-            
+                
             // Loading Overlay
             if viewModel.isLoading {
                 LoadingOverlay()
+            }
+
+            // ADDED: Get Test Token Button (Positioned at the top)
+            VStack {
+                HStack {
+                    Button("Get Test Token") {
+                        viewModel.getTestToken()
+                    }
+                    .padding()
+                    .background(Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(8)
+                    Spacer() // Push the button to the leading edge
+                }
+                Spacer() // Push the button to the top
             }
         }
         // Show alerts
@@ -72,6 +87,7 @@ struct ChatView: View {
         // Send welcome message if needed
         .onAppear {
             viewModel.sendWelcomeMessage()
+          //  viewModel.getTestToken() //Alternative way to get token
         }
     }
     
@@ -81,7 +97,7 @@ struct ChatView: View {
     private var inputBar: some View {
         VStack(spacing: 0) {
             Divider().background(Color.gray.opacity(0.3))
-            
+                
             HStack(spacing: 12) {
                 // Text field for user message
                 TextField("Type a message...", text: $messageText)
@@ -92,7 +108,7 @@ struct ChatView: View {
                     // Pressing "Send" key on the keyboard
                     .submitLabel(.send)
                     .onSubmit { sendMessage() }
-                
+                    
                 // Send button
                 Button(action: sendMessage) {
                     Image(systemName: "arrow.up.circle.fill")

@@ -1,28 +1,45 @@
 //  CraveBackendAPIClient.swift
-//  CravePhone/Data/DataSources/Remote
-//
-
 import Foundation
 
 // Define a custom error enum for API-related errors
 public enum APIError: Error, Equatable { // Made public
     case invalidURL
     case invalidResponse
-    case networkError(Error)
-    case decodingError(Error)
-    case unauthorized // Add an explicit unauthorized case
+    case networkError(URLError) // Associate the URLError
+    case decodingError(Error) // Keep this as a general Error
+    case unauthorized
     case serverError(Int)
-    case other(Error)
+    case other(String)  // Use a String for a custom message
 
-     public static func == (lhs: APIError, rhs: APIError) -> Bool { // Made public
+    public var localizedDescription: String { // Add a localizedDescription
+        switch self {
+        case .invalidURL:
+            return "Invalid URL."
+        case .invalidResponse:
+            return "Invalid server response."
+        case .networkError(let urlError):
+            return "Network error: \(urlError.localizedDescription)"
+        case .decodingError(let error):
+            return "Decoding error: \(error.localizedDescription)"
+        case .unauthorized:
+            return "Unauthorized (401)."
+        case .serverError(let code):
+            return "Server error (code \(code))."
+        case .other(let message):
+            return message
+        }
+    }
+
+     public static func == (lhs: APIError, rhs: APIError) -> Bool { // Improve Equatable
         switch (lhs, rhs) {
         case (.invalidURL, .invalidURL): return true
         case (.invalidResponse, .invalidResponse): return true
-        case (.networkError(_), .networkError(_)): return true // You might want more specific comparison here
-        case (.decodingError(_), .decodingError(_)): return true // You might want more specific comparison here
+        case (.networkError(let lhsError), .networkError(let rhsError)):
+            return lhsError.code == rhsError.code // Compare URLError codes
+        case (.decodingError, .decodingError): return true // Still general, could improve
         case (.unauthorized, .unauthorized): return true
         case (.serverError(let lhsCode), .serverError(let rhsCode)): return lhsCode == rhsCode
-        case (.other(_), .other(_)): return true  // This is a simplification, consider comparing the underlying errors.
+        case (.other(let lhsMsg), .other(let rhsMsg)): return lhsMsg == rhsMsg
         default: return false
         }
     }
@@ -30,7 +47,7 @@ public enum APIError: Error, Equatable { // Made public
 
 public class CraveBackendAPIClient { // Made public
 
-    private let baseURLString = "https://crave-mvp-backend-production.up.railway.app"  //  YOUR RAILWAY URL - VERY IMPORTANT
+    private let baseURLString = "https://crave-mvp-backend-production.up.railway.app"  //  YOUR RAILWAY URL
 
      public func generateTestToken() async throws -> String { // Made public
         guard let url = URL(string: "\(baseURLString)/api/admin/generate-test-token") else {
@@ -53,7 +70,7 @@ public class CraveBackendAPIClient { // Made public
             print("HTTP Status Code (generateTestToken): \(httpResponse.statusCode)") // Log the status code
 
             if httpResponse.statusCode == 401 {
-                throw APIError.unauthorized // Throw specific unauthorized error
+                throw APIError.unauthorized
             }
 
             if httpResponse.statusCode >= 500 {
@@ -68,16 +85,21 @@ public class CraveBackendAPIClient { // Made public
 
             //Decode JSON
             do{
-                let decodedResponse = try JSONDecoder().decode(TokenResponse.self, from: data) // Use the TokenResponse struct
+                let decodedResponse = try JSONDecoder().decode(TokenResponse.self, from: data)
                 return decodedResponse.token
             } catch {
-                print("JSON Decoding Error (generateTestToken): \(error)") // More detailed error
-                throw APIError.decodingError(error)
+                print("JSON Decoding Error (generateTestToken): \(error)")
+                throw APIError.decodingError(error) // No change needed here
             }
 
         } catch {
-            print("Networking or other Error (generateTestToken): \(error)") // Catch URLSession errors
-            throw APIError.networkError(error) // Wrap as a network error
+            print("Networking or other Error (generateTestToken): \(error)")
+            // IMPORTANT:  Check if it's a URLError
+            if let urlError = error as? URLError {
+                throw APIError.networkError(urlError) // Pass the URLError
+            } else {
+                throw APIError.other("Networking or other Error: \(error.localizedDescription)") // Pass a descriptive message
+            }
         }
     }
 
@@ -98,13 +120,13 @@ public class CraveBackendAPIClient { // Made public
          request.timeoutInterval = 60.0 // Longer timeout for chat
 
         do {
-            let (data, response) = try await URLSession.shared.data(for: request)  // Use URLSession.shared.data(for:)
+            let (data, response) = try await URLSession.shared.data(for: request)
 
             guard let httpResponse = response as? HTTPURLResponse else {
                 throw APIError.invalidResponse
             }
 
-            print("HTTP Status Code (sendMessage): \(httpResponse.statusCode)") // Log status code, corrected method name
+            print("HTTP Status Code (sendMessage): \(httpResponse.statusCode)")
 
 
             if httpResponse.statusCode == 401 {
@@ -122,17 +144,22 @@ public class CraveBackendAPIClient { // Made public
             }
 
             do {
-                let decodedResponse = try JSONDecoder().decode(ChatResponse.self, from: data) // Use ChatResponse struct
-                return decodedResponse.response //  Adjust based on your actual backend response
+                let decodedResponse = try JSONDecoder().decode(ChatResponse.self, from: data)
+                return decodedResponse.response
             } catch {
-                print("JSON Decoding Error (sendMessage): \(error)") // Log decoding errors, corrected method name
-                throw APIError.decodingError(error)
+                print("JSON Decoding Error (sendMessage): \(error)")
+                throw APIError.decodingError(error) // No change here
             }
 
 
         } catch {
-            print("Network or other Error (sendMessage): \(error)")  // Corrected method name
-            throw APIError.networkError(error) // Consistent error wrapping
+            print("Network or other Error (sendMessage): \(error)")
+            // IMPORTANT: Check for URLError
+            if let urlError = error as? URLError {
+                throw APIError.networkError(urlError)
+            } else {
+                throw APIError.other("Networking or other Error: \(error.localizedDescription)")
+            }
         }
     }
 }
