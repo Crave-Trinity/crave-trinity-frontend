@@ -16,10 +16,8 @@ struct CravingDTO {
     let cravingStrength: Double
     let timestamp: Date
     let isArchived: Bool
-    
-    // New: match 'emotions' to avoid mapper errors
     let emotions: [String]
-    
+
     init(
         id: UUID,
         text: String,
@@ -38,4 +36,3 @@ struct CravingDTO {
         self.emotions = emotions
     }
 }
-

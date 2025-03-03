@@ -20,16 +20,14 @@ struct KeychainHelper {
             kSecAttrService: service,
             kSecAttrAccount: account,
         ] as CFDictionary
-        
-        // Delete any existing item
+
         SecItemDelete(query)
-        
         let status = SecItemAdd(query, nil)
         if status != errSecSuccess {
             print("Error saving to Keychain: \(status)")
         }
     }
-    
+
     static func load(service: String, account: String) -> Data? {
         let query = [
             kSecClass: kSecClassGenericPassword,
@@ -38,10 +36,9 @@ struct KeychainHelper {
             kSecReturnData: true,
             kSecMatchLimit: kSecMatchLimitOne
         ] as CFDictionary
-        
+
         var result: AnyObject?
         let status = SecItemCopyMatching(query, &result)
-        
         if status == errSecSuccess {
             return result as? Data
         } else {
@@ -49,14 +46,14 @@ struct KeychainHelper {
             return nil
         }
     }
-    
+
     static func delete(service: String, account: String) {
         let query = [
             kSecClass: kSecClassGenericPassword,
             kSecAttrService: service,
             kSecAttrAccount: account,
         ] as CFDictionary
-        
+
         let status = SecItemDelete(query)
         if status != errSecSuccess && status != errSecItemNotFound {
             print("Error deleting from Keychain: \(status)")

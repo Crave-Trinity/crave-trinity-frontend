@@ -11,20 +11,20 @@ import Foundation
 
 public final class AiChatRepositoryImpl: AiChatRepositoryProtocol {
     private let backendClient: CraveBackendAPIClient
-    
+
     public init(backendClient: CraveBackendAPIClient) {
         self.backendClient = backendClient
     }
-    
+
     public func getAiResponse(for userQuery: String, authToken: String) async throws -> String {
         let raw = try await backendClient.sendMessage(userQuery: userQuery, authToken: authToken)
-        let cleaned = raw.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+        let cleaned = raw.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !cleaned.isEmpty else {
             throw ChatDataError.noResponse
         }
         return cleaned
     }
-    
+
     public func getTestToken() async throws -> String {
         try await backendClient.generateTestToken()
     }
@@ -34,7 +34,7 @@ public enum ChatDataError: Error, LocalizedError {
     case noResponse
     case invalidDataFormat
     case parsingFailed(String)
-    
+
     public var errorDescription: String? {
         switch self {
         case .noResponse:

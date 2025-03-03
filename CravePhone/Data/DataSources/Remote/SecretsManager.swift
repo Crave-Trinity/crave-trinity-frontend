@@ -26,7 +26,7 @@ public enum SecretsManager {
 
 public enum SecretsError: Error, LocalizedError {
     case missingKey(String)
-    
+
     public var errorDescription: String? {
         switch self {
         case .missingKey(let keyName):

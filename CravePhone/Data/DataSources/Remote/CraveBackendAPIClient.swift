@@ -17,7 +17,7 @@ public enum APIError: Error, Equatable {
     case unauthorized
     case serverError(Int)
     case other(String)
-    
+
     public var localizedDescription: String {
         switch self {
         case .invalidURL:           return "Invalid URL."
@@ -29,7 +29,7 @@ public enum APIError: Error, Equatable {
         case .other(let msg):       return msg
         }
     }
-    
+
     public static func == (lhs: APIError, rhs: APIError) -> Bool {
         switch (lhs, rhs) {
         case (.invalidURL, .invalidURL),
@@ -50,16 +50,16 @@ public enum APIError: Error, Equatable {
     }
 }
 
-// Matches the backend's JSON: { "message": "..." }
+// Backend returns {"message": "..."}
 public struct ChatResponse: Decodable {
     public let message: String
 }
 
 public class CraveBackendAPIClient {
     private let baseURLString = "https://crave-mvp-backend-production.up.railway.app"
-    
+
     public init() {}
-    
+
     public func sendMessage(userQuery: String, authToken: String) async throws -> String {
         guard let url = URL(string: "\(baseURLString)/api/v1/chat") else {
             throw APIError.invalidURL
@@ -68,15 +68,15 @@ public class CraveBackendAPIClient {
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("Bearer \(authToken)", forHTTPHeaderField: "Authorization")
-        
+
         let payload = ["userQuery": userQuery]
         request.httpBody = try JSONSerialization.data(withJSONObject: payload, options: [])
-        
+
         let (data, response) = try await URLSession.shared.data(for: request)
         guard let httpResponse = response as? HTTPURLResponse else {
             throw APIError.invalidResponse
         }
-        
+
         switch httpResponse.statusCode {
         case 200..<300:
             do {
@@ -93,7 +93,7 @@ public class CraveBackendAPIClient {
             throw APIError.invalidResponse
         }
     }
-    
+
     public func generateTestToken() async throws -> String {
         guard let url = URL(string: "\(baseURLString)/api/admin/generate-test-token") else {
             throw APIError.invalidURL
@@ -101,12 +101,12 @@ public class CraveBackendAPIClient {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        
+
         let (data, response) = try await URLSession.shared.data(for: request)
         guard let httpResponse = response as? HTTPURLResponse else {
             throw APIError.invalidResponse
         }
-        
+
         switch httpResponse.statusCode {
         case 200..<300:
             let dict = try JSONDecoder().decode([String: String].self, from: data)
