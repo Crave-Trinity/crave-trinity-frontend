@@ -1,7 +1,18 @@
+<!--
+=================================================================
+4) Info.plist
+   CravePhone/Info.plist
+
+Used for iOS app configuration, usage descriptions, etc.
+Replace or merge carefully with your existing Info.plist.
+=================================================================
+-->
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+ "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+    <!-- Basic app info -->
     <key>CFBundleExecutable</key>
     <string>$(EXECUTABLE_NAME)</string>
     <key>CFBundleIdentifier</key>
@@ -16,23 +27,31 @@
     <string>AppIcon</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
+    
+    <!-- Usage descriptions -->
     <key>NSMicrophoneUsageDescription</key>
     <string>This app uses the microphone to record cravings.</string>
     <key>NSSpeechRecognitionUsageDescription</key>
     <string>This app uses speech recognition to convert voice input into text.</string>
+    
+    <!-- Scenes -->
     <key>UIApplicationSceneManifest</key>
     <dict>
-        <key>UIApplicationPreferredDefaultSceneSessionRole</key>
-        <string>UIWindowSceneSessionRoleApplication</string>
         <key>UIApplicationSupportsMultipleScenes</key>
         <true/>
         <key>UISceneConfigurations</key>
         <dict/>
     </dict>
+    
+    <!-- Launch screen -->
     <key>UILaunchStoryboardName</key>
-    <string>LaunchScreen</string> <!-- Ensure your storyboard file matches "LaunchScreen.storyboard" -->
+    <string>LaunchScreen</string>
+    
+    <!-- Status bar style -->
     <key>UIStatusBarStyle</key>
     <string>UIStatusBarStyleDarkContent</string>
+    
+    <!-- Supported orientations -->
     <key>UISupportedInterfaceOrientations</key>
     <array>
         <string>UIInterfaceOrientationLandscapeLeft</string>
@@ -42,4 +61,3 @@
     </array>
 </dict>
 </plist>
-

@@ -1,11 +1,12 @@
+//=================================================================
+// 6) CravingRepositoryImpl.swift
+//    CravePhone/Data/Repositories/CravingRepositoryImpl.swift
 //
-//  CravingRepositoryImpl.swift
-//  CravePhone
+//  PURPOSE:
+//  - Basic repository for cravings, using CravingManager or a DB approach.
+//  - Does not talk directly to the backend in this example.
 //
-//  Uncle Bob & Steve Jobs Style:
-//   - Updated call to constructor: 'manager:' instead of 'cravingManager:' in DependencyContainer.
-//   - No further changes needed.
-//
+//=================================================================
 
 import Foundation
 
@@ -33,4 +34,3 @@ public final class CravingRepositoryImpl: CravingRepository {
         try await manager.delete(craving)
     }
 }
-
