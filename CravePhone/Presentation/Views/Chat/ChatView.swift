@@ -2,81 +2,83 @@
 //  ChatView.swift
 //  CravePhone/Presentation/Views/Chat
 //
-//  GOF/SOLID EXPLANATION:
-//   - Single Responsibility: Displays chat UI and interacts with ViewModel.
-//   - Minimal logic; delegates any real business decisions to the ViewModel.
-//   - Leverages SwiftUI for data-binding to @ObservedObject ViewModel.
+//  PURPOSE:
+//   - Shows the chat messages & text input box
+//   - Has a "Get Test Token" button for dev usage
 //
+
 import SwiftUI
 
 struct ChatView: View {
-    
-    // MARK: - Properties
     @ObservedObject var viewModel: ChatViewModel
-    @State private var messageText: String = ""           // local textfield binding
-    @FocusState private var isInputFocused: Bool            // track keyboard focus
+    @State private var messageText = ""
+    @FocusState private var isInputFocused: Bool
     
-    // MARK: - Init
     init(viewModel: ChatViewModel) {
         self.viewModel = viewModel
     }
     
-    // MARK: - Body
     var body: some View {
         ZStack {
-            // A black background for the entire safe area
             Color.black.ignoresSafeArea()
-                
+            
             VStack(spacing: 0) {
-                    
-                // Scrollable area for messages:
-                ScrollViewReader { scrollProxy in
+                // 1) Chat messages
+                ScrollViewReader { proxy in
                     ScrollView {
-                        LazyVStack(spacing: 12) {
+                        LazyVStack(spacing: 10) {
                             ForEach(viewModel.messages) { msg in
-                                MessageBubble(message: msg)
+                                messageBubble(msg)
                                     .id(msg.id)
                             }
                         }
-                        .padding(.horizontal)
-                        .padding(.top, 16)
-                        .padding(.bottom, 8)
+                        .padding(.top, 12)
                     }
-                    .onChange(of: viewModel.messages.count, initial: !viewModel.messages.isEmpty) { oldCount, newCount in
-                        // If a new message is appended, scroll to bottom
-                        if newCount > oldCount, let lastMsg = viewModel.messages.last {
+                    .onChange(of: viewModel.messages.count) { oldCount, newCount in
+                        if newCount > oldCount, let lastID = viewModel.messages.last?.id {
                             withAnimation {
-                                scrollProxy.scrollTo(lastMsg.id, anchor: .bottom)
+                                proxy.scrollTo(lastID, anchor: .bottom)
                             }
                         }
                     }
                 }
-                    
-                // Chat Input Bar
+                
+                // 2) Input bar
                 inputBar
             }
-                
-            // Loading Overlay
+            
+            // 3) Loading Overlay
             if viewModel.isLoading {
-                LoadingOverlay()
+                VStack {
+                    Spacer()
+                    ProgressView("Thinking...")
+                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                        .padding()
+                        .background(Color.black.opacity(0.6))
+                        .cornerRadius(8)
+                    Spacer()
+                }
             }
-
-            // ADDED: Get Test Token Button (Positioned at the top)
+            
+            // 4) "Get Test Token" dev button at top
             VStack {
                 HStack {
                     Button("Get Test Token") {
                         viewModel.getTestToken()
                     }
-                    .padding()
+                    .padding(8)
                     .background(Color.blue)
                     .foregroundColor(.white)
                     .cornerRadius(8)
-                    Spacer() // Push the button to the leading edge
+                    
+                    Spacer()
                 }
-                Spacer() // Push the button to the top
+                .padding()
+                
+                Spacer()
             }
         }
-        // Show alerts
+        // Show any alerts from the view model
         .alert(item: $viewModel.alertInfo) { info in
             Alert(
                 title: Text(info.title),
@@ -84,114 +86,65 @@ struct ChatView: View {
                 dismissButton: .default(Text("OK"))
             )
         }
-        // Send welcome message if needed
         .onAppear {
+            // Optionally load token from Keychain if you want to skip tapping "Get Test Token" every time
+            viewModel.loadAuthToken()
             viewModel.sendWelcomeMessage()
-          //  viewModel.getTestToken() //Alternative way to get token
         }
     }
     
-    // MARK: - Subviews
-    
-    /// The input bar at the bottom
     private var inputBar: some View {
-        VStack(spacing: 0) {
-            Divider().background(Color.gray.opacity(0.3))
-                
-            HStack(spacing: 12) {
-                // Text field for user message
+        VStack {
+            Divider().background(Color.gray.opacity(0.4))
+            HStack {
                 TextField("Type a message...", text: $messageText)
-                    .padding(12)
-                    .background(Color.gray.opacity(0.2))
-                    .cornerRadius(20)
                     .focused($isInputFocused)
-                    // Pressing "Send" key on the keyboard
-                    .submitLabel(.send)
-                    .onSubmit { sendMessage() }
-                    
-                // Send button
-                Button(action: sendMessage) {
-                    Image(systemName: "arrow.up.circle.fill")
-                        .font(.system(size: 32))
-                        .foregroundColor(
-                            messageText.trimmingCharacters(in: .whitespaces).isEmpty
-                            ? .gray : .blue
-                        )
+                    .padding(.horizontal, 12)
+                    .frame(minHeight: 36)
+                    .onSubmit {
+                        sendMessage()
+                    }
+                
+                Button(action: {
+                    sendMessage()
+                }) {
+                    Image(systemName: "paperplane.fill")
+                        .font(.system(size: 24))
                 }
-                .disabled(
-                    messageText.trimmingCharacters(in: .whitespaces).isEmpty ||
-                    viewModel.isLoading
-                )
+                .disabled(messageText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+                          || viewModel.isLoading)
+                .padding(.trailing, 12)
             }
-            .padding(.horizontal)
-            .padding(.vertical, 12)
-            .background(Color.black.opacity(0.3))
+            .padding(.vertical, 8)
         }
+        .background(Color.gray.opacity(0.1))
     }
     
-    /// Sends the user’s typed message to the ViewModel
     private func sendMessage() {
-        // 1) Trim the local text
-        let trimmed = messageText.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !trimmed.isEmpty else { return }
-        
-        // 2) Assign to ViewModel’s userInput (the CRUCIAL fix)
-        viewModel.userInput = trimmed
-        
-        // 3) Clear local text
+        let text = messageText.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !text.isEmpty else { return }
+        viewModel.userInput = text
         messageText = ""
-        
-        // 4) Trigger the async request in the ViewModel
         Task {
             await viewModel.sendMessage()
         }
     }
     
-    /// Single message bubble
-    struct MessageBubble: View {
-        let message: ChatViewModel.Message
-        
-        var body: some View {
-            HStack {
-                if message.isUser { Spacer() }
+    private func messageBubble(_ msg: ChatViewModel.Message) -> some View {
+        HStack {
+            if msg.isUser { Spacer() }
+            VStack(alignment: msg.isUser ? .trailing : .leading) {
+                Text(msg.content)
+                    .padding()
+                    .background(msg.isUser ? Color.blue.opacity(0.8) : Color.gray.opacity(0.3))
+                    .cornerRadius(12)
                 
-                VStack(alignment: message.isUser ? .trailing : .leading) {
-                    Text(message.content)
-                        .padding(12)
-                        .background(
-                            message.isUser
-                            ? Color.blue.opacity(0.9)
-                            : Color.gray.opacity(0.4)
-                        )
-                        .cornerRadius(16)
-                    
-                    Text(message.timestamp.formatted(date: .omitted, time: .shortened))
-                        .font(.system(size: 11))
-                        .foregroundColor(.gray)
-                }
-                
-                if !message.isUser { Spacer() }
+                Text(msg.timestamp.formatted(date: .omitted, time: .shortened))
+                    .font(.system(size: 10))
+                    .foregroundColor(.gray)
             }
-            .padding(.horizontal, 4)
+            if !msg.isUser { Spacer() }
         }
-    }
-    
-    /// A translucent overlay with a spinner for loading states
-    struct LoadingOverlay: View {
-        var body: some View {
-            VStack {
-                Spacer()
-                HStack {
-                    Spacer()
-                    ProgressView("Thinking...")
-                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                        .padding(20)
-                        .background(Color.black.opacity(0.6))
-                        .cornerRadius(12)
-                    Spacer()
-                }
-                Spacer()
-            }
-        }
+        .padding(.horizontal, 8)
     }
 }

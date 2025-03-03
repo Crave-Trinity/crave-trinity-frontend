@@ -1,14 +1,16 @@
+//
 //  ChatViewModel.swift
 //  CravePhone/Presentation/ViewModels/Chat
 //
+//  PURPOSE:
+//   - Orchestrates retrieving & storing the token, sending user messages, and storing chat history.
 
 import SwiftUI
 import Combine
-import Security // Import the Security framework for Keychain access
 
 @MainActor
 public final class ChatViewModel: ObservableObject {
-
+    
     // MARK: - Nested Type: Chat Message
     public struct Message: Identifiable {
         public let id = UUID()
@@ -16,141 +18,126 @@ public final class ChatViewModel: ObservableObject {
         public let isUser: Bool
         public let timestamp: Date = Date()
     }
-
+    
     // MARK: - Published Properties
     @Published public var messages: [Message] = []
     @Published public var userInput: String = ""
     @Published public var isLoading: Bool = false
-    @Published public var alertInfo: AlertInfo? // For displaying errors (e.g., "Empty Input")
-
+    @Published public var alertInfo: AlertInfo?
+    
     // MARK: - Dependencies
     private let aiChatUseCase: AiChatUseCaseProtocol
-
-    // MARK: - Authentication Properties
-    private var authToken: String?
-    private let keychainService = "com.yourcompany.CraveTrinity" // Replace with a unique identifier!  VERY IMPORTANT
+    
+    // MARK: - Keychain Info
+    private let keychainService = "com.yourcompany.CraveTrinity"
     private let keychainAccount = "userAuthToken"
-
-
-    // MARK: - Initialization
+    private var authToken: String?
+    
     public init(aiChatUseCase: AiChatUseCaseProtocol) {
         self.aiChatUseCase = aiChatUseCase
-        // DO NOT loadAuthToken() here. Load it after getting the token.
     }
-
-    // MARK: - Authentication Methods
-
-    // Function to load the token from the Keychain
+    
+    // MARK: - Load/Save/Clear
     func loadAuthToken() {
-        guard let tokenData = KeychainHelper.load(service: keychainService, account: keychainAccount),
-              let token = String(data: tokenData, encoding: .utf8) else {
-            // Handle the case where the token isn't found
-            self.alertInfo = AlertInfo(title: "Authentication", message: "Authentication token not found.")
-            print("Authentication token not found")
+        guard
+            let data = KeychainHelper.load(service: keychainService, account: keychainAccount),
+            let token = String(data: data, encoding: .utf8)
+        else {
+            print("Token not found in Keychain")
             return
         }
-        self.authToken = token
-        print("Token loaded successfully: \(token)") // Keep this for debugging
+        authToken = token
+        print("Token loaded from Keychain: \(token)")
     }
-
-    // Function to save the token to the Keychain
+    
     func saveAuthToken(token: String) {
-        guard let tokenData = token.data(using: .utf8) else {
-            print("Error encoding token to data")
-            return
-        }
-        KeychainHelper.save(data: tokenData, service: keychainService, account: keychainAccount)
-        print("Token saved successfully") // Add logging
+        guard let data = token.data(using: .utf8) else { return }
+        KeychainHelper.save(data: data, service: keychainService, account: keychainAccount)
+        authToken = token
+        print("Token saved to Keychain")
     }
-
-    // Function to clear the token (on logout or 401 error)
+    
     func clearAuthToken() {
         KeychainHelper.delete(service: keychainService, account: keychainAccount)
-        self.authToken = nil
-        print("Token cleared") // Add logging
+        authToken = nil
+        print("Token cleared from Keychain")
     }
-
-
+    
     // MARK: - Public Methods
+    
+    /// 1) Calls the backend to get a test JWT, 2) saves it in Keychain
     public func getTestToken() {
         Task {
             do {
-                let token = try await aiChatUseCase.getTestToken()
-                print("Received token: \(token)")
-                saveAuthToken(token: token) // Save to keychain
-                loadAuthToken() // *** LOAD THE TOKEN IMMEDIATELY AFTER SAVING ***
-                self.alertInfo = AlertInfo(title: "Success", message: "Test token retrieved!")
+                let newToken = try await aiChatUseCase.getTestToken()
+                saveAuthToken(token: newToken)
+                alertInfo = AlertInfo(title: "Success", message: "Test token retrieved.")
             } catch {
-                print("Error getting test token: \(error)")
-                DispatchQueue.main.async {
-                    self.alertInfo = AlertInfo(title: "Error", message: "Failed to get test token: \(error.localizedDescription)")
-                }
+                print("Error retrieving test token: \(error)")
+                alertInfo = AlertInfo(title: "Error", message: "Failed to get test token: \(error.localizedDescription)")
             }
         }
     }
-
-    /// Sends user's current `userInput` to the AI, appends responses to `messages`.
+    
+    /// Send the user's typed query as a chat message
     public func sendMessage() async {
+        // 1) Basic guard
         let query = userInput.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !query.isEmpty else {
             alertInfo = AlertInfo(title: "Empty Input", message: "Please type something before sending.")
             return
         }
-
+        
+        // 2) Append user message locally
         appendMessage(query, isUser: true)
         userInput = ""
-
+        
+        // 3) Must have a token
         guard let token = authToken else {
-            DispatchQueue.main.async {
-                self.alertInfo = AlertInfo(title: "Authentication", message: "Not authenticated. Please log in.")
-            }
-            print("No auth token, cannot send message")
+            alertInfo = AlertInfo(title: "Authentication", message: "No token. Tap 'Get Test Token' first.")
             return
         }
-        print("Current auth token: \(token)")
-
+        
+        // 4) Actually call the AI
+        isLoading = true
         do {
-            isLoading = true
             let aiResponse = try await aiChatUseCase.execute(userQuery: query, authToken: token)
             appendMessage(aiResponse, isUser: false)
         } catch {
             print("Error in ChatViewModel.sendMessage(): \(error)")
+            // If 401 or expired, clear token
             if let apiError = error as? APIError, apiError == .unauthorized {
-                 DispatchQueue.main.async {
-                    self.clearAuthToken()
-                    self.alertInfo = AlertInfo(title: "Authentication", message: "Your session has expired. Please log in again.")
-                }
+                clearAuthToken()
+                alertInfo = AlertInfo(
+                    title: "Session Expired",
+                    message: "Please re-fetch a token (401)."
+                )
             } else {
-              self.alertInfo = AlertInfo(title: "Error", message: error.localizedDescription)
+                alertInfo = AlertInfo(title: "Error", message: error.localizedDescription)
             }
         }
         isLoading = false
     }
-
-    /// Displays a one-time welcome message.
+    
+    /// Show a one-time welcome message
     public func sendWelcomeMessage() {
         if !UserDefaults.standard.bool(forKey: "welcomeMessageSent") {
             Task {
-                try? await Task.sleep(nanoseconds: 100_000_000) // 0.1s
+                try? await Task.sleep(nanoseconds: 200_000_000)
                 messages.append(
-                    Message(
-                        content: """
-                        Hi, Welcome to 🦊 Cravey Chat!
-
-                        ⚠️ Disclaimer:
-                        I’m an AI-powered craving analyzer. I cannot diagnose or provide medical treatment. Please consult a healthcare professional for such questions.
-
-                        How can I help process your cravings today?
+                    Message(content: """
+                        Hi, welcome to Crave Chat!
+                        (Disclaimer: I'm an AI craving analyst, not a doc.)
                         """,
-                        isUser: false
+                            isUser: false
                     )
                 )
                 UserDefaults.standard.set(true, forKey: "welcomeMessageSent")
             }
         }
     }
-
-    // MARK: - Private Helpers
+    
+    // MARK: - Helpers
     private func appendMessage(_ content: String, isUser: Bool) {
         messages.append(Message(content: content, isUser: isUser))
     }

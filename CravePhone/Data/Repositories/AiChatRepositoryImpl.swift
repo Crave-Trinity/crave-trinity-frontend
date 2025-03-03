@@ -1,42 +1,42 @@
+//
 //  AiChatRepositoryImpl.swift
 //  CravePhone/Data/Repositories
+//
+//  PURPOSE:
+//   - Concrete implementation of AiChatRepositoryProtocol
+//   - Calls CraveBackendAPIClient for chat requests and test-token requests.
 //
 
 import Foundation
 
 public final class AiChatRepositoryImpl: AiChatRepositoryProtocol {
-    private let backendClient: CraveBackendAPIClient // This was the issue:  Should not be public
-
+    private let backendClient: CraveBackendAPIClient
+    
     public init(backendClient: CraveBackendAPIClient) {
         self.backendClient = backendClient
     }
-
+    
+    // Pass the token along to the backend method
     public func getAiResponse(for userQuery: String, authToken: String) async throws -> String {
-        // 1) Call the backend, passing the token
-        let responseText = try await backendClient.sendMessage(userQuery: userQuery, authToken: authToken) // Corrected method name
-
-        // 2) Clean or filter the text
-        let cleaned = responseText.trimmingCharacters(in: .whitespacesAndNewlines) // Corrected this line
+        let raw = try await backendClient.sendMessage(userQuery: userQuery, authToken: authToken)
+        let cleaned = raw.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !cleaned.isEmpty else {
             throw ChatDataError.noResponse
         }
-
-        // 3) Return the cleaned text
         return cleaned
     }
-
-    // Implement getTestToken in the repository
-    public func getTestToken() async throws -> String {  // Added public
-        try await backendClient.generateTestToken()
+    
+    // Provide a method to retrieve a test token
+    public func getTestToken() async throws -> String {
+        return try await backendClient.generateTestToken()
     }
 }
 
-// MARK: - ChatDataError
 public enum ChatDataError: Error, LocalizedError {
     case noResponse
     case invalidDataFormat
     case parsingFailed(String)
-
+    
     public var errorDescription: String? {
         switch self {
         case .noResponse:
