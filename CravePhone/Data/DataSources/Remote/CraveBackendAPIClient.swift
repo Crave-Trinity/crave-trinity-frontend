@@ -42,8 +42,10 @@ public final class CraveBackendAPIClient {
         let endpoint = baseURL.appendingPathComponent("api/v1/chat")
         var request = URLRequest(url: endpoint)
         request.httpMethod = "POST"
+
         // 3) We want to send JSON
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
         // 4) Build the request body
         let body = ChatRequestDTO(userQuery: userQuery)
         request.httpBody = try JSONEncoder().encode(body)

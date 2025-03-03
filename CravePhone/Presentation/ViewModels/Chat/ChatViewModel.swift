@@ -7,6 +7,7 @@
 //   - Open/Closed: We can adjust disclaimers or text w/o rewriting the entire logic.
 //   - Liskov Substitution: This ViewModel could be replaced by a test double in unit tests.
 //
+
 import SwiftUI
 import Combine
 
@@ -81,7 +82,6 @@ public final class ChatViewModel: ObservableObject {
     public func sendWelcomeMessage() {
         
         if !UserDefaults.standard.bool(forKey: "welcomeMessageSent") {
-            
             Task {
                 // A brief delay for a smoother user experience
                 try? await Task.sleep(nanoseconds: 100_000_000) // 0.1s
@@ -92,7 +92,7 @@ public final class ChatViewModel: ObservableObject {
                         Hi, Welcome to 🦊 Cravey Chat!
 
                         ⚠️ Disclaimer:
-                        I’m an AI-powered craving analyzer. I cannot diagnose or provide medical treatment. Please consult a healthcare professional for such questions. 
+                        I’m an AI-powered craving analyzer. I cannot diagnose or provide medical treatment. Please consult a healthcare professional for such questions.
 
                         How can I help process your cravings today?
                         """,
