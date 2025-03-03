@@ -2,19 +2,15 @@
 //  LogCravingView.swift
 //  CravePhone
 //
-//  RESPONSIBILITY: Displays the Log Craving screen with sections for:
-//   - Description
-//   - Speech Toggle
-//   - Sliders (Intensity, Resistance)
-//   - Emotions
-//   - Submit Button
-//
 import SwiftUI
 
 public struct LogCravingView: View {
     @ObservedObject var viewModel: LogCravingViewModel
-    @State private var isSubmitting = false
+
+    // Declare a FocusState for controlling keyboard focus
     @FocusState private var isDescriptionFocused: Bool
+    
+    @State private var isSubmitting = false
 
     public init(viewModel: LogCravingViewModel) {
         self.viewModel = viewModel
@@ -22,18 +18,22 @@ public struct LogCravingView: View {
 
     public var body: some View {
         ZStack {
+            // Dismiss keyboard if user taps outside the text area
             CraveTheme.Colors.primaryGradient
-                .ignoresSafeArea(.all)
+                .ignoresSafeArea()
                 .onTapGesture {
-                    // Dismiss the keyboard on background tap
                     isDescriptionFocused = false
                 }
 
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
-                    CravingDescriptionSectionView(text: $viewModel.cravingDescription)
-                        .focused($isDescriptionFocused)
 
+                    // Pass the parent's focus binding to the child
+                    CravingDescriptionSectionView(
+                        text: $viewModel.cravingDescription,
+                        isFocused: $isDescriptionFocused
+                    )
+                    
                     CraveSpeechToggleButton(
                         isRecording: viewModel.isRecordingSpeech,
                         onToggle: {
@@ -41,12 +41,12 @@ public struct LogCravingView: View {
                             CraveHaptics.shared.mediumImpact()
                         }
                     )
-
+                    
                     CravingSlidersSectionView(
                         cravingStrength: $viewModel.cravingStrength,
                         resistance: $viewModel.confidenceToResist
                     )
-
+                    
                     CravingEmotionChipsView(
                         selectedEmotions: viewModel.selectedEmotions,
                         onToggleEmotion: { e in
@@ -60,6 +60,7 @@ public struct LogCravingView: View {
                 .padding()
             }
         }
+        // Keyboard toolbar with "Done"
         .toolbar {
             ToolbarItemGroup(placement: .keyboard) {
                 Spacer()
@@ -68,6 +69,7 @@ public struct LogCravingView: View {
                 }
             }
         }
+        // Example Alert usage
         .alert(item: $viewModel.alertInfo) { info in
             Alert(
                 title: Text(info.title),
@@ -100,9 +102,11 @@ public struct LogCravingView: View {
     private func submitCraving() {
         guard !isSubmitting else { return }
         isSubmitting = true
+        
         Task {
             await viewModel.logCraving()
             isSubmitting = false
+            // Also dismiss keyboard after submitting
             isDescriptionFocused = false
         }
     }

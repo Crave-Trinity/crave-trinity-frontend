@@ -2,8 +2,9 @@
 //  CraveTextEditor.swift
 //  CravePhone
 //
-//  RESPONSIBILITY: Text editor with placeholder logic & character limit.
-//  Speech mic button removed, now in CraveSpeechToggleButton.
+//  RESPONSIBILITY:
+//    - A custom TextEditor with placeholder logic & character-limit control.
+//    - We’ve removed any .focused() calls here, because we now manage focus in the parent.
 //
 
 import SwiftUI
@@ -15,17 +16,14 @@ struct CraveTextEditor: View {
     @State private var editorHeight: CGFloat = 120
 
     var body: some View {
-        ZStack {
+        ZStack(alignment: .topLeading) {
             if text.isEmpty {
                 placeholderContent
-                    // The parent view is responsible for setting focus.
-                    .onTapGesture {
-                        // Intentionally left blank; the parent's tap gesture will set focus.
-                    }
+                    // Tapping the placeholder triggers the parent's .onTapGesture to focus
+                    .allowsHitTesting(false)
             }
 
             TextEditor(text: $text)
-                // Remove the internal .focused modifier.
                 .font(CraveTheme.Typography.body)
                 .foregroundColor(CraveTheme.Colors.primaryText)
                 .frame(height: max(editorHeight, 120))
@@ -34,11 +32,9 @@ struct CraveTextEditor: View {
                 .cornerRadius(12)
                 .overlay(
                     RoundedRectangle(cornerRadius: 12)
-                        .stroke(
-                            Color.white.opacity(0.3),
-                            lineWidth: 1
-                        )
+                        .stroke(Color.white.opacity(0.3), lineWidth: 1)
                 )
+                // Clear the native text editor background on older iOS:
                 .modifier(ScrollBackgroundClearModifier())
                 .onChangeBackport(of: text, initial: false) { _, newVal in
                     if newVal.count > characterLimit {

@@ -3,15 +3,11 @@
 //  CravePhone
 //
 //  RESPONSIBILITY:
-//    A custom UIHostingController that automatically adjusts layout for the keyboard.
-//    - On iOS 16+: Uses UIKeyboardLayoutGuide.
-//    - On older iOS: Falls back to manual notification-based adjustments.
+//    - A custom UIHostingController that automatically adjusts layout for the keyboard.
+//    - On iOS 16+: Pins bottom of SwiftUI content to the keyboard layout guide.
+//    - On older iOS: Falls back to manual safeAreaInsets adjustments.
 //
-//  DESIGN FOR STEVE JOBS, CODE LIKE UNCLE BOB:
-//    - Single Responsibility: Only handles the keyboard.
-//    - Open for extension, closed for modification.
-//    - No duplication of logic across multiple views.
-//
+
 import SwiftUI
 import UIKit
 
@@ -24,10 +20,9 @@ public class KeyboardAdaptiveHostingController<Content: View>: UIHostingControll
     public override func viewDidLoad() {
         super.viewDidLoad()
 
-        // iOS 16 and later: Pin bottom of the SwiftUI content to the keyboard layout guide’s top anchor.
+        // iOS 16 and later: Use UIKeyboardLayoutGuide
         if #available(iOS 16.0, *) {
             let guide = view.keyboardLayoutGuide
-            // The first subview is where SwiftUI’s content is hosted.
             if let swiftUIView = view.subviews.first {
                 swiftUIView.translatesAutoresizingMaskIntoConstraints = false
                 NSLayoutConstraint.activate([
@@ -38,12 +33,11 @@ public class KeyboardAdaptiveHostingController<Content: View>: UIHostingControll
                 ])
             }
         } else {
-            // Fallback for iOS < 16
             addKeyboardObservers()
         }
     }
 
-    // MARK: - Legacy Fallback
+    // MARK: - Fallback for iOS < 16
     private func addKeyboardObservers() {
         keyboardWillShowObserver = NotificationCenter.default.addObserver(
             forName: UIResponder.keyboardWillShowNotification,
@@ -64,10 +58,9 @@ public class KeyboardAdaptiveHostingController<Content: View>: UIHostingControll
 
     private func adjustForKeyboard(notification: Notification, isShowing: Bool) {
         guard let userInfo = notification.userInfo else { return }
-
         let duration = (userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double) ?? 0.3
         let curveRaw = (userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? NSNumber)?.uintValue
-                        ?? UIView.AnimationOptions.curveEaseInOut.rawValue
+            ?? UIView.AnimationOptions.curveEaseInOut.rawValue
         let animationOptions = UIView.AnimationOptions(rawValue: curveRaw)
 
         var keyboardHeight: CGFloat = 0
@@ -81,7 +74,7 @@ public class KeyboardAdaptiveHostingController<Content: View>: UIHostingControll
             options: animationOptions,
             animations: {
                 if isShowing {
-                    // Increase safe area so the content is pushed above the keyboard
+                    // Increase safe area so content is pushed above keyboard
                     self.additionalSafeAreaInsets.bottom = keyboardHeight - self.view.safeAreaInsets.bottom
                 } else {
                     self.additionalSafeAreaInsets.bottom = 0

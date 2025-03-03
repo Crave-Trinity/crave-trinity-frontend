@@ -2,15 +2,14 @@
 //  CravingDescriptionSectionView.swift
 //  CravePhone
 //
-//  RESPONSIBILITY: Collects text for describing a craving.
-//
-
 import SwiftUI
 
 struct CravingDescriptionSectionView: View {
     @Binding var text: String
-    // Accept a FocusState binding from the parent.
-    @FocusState var isFocused: Bool
+
+    // This must be a FocusState.Binding<Bool>,
+    // which can be passed to .focused(...)
+    @FocusState.Binding var isFocused: Bool
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -19,13 +18,14 @@ struct CravingDescriptionSectionView: View {
                 .foregroundColor(CraveTheme.Colors.primaryText)
 
             CraveTextEditor(text: $text)
-                .frame(maxWidth: .infinity, minHeight: 120)
-                // Attach the focus modifier to control the keyboard.
+                // Tie the editor focus to this parent's focus binding
                 .focused($isFocused)
+                // Let the user tap the text area to become focused
                 .onTapGesture {
                     isFocused = true
                 }
-
+                .frame(maxWidth: .infinity, minHeight: 120)
+            
             HStack {
                 Spacer()
                 Text("\(text.count)/300")
