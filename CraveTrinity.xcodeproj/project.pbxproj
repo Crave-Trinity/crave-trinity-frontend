@@ -110,6 +110,7 @@
 				Tests/UI/CravePhoneUITests.swift,
 				Tests/UI/CravePhoneUITestsLaunchTests.swift,
 				Tests/UI/CravingListFlowUITests.swift,
+				Tests/UI/CravingLogViewModelTests.swift,
 				Tests/UI/LogCravingFlowUITests.swift,
 				Tests/Unit/AnalyticsModelTests.swift,
 				Tests/Unit/CravingManagerTests.swift,
@@ -162,6 +163,7 @@
 				Presentation/Common/SafeAreaInsetsEnvironment.swift = (ios, );
 				"Presentation/Configuration/AnalyticsConfiguration+Defaults.swift" = (ios, );
 				Presentation/Configuration/AnalyticsConfiguration.swift = (ios, );
+				Presentation/Utilities/ViewModifiers.swift = (ios, );
 				Presentation/ViewModels/Analytics/AnalyticsDashboardViewModel.swift = (ios, );
 				Presentation/ViewModels/Analytics/AnalyticsViewModel.swift = (ios, );
 				Presentation/ViewModels/Craving/CravingListViewModel.swift = (ios, );
@@ -224,6 +226,7 @@
 				Tests/UI/CravePhoneUITests.swift,
 				Tests/UI/CravePhoneUITestsLaunchTests.swift,
 				Tests/UI/CravingListFlowUITests.swift,
+				Tests/UI/CravingLogViewModelTests.swift,
 				Tests/UI/LogCravingFlowUITests.swift,
 			);
 			platformFiltersByRelativePath = {

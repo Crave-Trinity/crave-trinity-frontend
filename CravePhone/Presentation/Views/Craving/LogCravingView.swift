@@ -13,29 +13,29 @@
 import SwiftUI
 
 public struct LogCravingView: View {
-    
     @ObservedObject var viewModel: LogCravingViewModel
     @State private var isSubmitting = false
-    
+    // Create a FocusState to control the text editor’s focus.
+    @FocusState private var isDescriptionFocused: Bool
+
     public init(viewModel: LogCravingViewModel) {
         self.viewModel = viewModel
     }
-    
+
     public var body: some View {
         ZStack {
-            // Example background
             CraveTheme.Colors.primaryGradient
                 .ignoresSafeArea(.all)
-            
+                // Dismiss keyboard when tapping the background.
+                .onTapGesture {
+                    isDescriptionFocused = false
+                }
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
-                    
-                    // Example text editor or text field
-                    CravingDescriptionSectionView(
-                        text: $viewModel.cravingDescription
-                    )
-                    
-                    // Example speech toggle button
+                    // Pass the focus state down to the description view.
+                    CravingDescriptionSectionView(text: $viewModel.cravingDescription)
+                        .focused($isDescriptionFocused)
+
                     CraveSpeechToggleButton(
                         isRecording: viewModel.isRecordingSpeech,
                         onToggle: {
@@ -43,14 +43,12 @@ public struct LogCravingView: View {
                             CraveHaptics.shared.mediumImpact()
                         }
                     )
-                    
-                    // Example sliders
+
                     CravingSlidersSectionView(
                         cravingStrength: $viewModel.cravingStrength,
                         resistance: $viewModel.confidenceToResist
                     )
-                    
-                    // Example emotions
+
                     CravingEmotionChipsView(
                         selectedEmotions: viewModel.selectedEmotions,
                         onToggleEmotion: { e in
@@ -58,10 +56,19 @@ public struct LogCravingView: View {
                             CraveHaptics.shared.selectionChanged()
                         }
                     )
-                    
+
                     submitButton
                 }
                 .padding()
+            }
+        }
+        // Add a toolbar above the keyboard with a "Done" button.
+        .toolbar {
+            ToolbarItemGroup(placement: .keyboard) {
+                Spacer()
+                Button("Done") {
+                    isDescriptionFocused = false
+                }
             }
         }
         .alert(item: $viewModel.alertInfo) { info in
@@ -72,7 +79,7 @@ public struct LogCravingView: View {
             )
         }
     }
-    
+
     private var submitButton: some View {
         Button {
             submitCraving()
@@ -92,13 +99,15 @@ public struct LogCravingView: View {
         }
         .disabled(isSubmitting)
     }
-    
+
     private func submitCraving() {
         guard !isSubmitting else { return }
         isSubmitting = true
         Task {
             await viewModel.logCraving()
             isSubmitting = false
+            // Dismiss the keyboard upon submission.
+            isDescriptionFocused = false
         }
     }
 }

@@ -13,18 +13,19 @@ struct CraveTextEditor: View {
     let characterLimit: Int = 300
 
     @State private var editorHeight: CGFloat = 120
-    @FocusState private var isFocused: Bool
 
     var body: some View {
         ZStack {
             if text.isEmpty {
                 placeholderContent
-                    .opacity(isFocused ? 0.4 : 0.7)
-                    .onTapGesture { isFocused = true }
+                    // The parent view is responsible for setting focus.
+                    .onTapGesture {
+                        // Intentionally left blank; the parent's tap gesture will set focus.
+                    }
             }
 
             TextEditor(text: $text)
-                .focused($isFocused)
+                // Remove the internal .focused modifier.
                 .font(CraveTheme.Typography.body)
                 .foregroundColor(CraveTheme.Colors.primaryText)
                 .frame(height: max(editorHeight, 120))
@@ -34,9 +35,7 @@ struct CraveTextEditor: View {
                 .overlay(
                     RoundedRectangle(cornerRadius: 12)
                         .stroke(
-                            isFocused
-                            ? CraveTheme.Colors.accent.opacity(0.5)
-                            : Color.white.opacity(0.3),
+                            Color.white.opacity(0.3),
                             lineWidth: 1
                         )
                 )
@@ -74,21 +73,6 @@ struct CraveTextEditor: View {
             withAnimation(.easeOut(duration: 0.2)) {
                 editorHeight = newHeight
             }
-        }
-    }
-}
-
-// For clearing the scroll background in older iOS versions
-struct ScrollBackgroundClearModifier: ViewModifier {
-    func body(content: Content) -> some View {
-        if #available(iOS 16.0, *) {
-            return AnyView(content.scrollContentBackground(.hidden))
-        } else {
-            return AnyView(
-                content
-                    .onAppear { UITextView.appearance().backgroundColor = .clear }
-                    .onDisappear { UITextView.appearance().backgroundColor = nil }
-            )
         }
     }
 }
