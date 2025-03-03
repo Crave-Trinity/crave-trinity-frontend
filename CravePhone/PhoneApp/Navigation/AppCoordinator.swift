@@ -1,15 +1,4 @@
-//=========================================
-//  AppCoordinator.swift
-//  CravePhone
-//
-//  DESCRIPTION:
-//    - Manages each major feature view in the navigation or tab setup.
-//
-//  ARCHITECTURE (SOLID):
-//    - Single Responsibility: Provide creation for each screen.
-//
-//  LAST UPDATED: <today's date>
-//=========================================
+// AppCoordinator.swift
 import SwiftUI
 
 @MainActor

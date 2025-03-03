@@ -8,27 +8,29 @@ import SwiftData
 
 @MainActor
 public final class DependencyContainer: ObservableObject {
-    // 1) Store the container
+    
     @Published private(set) var modelContainer: ModelContainer
     
-    // 2) Create a single ModelContext referencing that container
     private lazy var modelContext: ModelContext = {
         ModelContext(modelContainer)
     }()
-
+    
     // MARK: - Craving
     private lazy var cravingManager: CravingManager = {
-        // Use modelContext, not modelContainer.context
         CravingManager(modelContext: modelContext)
     }()
     
     private lazy var cravingRepository: CravingRepository = {
         CravingRepositoryImpl(manager: cravingManager)
     }()
-
+    
+    // MARK: - Speech
+    private lazy var speechService: SpeechToTextServiceProtocol = {
+        SpeechToTextServiceImpl()
+    }()
+    
     // MARK: - Analytics
     private lazy var analyticsStorage: AnalyticsStorageProtocol = {
-        // Pass the same modelContext to AnalyticsStorage
         AnalyticsStorage(modelContext: modelContext)
     }()
     
@@ -63,15 +65,13 @@ public final class DependencyContainer: ObservableObject {
         )
     }()
     
-    // MARK: - AI Chat - No Changes needed here, this is correct
+    // MARK: - AI Chat
     private lazy var apiClient: APIClient = {
         APIClient()
     }()
-
-    //No longer need baseURL here
     
     private lazy var aiChatRepository: AiChatRepositoryProtocol = {
-        AiChatRepositoryImpl(apiClient: apiClient) // Pass only apiClient
+        AiChatRepositoryImpl(apiClient: apiClient)
     }()
     
     private lazy var aiChatUseCase: AiChatUseCaseProtocol = {
@@ -80,21 +80,11 @@ public final class DependencyContainer: ObservableObject {
     
     // MARK: - Init
     public init() {
-        // Define the schema from your model classes.
         let schema = Schema([CravingEntity.self, AnalyticsMetadata.self])
-        
-        // Create a ModelConfiguration
-        let modelConfiguration = ModelConfiguration(
-            schema: schema,
-            isStoredInMemoryOnly: false
-        )
+        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
         
         do {
-            // Initialize the container
-            self.modelContainer = try ModelContainer(
-                for: schema,
-                configurations: [modelConfiguration]
-            )
+            self.modelContainer = try ModelContainer(for: schema, configurations: [modelConfiguration])
         } catch {
             fatalError("Failed to create ModelContainer: \(error)")
         }
@@ -106,7 +96,11 @@ public final class DependencyContainer: ObservableObject {
     }
     
     public func makeLogCravingViewModel() -> LogCravingViewModel {
-        LogCravingViewModel(cravingRepository: cravingRepository)
+        // NOTE: We now inject both the cravingRepository AND speechService
+        LogCravingViewModel(
+            cravingRepository: cravingRepository,
+            speechService: speechService
+        )
     }
     
     public func makeCravingListViewModel() -> CravingListViewModel {

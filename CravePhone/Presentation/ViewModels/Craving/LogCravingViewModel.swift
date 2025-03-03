@@ -4,17 +4,16 @@
 //
 //  RESPONSIBILITY: Holds form data & handles speech recognition and saving logic.
 //
+
 import SwiftUI
 import Combine
 import Foundation
-import UIKit
 
 @MainActor
 public class LogCravingViewModel: ObservableObject {
-
+    
     // MARK: - Dependencies
     
-    /// This is our new injection of a SpeechToTextServiceProtocol
     private let speechService: SpeechToTextServiceProtocol
     private let cravingRepository: CravingRepository
     
@@ -30,20 +29,17 @@ public class LogCravingViewModel: ObservableObject {
     
     // MARK: - Initialization
     
-    /// We now inject `speechService` so that the ViewModel depends on an abstraction, not a concrete class.
     public init(cravingRepository: CravingRepository,
                 speechService: SpeechToTextServiceProtocol) {
-        
         self.cravingRepository = cravingRepository
         self.speechService = speechService
         
-        // Listen for speech updates. Whenever the service recognizes new text,
-        // update `cravingDescription`.
+        // Bind recognized text to local property
         speechService.onTextUpdated = { [weak self] recognizedText in
             self?.cravingDescription = recognizedText
         }
         
-        // Request permissions (asynchronously).
+        // Request speech permissions
         Task {
             let success = await speechService.requestAuthorization()
             print("Speech recognition authorization: \(success ? "granted" : "denied")")
@@ -52,10 +48,8 @@ public class LogCravingViewModel: ObservableObject {
     
     // MARK: - Public Methods
     
-    /// Logs the current craving data asynchronously via the CravingRepository.
     public func logCraving() async {
         isLoading = true
-        
         let newCraving = CravingEntity(
             cravingDescription: cravingDescription,
             cravingStrength: cravingStrength,
@@ -72,11 +66,9 @@ public class LogCravingViewModel: ObservableObject {
         } catch {
             alertInfo = AlertInfo(title: "Error", message: error.localizedDescription)
         }
-        
         isLoading = false
     }
     
-    /// Toggles an emotion chip in the UI
     public func toggleEmotion(_ emotion: String) {
         if selectedEmotions.contains(emotion) {
             selectedEmotions.remove(emotion)
@@ -85,20 +77,18 @@ public class LogCravingViewModel: ObservableObject {
         }
     }
     
-    /// Called when a user taps the microphone icon to start/stop recording
     public func toggleSpeechRecognition() {
         isRecordingSpeech ? stopSpeechRecognition() : startSpeechRecognition()
     }
     
     // MARK: - Private Helpers
     
-    /// Starts the microphone capture & recognition
     private func startSpeechRecognition() {
         do {
-            // Attempt to start the speech service
             let started = try speechService.startRecording()
             if started {
                 isRecordingSpeech = true
+                // e.g., Provide a small haptic
                 UIImpactFeedbackGenerator(style: .medium).impactOccurred()
             } else {
                 alertInfo = AlertInfo(
@@ -107,29 +97,21 @@ public class LogCravingViewModel: ObservableObject {
                 )
             }
         } catch {
-            // Catch any thrown SpeechRecognitionError
             if let speechError = error as? SpeechRecognitionError {
-                alertInfo = AlertInfo(
-                    title: "Speech Error",
-                    message: speechError.localizedDescription
-                )
+                alertInfo = AlertInfo(title: "Speech Error", message: speechError.localizedDescription)
             } else {
-                alertInfo = AlertInfo(
-                    title: "Speech Error",
-                    message: error.localizedDescription
-                )
+                alertInfo = AlertInfo(title: "Speech Error", message: error.localizedDescription)
             }
         }
     }
     
-    /// Stops the microphone capture & recognition
     private func stopSpeechRecognition() {
         speechService.stopRecording()
         isRecordingSpeech = false
+        // e.g., Provide a small haptic
         UIImpactFeedbackGenerator(style: .medium).impactOccurred()
     }
     
-    /// Clears the form after a successful log
     private func resetForm() {
         cravingDescription = ""
         cravingStrength = 5

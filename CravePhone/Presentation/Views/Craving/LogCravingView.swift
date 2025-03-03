@@ -13,29 +13,29 @@
 import SwiftUI
 
 public struct LogCravingView: View {
+    
     @ObservedObject var viewModel: LogCravingViewModel
-    @State private var isSubmitting: Bool = false
-
+    @State private var isSubmitting = false
+    
     public init(viewModel: LogCravingViewModel) {
         self.viewModel = viewModel
     }
-
+    
     public var body: some View {
         ZStack {
-            // Full-bleed gradient, ignoring safe areas
+            // Example background
             CraveTheme.Colors.primaryGradient
                 .ignoresSafeArea(.all)
-                .ignoresSafeArea(.keyboard, edges: .bottom)
-
+            
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
                     
-                    // Textual description
+                    // Example text editor or text field
                     CravingDescriptionSectionView(
                         text: $viewModel.cravingDescription
                     )
-
-                    // Speech Toggle Button (now a separate view)
+                    
+                    // Example speech toggle button
                     CraveSpeechToggleButton(
                         isRecording: viewModel.isRecordingSpeech,
                         onToggle: {
@@ -43,27 +43,25 @@ public struct LogCravingView: View {
                             CraveHaptics.shared.mediumImpact()
                         }
                     )
-
-                    // Intensity / Resistance Sliders
+                    
+                    // Example sliders
                     CravingSlidersSectionView(
                         cravingStrength: $viewModel.cravingStrength,
                         resistance: $viewModel.confidenceToResist
                     )
-
-                    // Emotion Chips
+                    
+                    // Example emotions
                     CravingEmotionChipsView(
                         selectedEmotions: viewModel.selectedEmotions,
-                        onToggleEmotion: { emotion in
-                            viewModel.toggleEmotion(emotion)
+                        onToggleEmotion: { e in
+                            viewModel.toggleEmotion(e)
                             CraveHaptics.shared.selectionChanged()
                         }
                     )
-
-                    // Submit Button
+                    
                     submitButton
-                        .padding(.top, 12)
                 }
-                .padding(.horizontal, CraveTheme.Spacing.medium)
+                .padding()
             }
         }
         .alert(item: $viewModel.alertInfo) { info in
@@ -74,8 +72,7 @@ public struct LogCravingView: View {
             )
         }
     }
-
-    // MARK: - Submit Button
+    
     private var submitButton: some View {
         Button {
             submitCraving()
@@ -84,50 +81,24 @@ public struct LogCravingView: View {
                 if isSubmitting {
                     ProgressView()
                         .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                        .padding(.trailing, 8)
+                        .padding(.trailing, 6)
                 }
-                Text(isSubmitting ? "Saving..." : "Record Craving")
-                    .font(CraveTheme.Typography.subheading.weight(.bold))
-                    .foregroundColor(CraveTheme.Colors.buttonText)
-                    .frame(maxWidth: .infinity)
+                Text(isSubmitting ? "Saving..." : "Log Craving")
             }
-            .padding(.vertical, 16)
-            .background(
-                RoundedRectangle(cornerRadius: CraveTheme.Layout.cornerRadius)
-                    .fill(
-                        buttonIsEnabled
-                            ? CraveTheme.Colors.accent
-                            : CraveTheme.Colors.accent.opacity(0.5)
-                    )
-                    .shadow(
-                        color: buttonIsEnabled
-                            ? CraveTheme.Colors.accent.opacity(0.3)
-                            : .clear,
-                        radius: 8, y: 4
-                    )
-            )
+            .frame(maxWidth: .infinity)
+            .padding()
+            .background(Color.blue.cornerRadius(8))
+            .foregroundColor(.white)
         }
-        .disabled(isSubmitting || !viewModel.isValid)
-        .animation(CraveTheme.Animations.smooth, value: isSubmitting)
-        .animation(CraveTheme.Animations.smooth, value: viewModel.isValid)
+        .disabled(isSubmitting)
     }
-
-    private var buttonIsEnabled: Bool {
-        !isSubmitting && viewModel.isValid
-    }
-
-    // MARK: - Submit Craving Logic
+    
     private func submitCraving() {
-        guard buttonIsEnabled else { return }
-        withAnimation { isSubmitting = true }
-        CraveHaptics.shared.notification(type: .success)
-
+        guard !isSubmitting else { return }
+        isSubmitting = true
         Task {
             await viewModel.logCraving()
-            try? await Task.sleep(nanoseconds: 300_000_000)
-            await MainActor.run {
-                withAnimation { isSubmitting = false }
-            }
+            isSubmitting = false
         }
     }
 }

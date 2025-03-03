@@ -1,12 +1,13 @@
 //
-//  SimpleSpeechToText.swift
+//  SpeechToTextServiceProtocol.swift
 //  CravePhone
 //
-//  Path: /Users/jj/Desktop/IOS Applications/crave-trinity-frontend/CravePhone/Utilities/SimpleSpeechToText.swift
+//  Defines the contract for any speech-to-text service implementation.
 //
 
 import Foundation
 
+/// Specialized errors for speech recognition
 public enum SpeechRecognitionError: Error, LocalizedError {
     case notAuthorized
     case recognizerUnavailable
@@ -26,18 +27,18 @@ public enum SpeechRecognitionError: Error, LocalizedError {
     }
 }
 
+/// Protocol for any speech-to-text service implementation
 public protocol SpeechToTextServiceProtocol: AnyObject {
-    /// Ask user for permission. Returns `true` if granted, `false` otherwise.
+    /// Callback invoked whenever partial/final text is recognized
+    var onTextUpdated: ((String) -> Void)? { get set }
+    
+    /// Asks user for permission (returns true if granted)
     func requestAuthorization() async -> Bool
     
-    /// Attempts to start speech recognition.
-    /// - Returns: `true` if successfully started, `false` otherwise.
-    /// - Throws: `SpeechRecognitionError` if something prevents speech recognition from starting
+    /// Starts the mic capture and speech recognition
+    @discardableResult
     func startRecording() throws -> Bool
     
-    /// Stops recording and ends recognition gracefully.
+    /// Stops recognition
     func stopRecording()
-    
-    /// A closure for partial or final text updates.
-    var onTextUpdated: ((String) -> Void)? { get set }
 }

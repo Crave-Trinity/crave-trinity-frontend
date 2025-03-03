@@ -9,33 +9,24 @@ import Foundation
 import AVFoundation
 import Speech
 
+/// Concrete production-ready implementation of SpeechToTextServiceProtocol
 public final class SpeechToTextServiceImpl: NSObject, SpeechToTextServiceProtocol {
-    
-    // MARK: - Properties
     
     private let speechRecognizer: SFSpeechRecognizer?
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     private var recognitionTask: SFSpeechRecognitionTask?
     private let audioEngine = AVAudioEngine()
     
-    // The view model (or any consumer) can set this closure to handle recognized text updates.
     public var onTextUpdated: ((String) -> Void)?
-    
-    // Track whether we are currently recording to prevent multiple sessions from overlapping.
     private(set) var isRecording: Bool = false
     
-    // MARK: - Initialization
-    
     public override init() {
-        // Using US English, but you can localize for other languages if desired.
+        // Using US English. Localize as needed.
         self.speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: "en-US"))
         super.init()
     }
     
-    // MARK: - Authorization
-    
     public func requestAuthorization() async -> Bool {
-        // Apple’s API is callback-based, so we bridge it into an async call via withCheckedContinuation.
         return await withCheckedContinuation { continuation in
             SFSpeechRecognizer.requestAuthorization { status in
                 continuation.resume(returning: status == .authorized)
@@ -43,19 +34,15 @@ public final class SpeechToTextServiceImpl: NSObject, SpeechToTextServiceProtoco
         }
     }
     
-    // MARK: - Start Recording
-    
     @discardableResult
     public func startRecording() throws -> Bool {
-        // If we’re already in a recording session, no need to start again.
+        // Prevent re-entrancy
         guard !isRecording else { return false }
         
-        // Check if speech recognizer is available on this device/locale at the moment.
         guard speechRecognizer?.isAvailable == true else {
             throw SpeechRecognitionError.recognizerUnavailable
         }
         
-        // Configure the audio session for recording voice input.
         let audioSession = AVAudioSession.sharedInstance()
         do {
             try audioSession.setCategory(.record, mode: .measurement, options: .duckOthers)
@@ -66,19 +53,16 @@ public final class SpeechToTextServiceImpl: NSObject, SpeechToTextServiceProtoco
             )
         }
         
-        // Prepare a recognition request to stream audio buffers.
         recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
         recognitionRequest?.shouldReportPartialResults = true
         
-        // Install a tap on the audio engine’s input node so we can grab microphone data.
+        // Install mic tap
         let inputNode = audioEngine.inputNode
-        let recordingFormat = inputNode.outputFormat(forBus: 0)
-        
-        inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { [weak self] buffer, _ in
+        let format = inputNode.outputFormat(forBus: 0)
+        inputNode.installTap(onBus: 0, bufferSize: 1024, format: format) { [weak self] buffer, _ in
             self?.recognitionRequest?.append(buffer)
         }
         
-        // Start up the audio engine so we can begin streaming audio.
         audioEngine.prepare()
         do {
             try audioEngine.start()
@@ -88,30 +72,23 @@ public final class SpeechToTextServiceImpl: NSObject, SpeechToTextServiceProtoco
             )
         }
         
-        // Now create and start the recognition task.
         recognitionTask = speechRecognizer?.recognitionTask(with: recognitionRequest!) { [weak self] result, error in
             guard let self = self else { return }
             
-            // Whenever we get a partial or final result, invoke the callback.
             if let result = result {
                 self.onTextUpdated?(result.bestTranscription.formattedString)
             }
-            
-            // If there's an error, or the result is final, we should tear down.
+            // Stop if final or if there's an error
             if error != nil || (result?.isFinal == true) {
                 self.stopRecording()
             }
         }
         
-        // Mark that we are in fact recording now.
         isRecording = true
         return true
     }
     
-    // MARK: - Stop Recording
-    
     public func stopRecording() {
-        // If we’re not recording, no need to do anything.
         guard isRecording else { return }
         
         audioEngine.stop()
@@ -120,15 +97,14 @@ public final class SpeechToTextServiceImpl: NSObject, SpeechToTextServiceProtoco
         recognitionRequest?.endAudio()
         recognitionTask?.cancel()
         
-        // Reset everything.
         recognitionRequest = nil
         recognitionTask = nil
         isRecording = false
         
-        // Deactivate audio session—nonfatal if it fails here.
         do {
             try AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
         } catch {
+            // Typically non-fatal
             print("Audio session deactivation failed: \(error.localizedDescription)")
         }
     }
