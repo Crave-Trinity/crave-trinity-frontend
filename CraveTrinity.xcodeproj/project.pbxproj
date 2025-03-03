@@ -163,6 +163,8 @@
 				Presentation/Common/SafeAreaInsetsEnvironment.swift = (ios, );
 				"Presentation/Configuration/AnalyticsConfiguration+Defaults.swift" = (ios, );
 				Presentation/Configuration/AnalyticsConfiguration.swift = (ios, );
+				Presentation/Utilities/KeyboardAdaptiveHostingController.swift = (ios, );
+				Presentation/Utilities/KeyboardAdaptiveHostingView.swift = (ios, );
 				Presentation/Utilities/ViewModifiers.swift = (ios, );
 				Presentation/ViewModels/Analytics/AnalyticsDashboardViewModel.swift = (ios, );
 				Presentation/ViewModels/Analytics/AnalyticsViewModel.swift = (ios, );

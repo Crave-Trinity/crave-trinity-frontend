@@ -1,23 +1,19 @@
-
-//=================================================
-// FILE: CravingListFlowUITests.swift
-// DIRECTORY: CravePhoneUITests
-// PURPOSE: Tests the Craving List screen (search, filter, archive).
 //
-// UNCLE BOB / SOLID:
-// - Each test method has a single responsibility to verify one feature.
-// - Clear naming, minimal duplication.
+//  CravingListFlowUITests.swift
+//  CravePhoneUITests
 //
-// GOF / STEVE JOBS DESIGN:
-// - Strategy pattern: each test covers a distinct user strategy
-// - Minimal friction: straightforward test code with clarity.
-//=================================================
+//  Directory: CravePhoneUITests/UI/
+//  PURPOSE: Tests the "Cravings" list screen, including navigation, search, filtering, and archiving.
+//  Each test method targets a distinct user strategy following SOLID principles.
+//
 
 import XCTest
 
 final class CravingListFlowUITests: XCTestCase {
     
     private var app: XCUIApplication!
+    
+    // MARK: - Setup & Teardown
     
     override func setUpWithError() throws {
         continueAfterFailure = false
@@ -29,19 +25,15 @@ final class CravingListFlowUITests: XCTestCase {
         app = nil
     }
     
-    /// Test navigation to "Cravings" tab and ensuring the list loads.
+    /// Test navigation to the "Cravings" tab and verify the search field is present.
     func testNavigateToCravingsList() throws {
         app.tabBars.buttons["Cravings"].tap()
         
-        // Check if the "Search cravings" text field is there
         XCTAssertTrue(app.textFields["Search cravings"].exists,
-                      "Search field should be visible on CravingListView.")
-        
-        // Possibly check if there's a "Loading cravings..." indicator before data loads
-        // Adjust or remove based on your code
+                      "The search text field should be visible on the Cravings list screen.")
     }
     
-    /// Test searching for a known craving text (assuming one is in the list).
+    /// Test searching for a craving.
     func testSearchForCraving() throws {
         app.tabBars.buttons["Cravings"].tap()
         
@@ -51,46 +43,43 @@ final class CravingListFlowUITests: XCTestCase {
         searchField.tap()
         searchField.typeText("Chocolate")
         
-        // Possibly check if a list cell contains "Chocolate"
+        // Check if a cell with expected text appears.
         XCTAssertTrue(app.staticTexts["Chocolate craving after dinner"].exists,
-                      "Craving list should show 'Chocolate craving...' when searching 'Chocolate'.")
+                      "The cravings list should display a cell matching the search query.")
     }
     
-    /// Test applying a filter chip, e.g., "High Intensity" or "Recent".
+    /// Test applying a filter (e.g., high intensity).
     func testFilterHighIntensity() throws {
         app.tabBars.buttons["Cravings"].tap()
         
-        let highChip = app.buttons["High Intensity"]
-        XCTAssertTrue(highChip.exists, "High intensity filter chip must exist.")
+        let highIntensityChip = app.buttons["High Intensity"]
+        XCTAssertTrue(highIntensityChip.exists, "High Intensity filter chip should be visible.")
         
-        highChip.tap()
+        highIntensityChip.tap()
         
-        // Check that results reflect only high-intensity cravings
-        // This is domain-specific; adjust the following line
-        // Example: A cell that has intensity >= 7
-        XCTAssertTrue(app.staticTexts["Intensity: 8/10"].exists
-                      || app.staticTexts["Intensity: 9/10"].exists,
-                      "At least one high-intensity craving should be visible after filter.")
+        // Check that at least one high-intensity craving cell appears.
+        XCTAssertTrue(app.staticTexts["Intensity: 8/10"].exists ||
+                      app.staticTexts["Intensity: 9/10"].exists,
+                      "At least one high-intensity craving should be visible after filtering.")
     }
     
-    /// Test archiving a craving from the list via context menu or button.
+    /// Test archiving a craving from the list.
     func testArchiveCraving() throws {
         app.tabBars.buttons["Cravings"].tap()
         
-        // Identify a specific craving cell
-        let cravingCell = app.staticTexts["Social drinking urge"] // example
-        XCTAssertTrue(cravingCell.exists, "Expected 'Social drinking urge' in the list.")
+        // Find a specific craving cell by its label.
+        let cravingCell = app.staticTexts["Social drinking urge"]
+        XCTAssertTrue(cravingCell.exists, "The 'Social drinking urge' cell should exist in the list.")
         
-        // Long press or use context menu to archive
+        // Long press to activate the context menu.
         cravingCell.press(forDuration: 1.0)
         
         let archiveButton = app.buttons["Archive"]
-        XCTAssertTrue(archiveButton.exists, "Archive option in context menu should be visible.")
+        XCTAssertTrue(archiveButton.exists, "Archive option should be available in the context menu.")
         
         archiveButton.tap()
         
-        // Confirm it’s removed from active list
-        XCTAssertFalse(cravingCell.exists,
-                       "Craving should disappear after archiving from the list.")
+        // Verify that the cell is no longer visible.
+        XCTAssertFalse(cravingCell.exists, "The craving should be removed from the list after archiving.")
     }
 }

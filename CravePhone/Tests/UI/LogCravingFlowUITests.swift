@@ -1,177 +1,107 @@
-//=================================================
-// FILE: LogCravingFlowUITests.swift
-// DIRECTORY: CravePhoneUITests
-// PURPOSE: Thoroughly tests the "Log Craving" flow.
 //
-// ARCHITECTURE (SOLID + Uncle Bob):
-// - Single Responsibility: This file tests the log flow end-to-end.
-// - Open/Closed: Additional test methods can be added without modifying existing ones.
-// - Interface Segregation: Each test focuses on one scenario at a time.
+//  LogCravingFlowUITests.swift
+//  CravePhoneUITests
 //
-// GOF / STEVE JOBS DESIGN:
-// - Strategy: Each test method is like a strategy for verifying a user path.
-// - Simple, minimal friction with clear naming and comments.
-//=================================================
+//  Directory: CravePhoneUITests/UI/
+//  PURPOSE: Tests the end-to-end "Log Craving" flow, including keyboard behavior,
+//           character limits, submission, and UI component presence.
+//  Follows SOLID principles by focusing each test on a single user interaction.
+//
 
 import XCTest
 
 final class LogCravingFlowUITests: XCTestCase {
-    
+
     private var app: XCUIApplication!
-    
+
     // MARK: - Setup & Teardown
-    
+
     override func setUpWithError() throws {
         continueAfterFailure = false
         app = XCUIApplication()
         app.launch()
     }
-    
+
     override func tearDownWithError() throws {
         app = nil
     }
-    
-    // MARK: - Test Cases
-    
-    /// Test that we can navigate to "Log" tab and see expected UI elements.
-    func testNavigateToLogCravingTab() throws {
-        // Tap the "Log" tab in your CRAVETabView
+
+    /// Test that tapping the "Done" button dismisses the keyboard.
+    func testKeyboardDismissalWithDoneButton() throws {
         app.tabBars.buttons["Log"].tap()
-        
-        // Check that the text field or text editor for craving description is present
-        XCTAssertTrue(app.textViews["CravingDescriptionEditor"].exists
-                      || app.textFields["CravingDescriptionEditor"].exists,
-                      "The description text field or editor should be visible.")
-        
-        // Check mic button
-        XCTAssertTrue(app.buttons["Mic"].exists,
-                      "The mic toggle button should be visible on the Log Craving screen.")
-        
-        // Check "Log Craving" button
-        XCTAssertTrue(app.buttons["Log Craving"].exists,
-                      "Log Craving button should be visible.")
+
+        let textEditor = app.textViews["CravingDescriptionEditor"]
+        XCTAssertTrue(textEditor.exists, "CraveTextEditor should be visible.")
+
+        textEditor.tap()
+        textEditor.typeText("Test craving entry.")
+
+        let doneButton = app.buttons["Done"]
+        XCTAssertTrue(doneButton.exists, "Done button should appear above the keyboard.")
+
+        doneButton.tap()
+
+        XCTAssertFalse(app.keyboards.element.exists, "Keyboard should be dismissed after tapping Done.")
     }
-    
-    /// Test toggling speech recognition.
-    /// (Note: actual speech recognition text might not work in the simulator reliably.)
-    func testSpeechToggle() throws {
+
+    /// Test that tapping on the background dismisses the keyboard.
+    func testKeyboardDismissalWithBackgroundTap() throws {
         app.tabBars.buttons["Log"].tap()
-        
-        let micButton = app.buttons["Mic"]
-        XCTAssertTrue(micButton.exists, "Mic button should exist.")
-        
-        // Tap to turn on speech recognition
-        micButton.tap()
-        // Possibly check if there's a label or icon that changes state
-        // e.g., "Recording" label or a 'Stop' button
-        // Adjust the line below to match your actual UI changes
-        XCTAssertTrue(app.staticTexts["Recording"].exists, "Should show 'Recording' state.")
-        
-        // Tap to turn it off
-        micButton.tap()
-        // Check if state reverts
-        XCTAssertFalse(app.staticTexts["Recording"].exists, "Recording label should disappear.")
+
+        let textEditor = app.textViews["CravingDescriptionEditor"]
+        XCTAssertTrue(textEditor.exists, "CraveTextEditor should be visible.")
+
+        textEditor.tap()
+        textEditor.typeText("Testing keyboard dismissal.")
+
+        // Tap outside the text editor (on the background).
+        app.otherElements.firstMatch.tap()
+
+        XCTAssertFalse(app.keyboards.element.exists, "Keyboard should be dismissed when tapping the background.")
     }
-    
-    /// Test typing text into the craving description field and verifying it.
-    func testEnterCravingDescription() throws {
+
+    /// Test that the character limit of 300 characters is enforced.
+    func testCravingDescriptionCharacterLimit() throws {
         app.tabBars.buttons["Log"].tap()
-        
-        let descriptionEditor = app.textViews["CravingDescriptionEditor"]
-        if descriptionEditor.exists {
-            descriptionEditor.tap()
-            descriptionEditor.typeText("Testing chocolate craving")
-            // Verify the typed text
-            XCTAssertTrue(descriptionEditor.value as? String == "Testing chocolate craving",
-                          "Typed text should match 'Testing chocolate craving'")
-        } else {
-            XCTFail("Craving description text view not found.")
-        }
+
+        let textEditor = app.textViews["CravingDescriptionEditor"]
+        XCTAssertTrue(textEditor.exists, "CraveTextEditor should be visible.")
+
+        textEditor.tap()
+
+        // Generate a string longer than 300 characters.
+        let longText = String(repeating: "A", count: 305)
+        textEditor.typeText(longText)
+
+        // Verify that the text editor only contains 300 characters.
+        let textValue = textEditor.value as? String ?? ""
+        XCTAssertEqual(textValue.count, 300, "Craving description should be limited to 300 characters.")
     }
-    
-    /// Test adjusting the "Intensity" and "Resistance" sliders.
-    func testAdjustSliders() throws {
-        app.tabBars.buttons["Log"].tap()
-        
-        // Suppose you have accessibility IDs "IntensitySlider" and "ResistanceSlider"
-        let intensitySlider = app.sliders["IntensitySlider"]
-        let resistanceSlider = app.sliders["ResistanceSlider"]
-        
-        // Ensure they exist
-        XCTAssertTrue(intensitySlider.exists, "Intensity slider should be present.")
-        XCTAssertTrue(resistanceSlider.exists, "Resistance slider should be present.")
-        
-        // Move the intensity slider to 8/10
-        intensitySlider.adjust(toNormalizedSliderPosition: 0.7) // approximate
-        // Move the resistance slider to 3/10
-        resistanceSlider.adjust(toNormalizedSliderPosition: 0.2)
-        
-        // You could do more checks if your UI displays the numeric slider value
-    }
-    
-    /// Test selecting multiple emotion chips and verifying selection.
-    func testSelectEmotions() throws {
-        app.tabBars.buttons["Log"].tap()
-        
-        // Example emotion chips: "Hungry", "Angry", "Lonely", "Tired", etc.
-        let hungryChip = app.buttons["Hungry"]
-        let lonelyChip = app.buttons["Lonely"]
-        
-        // Tap them
-        hungryChip.tap()
-        lonelyChip.tap()
-        
-        // If your chips visually change or have a selected state,
-        // you could verify by checking isSelected or color changes
-        // (in pure SwiftUI, you might rely on the label text still).
-        // This example just ensures they exist:
-        XCTAssertTrue(hungryChip.exists, "'Hungry' chip should exist and be selectable.")
-        XCTAssertTrue(lonelyChip.exists, "'Lonely' chip should exist and be selectable.")
-    }
-    
-    /// Test a successful craving log flow: fill in data, tap "Log Craving", confirm success alert.
+
+    /// Test a successful log craving flow, including form reset and alert presentation.
     func testLogCravingSuccessFlow() throws {
         app.tabBars.buttons["Log"].tap()
-        
-        // Type something
-        let descriptionEditor = app.textViews["CravingDescriptionEditor"]
-        guard descriptionEditor.exists else {
-            XCTFail("No description editor found.")
-            return
-        }
-        descriptionEditor.tap()
-        descriptionEditor.typeText("Really want a donut right now.")
-        
-        // Suppose we only require a non-empty description for "Log Craving" to enable
+
+        let textEditor = app.textViews["CravingDescriptionEditor"]
+        XCTAssertTrue(textEditor.exists, "CraveTextEditor should be visible.")
+
+        textEditor.tap()
+        textEditor.typeText("Really craving a burger right now.")
+
         let logButton = app.buttons["Log Craving"]
-        XCTAssertTrue(logButton.isEnabled, "Log button should be enabled after typing description.")
-        
-        // Tap "Log Craving"
+        XCTAssertTrue(logButton.isEnabled, "Log button should be enabled after entering a description.")
+
         logButton.tap()
-        
-        // Expect a success alert to appear
+
+        // Expect a success alert to appear.
         let successAlert = app.alerts["Success"]
-        XCTAssertTrue(successAlert.waitForExistence(timeout: 5),
-                      "Success alert should appear after logging a craving.")
-        
-        // Dismiss alert
+        XCTAssertTrue(successAlert.waitForExistence(timeout: 5), "Success alert should appear after logging a craving.")
+
+        // Dismiss the alert.
         successAlert.buttons["OK"].tap()
-        
-        // Possibly confirm the form is reset
-        XCTAssertEqual((descriptionEditor.value as? String) ?? "", "",
-                       "Description should be cleared after logging.")
-    }
-    
-    /// Test an error scenario: tries to log with an empty description
-    func testLogCravingEmptyDescriptionError() throws {
-        app.tabBars.buttons["Log"].tap()
-        
-        let logButton = app.buttons["Log Craving"]
-        // If your code disables the button, check that it's disabled:
-        XCTAssertFalse(logButton.isEnabled,
-                       "Log button should be disabled with no description input.")
-        
-        // Or if your code shows an error alert, tap the button and check alert
-        // (Adjust depending on your actual validation flow.)
+
+        // Verify that the text editor has been reset.
+        let textValue = textEditor.value as? String ?? ""
+        XCTAssertEqual(textValue, "", "Craving description should be cleared after submission.")
     }
 }

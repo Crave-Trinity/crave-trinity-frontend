@@ -3,19 +3,17 @@
 //  CravePhone
 //
 //  RESPONSIBILITY: Displays the Log Craving screen with sections for:
-//  - Description
-//  - Speech Toggle
-//  - Sliders (Intensity, Resistance)
-//  - Emotions
-//  - Submit Button
+//   - Description
+//   - Speech Toggle
+//   - Sliders (Intensity, Resistance)
+//   - Emotions
+//   - Submit Button
 //
-
 import SwiftUI
 
 public struct LogCravingView: View {
     @ObservedObject var viewModel: LogCravingViewModel
     @State private var isSubmitting = false
-    // Create a FocusState to control the text editor’s focus.
     @FocusState private var isDescriptionFocused: Bool
 
     public init(viewModel: LogCravingViewModel) {
@@ -26,13 +24,13 @@ public struct LogCravingView: View {
         ZStack {
             CraveTheme.Colors.primaryGradient
                 .ignoresSafeArea(.all)
-                // Dismiss keyboard when tapping the background.
                 .onTapGesture {
+                    // Dismiss the keyboard on background tap
                     isDescriptionFocused = false
                 }
+
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
-                    // Pass the focus state down to the description view.
                     CravingDescriptionSectionView(text: $viewModel.cravingDescription)
                         .focused($isDescriptionFocused)
 
@@ -62,7 +60,6 @@ public struct LogCravingView: View {
                 .padding()
             }
         }
-        // Add a toolbar above the keyboard with a "Done" button.
         .toolbar {
             ToolbarItemGroup(placement: .keyboard) {
                 Spacer()
@@ -106,7 +103,6 @@ public struct LogCravingView: View {
         Task {
             await viewModel.logCraving()
             isSubmitting = false
-            // Dismiss the keyboard upon submission.
             isDescriptionFocused = false
         }
     }
