@@ -3,9 +3,9 @@
 //  CravePhone/Data/DataSources/Remote
 //
 //  PURPOSE:
-//  - Single Responsibility (SRP): Only talks to our Railway backend.
-//  - "Designed for Steve Jobs": Simple, minimal friction, well-commented.
+//  - Single Responsibility: Only talks to our Railway backend.
 //  - Uncle Bob + GoF + Clean Architecture: This code is mighty and pure!
+//  - “Designed for Steve Jobs”: minimal friction, well-commented.
 //
 //  LAST UPDATED: <today's date>
 //
@@ -13,6 +13,7 @@
 import Foundation
 
 // MARK: - Data Transfer Objects (DTOs)
+
 /// We will send this to our backend
 public struct ChatRequestDTO: Encodable {
     public let userQuery: String
@@ -25,10 +26,8 @@ public struct ChatResponseDTO: Decodable {
 
 // MARK: - CraveBackendAPIClient
 public final class CraveBackendAPIClient {
-
     // 1) Adjust the URL to match your actual Railway link
     private let baseURL = URL(string: "https://crave-mvp-backend-production.up.railway.app")!
-
     private let session: URLSession
 
     public init(session: URLSession = .shared) {
@@ -39,14 +38,12 @@ public final class CraveBackendAPIClient {
     public func fetchChatResponse(
         userQuery: String
     ) async throws -> String {
-        // 2) Suppose the route is POST /api/v1/chat
+        // 2) The route is POST /api/v1/chat
         let endpoint = baseURL.appendingPathComponent("api/v1/chat")
         var request = URLRequest(url: endpoint)
         request.httpMethod = "POST"
-
         // 3) We want to send JSON
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-
         // 4) Build the request body
         let body = ChatRequestDTO(userQuery: userQuery)
         request.httpBody = try JSONEncoder().encode(body)
