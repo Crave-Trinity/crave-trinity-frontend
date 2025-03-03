@@ -104,19 +104,17 @@
 				Tests/AnalyticsTests/Domain/AnalyticsInsightTests.swift,
 				Tests/AnalyticsTests/Domain/AnalyticsPatternTests.swift,
 				Tests/AnalyticsTests/Domain/AnalyticsPredictionTests.swift,
-				Tests/AnalyticsTests/Integration/AnalyticsModelTests.swift,
-				Tests/AnalyticsTests/Integration/CravingAnalyticsIntegrationTests.swift,
-				Tests/CravePhoneUITests/AnalyticsFlowUITests.swift,
-				Tests/CravePhoneUITests/ChatFlowUITests.swift,
-				Tests/CravePhoneUITests/CravingListFlowUITests.swift,
-				Tests/CravePhoneUITests/LogCravingFlowUITests.swift,
-				Tests/CravingTests/CravingManagerTests.swift,
-				Tests/CravingTests/CravingModelTests.swift,
-				Tests/CravingTests/InteractionDataTests.swift,
-				Tests/Domain/CravePhoneUITests.swift,
-				Tests/Domain/CravePhoneUITestsLaunchTests.swift,
-				Tests/Integration/CravePhoneUITests.swift,
-				Tests/Integration/CravePhoneUITestsLaunchTests.swift,
+				Tests/Integration/CravingAnalyticsIntegrationTests.swift,
+				Tests/UI/AnalyticsFlowUITests.swift,
+				Tests/UI/ChatFlowUITests.swift,
+				Tests/UI/CravePhoneUITests.swift,
+				Tests/UI/CravePhoneUITestsLaunchTests.swift,
+				Tests/UI/CravingListFlowUITests.swift,
+				Tests/UI/LogCravingFlowUITests.swift,
+				Tests/Unit/AnalyticsModelTests.swift,
+				Tests/Unit/CravingManagerTests.swift,
+				Tests/Unit/CravingModelTests.swift,
+				Tests/Unit/InteractionDataTests.swift,
 			);
 			platformFiltersByRelativePath = {
 				Data/DTOs/AnalyticsDTO.swift = (ios, );
@@ -193,11 +191,11 @@
 				Tests/AnalyticsTests/Domain/AnalyticsInsightTests.swift,
 				Tests/AnalyticsTests/Domain/AnalyticsPatternTests.swift,
 				Tests/AnalyticsTests/Domain/AnalyticsPredictionTests.swift,
-				Tests/AnalyticsTests/Integration/AnalyticsModelTests.swift,
-				Tests/AnalyticsTests/Integration/CravingAnalyticsIntegrationTests.swift,
-				Tests/CravingTests/CravingManagerTests.swift,
-				Tests/CravingTests/CravingModelTests.swift,
-				Tests/CravingTests/InteractionDataTests.swift,
+				Tests/Integration/CravingAnalyticsIntegrationTests.swift,
+				Tests/Unit/AnalyticsModelTests.swift,
+				Tests/Unit/CravingManagerTests.swift,
+				Tests/Unit/CravingModelTests.swift,
+				Tests/Unit/InteractionDataTests.swift,
 			);
 			platformFiltersByRelativePath = {
 				Tests/AnalyticsTests/Data/AnalyticsAggregatorTests.swift = (ios, );
@@ -210,21 +208,32 @@
 				Tests/AnalyticsTests/Domain/AnalyticsInsightTests.swift = (ios, );
 				Tests/AnalyticsTests/Domain/AnalyticsPatternTests.swift = (ios, );
 				Tests/AnalyticsTests/Domain/AnalyticsPredictionTests.swift = (ios, );
+				Tests/Integration/CravingAnalyticsIntegrationTests.swift = (ios, );
+				Tests/Unit/AnalyticsModelTests.swift = (ios, );
+				Tests/Unit/CravingManagerTests.swift = (ios, );
+				Tests/Unit/CravingModelTests.swift = (ios, );
+				Tests/Unit/InteractionDataTests.swift = (ios, );
 			};
 			target = 28A3F86A2D65962B00D8DE44 /* CravePhoneTests */;
 		};
 		28A3F8C42D65971B00D8DE44 /* Exceptions for "CravePhone" folder in "CravePhoneUITests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Tests/CravePhoneUITests/AnalyticsFlowUITests.swift,
-				Tests/CravePhoneUITests/ChatFlowUITests.swift,
-				Tests/CravePhoneUITests/CravingListFlowUITests.swift,
-				Tests/CravePhoneUITests/LogCravingFlowUITests.swift,
-				Tests/Domain/CravePhoneUITests.swift,
-				Tests/Domain/CravePhoneUITestsLaunchTests.swift,
-				Tests/Integration/CravePhoneUITests.swift,
-				Tests/Integration/CravePhoneUITestsLaunchTests.swift,
+				Tests/UI/AnalyticsFlowUITests.swift,
+				Tests/UI/ChatFlowUITests.swift,
+				Tests/UI/CravePhoneUITests.swift,
+				Tests/UI/CravePhoneUITestsLaunchTests.swift,
+				Tests/UI/CravingListFlowUITests.swift,
+				Tests/UI/LogCravingFlowUITests.swift,
 			);
+			platformFiltersByRelativePath = {
+				Tests/UI/AnalyticsFlowUITests.swift = (ios, );
+				Tests/UI/ChatFlowUITests.swift = (ios, );
+				Tests/UI/CravePhoneUITests.swift = (ios, );
+				Tests/UI/CravePhoneUITestsLaunchTests.swift = (ios, );
+				Tests/UI/CravingListFlowUITests.swift = (ios, );
+				Tests/UI/LogCravingFlowUITests.swift = (ios, );
+			};
 			target = 28A3F8742D65962B00D8DE44 /* CravePhoneUITests */;
 		};
 		28A3F8FE2D65975E00D8DE44 /* Exceptions for "CraveWatch" folder in "CraveWatch Watch App" target */ = {
@@ -922,6 +931,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = CravePhone/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -953,6 +963,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = CravePhone/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -986,7 +997,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CraveTrinity.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CraveTrinity";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CravePhone.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CravePhone";
 			};
 			name = Debug;
 		};
@@ -1005,7 +1016,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CraveTrinity.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CraveTrinity";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CravePhone.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CravePhone";
 			};
 			name = Release;
 		};
