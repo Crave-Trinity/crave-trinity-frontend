@@ -106,6 +106,10 @@
 				Tests/AnalyticsTests/Domain/AnalyticsPredictionTests.swift,
 				Tests/AnalyticsTests/Integration/AnalyticsModelTests.swift,
 				Tests/AnalyticsTests/Integration/CravingAnalyticsIntegrationTests.swift,
+				Tests/CravePhoneUITests/AnalyticsFlowUITests.swift,
+				Tests/CravePhoneUITests/ChatFlowUITests.swift,
+				Tests/CravePhoneUITests/CravingListFlowUITests.swift,
+				Tests/CravePhoneUITests/LogCravingFlowUITests.swift,
 				Tests/CravingTests/CravingManagerTests.swift,
 				Tests/CravingTests/CravingModelTests.swift,
 				Tests/CravingTests/InteractionDataTests.swift,
@@ -113,8 +117,6 @@
 				Tests/Domain/CravePhoneUITestsLaunchTests.swift,
 				Tests/Integration/CravePhoneUITests.swift,
 				Tests/Integration/CravePhoneUITestsLaunchTests.swift,
-				Tests/UITests/CravePhoneUITests.swift,
-				Tests/UITests/CravePhoneUITestsLaunchTests.swift,
 			);
 			platformFiltersByRelativePath = {
 				Data/DTOs/AnalyticsDTO.swift = (ios, );
@@ -214,12 +216,14 @@
 		28A3F8C42D65971B00D8DE44 /* Exceptions for "CravePhone" folder in "CravePhoneUITests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Tests/CravePhoneUITests/AnalyticsFlowUITests.swift,
+				Tests/CravePhoneUITests/ChatFlowUITests.swift,
+				Tests/CravePhoneUITests/CravingListFlowUITests.swift,
+				Tests/CravePhoneUITests/LogCravingFlowUITests.swift,
 				Tests/Domain/CravePhoneUITests.swift,
 				Tests/Domain/CravePhoneUITestsLaunchTests.swift,
 				Tests/Integration/CravePhoneUITests.swift,
 				Tests/Integration/CravePhoneUITestsLaunchTests.swift,
-				Tests/UITests/CravePhoneUITests.swift,
-				Tests/UITests/CravePhoneUITestsLaunchTests.swift,
 			);
 			target = 28A3F8742D65962B00D8DE44 /* CravePhoneUITests */;
 		};
