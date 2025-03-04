@@ -3,15 +3,15 @@
 //  CravePhone
 //
 //  PURPOSE:
-//    - The @main entry point. We ignore safe areas at the top-level,
-//      so everything physically extends behind the notch/home indicator.
-//    - We apply our SafeAreaInsetsEnvironmentReader so subviews can read
-//      the real safeAreaInsets from the environment if needed.
+//    - The @main entry point. We extend the background color everywhere,
+//      but let SwiftUI manage safe areas naturally.
+//    - This prevents conflicting safe-area calculations that can lead
+//      to negative frame dimensions.
+//    - UNCLE BOB / STEVE JOBS STYLE: Keep things minimal and let the system do its job.
 //
-//  UNCLE BOB / SOLID:
-//    - Single Responsibility: Launch the SwiftUI scene with the coordinator.
-//
-
+//  NOTE:
+//    We removed the custom SafeAreaInsetsEnvironmentReader from the top-level view.
+//    If you still need safe area insets in your subviews, consider applying the modifier at a lower level.
 import SwiftUI
 import SwiftData
 
@@ -23,17 +23,15 @@ struct CRAVEApp: App {
     var body: some Scene {
         WindowGroup {
             ZStack {
-                // This ensures the background color extends everywhere
+                // Full-bleed background
                 Color.black
                     .ignoresSafeArea()
-
-                // Show the app's coordinator-driven UI
+                
+                // Coordinator-driven UI
                 CoordinatorHostView(container: container)
             }
-            // Apply the environment reader so child views can see real safeAreaInsets,
-            // even though we're ignoring safe areas at this top level
-            .modifier(SafeAreaInsetsEnvironmentReader())
             .preferredColorScheme(.dark)
         }
     }
 }
+
