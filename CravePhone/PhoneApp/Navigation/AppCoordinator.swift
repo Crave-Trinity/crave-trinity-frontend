@@ -26,31 +26,29 @@ public final class AppCoordinator: ObservableObject {
     }
 
     public func makeLogCravingView() -> some View {
-        // Wrap LogCravingView in KeyboardAdaptiveHostingView for proper keyboard handling
-        return KeyboardAdaptiveHostingView(
+        KeyboardAdaptiveHostingView(
             LogCravingView(viewModel: self.container.makeLogCravingViewModel())
         )
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
     public func makeCravingListView() -> some View {
-        return CravingListView(viewModel: self.container.makeCravingListViewModel())
+        CravingListView(viewModel: self.container.makeCravingListViewModel())
             .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
     public func makeAnalyticsDashboardView() -> some View {
-        return AnalyticsDashboardView(viewModel: self.container.makeAnalyticsViewModel())
+        AnalyticsDashboardView(viewModel: self.container.makeAnalyticsViewModel())
             .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
     public func makeChatView() -> some View {
-        // Ensure .frame() is applied to ChatView (not its view model)
-        return ChatView(viewModel: self.container.makeChatViewModel())
+        ChatView(viewModel: self.container.makeChatViewModel())
             .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
     public func start() -> some View {
-        return CRAVETabView(coordinator: self)
+        CRAVETabView(coordinator: self)
     }
 }
 

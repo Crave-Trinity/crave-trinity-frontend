@@ -1,3 +1,4 @@
+//
 //  LogCravingView.swift
 //  CravePhone
 //
@@ -33,7 +34,7 @@ public struct LogCravingView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
                     
-                    // Description text area
+                    // Description text area (with updated heading in the subview)
                     CravingDescriptionSectionView(
                         text: $viewModel.cravingDescription,
                         isFocused: $isDescriptionFocused

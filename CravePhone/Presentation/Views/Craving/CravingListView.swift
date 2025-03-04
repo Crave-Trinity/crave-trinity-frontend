@@ -1,4 +1,4 @@
-//=================================================
+//
 //  CravingListView.swift
 //  CravePhone
 //
@@ -12,19 +12,15 @@
 //  "DESIGNED FOR STEVE JOBS":
 //    - Minimal friction, smooth transitions, clarity.
 //
-//  LAST UPDATED: <today's date>
-//=================================================
+
 import SwiftUI
 
 struct CravingListView: View {
-    // MARK: - Observed ViewModel
     @ObservedObject var viewModel: CravingListViewModel
     
-    // MARK: - Local State
     @State private var searchText = ""
     @State private var selectedFilter: CravingFilter = .all
     
-    // MARK: - Filter Enum
     enum CravingFilter: String, CaseIterable, Identifiable {
         case all          = "All"
         case high         = "High Intensity"
@@ -33,25 +29,19 @@ struct CravingListView: View {
         var id: String { self.rawValue }
     }
     
-    // MARK: - View Body
     var body: some View {
         ZStack {
-            // Full-bleed gradient background + keyboard safe-area fix
             CraveTheme.Colors.primaryGradient
                 .ignoresSafeArea(.all)
                 .ignoresSafeArea(.keyboard, edges: .bottom)
 
             VStack(spacing: 0) {
-                // Header
                 headerView
-                
-                // Search & Filter Bar
                 searchAndFilterBar
                     .padding(.horizontal)
                     .padding(.top, 8)
                     .padding(.bottom, 4)
                 
-                // Main Content
                 if viewModel.isLoading {
                     loadingView
                 } else if filteredCravings.isEmpty {
@@ -76,7 +66,6 @@ struct CravingListView: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        // Show any alerts triggered by the ViewModel
         .alert(item: $viewModel.alertInfo) { info in
             Alert(
                 title: Text(info.title),
@@ -85,16 +74,12 @@ struct CravingListView: View {
             )
         }
         .onAppear {
-            // Fetch cravings when this view appears
             Task { await viewModel.fetchCravings() }
         }
     }
     
-    // MARK: - Filter Logic
     private var filteredCravings: [CravingEntity] {
         let cravings = viewModel.cravings
-        
-        // 1) Search-based filter
         let searchFiltered = searchText.isEmpty
             ? cravings
             : cravings.filter {
@@ -102,23 +87,17 @@ struct CravingListView: View {
                     .contains(searchText.lowercased())
             }
         
-        // 2) Additional filter type
         switch selectedFilter {
         case .all:
             return searchFiltered
         case .high:
             return searchFiltered.filter { $0.intensity >= 7.0 }
         case .recent:
-            let oneWeekAgo = Calendar.current.date(
-                byAdding: .day,
-                value: -7,
-                to: Date()
-            ) ?? Date()
+            let oneWeekAgo = Calendar.current.date(byAdding: .day, value: -7, to: Date()) ?? Date()
             return searchFiltered.filter { $0.timestamp >= oneWeekAgo }
         }
     }
     
-    // MARK: - Header View
     private var headerView: some View {
         VStack(spacing: 8) {
             HStack {
@@ -142,11 +121,9 @@ struct CravingListView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
         .padding()
-        // Gradient behind the header
         .background(CraveTheme.Colors.primaryGradient)
     }
     
-    // MARK: - Search & Filter Bar
     private var searchAndFilterBar: some View {
         VStack(spacing: 8) {
             HStack {
@@ -156,7 +133,6 @@ struct CravingListView: View {
                 TextField("Search cravings", text: $searchText)
                     .foregroundColor(CraveTheme.Colors.primaryText)
                 
-                // Clear search icon
                 if !searchText.isEmpty {
                     Button {
                         searchText = ""
@@ -170,7 +146,6 @@ struct CravingListView: View {
             .background(Color.black.opacity(0.2))
             .cornerRadius(10)
             
-            // Filter chips
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 8) {
                     ForEach(CravingFilter.allCases) { filter in
@@ -190,7 +165,6 @@ struct CravingListView: View {
         }
     }
     
-    // MARK: - Loading View
     private var loadingView: some View {
         VStack {
             Spacer()
@@ -208,7 +182,6 @@ struct CravingListView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     
-    // MARK: - Empty Cravings View
     private var emptyCravingsView: some View {
         VStack(spacing: 16) {
             Spacer()
@@ -229,7 +202,6 @@ struct CravingListView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     
-    // MARK: - Filter Chip
     struct FilterChip: View {
         let title: String
         let isSelected: Bool
@@ -270,3 +242,4 @@ struct CravingListView: View {
         }
     }
 }
+

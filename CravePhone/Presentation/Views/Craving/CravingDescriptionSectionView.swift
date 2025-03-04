@@ -13,8 +13,9 @@ struct CravingDescriptionSectionView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
+            // CHANGED: Now uses .heading to match "Craving Logs" & "Analytics"
             Text("🍫 What are you craving?")
-                .font(CraveTheme.Typography.subheading)
+                .font(CraveTheme.Typography.heading)
                 .foregroundColor(CraveTheme.Colors.primaryText)
 
             CraveTextEditor(text: $text)
@@ -41,3 +42,4 @@ struct CravingDescriptionSectionView: View {
         .padding(.vertical, 8)
     }
 }
+

@@ -6,7 +6,6 @@
 //    - A custom TextEditor with placeholder logic & character-limit control.
 //    - We’ve removed any .focused() calls here, because we now manage focus in the parent.
 //
-
 import SwiftUI
 
 struct CraveTextEditor: View {
@@ -19,7 +18,6 @@ struct CraveTextEditor: View {
         ZStack(alignment: .topLeading) {
             if text.isEmpty {
                 placeholderContent
-                    // Tapping the placeholder triggers the parent's .onTapGesture to focus
                     .allowsHitTesting(false)
             }
 
@@ -34,7 +32,6 @@ struct CraveTextEditor: View {
                     RoundedRectangle(cornerRadius: 12)
                         .stroke(Color.white.opacity(0.3), lineWidth: 1)
                 )
-                // Clear the native text editor background on older iOS:
                 .modifier(ScrollBackgroundClearModifier())
                 .onChangeBackport(of: text, initial: false) { _, newVal in
                     if newVal.count > characterLimit {

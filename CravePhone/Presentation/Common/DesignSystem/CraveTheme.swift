@@ -1,4 +1,4 @@
-//=========================================
+//
 //  CraveTheme.swift
 //  CravePhone
 //
@@ -11,8 +11,6 @@
 //  "DESIGNED FOR STEVE JOBS":
 //    - Minimal, consistent naming.
 //
-//  UPDATED: <today's date>
-//=========================================
 import SwiftUI
 
 public struct CraveTheme {
