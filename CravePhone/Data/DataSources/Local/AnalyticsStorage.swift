@@ -2,8 +2,11 @@
 //  AnalyticsStorage.swift
 //  CravePhone
 //
-//  Uses SwiftData to persist AnalyticsDTOs.
+//  Description:
+//   Implements AnalyticsStorageProtocol using SwiftData to persist AnalyticsDTO objects.
+//   (Uncle Bob style: Isolate persistence details in one class.)
 //
+
 import Foundation
 import SwiftData
 

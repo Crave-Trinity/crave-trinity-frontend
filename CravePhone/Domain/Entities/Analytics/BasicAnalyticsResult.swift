@@ -1,7 +1,12 @@
+//
 //  BasicAnalyticsResult.swift
 //  CravePhone
 //
-//  The single analytics result struct, no duplicates!
+//  Description:
+//   Domain struct that holds aggregated analytics results.
+//   It includes total counts, averages, success rate, and groupings by date.
+//   (Uncle Bob style: A single responsibility object for final analytics metrics.)
+//
 
 import Foundation
 
@@ -11,7 +16,6 @@ public struct BasicAnalyticsResult {
     public let averageIntensity: Double
     public let averageResistance: Double
     public let successRate: Double
-    
     public let cravingsByDate: [Date: Int]
     
     public init(

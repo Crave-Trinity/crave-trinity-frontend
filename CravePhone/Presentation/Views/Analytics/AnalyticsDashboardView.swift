@@ -3,7 +3,8 @@
 //  CravePhone
 //
 //  FINAL FIX:
-//  Displays real analytics from AnalyticsViewModel, updating when the selected time frame changes.
+//  Displays real analytics from AnalyticsViewModel and updates when the selected time frame changes.
+//  (Uncle Bob & Steve Jobs: Clean UI code with reactive updates.)
 //
 
 import SwiftUI
@@ -36,12 +37,10 @@ public struct AnalyticsDashboardView: View {
     
     public var body: some View {
         ZStack {
-            // Background gradient
-            CraveTheme.Colors.primaryGradient
-                .ignoresSafeArea()
+            CraveTheme.Colors.primaryGradient.ignoresSafeArea()
             
             VStack(spacing: 0) {
-                // Header with title and time frame menu
+                // Header with title and time frame menu.
                 VStack(spacing: 8) {
                     HStack {
                         Text("📊 Analytics")
@@ -61,10 +60,7 @@ public struct AnalyticsDashboardView: View {
                             }
                             .padding(.horizontal, 10)
                             .padding(.vertical, 5)
-                            .background(
-                                RoundedRectangle(cornerRadius: 8)
-                                    .fill(Color.black.opacity(0.3))
-                            )
+                            .background(RoundedRectangle(cornerRadius: 8).fill(Color.black.opacity(0.3)))
                             .foregroundColor(.white)
                         }
                     }
@@ -76,7 +72,7 @@ public struct AnalyticsDashboardView: View {
                 .padding()
                 .background(CraveTheme.Colors.primaryGradient)
                 
-                // Tab selector
+                // Tab selector.
                 HStack(spacing: 0) {
                     ForEach(AnalyticsTab.allCases) { tab in
                         Button {
@@ -85,10 +81,7 @@ public struct AnalyticsDashboardView: View {
                         } label: {
                             VStack(spacing: 4) {
                                 Text(tab.rawValue)
-                                    .font(.system(
-                                        size: 14,
-                                        weight: selectedTab == tab ? .semibold : .regular
-                                    ))
+                                    .font(.system(size: 14, weight: selectedTab == tab ? .semibold : .regular))
                                     .foregroundColor(selectedTab == tab ? CraveTheme.Colors.accent : CraveTheme.Colors.secondaryText)
                                     .padding(.horizontal, 4)
                                     .padding(.vertical, 8)
@@ -105,7 +98,7 @@ public struct AnalyticsDashboardView: View {
                 .padding(.horizontal)
                 .padding(.top, 8)
                 
-                // Main content area
+                // Main content area.
                 ScrollView {
                     VStack(spacing: 20) {
                         switch selectedTab {
@@ -124,7 +117,6 @@ public struct AnalyticsDashboardView: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        // Fetch analytics on appear and on time frame change using the conversion extension.
         .onAppear {
             Task { await viewModel.fetchAnalytics(timeFrame: selectedTimeFrame.toAnalyticsManagerTimeFrame) }
         }
@@ -137,29 +129,23 @@ public struct AnalyticsDashboardView: View {
     
     private var overviewTab: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("Total Cravings: \(viewModel.totalCravings)")
-                .foregroundColor(.white)
-            Text("Avg Intensity: \(String(format: "%.1f", viewModel.averageIntensity))")
-                .foregroundColor(.white)
-            Text("Avg Resistance: \(String(format: "%.1f", viewModel.averageResistance))")
-                .foregroundColor(.white)
-            Text("Success Rate: \(String(format: "%.1f", viewModel.successRate))%")
-                .foregroundColor(.white)
+            Text("Total Cravings: \(viewModel.totalCravings)").foregroundColor(.white)
+            Text("Avg Intensity: \(String(format: "%.1f", viewModel.averageIntensity))").foregroundColor(.white)
+            Text("Avg Resistance: \(String(format: "%.1f", viewModel.averageResistance))").foregroundColor(.white)
+            Text("Success Rate: \(String(format: "%.1f", viewModel.successRate))%").foregroundColor(.white)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
     
     private var trendsTab: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("Cravings by Date: \(viewModel.cravingsByDate.count) unique days")
-                .foregroundColor(.white)
+            Text("Cravings by Date: \(viewModel.cravingsByDate.count) unique days").foregroundColor(.white)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
     
     private var triggersTab: some View {
         VStack(alignment: .leading, spacing: 16) {
-            // Safely join detectedPatterns (which is a [String])
             Text("Detected Patterns: \(viewModel.detectedPatterns.isEmpty ? "None" : viewModel.detectedPatterns.joined(separator: ", "))")
                 .foregroundColor(.white)
         }

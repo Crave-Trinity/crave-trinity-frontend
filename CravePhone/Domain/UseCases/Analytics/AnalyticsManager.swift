@@ -3,10 +3,9 @@
 //  CravePhone
 //
 //  Description:
-//    Orchestrates the aggregator, returning BasicAnalyticsResult with no confusion.
-//    It fetches craving events, aggregates them, and (optionally) detects patterns.
-//    Currently, pattern detection is not integrated into the final result.
-//    (Uncle Bob style: Keep it simple and remove unused variables.)
+//   Orchestrates fetching analytics events, aggregating them, and optionally detecting patterns.
+//   Returns a unified BasicAnalyticsResult. Pattern detection is currently optional.
+//   (Uncle Bob: Simple, clear orchestration.)
 //
 
 import Foundation
@@ -34,7 +33,7 @@ public final class AnalyticsManager {
         let now = Date()
         let startDate: Date
         
-        // Determine the start date based on the time frame.
+        // Determine start date based on selected time frame.
         switch timeFrame {
         case .week:
             startDate = Calendar.current.date(byAdding: .day, value: -7, to: now) ?? now
@@ -46,16 +45,15 @@ public final class AnalyticsManager {
             startDate = Calendar.current.date(byAdding: .year, value: -1, to: now) ?? now
         }
         
-        // 1) Get events from the repository.
+        // 1) Retrieve events from the repository.
         let events = try await repository.fetchCravingEvents(from: startDate, to: now)
         
-        // 2) Aggregate events into a BasicAnalyticsResult.
+        // 2) Aggregate events into BasicAnalyticsResult.
         let aggregated = try await aggregator.aggregate(events: events)
         
-        // 3) Optionally detect patterns. Currently unused.
+        // 3) (Optional) Detect patterns. (Currently unused.)
         // _ = try await patternDetection.detectPatterns(in: events)
         
-        // 4) Return the final aggregated result.
         return aggregated
     }
 }

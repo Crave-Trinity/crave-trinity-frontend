@@ -1,5 +1,12 @@
-// AnalyticsDashboardView+TimeFrameConversion.swift
-// Converts the dashboard view’s TimeFrame to AnalyticsManager.TimeFrame.
+//
+//  AnalyticsDashboardView+TimeFrameConversion.swift
+//  CravePhone
+//
+//  Description:
+//   Extension to convert the dashboard view’s TimeFrame to the manager’s TimeFrame.
+//   (Uncle Bob: Keep conversion logic centralized.)
+//
+
 import Foundation
 
 extension AnalyticsDashboardView.TimeFrame {
