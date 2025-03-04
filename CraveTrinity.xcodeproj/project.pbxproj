@@ -167,7 +167,6 @@
 				Presentation/Utilities/KeyboardAdaptiveHostingController.swift = (ios, );
 				Presentation/Utilities/KeyboardAdaptiveHostingView.swift = (ios, );
 				Presentation/Utilities/ViewModifiers.swift = (ios, );
-				Presentation/ViewModels/Analytics/AnalyticsDashboardViewModel.swift = (ios, );
 				Presentation/ViewModels/Analytics/AnalyticsViewModel.swift = (ios, );
 				Presentation/ViewModels/Craving/CravingListViewModel.swift = (ios, );
 				Presentation/ViewModels/Craving/LogCravingViewModel.swift = (ios, );
