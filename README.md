@@ -25,7 +25,6 @@
 * 📌 Feb 19: [Crave-trinity (iOS + Watch + Vision)](https://github.com/The-Obstacle-Is-The-Way/crave-trinity) – Unified codebase with AR/VR hooks for the future
 * 📌 Feb 20–21: WatchOS – Refined UI/UX, aesthetics, HIG-compliant intensity/resistance sliders
 * 📌 Feb 22–23: [CraveWave Backend](https://github.com/Crave-Trinity/crave-trinity-backend) – Backend foundation, improved syncing, refined UI/UX 
-* 📌 Feb 23–Present: Back-End [Live](https://crave-mvp-backend-production-a001.up.railway.app); Completing endpoints, MVP scope iteration
 * 📌 Feb 23 – Mar 3: Full-Stack MVP – Deployed Full-stack; Better Front-end
 * 📌 Mar 3 - Present: Live on [TestFlight](https://testflight.apple.com/join/Yb1uKZYx); Integrated [Backend Infrastructure](https://crave-mvp-backend-production-a001.up.railway.app)
   
