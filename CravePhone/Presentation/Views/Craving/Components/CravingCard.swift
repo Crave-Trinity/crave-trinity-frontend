@@ -4,13 +4,16 @@
 //
 //  RESPONSIBILITY:
 //    Displays a single logged craving in a card layout.
-//    Shows the craving description, intensity (with a wave icon), and resistance (with a shield icon).
-//    "DESIGNED FOR STEVE JOBS, CODED LIKE UNCLE BOB":
-//      - Clear presentation and dynamic visual feedback.
-//      - Separation of concerns with self-contained, reusable UI.
+//    Shows craving description, intensity (wave/flame icon), and resistance (shield icon).
+//    Now includes a second badge (shield) next to the flame at the top.
+//
+//  "DESIGNED FOR STEVE JOBS, CODED LIKE UNCLE BOB":
+//    - Minimal friction, polished look.
+//    - Clear, balanced badges for intensity & resistance side by side.
+//    - Reverses color logic so that high resistance is a positive color.
 //
 //  USAGE:
-//    Use this view within your CravingListView or similar screens to present each logged craving.
+//    Integrate in your CravingListView or any place you show a list of CravingEntities.
 //
 
 import SwiftUI
@@ -27,10 +30,11 @@ public struct CravingCard: View {
     
     public var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            // Header section with timestamp and intensity badge.
+            
+            // HEADER: Now includes BOTH flame and shield at the top.
             headerSection
             
-            // Craving description with expand/collapse functionality.
+            // MAIN DESCRIPTION: Expand/collapse on tap.
             Text(craving.cravingDescription)
                 .font(CraveTheme.Typography.subheading)
                 .foregroundColor(CraveTheme.Colors.primaryText)
@@ -44,14 +48,13 @@ public struct CravingCard: View {
                     CraveHaptics.shared.lightImpact()
                 }
             
+            // METRICS + EMOTIONS: Shown if expanded or if isFeatured
             if isExpanded || isFeatured {
-                // Metrics section displaying intensity and resistance.
                 metricsSection
                     .padding(.top, 4)
                     .transition(.move(edge: .top).combined(with: .opacity))
             }
             
-            // Optional emotions section.
             let emotions = craving.emotions
             if !emotions.isEmpty {
                 emotionsSection(emotions)
@@ -86,7 +89,7 @@ public struct CravingCard: View {
         .accessibilityHint("Double tap to \(isExpanded ? "collapse" : "expand") details")
     }
     
-    // MARK: - Header Section
+    // MARK: - HEADER: Date + BOTH Badges (Flame + Shield)
     
     private var headerSection: some View {
         HStack(alignment: .center) {
@@ -94,18 +97,28 @@ public struct CravingCard: View {
                 Text(craving.timestamp.formattedDate())
                     .font(CraveTheme.Typography.body.weight(.medium))
                     .foregroundColor(CraveTheme.Colors.secondaryText)
+                
                 if isExpanded {
                     Text(craving.timestamp.formatted(date: .omitted, time: .shortened))
                         .font(CraveTheme.Typography.body)
                         .foregroundColor(CraveTheme.Colors.secondaryText.opacity(0.7))
                 }
             }
+            
             Spacer()
-            intensityBadge
-                .scaleEffect(isFeatured ? 1.1 : 1.0)
+            
+            // Combine both badges in an HStack
+            HStack(spacing: 8) {
+                intensityBadge
+                resistanceBadge
+            }
+            .scaleEffect(isFeatured ? 1.1 : 1.0)
         }
     }
     
+    // MARK: - BADGES
+    
+    /// Flame badge for Intensity
     private var intensityBadge: some View {
         HStack(spacing: 4) {
             Image(systemName: "flame.fill")
@@ -119,7 +132,22 @@ public struct CravingCard: View {
         .background(Capsule().fill(intensityColor.opacity(0.2)))
     }
     
-    // MARK: - Metrics Section
+    /// Shield badge for Resistance (with more "positive" color logic)
+    private var resistanceBadge: some View {
+        HStack(spacing: 4) {
+            Image(systemName: "shield.fill")
+                .font(.system(size: 12))
+            Text("\(Int(craving.resistance))")
+                .font(.system(size: 14, weight: .bold))
+        }
+        // Use "positive" color logic for higher resistance
+        .foregroundColor(resistanceLabelColor)
+        .padding(.horizontal, 10)
+        .padding(.vertical, 5)
+        .background(Capsule().fill(resistanceColor.opacity(0.2)))
+    }
+    
+    // MARK: - MAIN METRICS SECTION
     
     private var metricsSection: some View {
         VStack(spacing: 12) {
@@ -139,7 +167,7 @@ public struct CravingCard: View {
                 Divider().frame(height: 30)
                     .background(Color.gray.opacity(0.2))
                 
-                // Resistance metric with shield icon
+                // Resistance metric
                 metricItem(
                     title: "Resistance",
                     value: "\(Int(craving.resistance))/10",
@@ -150,7 +178,7 @@ public struct CravingCard: View {
         }
     }
     
-    // MARK: - Emotions Section
+    // MARK: - EMOTIONS SECTION
     
     private func emotionsSection(_ emotions: [String]) -> some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -174,7 +202,7 @@ public struct CravingCard: View {
         }
     }
     
-    // MARK: - Metric Item Helper
+    // MARK: - METRIC ITEM HELPER
     
     private func metricItem(title: String, value: String, icon: String, color: Color) -> some View {
         HStack(spacing: 8) {
@@ -193,8 +221,9 @@ public struct CravingCard: View {
         .frame(maxWidth: .infinity, alignment: .leading)
     }
     
-    // MARK: - Dynamic Color Helpers
+    // MARK: - COLOR LOGIC
     
+    // Intensity: higher = "hotter" color
     private var intensityColor: Color {
         switch craving.intensity {
         case 1...3:  return .green
@@ -203,7 +232,6 @@ public struct CravingCard: View {
         default:     return .red
         }
     }
-    
     private var intensityLabelColor: Color {
         switch craving.intensity {
         case 1...3:  return .green
@@ -212,12 +240,23 @@ public struct CravingCard: View {
         }
     }
     
+    // Resistance: higher = more positive color
+    // e.g. 1 is "low confidence" -> grayish
+    //      10 is "very high confidence" -> bright green or blue
     private var resistanceColor: Color {
         switch craving.resistance {
-        case 1...3: return .red
-        case 4...6: return .orange
-        case 7...8: return .yellow
-        default:    return .green
+        case 1...3:  return .gray
+        case 4...6:  return .mint       // a fresh, uplifting color
+        case 7...8:  return .blue       // even stronger positivity
+        default:     return .green      // top-tier positivity
+        }
+    }
+    private var resistanceLabelColor: Color {
+        switch craving.resistance {
+        case 1...3:  return .gray
+        case 4...6:  return .mint
+        case 7...8:  return .blue
+        default:     return .white
         }
     }
 }
