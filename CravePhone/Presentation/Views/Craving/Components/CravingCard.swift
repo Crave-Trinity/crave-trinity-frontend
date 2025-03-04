@@ -2,16 +2,15 @@
 //  CravingCard.swift
 //  CravePhone
 //
-//  PURPOSE:
-//    - Display an individual craving in a card with intensity/resistance metrics, date/time, emotions.
+//  RESPONSIBILITY:
+//    Displays a single logged craving in a card layout.
+//    Shows the craving description, intensity (with a wave icon), and resistance (with a shield icon).
+//    "DESIGNED FOR STEVE JOBS, CODED LIKE UNCLE BOB":
+//      - Clear presentation and dynamic visual feedback.
+//      - Separation of concerns with self-contained, reusable UI.
 //
-//  ARCHITECTURE (SOLID):
-//    - Single Responsibility: UI for one craving’s data.
-//
-//  “DESIGNED FOR STEVE JOBS”:
-//    - Minimal friction, clean layout, slight animations.
-//
-//  LAST UPDATED: <today's date>.
+//  USAGE:
+//    Use this view within your CravingListView or similar screens to present each logged craving.
 //
 
 import SwiftUI
@@ -28,8 +27,10 @@ public struct CravingCard: View {
     
     public var body: some View {
         VStack(alignment: .leading, spacing: 12) {
+            // Header section with timestamp and intensity badge.
             headerSection
             
+            // Craving description with expand/collapse functionality.
             Text(craving.cravingDescription)
                 .font(CraveTheme.Typography.subheading)
                 .foregroundColor(CraveTheme.Colors.primaryText)
@@ -44,11 +45,13 @@ public struct CravingCard: View {
                 }
             
             if isExpanded || isFeatured {
+                // Metrics section displaying intensity and resistance.
                 metricsSection
                     .padding(.top, 4)
                     .transition(.move(edge: .top).combined(with: .opacity))
             }
             
+            // Optional emotions section.
             let emotions = craving.emotions
             if !emotions.isEmpty {
                 emotionsSection(emotions)
@@ -57,8 +60,8 @@ public struct CravingCard: View {
         }
         .padding(CraveTheme.Spacing.medium)
         .background(
-            RoundedRectangle(cornerRadius: CraveTheme.Layout.cardCornerRadius)    // <--- used here
-                .fill(CraveTheme.Colors.cardBackground)                           // <--- used here
+            RoundedRectangle(cornerRadius: CraveTheme.Layout.cardCornerRadius)
+                .fill(CraveTheme.Colors.cardBackground)
                 .shadow(
                     color: isFeatured
                         ? CraveTheme.Colors.accent.opacity(0.3)
@@ -78,27 +81,25 @@ public struct CravingCard: View {
                 )
         )
         .animation(.spring(response: 0.3, dampingFraction: 0.7), value: isExpanded)
-        .animation(.spring(response: 0.3, dampingFraction: 0.7), value: isFeatured)
         .accessibilityElement(children: .combine)
         .accessibilityLabel("Craving: \(craving.cravingDescription)")
         .accessibilityHint("Double tap to \(isExpanded ? "collapse" : "expand") details")
     }
     
-    // MARK: - Header
+    // MARK: - Header Section
+    
     private var headerSection: some View {
         HStack(alignment: .center) {
             VStack(alignment: .leading, spacing: 2) {
                 Text(craving.timestamp.formattedDate())
                     .font(CraveTheme.Typography.body.weight(.medium))
                     .foregroundColor(CraveTheme.Colors.secondaryText)
-                
                 if isExpanded {
                     Text(craving.timestamp.formatted(date: .omitted, time: .shortened))
                         .font(CraveTheme.Typography.body)
                         .foregroundColor(CraveTheme.Colors.secondaryText.opacity(0.7))
                 }
             }
-            
             Spacer()
             intensityBadge
                 .scaleEffect(isFeatured ? 1.1 : 1.0)
@@ -118,6 +119,8 @@ public struct CravingCard: View {
         .background(Capsule().fill(intensityColor.opacity(0.2)))
     }
     
+    // MARK: - Metrics Section
+    
     private var metricsSection: some View {
         VStack(spacing: 12) {
             Rectangle()
@@ -125,6 +128,7 @@ public struct CravingCard: View {
                 .foregroundColor(Color.gray.opacity(0.2))
             
             HStack {
+                // Intensity metric
                 metricItem(
                     title: "Intensity",
                     value: "\(Int(craving.intensity))/10",
@@ -135,6 +139,7 @@ public struct CravingCard: View {
                 Divider().frame(height: 30)
                     .background(Color.gray.opacity(0.2))
                 
+                // Resistance metric with shield icon
                 metricItem(
                     title: "Resistance",
                     value: "\(Int(craving.resistance))/10",
@@ -144,6 +149,8 @@ public struct CravingCard: View {
             }
         }
     }
+    
+    // MARK: - Emotions Section
     
     private func emotionsSection(_ emotions: [String]) -> some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -167,17 +174,17 @@ public struct CravingCard: View {
         }
     }
     
+    // MARK: - Metric Item Helper
+    
     private func metricItem(title: String, value: String, icon: String, color: Color) -> some View {
         HStack(spacing: 8) {
             Image(systemName: icon)
                 .foregroundColor(color)
                 .font(.system(size: 16))
-            
             VStack(alignment: .leading, spacing: 2) {
                 Text(title)
                     .font(CraveTheme.Typography.body)
                     .foregroundColor(CraveTheme.Colors.secondaryText)
-                
                 Text(value)
                     .font(CraveTheme.Typography.body.weight(.semibold))
                     .foregroundColor(CraveTheme.Colors.primaryText)
@@ -185,6 +192,8 @@ public struct CravingCard: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
+    
+    // MARK: - Dynamic Color Helpers
     
     private var intensityColor: Color {
         switch craving.intensity {
@@ -212,3 +221,4 @@ public struct CravingCard: View {
         }
     }
 }
+
