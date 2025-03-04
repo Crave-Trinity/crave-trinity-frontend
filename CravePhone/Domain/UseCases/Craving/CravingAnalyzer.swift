@@ -1,5 +1,5 @@
+//CravingAnalyzer.swift
 import Foundation
-
 public final class CravingAnalyzer {
     public init() {}
     
@@ -8,4 +8,3 @@ public final class CravingAnalyzer {
         return "Analysis Result"
     }
 }
-
