@@ -30,7 +30,7 @@ struct CravingLogTriggerPageView: View {
                 // 2) Text Editor (~33% of screen height)
                 MinimalWatchCraveTextEditor(
                     text: $viewModel.cravingText,
-                    placeholder: "What triggered it?",
+                    placeholder: "Any triggers?",
                     isFocused: $isEditorFocused,
                     characterLimit: 200
                 )

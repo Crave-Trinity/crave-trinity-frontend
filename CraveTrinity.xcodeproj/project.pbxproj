@@ -250,6 +250,7 @@
 				Core/Tests/Unit/VitalsViewModelTests.swift,
 			);
 			platformFiltersByRelativePath = {
+				Core/Presentation/Common/Views/CravingLogTriggerPageView.swift = (watchos, );
 				Core/Presentation/Common/WatchCraveTextEditor.swift = (watchos, );
 				Core/Presentation/ViewModels/CravingLogViewModel.swift = (watchos, );
 				Core/Services/OfflineCravingSyncManager.swift = (watchos, );
