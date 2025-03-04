@@ -26,7 +26,7 @@
 * 📌 Feb 20–21: WatchOS – Refined UI/UX, aesthetics, HIG-compliant intensity/resistance sliders
 * 📌 Feb 22–23: [CraveWave Backend](https://github.com/Crave-Trinity/crave-trinity-backend) – Backend foundation, improved syncing, refined UI/UX 
 * 📌 Feb 23–Present: Back-End [Live](https://crave-mvp-backend-production-a001.up.railway.app); Completing endpoints, MVP scope iteration
-📌 Feb 23 – Mar 3: Full-Stack MVP – Refined Front-end; Deployed Full-stack; Now live on [TestFlight](https://testflight.apple.com/join/Yb1uKZYx); connected to [backend infrastructure](https://crave-mvp-backend-production-a001.up.railway.app)
+* 📌 Feb 23 – Mar 3: Full-Stack MVP – Refined Front-end; Deployed Full-stack; Now live on [TestFlight](https://testflight.apple.com/join/Yb1uKZYx); connected to [backend infrastructure](https://crave-mvp-backend-production-a001.up.railway.app)
   
 💡 Functional watchOS/iOS MVP - built in 7 days from scratch while learning Swift with AI acceleration and basecode abstraction. 
 * It wasn’t just copy-pasta spaghetti; I debugged, refactored, and solved SwiftData issues. I can learn, execute fast, and build something real. The marathon continues.
