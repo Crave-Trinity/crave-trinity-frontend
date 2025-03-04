@@ -17,16 +17,14 @@ import SwiftData
 
 @main
 struct CRAVEApp: App {
-    
     private let container = DependencyContainer()
-    
+
     var body: some Scene {
         WindowGroup {
             ZStack {
                 // Full-bleed background
-                Color.black
-                    .ignoresSafeArea()
-                
+                Color.black.ignoresSafeArea()
+
                 // Coordinator-driven UI
                 CoordinatorHostView(container: container)
             }
@@ -34,4 +32,3 @@ struct CRAVEApp: App {
         }
     }
 }
-
