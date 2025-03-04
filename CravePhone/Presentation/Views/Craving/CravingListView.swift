@@ -3,15 +3,15 @@
 //  CravePhone
 //
 //  PURPOSE:
-//    - Display a searchable list of cravings, with filter chips for intensity/recent.
+//    - Display a searchable list of cravings, with filter chips for intensity/recent/high resistance.
 //    - Entire background ignores safe areas + keyboard edges.
 //
 //  ARCHITECTURE (SOLID):
 //    - Single Responsibility: Show + filter cravings.
 //
-//  "DESIGNED FOR STEVE JOBS":
-//    - Minimal friction, smooth transitions, clarity.
-//
+//  "DESIGNED FOR STEVE JOBS, CODED LIKE UNCLE BOB":
+//    - Minimal friction, polished clarity.
+//    - Clear filtering logic, readable, easily testable.
 
 import SwiftUI
 
@@ -21,14 +21,18 @@ struct CravingListView: View {
     @State private var searchText = ""
     @State private var selectedFilter: CravingFilter = .all
     
+    // MARK: - Filter Enum
     enum CravingFilter: String, CaseIterable, Identifiable {
-        case all          = "All"
-        case high         = "High Intensity"
-        case recent       = "Recent"
+        case all              = "All"
+        case highIntensity    = "High Intensity"
+        case recent           = "Recent"
+        // NEW: Add a new filter case
+        case highResistance   = "High Resistance"
         
         var id: String { self.rawValue }
     }
     
+    // MARK: - Body
     var body: some View {
         ZStack {
             CraveTheme.Colors.primaryGradient
@@ -52,7 +56,9 @@ struct CravingListView: View {
                             ForEach(filteredCravings) { craving in
                                 CravingCard(craving: craving)
                                     .contextMenu {
-                                        Button("View Details") {}
+                                        Button("View Details") {
+                                            // handle detail action
+                                        }
                                         Button("Archive") {
                                             Task { await viewModel.archiveCraving(craving) }
                                         }
@@ -78,8 +84,11 @@ struct CravingListView: View {
         }
     }
     
+    // MARK: - Computed: Filtered + Sorted Cravings
     private var filteredCravings: [CravingEntity] {
         let cravings = viewModel.cravings
+        
+        // 1) Filter by search text
         let searchFiltered = searchText.isEmpty
             ? cravings
             : cravings.filter {
@@ -87,17 +96,30 @@ struct CravingListView: View {
                     .contains(searchText.lowercased())
             }
         
+        // 2) Filter by selected filter
         switch selectedFilter {
         case .all:
             return searchFiltered
-        case .high:
+            
+        case .highIntensity:
+            // Intensity >= 7
             return searchFiltered.filter { $0.intensity >= 7.0 }
+            
         case .recent:
+            // Logged within the last 7 days
             let oneWeekAgo = Calendar.current.date(byAdding: .day, value: -7, to: Date()) ?? Date()
             return searchFiltered.filter { $0.timestamp >= oneWeekAgo }
+            
+        case .highResistance:
+            // NEW: Filter for high resistance, e.g., >= 7
+            // Also sort by descending resistance
+            return searchFiltered
+                .filter { $0.resistance >= 7.0 }
+                .sorted { $0.resistance > $1.resistance }
         }
     }
     
+    // MARK: - Header View
     private var headerView: some View {
         VStack(spacing: 8) {
             HStack {
@@ -106,9 +128,15 @@ struct CravingListView: View {
                     .foregroundColor(CraveTheme.Colors.primaryText)
                 Spacer()
                 Menu {
-                    Button("Sort by Date") {}
-                    Button("Sort by Intensity") {}
-                    Button("Sort by Resistance") {}
+                    Button("Sort by Date") {
+                        // handle date sort
+                    }
+                    Button("Sort by Intensity") {
+                        // handle intensity sort
+                    }
+                    Button("Sort by Resistance") {
+                        // handle resistance sort
+                    }
                 } label: {
                     Image(systemName: "ellipsis.circle")
                         .font(.system(size: 20))
@@ -124,8 +152,10 @@ struct CravingListView: View {
         .background(CraveTheme.Colors.primaryGradient)
     }
     
+    // MARK: - Search & Filter Bar
     private var searchAndFilterBar: some View {
         VStack(spacing: 8) {
+            // Search Field
             HStack {
                 Image(systemName: "magnifyingglass")
                     .foregroundColor(.gray)
@@ -146,6 +176,7 @@ struct CravingListView: View {
             .background(Color.black.opacity(0.2))
             .cornerRadius(10)
             
+            // Filter Chips
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 8) {
                     ForEach(CravingFilter.allCases) { filter in
@@ -165,6 +196,7 @@ struct CravingListView: View {
         }
     }
     
+    // MARK: - Loading View
     private var loadingView: some View {
         VStack {
             Spacer()
@@ -182,6 +214,7 @@ struct CravingListView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     
+    // MARK: - Empty Cravings View
     private var emptyCravingsView: some View {
         VStack(spacing: 16) {
             Spacer()
@@ -202,6 +235,7 @@ struct CravingListView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     
+    // MARK: - FilterChip
     struct FilterChip: View {
         let title: String
         let isSelected: Bool
