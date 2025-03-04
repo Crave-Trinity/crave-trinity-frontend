@@ -1,13 +1,10 @@
-//=================================================================
-// 5) AnalyticsRepositoryImpl.swift
-//    CravePhone/Data/Repositories/AnalyticsRepositoryImpl.swift
 //
-//  PURPOSE:
-//  - Example analytics repository (may be local or remote).
-//  - Adjust if you integrate with your backend.
+//  AnalyticsRepositoryImpl.swift
+//  CravePhone
 //
-//  LAST UPDATED: <today's date>
-//=================================================================
+//  Example: Local fetch from your model context (or you can call a remote API).
+//  This version returns an empty array until you implement the proper fetch logic in your AnalyticsStorageProtocol.
+//
 
 import Foundation
 
@@ -22,9 +19,17 @@ public final class AnalyticsRepositoryImpl: AnalyticsRepositoryProtocol {
     }
 
     public func fetchCravingEvents(from startDate: Date, to endDate: Date) async throws -> [CravingEvent] {
-        // Example: Use storage + mapper
-        // If you have a remote analytics endpoint, call it here using CraveBackendAPIClient.
-        // For now, it returns an empty list as a placeholder.
+        // NOTE:
+        // The original code expected a method `fetchCravingEntities(start:end:)` on AnalyticsStorageProtocol,
+        // but that method does not exist. Until you implement it,
+        // we return an empty array as a placeholder.
+        
+        // Example if you later add the method:
+        // let cravingEntities = try await storage.fetchCravingEntities(start: startDate, end: endDate)
+        // let events = cravingEntities.map { mapper.toCravingEvent($0) }
+        // return events
+        
         return []
     }
 }
+

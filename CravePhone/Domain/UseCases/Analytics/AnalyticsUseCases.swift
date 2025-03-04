@@ -1,9 +1,15 @@
-//AnalyticsUseCases.swift
+//
+//  AnalyticsUseCases.swift
+//  CravePhone
+//
+//  Baby mode: This version requires a time frame parameter
+//  so we call getBasicStats(for:) with a chosen time frame.
+//
 
 import Foundation
 
 public protocol GetBasicAnalyticsUseCaseProtocol {
-    func execute() async throws -> BasicAnalyticsResult
+    func execute(timeFrame: AnalyticsDashboardView.TimeFrame) async throws -> BasicAnalyticsResult
 }
 
 public final class GetBasicAnalyticsUseCase: GetBasicAnalyticsUseCaseProtocol {
@@ -13,8 +19,8 @@ public final class GetBasicAnalyticsUseCase: GetBasicAnalyticsUseCaseProtocol {
         self.analyticsManager = analyticsManager
     }
 
-    public func execute() async throws -> BasicAnalyticsResult {
-        return try await analyticsManager.getBasicStats()
+    public func execute(timeFrame: AnalyticsDashboardView.TimeFrame) async throws -> BasicAnalyticsResult {
+        return try await analyticsManager.getBasicStats(for: timeFrame)
     }
 }
 

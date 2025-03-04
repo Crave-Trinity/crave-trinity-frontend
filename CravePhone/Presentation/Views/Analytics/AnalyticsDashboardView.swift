@@ -2,20 +2,11 @@
 //  AnalyticsDashboardView.swift
 //  CravePhone
 //
-//  PURPOSE:
-//    - Display analytics data for multiple time frames (week, month, quarter, year) + tabs (Overview, Trends, Triggers, Insights).
+//  FINAL FIX:
+//  This version displays real analytics from AnalyticsViewModel and uses the new onChange modifier.
+//  It updates analytics whenever the selected time frame changes.
 //
-//  ARCHITECTURE (SOLID):
-//    - Single Responsibility: Analytics UI only.
-//    - Dependence on injected ViewModel (AnalyticsViewModel).
-//
-//  GANG OF FOUR:
-//    - Strategy: switching tabs changes content strategy.
-//    - Factory: coordinator constructs the VM.
-//
-//  "DESIGNED FOR STEVE JOBS":
-//    - Clear timeframe menu + tab selector. Minimal friction for user to glean insights.
-//
+
 import SwiftUI
 import Charts
 
@@ -46,19 +37,18 @@ public struct AnalyticsDashboardView: View {
     
     public var body: some View {
         ZStack {
-            // Full-bleed background that explicitly ignores safe areas
+            // Background gradient that ignores safe areas
             CraveTheme.Colors.primaryGradient
                 .ignoresSafeArea()
             
             VStack(spacing: 0) {
-                // Header section
+                // Header with title and time frame menu
                 VStack(spacing: 8) {
                     HStack {
                         Text("📊 Analytics")
                             .font(CraveTheme.Typography.heading)
                             .foregroundColor(CraveTheme.Colors.primaryText)
                         Spacer()
-                        
                         Menu {
                             ForEach(TimeFrame.allCases) { frame in
                                 Button(frame.rawValue) {
@@ -68,9 +58,7 @@ public struct AnalyticsDashboardView: View {
                         } label: {
                             HStack {
                                 Text(selectedTimeFrame.rawValue)
-                                    .font(CraveTheme.Typography.body)
                                 Image(systemName: "chevron.down")
-                                    .font(.system(size: 12))
                             }
                             .padding(.horizontal, 10)
                             .padding(.vertical, 5)
@@ -89,7 +77,7 @@ public struct AnalyticsDashboardView: View {
                 .padding()
                 .background(CraveTheme.Colors.primaryGradient)
                 
-                // Tab selector
+                // Tab selector for Overview, Trends, Triggers, Insights
                 HStack(spacing: 0) {
                     ForEach(AnalyticsTab.allCases) { tab in
                         Button {
@@ -98,26 +86,16 @@ public struct AnalyticsDashboardView: View {
                         } label: {
                             VStack(spacing: 4) {
                                 Text(tab.rawValue)
-                                    .font(
-                                        .system(
-                                            size: 14,
-                                            weight: selectedTab == tab ? .semibold : .regular
-                                        )
-                                    )
-                                    .foregroundColor(
-                                        selectedTab == tab
-                                        ? CraveTheme.Colors.accent
-                                        : CraveTheme.Colors.secondaryText
-                                    )
+                                    .font(.system(
+                                        size: 14,
+                                        weight: selectedTab == tab ? .semibold : .regular
+                                    ))
+                                    .foregroundColor(selectedTab == tab ? CraveTheme.Colors.accent : CraveTheme.Colors.secondaryText)
                                     .padding(.horizontal, 4)
                                     .padding(.vertical, 8)
                                 
                                 Rectangle()
-                                    .fill(
-                                        selectedTab == tab
-                                        ? CraveTheme.Colors.accent
-                                        : Color.clear
-                                    )
+                                    .fill(selectedTab == tab ? CraveTheme.Colors.accent : Color.clear)
                                     .frame(height: 2)
                             }
                         }
@@ -128,44 +106,75 @@ public struct AnalyticsDashboardView: View {
                 .padding(.horizontal)
                 .padding(.top, 8)
                 
+                // Main content area that switches based on the selected tab
                 ScrollView {
                     VStack(spacing: 20) {
                         switch selectedTab {
                         case .overview:
-                            Text("Overview Tab Content")
-                                .foregroundColor(.white)
-                                .frame(maxWidth: .infinity)
+                            overviewTab
                         case .trends:
-                            Text("Trends Tab Content")
-                                .foregroundColor(.white)
-                                .frame(maxWidth: .infinity)
+                            trendsTab
                         case .triggers:
-                            Text("Triggers Tab Content")
-                                .foregroundColor(.white)
-                                .frame(maxWidth: .infinity)
+                            triggersTab
                         case .insights:
-                            Text("Insights Tab Content")
-                                .foregroundColor(.white)
-                                .frame(maxWidth: .infinity)
+                            insightsTab
                         }
                     }
                     .padding()
                 }
             }
         }
-        // Frame and events remain unchanged
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        // When the view appears, fetch analytics data
         .onAppear {
             Task { await viewModel.fetchAnalytics(timeFrame: selectedTimeFrame) }
         }
-        #if swift(>=5.9)
-        .onChange(of: selectedTimeFrame, initial: false) { oldVal, newVal in
-            Task { await viewModel.fetchAnalytics(timeFrame: selectedTimeFrame) }
+        // Use the new onChange modifier (available in iOS 17+) to update analytics when the selectedTimeFrame changes.
+        // This version provides both the old and new value.
+        .onChange(of: selectedTimeFrame, initial: true) { oldValue, newValue in
+            Task { await viewModel.fetchAnalytics(timeFrame: newValue) }
         }
-        #else
-        .onChange(of: selectedTimeFrame) { _ in
-            Task { await viewModel.fetchAnalytics(timeFrame: selectedTimeFrame) }
+    }
+    
+    // MARK: - Tab Content Views
+    
+    private var overviewTab: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            Text("Total Cravings: \(viewModel.totalCravings)")
+                .foregroundColor(.white)
+            Text("Avg Intensity: \(String(format: "%.1f", viewModel.averageIntensity))")
+                .foregroundColor(.white)
+            Text("Avg Resistance: \(String(format: "%.1f", viewModel.averageResistance))")
+                .foregroundColor(.white)
+            Text("Success Rate: \(String(format: "%.1f", viewModel.successRate))%")
+                .foregroundColor(.white)
         }
-        #endif
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+    
+    private var trendsTab: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            Text("Cravings by Date: \(viewModel.cravingsByDate.count) unique days")
+                .foregroundColor(.white)
+            // Additional trend charts or data can be added here.
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+    
+    private var triggersTab: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            Text("Detected Patterns: \(viewModel.detectedPatterns.joined(separator: ", "))")
+                .foregroundColor(.white)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+    
+    private var insightsTab: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            Text("Insights Tab Content - Add your logic here!")
+                .foregroundColor(.white)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
+
