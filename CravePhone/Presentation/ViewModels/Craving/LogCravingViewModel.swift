@@ -2,51 +2,57 @@
 //  LogCravingViewModel.swift
 //  CravePhone
 //
-//  Description:
-//   When the user logs a new craving, this view model saves a CravingEntity
-//   and also stores a corresponding analytics record. It handles speech-to-text,
-//   form validation, and state updates.
-//   (Uncle Bob: Keep responsibilities isolated and code DRY.)
+//  Uncle Bob: A ViewModel should contain presentation logic and mediate
+//  between the View (UI) and the Domain/UseCase layers. It does not handle
+//  direct data persistence; it delegates to repositories or use cases.
+//  Keep responsibilities clear and minimal.
 //
-
 import SwiftUI
 import Foundation
-
 @MainActor
 public final class LogCravingViewModel: ObservableObject {
+    // MARK: - Dependencies
     private let cravingRepo: CravingRepository
-    private let analyticsRepo: AnalyticsRepositoryProtocol
+    
+    // Changed from AnalyticsRepositoryProtocol to AnalyticsRepository
+    private let analyticsRepo: AnalyticsRepository
+    
     private let speechService: SpeechToTextServiceProtocol
-
-    // User-entered properties
+    
+    // MARK: - User Input Properties
     @Published public var cravingDescription: String = ""
     @Published public var cravingStrength: Double = 5
     @Published public var confidenceToResist: Double = 5
     @Published public var selectedEmotions: Set<String> = []
     
-    // UI state properties
+    // MARK: - UI State
     @Published public var isLoading: Bool = false
     @Published public var alertInfo: AlertInfo?
-    
-    // Speech recognition status
     @Published public var isRecordingSpeech: Bool = false
-
+    
+    // MARK: - Initialization
     public init(
         cravingRepo: CravingRepository,
-        analyticsRepo: AnalyticsRepositoryProtocol,
+        analyticsRepo: AnalyticsRepository,
         speechService: SpeechToTextServiceProtocol
     ) {
         self.cravingRepo = cravingRepo
         self.analyticsRepo = analyticsRepo
         self.speechService = speechService
         
-        // Update the description as speech text is recognized.
+        // On speech-to-text updates, automatically update the craving description.
         self.speechService.onTextUpdated = { [weak self] text in
             self?.cravingDescription = text
         }
     }
     
-    /// Logs a new craving by saving it and storing an analytics record.
+    // MARK: - Public Methods
+    
+    /// Logs a new craving by:
+    /// 1) Persisting a CravingEntity to the local repository,
+    /// 2) Persisting an Analytics event for that craving,
+    /// 3) Providing user feedback via an alert,
+    /// 4) Resetting the form fields.
     public func logCraving() async {
         isLoading = true
         
@@ -60,18 +66,26 @@ public final class LogCravingViewModel: ObservableObject {
         )
         
         do {
+            // Save the new craving
             try await cravingRepo.addCraving(entity)
+            
+            // Save an analytics event capturing this craving log
             try await analyticsRepo.storeCravingEvent(from: entity)
+            
+            // Provide success feedback
             alertInfo = AlertInfo(title: "Success", message: "Craving logged successfully!")
+            
+            // Reset for next input
             resetForm()
         } catch {
+            // Display any errors
             alertInfo = AlertInfo(title: "Error", message: error.localizedDescription)
         }
         
         isLoading = false
     }
     
-    /// Toggles speech recognition.
+    /// Toggles speech recognition on/off using the injected speech service.
     public func toggleSpeechRecognition() {
         if isRecordingSpeech {
             speechService.stopRecording()
@@ -86,7 +100,7 @@ public final class LogCravingViewModel: ObservableObject {
         }
     }
     
-    /// Toggles an emotion’s selection.
+    /// Toggle a specific emotion in the selectedEmotions set.
     public func toggleEmotion(_ emotion: String) {
         if selectedEmotions.contains(emotion) {
             selectedEmotions.remove(emotion)
@@ -95,16 +109,19 @@ public final class LogCravingViewModel: ObservableObject {
         }
     }
     
-    /// Resets form values.
+    /// A convenient property to validate whether the form can be submitted.
+    public var isValid: Bool {
+        !cravingDescription.isEmpty && cravingStrength > 0
+    }
+    
+    // MARK: - Private Helpers
+    
+    /// Clears input fields after a successful submission.
     private func resetForm() {
         cravingDescription = ""
         cravingStrength = 5
         confidenceToResist = 5
         selectedEmotions.removeAll()
     }
-    
-    /// Form validation.
-    public var isValid: Bool {
-        !cravingDescription.isEmpty && cravingStrength > 0
-    }
 }
+
