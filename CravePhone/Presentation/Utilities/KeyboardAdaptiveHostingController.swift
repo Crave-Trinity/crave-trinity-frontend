@@ -3,9 +3,9 @@
 //  CravePhone
 //
 //  RESPONSIBILITY:
-//    - A custom UIHostingController that automatically adjusts layout for the keyboard.
-//    - On iOS 16+: Pins bottom of SwiftUI content to the keyboard layout guide.
-//    - On older iOS: Falls back to manual safeAreaInsets adjustments.
+//   - A custom UIHostingController that helps avoid keyboard overlap.
+//   - On iOS 16+, rely on SwiftUI's built-in avoidance.
+//   - On older iOS, adjust safe area insets manually.
 //
 
 import SwiftUI
@@ -19,25 +19,18 @@ public class KeyboardAdaptiveHostingController<Content: View>: UIHostingControll
 
     public override func viewDidLoad() {
         super.viewDidLoad()
-
-        // iOS 16 and later: Use UIKeyboardLayoutGuide
+        
+        // iOS 16 and newer: Let SwiftUI handle the keyboard avoidance automatically
         if #available(iOS 16.0, *) {
-            let guide = view.keyboardLayoutGuide
-            if let swiftUIView = view.subviews.first {
-                swiftUIView.translatesAutoresizingMaskIntoConstraints = false
-                NSLayoutConstraint.activate([
-                    swiftUIView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-                    swiftUIView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-                    swiftUIView.topAnchor.constraint(equalTo: view.topAnchor),
-                    swiftUIView.bottomAnchor.constraint(equalTo: guide.topAnchor)
-                ])
-            }
+            // No manual constraints needed here.
         } else {
+            // Fallback for iOS < 16
             addKeyboardObservers()
         }
     }
 
-    // MARK: - Fallback for iOS < 16
+    // MARK: - Fallback Approach
+
     private func addKeyboardObservers() {
         keyboardWillShowObserver = NotificationCenter.default.addObserver(
             forName: UIResponder.keyboardWillShowNotification,
@@ -74,8 +67,12 @@ public class KeyboardAdaptiveHostingController<Content: View>: UIHostingControll
             options: animationOptions,
             animations: {
                 if isShowing {
-                    // Increase safe area so content is pushed above keyboard
-                    self.additionalSafeAreaInsets.bottom = keyboardHeight - self.view.safeAreaInsets.bottom
+                    // If you have a bottom TabView, optionally subtract its height:
+                    let tabBarHeight: CGFloat = 49
+                    self.additionalSafeAreaInsets.bottom = max(
+                        0,
+                        keyboardHeight - self.view.safeAreaInsets.bottom - tabBarHeight
+                    )
                 } else {
                     self.additionalSafeAreaInsets.bottom = 0
                 }

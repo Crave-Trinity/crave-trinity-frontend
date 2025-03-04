@@ -1,15 +1,20 @@
-//
 //  LogCravingView.swift
 //  CravePhone
 //
+//  RESPONSIBILITY:
+//   - Presents the "Log Craving" screen with description, sliders, and emotions.
+//   - Validates form inputs before allowing submission.
+//
+
 import SwiftUI
 
 public struct LogCravingView: View {
     @ObservedObject var viewModel: LogCravingViewModel
-
-    // Declare a FocusState for controlling keyboard focus
+    
+    // Control keyboard focus on the description field
     @FocusState private var isDescriptionFocused: Bool
     
+    // Track submission to show a spinner and disable repeated taps
     @State private var isSubmitting = false
 
     public init(viewModel: LogCravingViewModel) {
@@ -18,7 +23,7 @@ public struct LogCravingView: View {
 
     public var body: some View {
         ZStack {
-            // Dismiss keyboard if user taps outside the text area
+            // Background gradient; tapping it dismisses the keyboard
             CraveTheme.Colors.primaryGradient
                 .ignoresSafeArea()
                 .onTapGesture {
@@ -27,13 +32,14 @@ public struct LogCravingView: View {
 
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
-
-                    // Pass the parent's focus binding to the child
+                    
+                    // Description text area
                     CravingDescriptionSectionView(
                         text: $viewModel.cravingDescription,
                         isFocused: $isDescriptionFocused
                     )
                     
+                    // Speech toggle button
                     CraveSpeechToggleButton(
                         isRecording: viewModel.isRecordingSpeech,
                         onToggle: {
@@ -42,11 +48,13 @@ public struct LogCravingView: View {
                         }
                     )
                     
+                    // Two sliders: intensity & resistance
                     CravingSlidersSectionView(
                         cravingStrength: $viewModel.cravingStrength,
                         resistance: $viewModel.confidenceToResist
                     )
                     
+                    // Emotion chips
                     CravingEmotionChipsView(
                         selectedEmotions: viewModel.selectedEmotions,
                         onToggleEmotion: { e in
@@ -55,13 +63,14 @@ public struct LogCravingView: View {
                         }
                     )
 
+                    // Submit button
                     submitButton
                 }
                 .padding()
             }
         }
-        // Keyboard toolbar with "Done"
         .toolbar {
+            // Keyboard toolbar with a "Done" button to dismiss
             ToolbarItemGroup(placement: .keyboard) {
                 Spacer()
                 Button("Done") {
@@ -69,7 +78,7 @@ public struct LogCravingView: View {
                 }
             }
         }
-        // Example Alert usage
+        // Alert for success/error messages
         .alert(item: $viewModel.alertInfo) { info in
             Alert(
                 title: Text(info.title),
@@ -78,6 +87,8 @@ public struct LogCravingView: View {
             )
         }
     }
+
+    // MARK: - Submit Button
 
     private var submitButton: some View {
         Button {
@@ -96,17 +107,29 @@ public struct LogCravingView: View {
             .background(Color.blue.cornerRadius(8))
             .foregroundColor(.white)
         }
-        .disabled(isSubmitting)
+        // NEW: Disable if submitting OR invalid form
+        .disabled(isSubmitting || !viewModel.isValid)
     }
+
+    // MARK: - Submit Logic
 
     private func submitCraving() {
         guard !isSubmitting else { return }
-        isSubmitting = true
         
+        // Optional extra guard to catch forced submissions
+        guard viewModel.isValid else {
+            viewModel.alertInfo = AlertInfo(
+                title: "Invalid Entry",
+                message: "Please provide a description and an intensity above 0."
+            )
+            return
+        }
+        
+        isSubmitting = true
         Task {
             await viewModel.logCraving()
             isSubmitting = false
-            // Also dismiss keyboard after submitting
+            // Dismiss keyboard
             isDescriptionFocused = false
         }
     }

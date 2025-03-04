@@ -2,15 +2,16 @@
 //  LogCravingViewModel+UIExtensions.swift
 //  CravePhone
 //
-//  RESPONSIBILITY: Adds UI-centric validations or computed properties.
+//  RESPONSIBILITY:
+//   - UI-centric validations or computed properties for LogCravingViewModel.
 //
 
 import Foundation
-import SwiftUI
 
 extension LogCravingViewModel {
+    
+    /// Basic validation: requires non-empty description and a positive strength.
     var isValid: Bool {
-        // Basic validation
         !cravingDescription.isEmpty && cravingStrength > 0
     }
 }
