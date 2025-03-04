@@ -1,10 +1,13 @@
-// Core/Domain/Interfaces/Repositories/AnalyticsRepository.swift
+//
+//  AnalyticsRepository.swift
+//  CravePhone
+//
+//  Description:
+//    Domain-level interface for retrieving analytics events
+//    and storing new ones (if your design calls for that).
+//
 import Foundation
-import Combine
-
-// This is an INTERFACE, so it must be public
 public protocol AnalyticsRepository {
-    func fetchCravingEvents(from startDate: Date, to endDate: Date) async throws -> [any AnalyticsEvent]
-    // Add other methods as needed (e.g., for fetching specific event types)
+    func fetchCravingEvents(from startDate: Date, to endDate: Date) async throws -> [CravingEvent]
+    func storeCravingEvent(from craving: CravingEntity) async throws
 }
-
