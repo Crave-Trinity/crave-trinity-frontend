@@ -2,9 +2,8 @@
 //  CraveBackendAPIClient.swift
 //  CravePhone/Data/DataSources/Remote
 //
-//  PASTE & RUN (No Explanations):
-//   - Contains sendMessage(...) and generateTestToken(...)
-//   - Fixes "no member" errors in AiChatRepositoryImpl
+//  PASTE & RUN (No Explanations)
+//  Debug prints included for token & response inspection
 //
 
 import Foundation
@@ -61,6 +60,9 @@ public class CraveBackendAPIClient {
     public init() {}
 
     public func sendMessage(userQuery: String, authToken: String) async throws -> String {
+        // Debug print: confirm the token in use
+        print("DEBUG: sendMessage(...) with token:", authToken)
+
         guard let url = URL(string: "\(baseURLString)/api/v1/chat") else {
             throw APIError.invalidURL
         }
@@ -76,6 +78,11 @@ public class CraveBackendAPIClient {
         guard let httpResponse = response as? HTTPURLResponse else {
             throw APIError.invalidResponse
         }
+
+        // Debug prints: status code + raw response
+        print("DEBUG: Chat request status code:", httpResponse.statusCode)
+        let rawBody = String(data: data, encoding: .utf8) ?? "nil"
+        print("DEBUG: Chat raw response body:", rawBody)
 
         switch httpResponse.statusCode {
         case 200..<300:
@@ -106,6 +113,10 @@ public class CraveBackendAPIClient {
         guard let httpResponse = response as? HTTPURLResponse else {
             throw APIError.invalidResponse
         }
+
+        print("DEBUG: Test token request status code:", httpResponse.statusCode)
+        let rawBody = String(data: data, encoding: .utf8) ?? "nil"
+        print("DEBUG: Test token raw response body:", rawBody)
 
         switch httpResponse.statusCode {
         case 200..<300:
