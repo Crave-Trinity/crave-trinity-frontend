@@ -56,15 +56,29 @@ struct WatchApp: App {
         }
     }()
     
-    /// The main scene of the app.
-    /// If the model container is available, it is injected into the environment so that
-    /// views using @Environment(\.modelContext) can access it.
+    /// State to control whether to show the splash screen.
+    @State private var showSplash = true
+    
     var body: some Scene {
         WindowGroup {
             if let container = modelContainer {
-                contentView
-                    .modelContainer(container)
-                    .environmentObject(dependencyContainer)
+                if showSplash {
+                    SplashScreenView()
+                        .onAppear {
+                            // Display the splash screen for 2 seconds
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                withAnimation {
+                                    showSplash = false
+                                }
+                            }
+                        }
+                        .modelContainer(container)
+                        .environmentObject(dependencyContainer)
+                } else {
+                    contentView
+                        .modelContainer(container)
+                        .environmentObject(dependencyContainer)
+                }
             } else {
                 // Display an error message if the data container fails to initialize.
                 Text("Failed to load data store.")
@@ -84,6 +98,26 @@ struct WatchApp: App {
                 Label("Log", systemImage: "pencil.line")
             }
             // Future tabs can be added here as needed.
+        }
+    }
+}
+
+/// A simple splash screen view displayed on app launch.
+struct SplashScreenView: View {
+    var body: some View {
+        VStack(spacing: 16) {
+            // Replace "AppLogo" with your actual asset name.
+            Image("AppLogo")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 80, height: 80)
+            Text("CRAVE")
+                .font(.title)
+                .fontWeight(.bold)
+            Text("Because No One Should Have to Fight Alone.")
+                .font(.footnote)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal)
         }
     }
 }
