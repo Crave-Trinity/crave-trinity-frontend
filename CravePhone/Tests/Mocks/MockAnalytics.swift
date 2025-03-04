@@ -1,4 +1,5 @@
 #if DEBUG
+//
 //  MockAnalytics.swift
 //  CravePhone
 //
@@ -8,11 +9,11 @@
 //  Usage:
 //    Called by AnalyticsDashboardView_Previews.
 //
-
 import Foundation
-
 // MARK: - Mock Analytics Repository
-final class MockAnalyticsRepository: AnalyticsRepositoryProtocol {
+// Change from AnalyticsRepositoryProtocol to AnalyticsRepository
+final class MockAnalyticsRepository: AnalyticsRepository {
+    
     // Returns an empty array (for previews)
     func fetchCravingEvents(from startDate: Date, to endDate: Date) async throws -> [CravingEvent] {
         return []
@@ -23,7 +24,6 @@ final class MockAnalyticsRepository: AnalyticsRepositoryProtocol {
         // Do nothing for preview/mock purposes.
     }
 }
-
 // MARK: - Mock Analytics Aggregator
 final class MockAnalyticsAggregator: AnalyticsAggregatorProtocol {
     // Returns dummy aggregated data for preview purposes
@@ -38,7 +38,6 @@ final class MockAnalyticsAggregator: AnalyticsAggregatorProtocol {
         )
     }
 }
-
 // MARK: - Mock Pattern Detection Service
 final class MockPatternDetectionService: PatternDetectionServiceProtocol {
     // Returns a couple of mock pattern strings
