@@ -23,11 +23,11 @@ struct CravingListView: View {
     
     // MARK: - Filter Enum
     enum CravingFilter: String, CaseIterable, Identifiable {
-        case all              = "All"
-        case highIntensity    = "High Intensity"
-        case recent           = "Recent"
-        // NEW: Add a new filter case
-        case highResistance   = "High Resistance"
+        // Reordered so that the chips appear in the new order:
+        case all            = "All"
+        case recent         = "Recent"
+        case highIntensity  = "High Intensity"
+        case highResistance = "High Resistance"
         
         var id: String { self.rawValue }
     }
@@ -111,7 +111,7 @@ struct CravingListView: View {
             return searchFiltered.filter { $0.timestamp >= oneWeekAgo }
             
         case .highResistance:
-            // NEW: Filter for high resistance, e.g., >= 7
+            // Filter for high resistance, e.g., >= 7
             // Also sort by descending resistance
             return searchFiltered
                 .filter { $0.resistance >= 7.0 }
@@ -276,4 +276,3 @@ struct CravingListView: View {
         }
     }
 }
-

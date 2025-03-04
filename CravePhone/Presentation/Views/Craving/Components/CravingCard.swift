@@ -121,8 +121,12 @@ public struct CravingCard: View {
     /// Flame badge for Intensity
     private var intensityBadge: some View {
         HStack(spacing: 4) {
+            // The flame symbol has a built-in multicolor style in SF Symbols
+            // so we can leverage that for a 3D-ish effect:
             Image(systemName: "flame.fill")
                 .font(.system(size: 12))
+                .symbolRenderingMode(.multicolor)
+            
             Text("\(Int(craving.intensity))")
                 .font(.system(size: 14, weight: .bold))
         }
@@ -132,16 +136,38 @@ public struct CravingCard: View {
         .background(Capsule().fill(intensityColor.opacity(0.2)))
     }
     
-    /// Shield badge for Resistance (with more "positive" color logic)
+    /// Shield badge for Resistance (with more "positive" color logic + custom gradient)
     private var resistanceBadge: some View {
         HStack(spacing: 4) {
+            // We'll overlay a gradient to simulate "internal shading."
+            // 1) Set the base color to .clear
+            // 2) Overlay a gradient
+            // 3) Mask it with the same shield shape so the gradient is clipped
+            
             Image(systemName: "shield.fill")
                 .font(.system(size: 12))
+                .foregroundColor(.clear)  // so the main icon is invisible
+                .overlay(
+                    LinearGradient(
+                        gradient: Gradient(
+                            colors: [
+                                resistanceLabelColor.opacity(0.9),
+                                resistanceLabelColor.opacity(0.4)
+                            ]
+                        ),
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                )
+                .mask(
+                    Image(systemName: "shield.fill")
+                        .font(.system(size: 12))
+                )
+            
             Text("\(Int(craving.resistance))")
                 .font(.system(size: 14, weight: .bold))
         }
-        // Use "positive" color logic for higher resistance
-        .foregroundColor(resistanceLabelColor)
+        .foregroundColor(resistanceLabelColor) // Applies to text
         .padding(.horizontal, 10)
         .padding(.vertical, 5)
         .background(Capsule().fill(resistanceColor.opacity(0.2)))
