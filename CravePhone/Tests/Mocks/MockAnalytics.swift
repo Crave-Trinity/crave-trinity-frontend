@@ -17,22 +17,24 @@ final class MockAnalyticsRepository: AnalyticsRepositoryProtocol {
     func fetchCravingEvents(from startDate: Date, to endDate: Date) async throws -> [CravingEvent] {
         return []
     }
+    
+    // Stub: No-op implementation for storing a craving event
+    func storeCravingEvent(from craving: CravingEntity) async throws {
+        // Do nothing for preview/mock purposes.
+    }
 }
 
 // MARK: - Mock Analytics Aggregator
 final class MockAnalyticsAggregator: AnalyticsAggregatorProtocol {
     // Returns dummy aggregated data for preview purposes
-    func aggregate(events: [CravingEvent]) async throws -> AggregatedData {
-        AggregatedData(
+    func aggregate(events: [CravingEvent]) async throws -> BasicAnalyticsResult {
+        return BasicAnalyticsResult(
             totalCravings: 10,
             totalResisted: 4,
             averageIntensity: 2.5,
             averageResistance: 3.2,
-            cravingsByDate: [:],
-            cravingsByHour: [:],
-            cravingsByWeekday: [:],
-            commonTriggers: [:],
-            timePatterns: []
+            successRate: 40.0,
+            cravingsByDate: [:]
         )
     }
 }
@@ -45,4 +47,3 @@ final class MockPatternDetectionService: PatternDetectionServiceProtocol {
     }
 }
 #endif
-

@@ -1,12 +1,15 @@
-//=================================================================
-// 8) DependencyContainer.swift
-//    CravePhone/PhoneApp/DI/DependencyContainer.swift
+//
+//  DependencyContainer.swift
+//  CravePhone/PhoneApp/DI
 //
 //  PURPOSE:
-//  - Master container for SwiftData-based repositories & services.
-//  - Creates all Repos and Use Cases in one place for easy injection.
+//    Master container for SwiftData-based repositories & services.
+//    Creates all Repos and Use Cases in one place for easy injection.
+//    (Assumes: CravingRepositoryImpl now uses init(modelContext: ModelContext),
+//     AnalyticsRepositoryImpl now uses init(storage: AnalyticsStorageProtocol) with no mapper,
+//     The unified aggregator is AnalyticsAggregator (not AnalyticsAggregatorImpl),
+//     and LogCravingViewModel is initialized with labels: cravingRepo, analyticsRepo, speechService.)
 //
-//=================================================================
 
 import SwiftUI
 import SwiftData
@@ -27,7 +30,8 @@ public final class DependencyContainer: ObservableObject {
         CravingManager(modelContext: modelContext)
     }()
     private lazy var cravingRepository: CravingRepository = {
-        CravingRepositoryImpl(manager: cravingManager)
+        // Updated initializer: CravingRepositoryImpl expects 'modelContext'
+        CravingRepositoryImpl(modelContext: modelContext)
     }()
     
     // MARK: - Speech Dependencies
@@ -39,14 +43,13 @@ public final class DependencyContainer: ObservableObject {
     private lazy var analyticsStorage: AnalyticsStorageProtocol = {
         AnalyticsStorage(modelContext: modelContext)
     }()
-    private lazy var analyticsMapper: AnalyticsMapper = {
-        AnalyticsMapper()
-    }()
     private lazy var analyticsRepository: AnalyticsRepositoryProtocol = {
-        AnalyticsRepositoryImpl(storage: analyticsStorage, mapper: analyticsMapper)
+        // Removed extra 'mapper' argument
+        AnalyticsRepositoryImpl(storage: analyticsStorage)
     }()
     private lazy var analyticsAggregator: AnalyticsAggregatorProtocol = {
-        AnalyticsAggregatorImpl(storage: analyticsStorage)
+        // Use the unified aggregator (returning BasicAnalyticsResult)
+        AnalyticsAggregator()
     }()
     private lazy var analyticsConfig: AnalyticsConfiguration = {
         AnalyticsConfiguration.shared
@@ -98,18 +101,23 @@ public final class DependencyContainer: ObservableObject {
     public func makeChatViewModel() -> ChatViewModel {
         ChatViewModel(aiChatUseCase: aiChatUseCase)
     }
+    
     public func makeLogCravingViewModel() -> LogCravingViewModel {
+        // Updated initializer: expects 'cravingRepo', 'analyticsRepo', and 'speechService'
         LogCravingViewModel(
-            cravingRepository: cravingRepository,
+            cravingRepo: cravingRepository,
+            analyticsRepo: analyticsRepository,
             speechService: speechService
         )
     }
+    
     public func makeCravingListViewModel() -> CravingListViewModel {
         CravingListViewModel(
             fetchCravingsUseCase: makeFetchCravingsUseCase(),
             archiveCravingUseCase: makeArchiveCravingUseCase()
         )
     }
+    
     public func makeAnalyticsViewModel() -> AnalyticsViewModel {
         AnalyticsViewModel(manager: analyticsManager)
     }
@@ -118,9 +126,11 @@ public final class DependencyContainer: ObservableObject {
     private func makeAddCravingUseCase() -> AddCravingUseCaseProtocol {
         AddCravingUseCase(cravingRepository: cravingRepository)
     }
+    
     private func makeFetchCravingsUseCase() -> FetchCravingsUseCaseProtocol {
         FetchCravingsUseCase(cravingRepository: cravingRepository)
     }
+    
     private func makeArchiveCravingUseCase() -> ArchiveCravingUseCaseProtocol {
         ArchiveCravingUseCase(cravingRepository: cravingRepository)
     }

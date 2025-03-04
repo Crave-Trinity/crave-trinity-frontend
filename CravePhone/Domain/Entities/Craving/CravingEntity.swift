@@ -3,15 +3,14 @@
 //  CravePhone
 //
 //  Uncle Bob & Steve Jobs Style:
-//   - Renamed 'description' to avoid SwiftData conflict.
-//   - Maintains alignment with "cravingStrength" & "confidenceToResist".
+//   - Single source for user-submitted “cravings”
+//   - Ties in with logging UI & usage analytics
 //
-
 import SwiftData
 import Foundation
 
 @Model
-public class CravingEntity {
+public final class CravingEntity {
     @Attribute(.unique) public var id: UUID
     public var cravingDescription: String
     public var cravingStrength: Double
@@ -38,4 +37,3 @@ public class CravingEntity {
         self.isArchived = isArchived
     }
 }
-

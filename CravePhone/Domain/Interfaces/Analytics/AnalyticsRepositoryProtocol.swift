@@ -3,17 +3,12 @@
 //  CravePhone
 //
 //  Description:
-//    The domain interface for fetching analytics-related events
-//    from local or remote sources.
+//    Domain-level interface for retrieving analytics events
+//    and storing new ones (if your design calls for that).
 //
-//  You previously had "public protocol AnalyticsRepository" –
-//  we rename it to `AnalyticsRepositoryProtocol` to avoid confusion
-//  with a potential class named AnalyticsRepository.
-//
-
 import Foundation
 
-public protocol AnalyticsRepositoryProtocol: AnyObject {
+public protocol AnalyticsRepositoryProtocol {
     func fetchCravingEvents(from startDate: Date, to endDate: Date) async throws -> [CravingEvent]
-    // Add other methods as needed
+    func storeCravingEvent(from craving: CravingEntity) async throws
 }

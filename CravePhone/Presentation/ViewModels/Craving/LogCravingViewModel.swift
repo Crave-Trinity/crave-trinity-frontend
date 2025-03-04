@@ -2,55 +2,55 @@
 //  LogCravingViewModel.swift
 //  CravePhone
 //
-//  RESPONSIBILITY: Holds form data & handles speech recognition and saving logic.
+//  When the user logs a new craving, we save the CravingEntity (via CravingRepository)
+//  and also store a matching analytics record (via AnalyticsRepository). This view model
+//  also handles speech-to-text functionality.
+//
+//  Designed for clarity and scalability (Uncle Bob + Steve Jobs style).
 //
 
 import SwiftUI
-import Combine
 import Foundation
 
 @MainActor
-public class LogCravingViewModel: ObservableObject {
-    
-    // MARK: - Dependencies
-    
+public final class LogCravingViewModel: ObservableObject {
+    private let cravingRepo: CravingRepository
+    private let analyticsRepo: AnalyticsRepositoryProtocol
     private let speechService: SpeechToTextServiceProtocol
-    private let cravingRepository: CravingRepository
+
+    // User-entered properties
+    @Published public var cravingDescription: String = ""
+    @Published public var cravingStrength: Double = 5
+    @Published public var confidenceToResist: Double = 5
+    @Published public var selectedEmotions: Set<String> = []
     
-    // MARK: - Published Properties
+    // For showing a spinner and alerts
+    @Published public var isLoading: Bool = false
+    @Published public var alertInfo: AlertInfo?
     
-    @Published var cravingDescription: String = ""
-    @Published var cravingStrength: Double = 5
-    @Published var confidenceToResist: Double = 5
-    @Published var selectedEmotions: Set<String> = []
-    @Published var isLoading: Bool = false
-    @Published var alertInfo: AlertInfo?
-    @Published var isRecordingSpeech: Bool = false
-    
-    // MARK: - Initialization
-    
-    public init(cravingRepository: CravingRepository,
-                speechService: SpeechToTextServiceProtocol) {
-        self.cravingRepository = cravingRepository
+    // Property for speech recording status
+    @Published public var isRecordingSpeech: Bool = false
+
+    public init(
+        cravingRepo: CravingRepository,
+        analyticsRepo: AnalyticsRepositoryProtocol,
+        speechService: SpeechToTextServiceProtocol
+    ) {
+        self.cravingRepo = cravingRepo
+        self.analyticsRepo = analyticsRepo
         self.speechService = speechService
         
-        // Bind recognized text to local property
-        speechService.onTextUpdated = { [weak self] recognizedText in
-            self?.cravingDescription = recognizedText
-        }
-        
-        // Request speech permissions
-        Task {
-            let success = await speechService.requestAuthorization()
-            print("Speech recognition authorization: \(success ? "granted" : "denied")")
+        // Wire speech service updates to update the craving description
+        self.speechService.onTextUpdated = { [weak self] text in
+            self?.cravingDescription = text
         }
     }
     
-    // MARK: - Public Methods
-    
+    /// Logs a new craving by saving it and recording analytics.
     public func logCraving() async {
         isLoading = true
-        let newCraving = CravingEntity(
+        
+        let entity = CravingEntity(
             cravingDescription: cravingDescription,
             cravingStrength: cravingStrength,
             confidenceToResist: confidenceToResist,
@@ -60,15 +60,35 @@ public class LogCravingViewModel: ObservableObject {
         )
         
         do {
-            try await cravingRepository.addCraving(newCraving)
-            alertInfo = AlertInfo(title: "Success", message: "Craving logged.")
+            // Save the craving
+            try await cravingRepo.addCraving(entity)
+            // Save the analytics record
+            try await analyticsRepo.storeCravingEvent(from: entity)
+            alertInfo = AlertInfo(title: "Success", message: "Craving logged successfully!")
             resetForm()
         } catch {
             alertInfo = AlertInfo(title: "Error", message: error.localizedDescription)
         }
+        
         isLoading = false
     }
     
+    /// Toggles the speech recognition state.
+    public func toggleSpeechRecognition() {
+        if isRecordingSpeech {
+            speechService.stopRecording()
+            isRecordingSpeech = false
+        } else {
+            do {
+                let started = try speechService.startRecording()
+                isRecordingSpeech = started
+            } catch {
+                alertInfo = AlertInfo(title: "Speech Error", message: error.localizedDescription)
+            }
+        }
+    }
+    
+    /// Toggles the selection of a given emotion.
     public func toggleEmotion(_ emotion: String) {
         if selectedEmotions.contains(emotion) {
             selectedEmotions.remove(emotion)
@@ -77,45 +97,16 @@ public class LogCravingViewModel: ObservableObject {
         }
     }
     
-    public func toggleSpeechRecognition() {
-        isRecordingSpeech ? stopSpeechRecognition() : startSpeechRecognition()
-    }
-    
-    // MARK: - Private Helpers
-    
-    private func startSpeechRecognition() {
-        do {
-            let started = try speechService.startRecording()
-            if started {
-                isRecordingSpeech = true
-                // e.g., Provide a small haptic
-                UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-            } else {
-                alertInfo = AlertInfo(
-                    title: "Recording Error",
-                    message: "Another recording session is already in progress."
-                )
-            }
-        } catch {
-            if let speechError = error as? SpeechRecognitionError {
-                alertInfo = AlertInfo(title: "Speech Error", message: speechError.localizedDescription)
-            } else {
-                alertInfo = AlertInfo(title: "Speech Error", message: error.localizedDescription)
-            }
-        }
-    }
-    
-    private func stopSpeechRecognition() {
-        speechService.stopRecording()
-        isRecordingSpeech = false
-        // e.g., Provide a small haptic
-        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-    }
-    
+    /// Resets the form after submission.
     private func resetForm() {
         cravingDescription = ""
         cravingStrength = 5
         confidenceToResist = 5
-        selectedEmotions = []
+        selectedEmotions.removeAll()
+    }
+    
+    /// Computed property for basic form validation.
+    public var isValid: Bool {
+        !cravingDescription.isEmpty && cravingStrength > 0
     }
 }

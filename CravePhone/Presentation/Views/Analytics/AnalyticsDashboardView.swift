@@ -3,8 +3,7 @@
 //  CravePhone
 //
 //  FINAL FIX:
-//  This version displays real analytics from AnalyticsViewModel and uses the new onChange modifier.
-//  It updates analytics whenever the selected time frame changes.
+//  Displays real analytics from AnalyticsViewModel, updating when the selected time frame changes.
 //
 
 import SwiftUI
@@ -37,7 +36,7 @@ public struct AnalyticsDashboardView: View {
     
     public var body: some View {
         ZStack {
-            // Background gradient that ignores safe areas
+            // Background gradient
             CraveTheme.Colors.primaryGradient
                 .ignoresSafeArea()
             
@@ -77,7 +76,7 @@ public struct AnalyticsDashboardView: View {
                 .padding()
                 .background(CraveTheme.Colors.primaryGradient)
                 
-                // Tab selector for Overview, Trends, Triggers, Insights
+                // Tab selector
                 HStack(spacing: 0) {
                     ForEach(AnalyticsTab.allCases) { tab in
                         Button {
@@ -106,7 +105,7 @@ public struct AnalyticsDashboardView: View {
                 .padding(.horizontal)
                 .padding(.top, 8)
                 
-                // Main content area that switches based on the selected tab
+                // Main content area
                 ScrollView {
                     VStack(spacing: 20) {
                         switch selectedTab {
@@ -125,14 +124,12 @@ public struct AnalyticsDashboardView: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        // When the view appears, fetch analytics data
+        // Fetch analytics on appear and on time frame change using the conversion extension.
         .onAppear {
-            Task { await viewModel.fetchAnalytics(timeFrame: selectedTimeFrame) }
+            Task { await viewModel.fetchAnalytics(timeFrame: selectedTimeFrame.toAnalyticsManagerTimeFrame) }
         }
-        // Use the new onChange modifier (available in iOS 17+) to update analytics when the selectedTimeFrame changes.
-        // This version provides both the old and new value.
-        .onChange(of: selectedTimeFrame, initial: true) { oldValue, newValue in
-            Task { await viewModel.fetchAnalytics(timeFrame: newValue) }
+        .onChange(of: selectedTimeFrame, initial: true) { _, newValue in
+            Task { await viewModel.fetchAnalytics(timeFrame: newValue.toAnalyticsManagerTimeFrame) }
         }
     }
     
@@ -156,14 +153,14 @@ public struct AnalyticsDashboardView: View {
         VStack(alignment: .leading, spacing: 16) {
             Text("Cravings by Date: \(viewModel.cravingsByDate.count) unique days")
                 .foregroundColor(.white)
-            // Additional trend charts or data can be added here.
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
     
     private var triggersTab: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("Detected Patterns: \(viewModel.detectedPatterns.joined(separator: ", "))")
+            // Safely join detectedPatterns (which is a [String])
+            Text("Detected Patterns: \(viewModel.detectedPatterns.isEmpty ? "None" : viewModel.detectedPatterns.joined(separator: ", "))")
                 .foregroundColor(.white)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -177,4 +174,3 @@ public struct AnalyticsDashboardView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
-

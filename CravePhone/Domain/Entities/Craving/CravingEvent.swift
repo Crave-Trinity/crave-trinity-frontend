@@ -3,28 +3,25 @@
 //  CravePhone
 //
 //  Description:
-//    A domain entity representing a single craving event,
-//    conforming to your AnalyticsEvent protocol (if needed).
+//    A domain struct that represents a craving from the aggregator's perspective.
 //
-
 import Foundation
 
 public struct CravingEvent: AnalyticsEvent {
     public let id: UUID
     public let timestamp: Date
-    public let cravingEntity: CravingEntity
-
-    // If your AnalyticsEvent protocol requires these:
-    public var eventType: String { "interaction" }
-    public var metadata: [String: Any] { [:] }
-
+    public let eventType: String
+    public let metadata: [String: Any]
+    
     public init(
-        id: UUID = UUID(),
-        timestamp: Date = Date(),
-        cravingEntity: CravingEntity
+        id: UUID,
+        timestamp: Date,
+        eventType: String,
+        metadata: [String: Any]
     ) {
         self.id = id
         self.timestamp = timestamp
-        self.cravingEntity = cravingEntity
+        self.eventType = eventType
+        self.metadata = metadata
     }
 }

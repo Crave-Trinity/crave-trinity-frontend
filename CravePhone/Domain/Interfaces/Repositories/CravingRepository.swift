@@ -2,11 +2,9 @@
 //  CravingRepository.swift
 //  CravePhone
 //
-//  Uncle Bob & Steve Jobs Style:
-//   - Defines persistence operations for CravingEntity.
-//   - Separate interface ensures easy swapping of implementations.
+//  Purpose:
+//    Abstract away the logic for persisting/fetching CravingEntity objects
 //
-
 import Foundation
 
 public protocol CravingRepository {
@@ -15,4 +13,3 @@ public protocol CravingRepository {
     func archiveCraving(_ craving: CravingEntity) async throws
     func deleteCraving(_ craving: CravingEntity) async throws
 }
-

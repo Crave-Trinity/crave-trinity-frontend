@@ -1,21 +1,14 @@
 //
 //  AppCoordinator.swift
-//  CravePhone
+//  CravePhone/PhoneApp/Navigation
 //
 //  RESPONSIBILITY:
 //    Coordinates root-level navigation in SwiftUI.
-//    "DESIGNED FOR STEVE JOBS, CODED LIKE UNCLE BOB":
-//      - Single Responsibility: Provide top-level views.
-//      - Minimal knowledge of the rest of the system.
-//      - Correct explicit capture in closures by using `self`.
-//      - Wraps views in layout modifiers as needed.
-//
-//  FIX:
-//    The error "Reference to property 'container' in closure requires explicit use of 'self'"
-//    is fixed by explicitly referencing `self.container` in each view-creation method.
+//    Designed for simplicity (Uncle Bob + Steve Jobs style).
 //
 
 import SwiftUI
+// Ensure you import the module that contains AnalyticsDashboardView.
 
 @MainActor
 public final class AppCoordinator: ObservableObject {
@@ -51,4 +44,3 @@ public final class AppCoordinator: ObservableObject {
         CRAVETabView(coordinator: self)
     }
 }
-

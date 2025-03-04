@@ -1,36 +1,41 @@
-//=================================================================
-// 6) CravingRepositoryImpl.swift
-//    CravePhone/Data/Repositories/CravingRepositoryImpl.swift
 //
-//  PURPOSE:
-//  - Basic repository for cravings, using CravingManager or a DB approach.
-//  - Does not talk directly to the backend in this example.
+//  CravingRepositoryImpl.swift
+//  CravePhone
 //
-//=================================================================
-
+//  Description:
+//    Uses SwiftData to store/fetch CravingEntity
+//
+import SwiftData
 import Foundation
 
 @MainActor
 public final class CravingRepositoryImpl: CravingRepository {
-    private let manager: CravingManager
+    private let modelContext: ModelContext
     
-    public init(manager: CravingManager) {
-        self.manager = manager
+    public init(modelContext: ModelContext) {
+        self.modelContext = modelContext
     }
     
     public func addCraving(_ craving: CravingEntity) async throws {
-        try await manager.insert(craving)
+        modelContext.insert(craving)
+        try modelContext.save()
     }
     
     public func fetchActiveCravings() async throws -> [CravingEntity] {
-        try await manager.fetchActiveCravings()
+        let descriptor = FetchDescriptor<CravingEntity>(
+            predicate: #Predicate<CravingEntity> { !$0.isArchived },
+            sortBy: [SortDescriptor(\.timestamp, order: .reverse)]
+        )
+        return try modelContext.fetch(descriptor)
     }
     
     public func archiveCraving(_ craving: CravingEntity) async throws {
-        try await manager.archive(craving)
+        craving.isArchived = true
+        try modelContext.save()
     }
     
     public func deleteCraving(_ craving: CravingEntity) async throws {
-        try await manager.delete(craving)
+        modelContext.delete(craving)
+        try modelContext.save()
     }
 }

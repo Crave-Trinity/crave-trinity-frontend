@@ -2,54 +2,43 @@
 //  AnalyticsViewModel.swift
 //  CravePhone
 //
-//  This version no longer calls loadSampleData().
-//  It now fetches real analytics by asking AnalyticsManager for basic stats,
-//  passing in a timeFrame, and then updating the published properties.
+//  Description:
+//    SwiftUI ViewModel that calls AnalyticsManager to fetch & display real stats.
 //
-
 import SwiftUI
 import Foundation
 
 @MainActor
-public class AnalyticsViewModel: ObservableObject {
+public final class AnalyticsViewModel: ObservableObject {
     private let manager: AnalyticsManager
     
-    // MARK: - Published Properties (to be displayed in the UI)
-    @Published var totalCravings: Int = 0
-    @Published var averageIntensity: Double = 0.0
-    @Published var averageResistance: Double = 0.0
-    @Published var successRate: Double = 0.0
+    @Published public var totalCravings: Int = 0
+    @Published public var averageIntensity: Double = 0
+    @Published public var averageResistance: Double = 0
+    @Published public var successRate: Double = 0
+    @Published public var cravingsByDate: [Date: Int] = [:]
     
-    // Example aggregated data (add more as needed)
-    @Published var cravingsByDate: [Date: Int] = [:]
-    @Published var cravingsByHour: [Int: Int] = [:]
-    @Published var detectedPatterns: [String] = []
+    // NEW: Detected patterns property used in the triggers tab.
+    @Published public var detectedPatterns: [String] = []
     
-    // MARK: - Initialization
     public init(manager: AnalyticsManager) {
         self.manager = manager
     }
     
-    // MARK: - Public Methods
-    
-    /// Fetches analytics data for the given timeFrame.
-    /// This method calls the AnalyticsManager's getBasicStats(for:) method.
-    func fetchAnalytics(timeFrame: AnalyticsDashboardView.TimeFrame) async {
+    public func fetchAnalytics(timeFrame: AnalyticsManager.TimeFrame) async {
         do {
-            // The manager now accepts a timeFrame argument.
-            let stats = try await manager.getBasicStats(for: timeFrame)
+            let result = try await manager.getBasicStats(for: timeFrame)
+            self.totalCravings = result.totalCravings
+            self.averageIntensity = result.averageIntensity
+            self.averageResistance = result.averageResistance
+            self.successRate = result.successRate
+            self.cravingsByDate = result.cravingsByDate
             
-            // Update the published properties with real data.
-            self.totalCravings = stats.totalCravings
-            self.averageIntensity = stats.averageIntensity
-            self.averageResistance = stats.averageResistance
-            self.successRate = stats.totalCravings > 0 ? (Double(stats.totalResisted) / Double(stats.totalCravings)) * 100.0 : 0
-            self.cravingsByDate = stats.cravingsByDate
-            self.cravingsByHour = stats.cravingsByHour
-            self.detectedPatterns = stats.detectedPatterns
+            // If pattern detection is implemented, update detectedPatterns accordingly.
+            // For now, assign an empty array.
+            self.detectedPatterns = []
         } catch {
-            print("Error fetching analytics: \(error)")
+            print("Error fetching analytics:", error)
         }
     }
 }
-

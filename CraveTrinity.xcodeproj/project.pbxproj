@@ -158,8 +158,8 @@
 				Presentation/Common/AlertInfo.swift = (ios, );
 				Presentation/Common/DesignSystem/Components/CraveTextEditor.swift = (ios, );
 				Presentation/Common/DesignSystem/CraveTheme.swift = (ios, );
+				"Presentation/Common/Extensions/AnalyticsDashboardView+TimeFrameConversion.swift" = (ios, );
 				"Presentation/Common/Extensions/Date+Extensions.swift" = (ios, );
-				"Presentation/Common/Extensions/LogCravingViewModel+UIExtensions.swift" = (ios, );
 				"Presentation/Common/Extensions/View+Extensions.swift" = (ios, );
 				Presentation/Common/SafeAreaInsetsEnvironment.swift = (ios, );
 				"Presentation/Configuration/AnalyticsConfiguration+Defaults.swift" = (ios, );
@@ -179,6 +179,7 @@
 				Presentation/Views/Craving/CravingListView.swift = (ios, );
 				Presentation/Views/Craving/LogCravingView.swift = (ios, );
 				Secrets.plist = (ios, );
+				Tests/Mocks/MockAnalytics.swift = (ios, );
 			};
 			target = 28A3F8582D65962900D8DE44 /* CravePhone */;
 		};

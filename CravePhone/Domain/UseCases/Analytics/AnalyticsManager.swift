@@ -2,15 +2,16 @@
 //  AnalyticsManager.swift
 //  CravePhone
 //
-//  This version handles different time frames (week, month, quarter, year)
-//  to fetch and aggregate real analytics data.
+//  Description:
+//    Orchestrates the aggregator, returning BasicAnalyticsResult with no confusion.
+//    It fetches craving events, aggregates them, and (optionally) detects patterns.
+//    Currently, pattern detection is not integrated into the final result.
+//    (Uncle Bob style: Keep it simple and remove unused variables.)
 //
 
 import Foundation
 
-@MainActor
-public final class AnalyticsManager: ObservableObject {
-    
+public final class AnalyticsManager {
     private let repository: AnalyticsRepositoryProtocol
     private let aggregator: AnalyticsAggregatorProtocol
     private let patternDetection: PatternDetectionServiceProtocol
@@ -25,12 +26,15 @@ public final class AnalyticsManager: ObservableObject {
         self.patternDetection = patternDetection
     }
     
-    /// Returns basic analytics stats for a given time frame.
-    public func getBasicStats(for timeFrame: AnalyticsDashboardView.TimeFrame) async throws -> BasicAnalyticsResult {
+    public enum TimeFrame {
+        case week, month, quarter, year
+    }
+    
+    public func getBasicStats(for timeFrame: TimeFrame) async throws -> BasicAnalyticsResult {
         let now = Date()
         let startDate: Date
         
-        // Choose the start date based on the selected time frame.
+        // Determine the start date based on the time frame.
         switch timeFrame {
         case .week:
             startDate = Calendar.current.date(byAdding: .day, value: -7, to: now) ?? now
@@ -42,24 +46,16 @@ public final class AnalyticsManager: ObservableObject {
             startDate = Calendar.current.date(byAdding: .year, value: -1, to: now) ?? now
         }
         
-        // Fetch events, aggregate data, and detect patterns.
-        let cravingEvents = try await repository.fetchCravingEvents(from: startDate, to: now)
-        let aggregatedData = try await aggregator.aggregate(events: cravingEvents)
-        let detectedPatterns = try await patternDetection.detectPatterns(in: cravingEvents)
+        // 1) Get events from the repository.
+        let events = try await repository.fetchCravingEvents(from: startDate, to: now)
         
-        // Merge the aggregated data with detected patterns into the final result.
-        return BasicAnalyticsResult(
-            totalCravings: aggregatedData.totalCravings,
-            totalResisted: aggregatedData.totalResisted,
-            averageIntensity: aggregatedData.averageIntensity,
-            averageResistance: aggregatedData.averageResistance,
-            cravingsByDate: aggregatedData.cravingsByDate,
-            cravingsByHour: aggregatedData.cravingsByHour,
-            cravingsByWeekday: aggregatedData.cravingsByWeekday,
-            commonTriggers: aggregatedData.commonTriggers,
-            timePatterns: aggregatedData.timePatterns,
-            detectedPatterns: detectedPatterns
-        )
+        // 2) Aggregate events into a BasicAnalyticsResult.
+        let aggregated = try await aggregator.aggregate(events: events)
+        
+        // 3) Optionally detect patterns. Currently unused.
+        // _ = try await patternDetection.detectPatterns(in: events)
+        
+        // 4) Return the final aggregated result.
+        return aggregated
     }
 }
-
