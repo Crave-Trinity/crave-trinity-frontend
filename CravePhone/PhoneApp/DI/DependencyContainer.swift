@@ -7,13 +7,11 @@
 //    Creates all Repos and Use Cases in one place for easy injection.
 //    (Assumes: CravingRepositoryImpl now uses init(modelContext: ModelContext),
 //     AnalyticsRepositoryImpl now uses init(storage: AnalyticsStorageProtocol) with no mapper,
-//     The unified aggregator is AnalyticsAggregator (not AnalyticsAggregatorImpl),
-//     and LogCravingViewModel is initialized with labels: cravingRepo, analyticsRepo, speechService.)
+//     The unified aggregator is AnalyticsAggregator (returning BasicAnalyticsResult),
+//     and LogCravingViewModel is initialized with cravingRepo, analyticsRepo, speechService.)
 //
-
 import SwiftUI
 import SwiftData
-
 @MainActor
 public final class DependencyContainer: ObservableObject {
     
@@ -30,7 +28,7 @@ public final class DependencyContainer: ObservableObject {
         CravingManager(modelContext: modelContext)
     }()
     private lazy var cravingRepository: CravingRepository = {
-        // Updated initializer: CravingRepositoryImpl expects 'modelContext'
+        // CravingRepositoryImpl expects 'modelContext'
         CravingRepositoryImpl(modelContext: modelContext)
     }()
     
@@ -43,12 +41,13 @@ public final class DependencyContainer: ObservableObject {
     private lazy var analyticsStorage: AnalyticsStorageProtocol = {
         AnalyticsStorage(modelContext: modelContext)
     }()
-    private lazy var analyticsRepository: AnalyticsRepositoryProtocol = {
-        // Removed extra 'mapper' argument
+    
+    // Change from AnalyticsRepositoryProtocol to AnalyticsRepository
+    private lazy var analyticsRepository: AnalyticsRepository = {
         AnalyticsRepositoryImpl(storage: analyticsStorage)
     }()
+    
     private lazy var analyticsAggregator: AnalyticsAggregatorProtocol = {
-        // Use the unified aggregator (returning BasicAnalyticsResult)
         AnalyticsAggregator()
     }()
     private lazy var analyticsConfig: AnalyticsConfiguration = {
@@ -60,7 +59,9 @@ public final class DependencyContainer: ObservableObject {
             configuration: analyticsConfig
         )
     }()
+    
     private lazy var analyticsManager: AnalyticsManager = {
+        // Now uses the consolidated AnalyticsRepository
         AnalyticsManager(
             repository: analyticsRepository,
             aggregator: analyticsAggregator,
