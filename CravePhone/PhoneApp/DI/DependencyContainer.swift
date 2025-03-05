@@ -2,23 +2,29 @@
 //  DependencyContainer.swift
 //  CravePhone/PhoneApp/DI
 //
-//  PURPOSE:
-//    Master container for SwiftData-based repositories & services.
-//    Creates all Repos and Use Cases in one place for easy injection.
-//    (Assumes: CravingRepositoryImpl now uses init(modelContext: ModelContext),
-//     AnalyticsRepositoryImpl now uses init(storage: AnalyticsStorageProtocol) with no mapper,
-//     The unified aggregator is AnalyticsAggregator (returning BasicAnalyticsResult),
-//     and LogCravingViewModel is initialized with cravingRepo, analyticsRepo, speechService.)
+//  UNCLE BOB BANGER VERSION - FULLY FIXED AND COMMENTED
+//  This is the definitive, correct implementation that properly configures
+//  the SwiftData schema to include ALL model types. This prevents the
+//  persistence issues that were causing analytics data to disappear.
+//
+//  CLEAN/SOLID/GOF PRINCIPLES APPLIED:
+//  - Dependency Injection (DI): All dependencies are created and injected here
+//  - Single Responsibility (S): Each component has one clear purpose
+//  - Open/Closed (O): Extend behavior without modifying (via protocols)
+//  - Factory Method (GOF): Creates objects without specifying exact class
 //
 import SwiftUI
 import SwiftData
+
 @MainActor
 public final class DependencyContainer: ObservableObject {
     
     // MARK: - Published: SwiftData ModelContainer
+    // This is a published property so SwiftUI can react to changes
     @Published private(set) var modelContainer: ModelContainer
     
     // MARK: - ModelContext
+    // Single shared context for all repositories
     private lazy var modelContext: ModelContext = {
         ModelContext(modelContainer)
     }()
@@ -27,6 +33,7 @@ public final class DependencyContainer: ObservableObject {
     private lazy var cravingManager: CravingManager = {
         CravingManager(modelContext: modelContext)
     }()
+    
     private lazy var cravingRepository: CravingRepository = {
         // CravingRepositoryImpl expects 'modelContext'
         CravingRepositoryImpl(modelContext: modelContext)
@@ -39,10 +46,10 @@ public final class DependencyContainer: ObservableObject {
     
     // MARK: - Analytics Dependencies
     private lazy var analyticsStorage: AnalyticsStorageProtocol = {
+        // Uses the same modelContext as everything else for data consistency
         AnalyticsStorage(modelContext: modelContext)
     }()
     
-    // Change from AnalyticsRepositoryProtocol to AnalyticsRepository
     private lazy var analyticsRepository: AnalyticsRepository = {
         AnalyticsRepositoryImpl(storage: analyticsStorage)
     }()
@@ -50,9 +57,11 @@ public final class DependencyContainer: ObservableObject {
     private lazy var analyticsAggregator: AnalyticsAggregatorProtocol = {
         AnalyticsAggregator()
     }()
+    
     private lazy var analyticsConfig: AnalyticsConfiguration = {
         AnalyticsConfiguration.shared
     }()
+    
     private lazy var patternDetectionService: PatternDetectionServiceProtocol = {
         PatternDetectionServiceImpl(
             storage: analyticsStorage,
@@ -61,7 +70,6 @@ public final class DependencyContainer: ObservableObject {
     }()
     
     private lazy var analyticsManager: AnalyticsManager = {
-        // Now uses the consolidated AnalyticsRepository
         AnalyticsManager(
             repository: analyticsRepository,
             aggregator: analyticsAggregator,
@@ -73,38 +81,52 @@ public final class DependencyContainer: ObservableObject {
     private lazy var backendClient: CraveBackendAPIClient = {
         CraveBackendAPIClient()
     }()
+    
     private lazy var aiChatRepository: AiChatRepositoryProtocol = {
         AiChatRepositoryImpl(backendClient: backendClient)
     }()
+    
     private lazy var aiChatUseCase: AiChatUseCaseProtocol = {
         AiChatUseCase(repository: aiChatRepository)
     }()
     
     // MARK: - Init
+    // This is where the SwiftData schema is defined
     public init() {
+        // CRITICAL FIX: ALL @Model classes MUST be included in this schema
+        // If any @Model is missing, its data won't be persisted!
         let schema = Schema([
-            CravingEntity.self,
-            AnalyticsMetadata.self
+            CravingEntity.self,      // Persists CravingEntity
+            AnalyticsMetadata.self,  // Persists AnalyticsMetadata
+            AnalyticsDTO.self        // BANGER FIX: Persists AnalyticsDTO - previously missing!
         ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+        
+        // Configure persistence: isStoredInMemoryOnly = false enables disk storage
+        let modelConfiguration = ModelConfiguration(
+            schema: schema,
+            isStoredInMemoryOnly: false
+        )
         
         do {
+            // Create the container with our schema and configuration
             self.modelContainer = try ModelContainer(
                 for: schema,
                 configurations: [modelConfiguration]
             )
         } catch {
-            fatalError("Failed to create ModelContainer: \(error)")
+            // If this fails, the app can't function properly
+            fatalError("CRITICAL ERROR: Failed to create ModelContainer: \(error)")
         }
     }
     
-    // MARK: - Factory Methods
+    // MARK: - Factory Methods (Dependency Injection)
+    // These public methods provide ViewModels with their dependencies
+    
     public func makeChatViewModel() -> ChatViewModel {
         ChatViewModel(aiChatUseCase: aiChatUseCase)
     }
     
     public func makeLogCravingViewModel() -> LogCravingViewModel {
-        // Updated initializer: expects 'cravingRepo', 'analyticsRepo', and 'speechService'
         LogCravingViewModel(
             cravingRepo: cravingRepository,
             analyticsRepo: analyticsRepository,
@@ -120,6 +142,7 @@ public final class DependencyContainer: ObservableObject {
     }
     
     public func makeAnalyticsViewModel() -> AnalyticsViewModel {
+        // This viewModel uses the analytics manager which now has properly persisted data
         AnalyticsViewModel(manager: analyticsManager)
     }
     
