@@ -1,18 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
- "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<!--
-=================================================================
-4) Info.plist
-   CravePhone/Info.plist
-
-Used for iOS app configuration, usage descriptions, etc.
-Replace or merge carefully with your existing Info.plist.
-=================================================================
--->
 <dict>
-    <!-- Basic app info -->
+    <!-- Basic App Info -->
     <key>CFBundleExecutable</key>
     <string>$(EXECUTABLE_NAME)</string>
     <key>CFBundleIdentifier</key>
@@ -28,13 +18,33 @@ Replace or merge carefully with your existing Info.plist.
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     
-    <!-- Usage descriptions -->
+    <!-- Usage Descriptions -->
     <key>NSMicrophoneUsageDescription</key>
     <string>This app uses the microphone to record cravings.</string>
     <key>NSSpeechRecognitionUsageDescription</key>
     <string>This app uses speech recognition to convert voice input into text.</string>
     
-    <!-- Scenes -->
+    <!-- Google Sign-In Configuration -->
+    <!-- Do NOT hard-code sensitive info here. Instead, use build variable substitutions -->
+    <key>GIDClientID</key>
+    <string>$(GOOGLE_CLIENT_ID)</string>
+    
+    <!-- URL Schemes for handling the OAuth callback -->
+    <key>CFBundleURLTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>$(GOOGLE_REVERSED_CLIENT_ID)</string>
+            </array>
+        </dict>
+    </array>
+    
+    <!-- Optional: Apple Team ID if needed for services -->
+    <key>AppleTeamID</key>
+    <string>$(APPLE_TEAM_ID)</string>
+    
+    <!-- Scene Manifest -->
     <key>UIApplicationSceneManifest</key>
     <dict>
         <key>UIApplicationSupportsMultipleScenes</key>
@@ -43,15 +53,15 @@ Replace or merge carefully with your existing Info.plist.
         <dict/>
     </dict>
     
-    <!-- Launch screen -->
+    <!-- Launch Screen -->
     <key>UILaunchStoryboardName</key>
     <string>LaunchScreen</string>
     
-    <!-- Status bar style -->
+    <!-- Status Bar Style -->
     <key>UIStatusBarStyle</key>
     <string>UIStatusBarStyleDarkContent</string>
     
-    <!-- Supported orientations -->
+    <!-- Supported Orientations -->
     <key>UISupportedInterfaceOrientations</key>
     <array>
         <string>UIInterfaceOrientationLandscapeLeft</string>

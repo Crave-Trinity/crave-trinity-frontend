@@ -1,0 +1,4 @@
+#Debug.xcconfig
+GOOGLE_CLIENT_ID = 756627842898-502k4g2t4d16918k0b4p1n08cbar8jlb.apps.googleusercontent.com
+GOOGLE_REVERSED_CLIENT_ID = com.googleusercontent.apps.756627842898-502k4g2t4d16918k0b4p1n08cbar8jlb
+APPLE_TEAM_ID = HJ7W9PTAD8
