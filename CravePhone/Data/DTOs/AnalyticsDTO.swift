@@ -12,7 +12,7 @@ import SwiftData
 @Model
 public final class AnalyticsDTO: Identifiable, Codable {
 
-    // MARK: - Persisted Properties (No extra attributes, fully compatible)
+    // MARK: - Persisted Properties
     public var id: UUID
     public var timestamp: Date
     public var eventType: String
@@ -22,24 +22,83 @@ public final class AnalyticsDTO: Identifiable, Codable {
     @Transient
     public var metadata: [String: Any] {
         get {
-            guard
-                let data = metadataJSON.data(using: .utf8),
-                let raw = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
-            else {
+            guard let data = metadataJSON.data(using: .utf8) else {
+                print("🚨 Failed to convert metadataJSON to data")
                 return [:]
             }
-            return [
-                "intensity": (raw["intensity"] as? NSNumber)?.doubleValue ?? 0.0,
-                "resistance": (raw["resistance"] as? NSNumber)?.doubleValue ?? 0.0,
-                "resisted": raw["resisted"] as? Bool ?? false,
-                "emotions": raw["emotions"] as? [String] ?? []
-            ]
+            
+            guard let raw = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else {
+                print("🚨 Failed to deserialize metadataJSON")
+                return [:]
+            }
+            
+            var result: [String: Any] = [:]
+            
+            // Properly handle intensity
+            if let intensity = raw["intensity"] {
+                if let number = intensity as? NSNumber {
+                    result["intensity"] = number.doubleValue
+                } else if let string = intensity as? String, let doubleValue = Double(string) {
+                    result["intensity"] = doubleValue
+                }
+            }
+            
+            // Properly handle resistance
+            if let resistance = raw["resistance"] {
+                if let number = resistance as? NSNumber {
+                    result["resistance"] = number.doubleValue
+                } else if let string = resistance as? String, let doubleValue = Double(string) {
+                    result["resistance"] = doubleValue
+                }
+            }
+            
+            // Handle resisted flag
+            if let resisted = raw["resisted"] as? Bool {
+                result["resisted"] = resisted
+            }
+            
+            // Handle emotions array
+            if let emotions = raw["emotions"] as? [String] {
+                result["emotions"] = emotions
+            }
+            
+            return result
         }
         set {
             do {
-                let data = try JSONSerialization.data(withJSONObject: newValue, options: [])
+                // Ensure numeric values are properly serialized
+                var safeMetadata: [String: Any] = [:]
+                
+                // Safely handle numeric values
+                if let intensity = newValue["intensity"] {
+                    if let double = intensity as? Double {
+                        safeMetadata["intensity"] = double
+                    } else if let number = intensity as? NSNumber {
+                        safeMetadata["intensity"] = number.doubleValue
+                    }
+                }
+                
+                if let resistance = newValue["resistance"] {
+                    if let double = resistance as? Double {
+                        safeMetadata["resistance"] = double
+                    } else if let number = resistance as? NSNumber {
+                        safeMetadata["resistance"] = number.doubleValue
+                    }
+                }
+                
+                // Handle boolean and array values directly
+                if let resisted = newValue["resisted"] as? Bool {
+                    safeMetadata["resisted"] = resisted
+                }
+                
+                if let emotions = newValue["emotions"] as? [String] {
+                    safeMetadata["emotions"] = emotions
+                }
+                
+                let data = try JSONSerialization.data(withJSONObject: safeMetadata, options: [])
                 metadataJSON = String(data: data, encoding: .utf8) ?? "{}"
             } catch {
+                print("🚨 Failed to serialize metadata: \(error)")
                 metadataJSON = "{}"
             }
         }
