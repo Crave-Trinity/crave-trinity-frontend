@@ -2,10 +2,9 @@
 //  CravingEntity.swift
 //  CravePhone
 //
-//  Uncle Bob & Steve Jobs Style:
-//   - Single source for user-submitted “cravings”
-//   - Ties in with logging UI & usage analytics
+//  Uncle Bob & Steve Jobs: Single responsibility, single definition.
 //
+
 import SwiftData
 import Foundation
 
@@ -18,7 +17,7 @@ public final class CravingEntity {
     public var emotions: [String]
     public var timestamp: Date
     public var isArchived: Bool
-    
+
     public init(
         id: UUID = UUID(),
         cravingDescription: String,
