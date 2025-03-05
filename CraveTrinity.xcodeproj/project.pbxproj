@@ -307,23 +307,11 @@
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
-/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
-		715CE4C22D7906280008EE44 /* Exceptions for "CravePhone" folder in "Compile Sources" phase from "CravePhone" target */ = {
-			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
-			buildPhase = 28A3F8552D65962900D8DE44 /* Sources */;
-			membershipExceptions = (
-				PhoneApp/Debug.xcconfig,
-				PhoneApp/Release.xcconfig,
-			);
-		};
-/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		28A3F85B2D65962900D8DE44 /* CravePhone */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				28A3F8C22D65971B00D8DE44 /* Exceptions for "CravePhone" folder in "CravePhone" target */,
-				715CE4C22D7906280008EE44 /* Exceptions for "CravePhone" folder in "Compile Sources" phase from "CravePhone" target */,
 				28A3F8C32D65971B00D8DE44 /* Exceptions for "CravePhone" folder in "CravePhoneTests" target */,
 				28A3F8C42D65971B00D8DE44 /* Exceptions for "CravePhone" folder in "CravePhoneUITests" target */,
 			);
