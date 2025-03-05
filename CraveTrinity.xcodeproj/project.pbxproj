@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		28A3F8EC2D65973500D8DE44 /* CraveWatch Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 28A3F8C92D65973300D8DE44 /* CraveWatch Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		28A3F90A2D65978500D8DE44 /* RealityKitContent in Frameworks */ = {isa = PBXBuildFile; productRef = 28A3F9092D65978500D8DE44 /* RealityKitContent */; };
+		715CE4B82D78F9AE0008EE44 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 715CE4B72D78F9AE0008EE44 /* GoogleSignIn */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -341,6 +342,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				715CE4B82D78F9AE0008EE44 /* GoogleSignIn in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -403,6 +405,7 @@
 				28A3F85B2D65962900D8DE44 /* CravePhone */,
 				28A3F8CA2D65973300D8DE44 /* CraveWatch */,
 				28A3F9062D65978500D8DE44 /* CraveVision */,
+				715CE4B62D78F9AE0008EE44 /* Frameworks */,
 				28A3F85A2D65962900D8DE44 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -420,6 +423,13 @@
 				28A3F9192D65978600D8DE44 /* CraveVisionTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		715CE4B62D78F9AE0008EE44 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -444,6 +454,7 @@
 			);
 			name = CravePhone;
 			packageProductDependencies = (
+				715CE4B72D78F9AE0008EE44 /* GoogleSignIn */,
 			);
 			productName = CraveTrinity;
 			productReference = 28A3F8592D65962900D8DE44 /* CravePhone.app */;
@@ -644,6 +655,9 @@
 			);
 			mainGroup = 28A3F8502D65962900D8DE44;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				715CE4B52D78F5C50008EE44 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 28A3F85A2D65962900D8DE44 /* Products */;
 			projectDirPath = "";
@@ -1390,10 +1404,26 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		715CE4B52D78F5C50008EE44 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
 		28A3F9092D65978500D8DE44 /* RealityKitContent */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = RealityKitContent;
+		};
+		715CE4B72D78F9AE0008EE44 /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 715CE4B52D78F5C50008EE44 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
