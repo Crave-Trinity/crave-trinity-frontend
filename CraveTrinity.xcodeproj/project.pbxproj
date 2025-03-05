@@ -119,13 +119,17 @@
 			);
 			platformFiltersByRelativePath = {
 				Data/DTOs/AnalyticsDTO.swift = (ios, );
+				Data/DTOs/AuthDTO.swift = (ios, );
 				Data/DTOs/CravingDTO.swift = (ios, );
+				Data/DTOs/OAuthDTO.swift = (ios, );
 				Data/DataSources/Local/AnalyticsStorage.swift = (ios, );
 				Data/DataSources/Remote/CraveBackendAPIClient.swift = (ios, );
 				Data/DataSources/Remote/ModelContainer.swift = (ios, );
 				Data/Mappers/AnalyticsMapper.swift = (ios, );
 				Data/Mappers/CravingMapper.swift = (ios, );
 				Data/Repositories/AnalyticsRepositoryImpl.swift = (ios, );
+				Data/Repositories/AuthRepository.swift = (ios, );
+				Data/Repositories/AuthRepositoryImpl.swift = (ios, );
 				Data/Repositories/CravingManager.swift = (ios, );
 				Data/Repositories/CravingRepositoryImpl.swift = (ios, );
 				Domain/Entities/Analytics/AnalyticsEntity.swift = (ios, );
@@ -134,6 +138,7 @@
 				Domain/Entities/Analytics/BasicAnalyticsResult.swift = (ios, );
 				Domain/Entities/Craving/CravingEntity.swift = (ios, );
 				Domain/Entities/Craving/CravingEvent.swift = (ios, );
+				Domain/Entities/User/UserEntity.swift = (ios, );
 				Domain/Interfaces/Analytics/AnalyticsStorageProtocol.swift = (ios, );
 				Domain/Interfaces/Repositories/AiChatRepositoryProtocol.swift = (ios, );
 				Domain/Interfaces/Repositories/AnalyticsRepository.swift = (ios, );
@@ -170,6 +175,7 @@
 				Presentation/ViewModels/Analytics/AnalyticsViewModel.swift = (ios, );
 				Presentation/ViewModels/Craving/CravingListViewModel.swift = (ios, );
 				Presentation/ViewModels/Craving/LogCravingViewModel.swift = (ios, );
+				Presentation/ViewModels/LoginViewModel.swift = (ios, );
 				Presentation/Views/Analytics/AnalyticsDashboardView.swift = (ios, );
 				Presentation/Views/Analytics/Components/AnalyticsCharts.swift = (ios, );
 				Presentation/Views/Analytics/Components/AnalyticsInsight.swift = (ios, );
@@ -178,7 +184,8 @@
 				Presentation/Views/Craving/CraveSpeechToggleButton.swift = (ios, );
 				Presentation/Views/Craving/CravingListView.swift = (ios, );
 				Presentation/Views/Craving/LogCravingView.swift = (ios, );
-				Secrets.plist = (ios, );
+				Presentation/Views/LoginView.swift = (ios, );
+				Presentation/Views/OAuthCallbackHandler.swift = (ios, );
 				Tests/Mocks/MockAnalytics.swift = (ios, );
 			};
 			target = 28A3F8582D65962900D8DE44 /* CravePhone */;
