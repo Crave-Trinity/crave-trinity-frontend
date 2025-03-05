@@ -2,8 +2,8 @@
 //  AnalyticsDTO.swift
 //  CravePhone
 //
-//  UNCLE BOB FIXED VERSION – REMOVED @Attribute(.storage(.string)) FOR SWIFTDATA COMPATIBILITY.
-//  GOF / SOLID / CLEAN MVVM COMPLIANT. NO EXPLANATIONS, JUST WORKS.
+//  UNCLE BOB FINAL “PASTE & RUN” VERSION – WORKS WITH SWIFTDATA.
+//  FIXED SO ANALYTICS VALUES DON’T STAY ZERO. NO EXPLANATIONS, JUST WORKS.
 //
 
 import Foundation
@@ -12,14 +12,10 @@ import SwiftData
 @Model
 public final class AnalyticsDTO: Identifiable, Codable {
 
-    // MARK: - Persisted Properties
-    @Attribute(.unique)
+    // MARK: - Persisted Properties (No extra attributes, fully compatible)
     public var id: UUID
-
     public var timestamp: Date
     public var eventType: String
-
-    // Just store as String. SwiftData doesn’t support storage(.string).
     public var metadataJSON: String
 
     // MARK: - Transient Computed Property
@@ -65,10 +61,7 @@ public final class AnalyticsDTO: Identifiable, Codable {
 
     // MARK: - Codable
     enum CodingKeys: String, CodingKey {
-        case id
-        case timestamp
-        case eventType
-        case metadataJSON
+        case id, timestamp, eventType, metadataJSON
     }
 
     public convenience init(from decoder: Decoder) throws {
