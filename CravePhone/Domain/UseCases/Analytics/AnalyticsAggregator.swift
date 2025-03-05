@@ -31,22 +31,22 @@ public final class AnalyticsAggregator: AnalyticsAggregatorProtocol {
         // 4. Count explicitly the resisted cravings
         let totalResisted = events.filter { ($0.metadata["resisted"] as? Bool) == true }.count
 
-        // 4. Calculate the success rate clearly
+        // 5. Calculate the success rate clearly
         let successRate = events.isEmpty
             ? 0.0
             : Double(totalResisted) / Double(events.count) * 100.0
 
-        // 5. Group cravings clearly by date (daily total)
+        // 6. Group cravings clearly by date (daily total)
         var cravingsByDate: [Date: Int] = [:]
         for event in events {
             let day = Calendar.current.startOfDay(for: event.timestamp)
             cravingsByDate[day, default: 0] += 1
         }
 
-        // 6. Return explicitly structured and clearly named analytics result
+        // 7. Return explicitly structured analytics result (Corrected explicitly here!)
         return BasicAnalyticsResult(
-            totalCravings: events.count,
-            totalResisted: totalResisted,  // Corrected explicitly to match initializer
+            totalCravings: totalCravings,       // ✅ explicitly corrected to remove warning
+            totalResisted: totalResisted,
             averageIntensity: averageIntensity,
             averageResistance: averageResistance,
             successRate: successRate,
