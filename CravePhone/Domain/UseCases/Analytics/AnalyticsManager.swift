@@ -10,9 +10,9 @@ public final class AnalyticsManager {
     // MARK: - Dependencies
     private let repository: AnalyticsRepository
     private let aggregator: AnalyticsAggregatorProtocol
-    private let patternDetection: PatternDetectionServiceProtocol // ✅ Correctly declared
+    private let patternDetection: PatternDetectionServiceProtocol
 
-    // MARK: - Initialization (✅ Explicit fix added here)
+    // MARK: - Initialization
     public init(
         repository: AnalyticsRepository,
         aggregator: AnalyticsAggregatorProtocol,
@@ -20,30 +20,57 @@ public final class AnalyticsManager {
     ) {
         self.repository = repository
         self.aggregator = aggregator
-        self.patternDetection = patternDetection // 🚨 MISSING LINE FIXED HERE 🚨
+        self.patternDetection = patternDetection
     }
 
     // MARK: - Enum for Analytics Time Frame
     public enum TimeFrame {
-        case all, week, month, quarter, year
+        case week, month, quarter, year
     }
 
-    /// Explicit FIX: Correct fetching logic (no filtering issues)
+    // MARK: - Public Methods
+
+    /// Retrieves and aggregates CRAVING events for a specified time frame.
     public func getBasicStats(for timeFrame: TimeFrame) async throws -> BasicAnalyticsResult {
-        let events = try await repository.fetchCravingEvents(
-            from: Date.distantPast,
-            to: Date.distantFuture
-        )
+        let now = Date()
+        let startDate: Date
+
+        switch timeFrame {
+        case .week:
+            startDate = Calendar.current.date(byAdding: .day, value: -7, to: now)!
+        case .month:
+            startDate = Calendar.current.date(byAdding: .month, value: -1, to: now)!
+        case .quarter:
+            startDate = Calendar.current.date(byAdding: .month, value: -3, to: now)!
+        case .year:
+            startDate = Calendar.current.date(byAdding: .year, value: -1, to: now)!
+        }
+
+        let events = try await repository.fetchCravingEvents(from: startDate, to: now)
         let aggregated = try await aggregator.aggregate(events: events)
+
         return aggregated
     }
 
-    /// Explicit FIX: Pattern detection fetching logic (same logic correction)
+    /// Retrieves patterns detected from craving events.
     public func getDetectedPatterns(for timeFrame: TimeFrame) async throws -> [String] {
-        let events = try await repository.fetchCravingEvents(
-            from: Date.distantPast,
-            to: Date.distantFuture
-        )
-        return try await patternDetection.detectPatterns(in: events)
+        let now = Date()
+        let startDate: Date
+
+        switch timeFrame {
+        case .week:
+            startDate = Calendar.current.date(byAdding: .day, value: -7, to: now)!
+        case .month:
+            startDate = Calendar.current.date(byAdding: .month, value: -1, to: now)!
+        case .quarter:
+            startDate = Calendar.current.date(byAdding: .month, value: -3, to: now)!
+        case .year:
+            startDate = Calendar.current.date(byAdding: .year, value: -1, to: now)!
+        }
+
+        let events = try await repository.fetchCravingEvents(from: startDate, to: now)
+        let patterns = try await patternDetection.detectPatterns(in: events)
+
+        return patterns
     }
 }
