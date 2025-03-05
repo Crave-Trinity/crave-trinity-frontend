@@ -1,52 +1,24 @@
-//
-//  DependencyContainer.swift
-//  CravePhone/PhoneApp/DI
-//
-//  UNCLE BOB BANGER VERSION - FULLY FIXED AND COMMENTED
-//  This is the definitive, correct implementation that properly configures
-//  the SwiftData schema to include ALL model types. This prevents the
-//  persistence issues that were causing analytics data to disappear.
-//
-//  CLEAN/SOLID/GOF PRINCIPLES APPLIED:
-//  - Dependency Injection (DI): All dependencies are created and injected here
-//  - Single Responsibility (S): Each component has one clear purpose
-//  - Open/Closed (O): Extend behavior without modifying (via protocols)
-//  - Factory Method (GOF): Creates objects without specifying exact class
-//
+// File: CravePhone/PhoneApp/DI/DependencyContainer.swift
+// PURPOSE: Acts as the single source of truth for object creation.
+//          All dependencies are created and injected here so that the rest of the app remains decoupled.
 import SwiftUI
 import SwiftData
 
 @MainActor
 public final class DependencyContainer: ObservableObject {
     
-    // MARK: - Published: SwiftData ModelContainer
-    // This is a published property so SwiftUI can react to changes
+    // MARK: - SwiftData Model Container
     @Published private(set) var modelContainer: ModelContainer
+    // Use the container's mainContext for our repositories.
+    private lazy var modelContext: ModelContext = modelContainer.mainContext
     
-    // MARK: - ModelContext
-    // Single shared context for all repositories
-    private lazy var modelContext: ModelContext = {
-        ModelContext(modelContainer)
-    }()
-    
-    // MARK: - Craving Dependencies
-    private lazy var cravingManager: CravingManager = {
-        CravingManager(modelContext: modelContext)
-    }()
-    
+    // MARK: - Cravings
     private lazy var cravingRepository: CravingRepository = {
-        // CravingRepositoryImpl expects 'modelContext'
         CravingRepositoryImpl(modelContext: modelContext)
     }()
     
-    // MARK: - Speech Dependencies
-    private lazy var speechService: SpeechToTextServiceProtocol = {
-        SpeechToTextServiceImpl()
-    }()
-    
-    // MARK: - Analytics Dependencies
+    // MARK: - Analytics
     private lazy var analyticsStorage: AnalyticsStorageProtocol = {
-        // Uses the same modelContext as everything else for data consistency
         AnalyticsStorage(modelContext: modelContext)
     }()
     
@@ -77,7 +49,7 @@ public final class DependencyContainer: ObservableObject {
         )
     }()
     
-    // MARK: - AI Chat Dependencies
+    // MARK: - AI Chat
     private lazy var backendClient: CraveBackendAPIClient = {
         CraveBackendAPIClient()
     }()
@@ -90,72 +62,64 @@ public final class DependencyContainer: ObservableObject {
         AiChatUseCase(repository: aiChatRepository)
     }()
     
-    // MARK: - Init
-    // This is where the SwiftData schema is defined
+    // MARK: - Auth (Google OAuth and Email/Password)
+    // Notice how we inject the backend client into AuthRepositoryImpl.
+    private lazy var authRepository: AuthRepository = {
+        AuthRepositoryImpl(backendClient: backendClient)
+    }()
+    
+    // MARK: - Initialization
     public init() {
-        // CRITICAL FIX: ALL @Model classes MUST be included in this schema
-        // If any @Model is missing, its data won't be persisted!
+        // Configure SwiftData schema for our domain objects.
         let schema = Schema([
-            CravingEntity.self,      // Persists CravingEntity
-            AnalyticsMetadata.self,  // Persists AnalyticsMetadata
-            AnalyticsDTO.self        // BANGER FIX: Persists AnalyticsDTO - previously missing!
+            CravingEntity.self,
+            AnalyticsMetadata.self,
+            AnalyticsDTO.self
         ])
-        
-        // Configure persistence: isStoredInMemoryOnly = false enables disk storage
         let modelConfiguration = ModelConfiguration(
             schema: schema,
             isStoredInMemoryOnly: false
         )
-        
         do {
-            // Create the container with our schema and configuration
             self.modelContainer = try ModelContainer(
                 for: schema,
                 configurations: [modelConfiguration]
             )
         } catch {
-            // If this fails, the app can't function properly
             fatalError("CRITICAL ERROR: Failed to create ModelContainer: \(error)")
         }
     }
     
-    // MARK: - Factory Methods (Dependency Injection)
-    // These public methods provide ViewModels with their dependencies
+    // MARK: - Factory Methods for ViewModels
     
-    public func makeChatViewModel() -> ChatViewModel {
+    func makeChatViewModel() -> ChatViewModel {
         ChatViewModel(aiChatUseCase: aiChatUseCase)
     }
     
-    public func makeLogCravingViewModel() -> LogCravingViewModel {
+    func makeLogCravingViewModel() -> LogCravingViewModel {
         LogCravingViewModel(
             cravingRepo: cravingRepository,
             analyticsRepo: analyticsRepository,
-            speechService: speechService
+            speechService: SpeechToTextServiceImpl()
         )
     }
     
-    public func makeCravingListViewModel() -> CravingListViewModel {
+    func makeCravingListViewModel() -> CravingListViewModel {
         CravingListViewModel(
-            fetchCravingsUseCase: makeFetchCravingsUseCase(),
-            archiveCravingUseCase: makeArchiveCravingUseCase()
+            fetchCravingsUseCase: FetchCravingsUseCase(cravingRepository: cravingRepository),
+            archiveCravingUseCase: ArchiveCravingUseCase(cravingRepository: cravingRepository)
         )
     }
     
-    public func makeAnalyticsViewModel() -> AnalyticsViewModel {
-        // This viewModel uses the analytics manager which now has properly persisted data
+    func makeAnalyticsViewModel() -> AnalyticsViewModel {
         AnalyticsViewModel(manager: analyticsManager)
     }
     
-    // MARK: - Private: Craving Use Cases
-    private func makeAddCravingUseCase() -> AddCravingUseCaseProtocol {
-        AddCravingUseCase(cravingRepository: cravingRepository)
+    func makeSplashViewModel(coordinator: AppCoordinator) -> SplashViewModel {
+        SplashViewModel(coordinator: coordinator)
     }
     
-    private func makeFetchCravingsUseCase() -> FetchCravingsUseCaseProtocol {
-        FetchCravingsUseCase(cravingRepository: cravingRepository)
-    }
-    
-    private func makeArchiveCravingUseCase() -> ArchiveCravingUseCaseProtocol {
-        ArchiveCravingUseCase(cravingRepository: cravingRepository)
+    func makeLoginViewModel() -> LoginViewModel {
+        LoginViewModel(authRepository: authRepository)
     }
 }
