@@ -20,14 +20,29 @@ public final class AnalyticsDTO: Identifiable, Codable {
     @Transient
     public var metadata: [String: Any] {
         get {
-            guard let data = metadataJSON.data(using: .utf8) else { return [:] }
-            return (try? JSONSerialization.jsonObject(with: data, options: [])) as? [String: Any] ?? [:]
+            guard let data = metadataJSON.data(using: .utf8),
+                  let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else {
+                print("⚠️ Metadata decoding failed.")
+                return [:]
+            }
+
+            // Explicitly decode numeric values clearly and safely
+            var explicitlyDecodedMetadata: [String: Any] = [:]
+
+            explicitlyDecodedMetadata["intensity"] = (json["intensity"] as? NSNumber)?.doubleValue ?? 0.0
+            explicitlyDecodedMetadata["resistance"] = (json["resistance"] as? NSNumber)?.doubleValue ?? 0.0
+            explicitlyDecodedMetadata["resisted"] = json["resisted"] as? Bool ?? false
+            explicitlyDecodedMetadata["emotions"] = json["emotions"] as? [String] ?? []
+
+            return explicitlyDecodedMetadata
         }
         set {
-            if let data = try? JSONSerialization.data(withJSONObject: newValue, options: []),
-               let jsonString = String(data: data, encoding: .utf8) {
-                metadataJSON = jsonString
-            } else {
+            // Explicit serialization clearly handled, errors clearly logged
+            do {
+                let data = try JSONSerialization.data(withJSONObject: newValue, options: [])
+                metadataJSON = String(data: data, encoding: .utf8) ?? "{}"
+            } catch {
+                print("🚨 Metadata encoding failed explicitly:", error)
                 metadataJSON = "{}"
             }
         }
