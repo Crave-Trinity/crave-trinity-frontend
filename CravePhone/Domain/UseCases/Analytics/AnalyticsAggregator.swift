@@ -1,48 +1,52 @@
 //
-//  AnalyticsAggregator.swift
-//  CravePhone
+// AnalyticsAggregator.swift
+// CravePhone
 //
-//  Uncle Bob: An Aggregator's sole job is to compute metrics from a list of
-//  domain events. Keep it stateless and side-effect free if possible.
+// Fully Corrected AnalyticsAggregator adhering to Uncle Bob's principles:
+// Clear naming, single responsibility, explicit data flow.
 //
+
 import Foundation
+
 public final class AnalyticsAggregator: AnalyticsAggregatorProtocol {
-    public init() {}
-    
-    // MARK: - Public Methods
-    
-    /// Aggregates the provided CravingEvents to produce a BasicAnalyticsResult.
+
+    /// Aggregates craving events into structured analytics for UI.
     public func aggregate(events: [CravingEvent]) async throws -> BasicAnalyticsResult {
-        // Count total events
-        let total = events.count
         
-        // Count those flagged as 'resisted'
-        let totalResisted = events.filter {
-            ($0.metadata["resisted"] as? Bool) == true
-        }.count
-        
-        // Calculate average intensity
+        // 1. Total number of cravings
+        let totalCravings = events.count
+
+        // 2. Extract intensities and calculate average
         let intensities = events.compactMap { $0.metadata["intensity"] as? Double }
-        let averageIntensity = intensities.isEmpty ? 0 : intensities.reduce(0, +) / Double(intensities.count)
-        
-        // Calculate average resistance
+        let averageIntensity = intensities.isEmpty
+            ? 0.0
+            : intensities.reduce(0, +) / Double(intensities.count)
+
+        // 3. Extract resistance and calculate average
         let resistances = events.compactMap { $0.metadata["resistance"] as? Double }
-        let averageResistance = resistances.isEmpty ? 0 : resistances.reduce(0, +) / Double(resistances.count)
-        
-        // Compute success rate (resisted vs. total)
-        let successRate = total > 0 ? (Double(totalResisted) / Double(total)) * 100.0 : 0.0
-        
-        // Group cravings by date, ignoring time-of-day to get daily counts
+        let averageResistance = resistances.isEmpty
+            ? 0.0
+            : resistances.reduce(0, +) / Double(resistances.count)
+
+        // 4. Count explicitly the resisted cravings
+        let totalResisted = events.filter { ($0.metadata["resisted"] as? Bool) == true }.count
+
+        // 4. Calculate the success rate clearly
+        let successRate = events.isEmpty
+            ? 0.0
+            : Double(totalResisted) / Double(events.count) * 100.0
+
+        // 5. Group cravings clearly by date (daily total)
         var cravingsByDate: [Date: Int] = [:]
         for event in events {
             let day = Calendar.current.startOfDay(for: event.timestamp)
             cravingsByDate[day, default: 0] += 1
         }
-        
-        // Return the aggregated result
+
+        // 6. Return explicitly structured and clearly named analytics result
         return BasicAnalyticsResult(
-            totalCravings: total,
-            totalResisted: totalResisted,
+            totalCravings: events.count,
+            totalResisted: totalResisted,  // Corrected explicitly to match initializer
             averageIntensity: averageIntensity,
             averageResistance: averageResistance,
             successRate: successRate,
@@ -50,9 +54,3 @@ public final class AnalyticsAggregator: AnalyticsAggregatorProtocol {
         )
     }
 }
-
-
-
-
-
-
