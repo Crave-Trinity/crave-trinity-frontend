@@ -1,12 +1,6 @@
-//
-//  LoginViewModel.swift
-//  CravePhone/Presentation/ViewModels
-//
-//  PURPOSE:
-//    - Orchestrates login logic explicitly for email/password and Google OAuth.
-//    - Visibility matches DependencyContainer explicitly.
-//  UNCLE BOB + STEVE JOBS STYLE – COMPLETE PASTE & RUN
-//=================================================================
+// File: LoginViewModel.swift
+// PURPOSE: Orchestrates login logic for both email/password and native Google sign‑in.
+// AUTHOR: Uncle Bob / Steve Jobs Style – Clean MVVM Implementation
 
 import SwiftUI
 import GoogleSignIn
@@ -19,7 +13,7 @@ public class LoginViewModel: ObservableObject {
     
     private let authRepository: AuthRepository
     
-    // MARK: - Definitively Corrected Internal Initializer
+    // MARK: - Initializer
     init(authRepository: AuthRepository) {
         self.authRepository = authRepository
     }
@@ -42,7 +36,7 @@ public class LoginViewModel: ObservableObject {
         }
     }
     
-    // MARK: - Google OAuth Login (Corrected explicitly)
+    // MARK: - Native Google Sign-In Login
     public func loginWithGoogle(presentingWindow: UIWindowScene?) {
         guard let windowScene = presentingWindow else {
             self.errorMessage = "No UIWindowScene found."
@@ -56,11 +50,9 @@ public class LoginViewModel: ObservableObject {
         
         isLoading = true
         
-        GIDSignIn.sharedInstance.signIn(
-            withPresenting: rootViewController
-        ) { [weak self] signInResult, error in
+        // Initiate Google sign-in with the provided root view controller.
+        GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController) { [weak self] signInResult, error in
             guard let self = self else { return }
-            
             defer { self.isLoading = false }
             
             if let error = error {
@@ -68,15 +60,21 @@ public class LoginViewModel: ObservableObject {
                 return
             }
             
-            guard signInResult != nil else {
-                self.errorMessage = "Google sign in result is nil."
+            // Extract the ID token from the sign-in result.
+            guard let idToken = signInResult?.user.idToken?.tokenString else {
+                self.errorMessage = "Google sign in did not return an ID token."
                 return
             }
             
+            // Call the new backend endpoint to verify the Google ID token.
             Task {
                 do {
-                    try await self.authRepository.googleLogin()
-                    // OAuth continues via browser. Callback handles final steps.
+                    let response = try await self.authRepository.verifyGoogleIdToken(idToken: idToken)
+                    KeychainHelper.save(
+                        data: Data(response.accessToken.utf8),
+                        service: "com.crave.app",
+                        account: "authToken"
+                    )
                 } catch {
                     self.errorMessage = error.localizedDescription
                 }

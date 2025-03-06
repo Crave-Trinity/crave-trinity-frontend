@@ -1,8 +1,6 @@
-//
-// AuthRepositoryImpl.swift
-// PURPOSE: Handles authentication (email/password & Google OAuth initiation).
-// AUTHOR: Uncle Bob/Steve Jobs Style
-// -----------------------------------------------------------------------------
+// File: AuthRepositoryImpl.swift
+// PURPOSE: Implements authentication logic (email/password and native Google sign‑in)
+// AUTHOR: Uncle Bob / Steve Jobs Style
 
 import Foundation
 import UIKit
@@ -10,12 +8,12 @@ import UIKit
 final class AuthRepositoryImpl: AuthRepository {
     private let backendClient: CraveBackendAPIClient
     
-    // MARK: - Definitive Designated Initializer
+    // MARK: - Designated Initializer
     init(backendClient: CraveBackendAPIClient) {
         self.backendClient = backendClient
     }
-
-    // MARK: - Email/Password Login (correct POST)
+    
+    // MARK: - Email/Password Login
     func login(email: String, password: String) async throws -> AuthResponseDTO {
         guard let url = URL(string: "\(backendClient.baseURL)/api/v1/auth/login") else {
             throw APIError.invalidURL
@@ -44,19 +42,40 @@ final class AuthRepositoryImpl: AuthRepository {
             throw APIError.invalidResponse
         }
     }
-
-    // MARK: - Definitive Google OAuth initiation (GET, no body, opens browser)
-    func googleLogin() async throws {
-        guard let url = URL(string: "\(backendClient.baseURL)/auth/oauth/google/login") else {
+    
+    // MARK: - Native Google Sign-In Verification
+    func verifyGoogleIdToken(idToken: String) async throws -> AuthResponseDTO {
+        // Use the new endpoint that expects an ID token from the iOS client
+        guard let url = URL(string: "\(backendClient.baseURL)/api/v1/auth/verify-google-id-token") else {
             throw APIError.invalidURL
         }
-
-        await MainActor.run {
-            UIApplication.shared.open(url)
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        // The backend expects a JSON body with the key "id_token"
+        let body = ["id_token": idToken]
+        request.httpBody = try JSONSerialization.data(withJSONObject: body, options: [])
+        
+        let (data, response) = try await URLSession.shared.data(for: request)
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw APIError.invalidResponse
+        }
+        
+        switch httpResponse.statusCode {
+        case 200..<300:
+            return try JSONDecoder().decode(AuthResponseDTO.self, from: data)
+        case 401:
+            throw APIError.unauthorized
+        case 500...599:
+            throw APIError.serverError(httpResponse.statusCode)
+        default:
+            throw APIError.invalidResponse
         }
     }
-
-    // MARK: - Fetch Current User (correct GET)
+    
+    // MARK: - Fetch Current User
     func fetchCurrentUser(accessToken: String) async throws -> UserEntity {
         guard let url = URL(string: "\(backendClient.baseURL)/api/v1/auth/me") else {
             throw APIError.invalidURL

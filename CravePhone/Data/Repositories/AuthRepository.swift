@@ -1,11 +1,13 @@
-//
-// AuthRepository.swift
-// PURPOSE: Protocol for authentication repository to abstract auth implementation details.
-//
+// File: AuthRepository.swift
+// PURPOSE: Protocol to abstract authentication operations.
+
 import Foundation
 
 protocol AuthRepository {
+    // Email/Password login
     func login(email: String, password: String) async throws -> AuthResponseDTO
-    func googleLogin() async throws   // Definitively NO parameter here now (OAuth initiation is GET)
+    // Native Google Sign-In: send the ID token obtained from Google to backend
+    func verifyGoogleIdToken(idToken: String) async throws -> AuthResponseDTO
+    // Fetch the currently logged-in user (using your internal JWT)
     func fetchCurrentUser(accessToken: String) async throws -> UserEntity
 }
