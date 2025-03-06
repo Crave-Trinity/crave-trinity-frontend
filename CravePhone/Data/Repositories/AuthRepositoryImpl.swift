@@ -17,7 +17,7 @@ final class AuthRepositoryImpl: AuthRepository {
     init(backendClient: CraveBackendAPIClient) {
         self.backendClient = backendClient
     }
-    
+
     // MARK: - Email/Password Login
     // Attempts to log in using email and password credentials.
     // - Parameters:
@@ -26,7 +26,6 @@ final class AuthRepositoryImpl: AuthRepository {
     // - Throws: APIError if the network call or decoding fails.
     // - Returns: An AuthResponseDTO containing the authentication details.
     func login(email: String, password: String) async throws -> AuthResponseDTO {
-        // Construct the URL using the backend client's public baseURL.
         guard let url = URL(string: "\(backendClient.baseURL)/api/v1/auth/login") else {
             throw APIError.invalidURL
         }
@@ -35,7 +34,6 @@ final class AuthRepositoryImpl: AuthRepository {
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        // Create the login request body.
         let body = AuthRequestDTO(email: email, password: password)
         request.httpBody = try JSONEncoder().encode(body)
         
@@ -55,7 +53,7 @@ final class AuthRepositoryImpl: AuthRepository {
             throw APIError.invalidResponse
         }
     }
-    
+
     // MARK: - Google OAuth Login
     // Logs in using a Google OAuth idToken.
     // - Parameter idToken: The Google OAuth token.
@@ -65,21 +63,19 @@ final class AuthRepositoryImpl: AuthRepository {
         guard let url = URL(string: "\(backendClient.baseURL)/auth/oauth/google/login") else {
             throw APIError.invalidURL
         }
-
+        
         var request = URLRequest(url: url)
-        request.httpMethod = "GET" // ← This should be GET for OAuth initiation
+        request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        // Typically, you don't send a request body when using GET for OAuth initiation.
-        // Remove the body encoding entirely:
-        // let body = GoogleOAuthRequestDTO(idToken: idToken)
-        // request.httpBody = try JSONEncoder().encode(body)
-
+        let body = GoogleOAuthRequestDTO(idToken: idToken)
+        request.httpBody = try JSONEncoder().encode(body)
+        
         let (data, response) = try await URLSession.shared.data(for: request)
         guard let httpResponse = response as? HTTPURLResponse else {
             throw APIError.invalidResponse
         }
-
+        
         switch httpResponse.statusCode {
         case 200..<300:
             return try JSONDecoder().decode(GoogleOAuthResponseDTO.self, from: data)
@@ -91,6 +87,7 @@ final class AuthRepositoryImpl: AuthRepository {
             throw APIError.invalidResponse
         }
     }
+
     // MARK: - Fetch Current User
     // Retrieves the current authenticated user's details using a valid access token.
     // - Parameter accessToken: A valid OAuth access token.
