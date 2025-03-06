@@ -40,10 +40,10 @@ CRAVE is an AI-powered craving analytics system, built to provide personalized b
 * 📌 Feb 22–23: [CraveWave Backend](https://github.com/Crave-Trinity/crave-trinity-backend) – Backend foundation, iOS syncing, refined UI/UX 
 * 📌 Feb 23 – Mar 3: Deployed Backend on Railway, Improved Front-end
 * 📌 Mar 3 - Mar 6: Iterate [TestFlight](https://testflight.apple.com/join/Yb1uKZYx); Integrated [Backend Infra](https://crave-mvp-backend-production-a001.up.railway.app/docs)
-  
-💡 Functional watchOS/iOS MVP - built in 7 days from scratch while learning Swift with AI acceleration and basecode abstraction. It wasn’t just copy-pasta spaghetti; I debugged, refactored, and built something real. The marathon continues.
 
 ---
+
+* 💡 Functional watchOS/iOS MVP - built in 7 days from scratch while learning Swift with AI acceleration and basecode abstraction. It wasn’t just copy-pasta spaghetti; I debugged, refactored, and built something real. The marathon continues.
 
 * 🫡 "It is not the critic who counts; not the man who points out how the strong man stumbles. The credit belongs to the man who is actually in the arena, who at the best knows in the end the triumph of high achievement, and who at the worst, if he fails, at least fails while daring greatly." - Theodore Roosevelt 
 
