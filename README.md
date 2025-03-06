@@ -43,7 +43,7 @@ CRAVE is an AI-powered craving analytics system, built to provide personalized b
 
 ---
 
-* 💡 WatchOS/iOS M(V)P - built in 7 days from scratch while learning Swift with AI acceleration and basecode abstraction. It wasn’t just copy-pasta spaghetti; I debugged, refactored, and built something real. The marathon continues.
+* 💡 WatchOS/iOS MVP - built in 7 days from scratch while learning Swift with AI acceleration and basecode abstraction. It wasn’t just copy-pasta spaghetti; I debugged, refactored, and built something real. The marathon continues.
 
 * 🫡 "It is not the critic who counts; not the man who points out how the strong man stumbles. The credit belongs to the man who is actually in the arena, who at the best knows in the end the triumph of high achievement, and who at the worst, if he fails, at least fails while daring greatly." - Theodore Roosevelt 
 
