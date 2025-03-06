@@ -15,6 +15,22 @@
 
 ---
 
+## 🚀 CRAVE MVP – Finalized Architecture & Execution Plan  
+### 📌 What We’re Shipping First 
+CRAVE is an AI-powered craving analytics system, built to provide personalized behavioral analysis by combining user logs, RAG, and LoRA fine-tuning.  
+
+* ✅ Apple Watch + iPhone App → Seamless craving logging.  
+* ✅ [Backend](https://crave-mvp-backend-production-a001.up.railway.app/docs) that processes & analyzes cravings, not just stores them.
+* ✅ RAG (Retrieval-Augmented Generation) to personalize AI responses without costly fine-tuning.  
+* ✅ LoRA (Low-Rank Adaptation) to fine-tune craving personas with minimal compute costs.
+* ✅ A scalable backend with fast inference on AWS, using open-source models.
+
+⚠️ Disclaimer: CRAVE intends to provide analytical **insights** based on user-logged cravings data. 
+- It will not offer medical predictions, diagnoses, or treatment prior to FDA SaMD approval.
+- Any behavioral insights should be viewed as informational only, and users should consult a healthcare professional for medical or therapeutic guidance.
+
+---
+
 📄 Timeline of commits:
 * 📌 Oct – Dec: Shower thoughts; Ideas into words
 * 📌 Jan - Feb: < 30% of Swift bootcamp; YC app submited to accelerate iteration
@@ -30,22 +46,6 @@
 ---
 
 * 🫡 "It is not the critic who counts; not the man who points out how the strong man stumbles. The credit belongs to the man who is actually in the arena, who at the best knows in the end the triumph of high achievement, and who at the worst, if he fails, at least fails while daring greatly." - Theodore Roosevelt 
-
----
-
-## 🚀 CRAVE MVP – Finalized Architecture & Execution Plan  
-### 📌 What We’re Shipping First 
-CRAVE is an AI-powered craving analytics system, built to provide personalized behavioral analysis by combining user logs, RAG, and LoRA fine-tuning.  
-
-* ✅ Apple Watch + iPhone App → Seamless craving logging.  
-* ✅ [Backend](https://github.com/Crave-Trinity/crave-trinity-backend) that processes & analyzes cravings, not just stores them.
-* ✅ RAG (Retrieval-Augmented Generation) to personalize AI responses without costly fine-tuning.  
-* ✅ LoRA (Low-Rank Adaptation) to fine-tune craving personas with minimal compute costs.
-* ✅ A scalable backend with fast inference on AWS, using open-source models.
-
-⚠️ Disclaimer: CRAVE intends to provide analytical **insights** based on user-logged cravings data. 
-- It will not offer medical predictions, diagnoses, or treatment prior to FDA SaMD approval.
-- Any behavioral insights should be viewed as informational only, and users should consult a healthcare professional for medical or therapeutic guidance.
 
 ---
 
