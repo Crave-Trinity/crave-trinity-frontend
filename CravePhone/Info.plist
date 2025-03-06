@@ -25,9 +25,8 @@
     <string>This app uses speech recognition to convert voice input into text.</string>
     
     <!-- Google Sign-In Configuration -->
-    <!-- Do NOT hard-code sensitive info here. Instead, use build variable substitutions -->
     <key>GIDClientID</key>
-    <string>$(GOOGLE_CLIENT_ID)</string>
+    <string>756627842898-502k4g2t4d16918k0b4p1n08cbar8jlb.apps.googleusercontent.com</string>
     
     <!-- URL Schemes for handling the OAuth callback -->
     <key>CFBundleURLTypes</key>
@@ -35,7 +34,7 @@
         <dict>
             <key>CFBundleURLSchemes</key>
             <array>
-                <string>$(GOOGLE_REVERSED_CLIENT_ID)</string>
+                <string>com.googleusercontent.apps.756627842898-502k4g2t4d16918k0b4p1n08cbar8jlb</string>
             </array>
         </dict>
     </array>
