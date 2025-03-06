@@ -25,8 +25,7 @@
 * 📌 Feb 23 – Mar 3: Deployed Backend on Railway, Improved Front-end
 * 📌 Mar 3 - Mar 6: Iterate [TestFlight](https://testflight.apple.com/join/Yb1uKZYx); Integrated [Backend Infra](https://crave-mvp-backend-production-a001.up.railway.app/docs)
   
-💡 Functional watchOS/iOS MVP - built in 7 days from scratch while learning Swift with AI acceleration and basecode abstraction. 
-* It wasn’t just copy-pasta spaghetti; I debugged, refactored, and solved programming problems. I can learn, execute fast, and build something real. The marathon continues.
+💡 Functional watchOS/iOS MVP - built in 7 days from scratch while learning Swift with AI acceleration and basecode abstraction. It wasn’t just copy-pasta spaghetti; I debugged, refactored, and built something real. The marathon continues.
 
 ---
 
