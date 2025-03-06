@@ -18,7 +18,7 @@
 📄 Timeline of commits:
 * 📌 Oct – Dec: Shower thoughts; Ideas into words
 * 📌 Jan - Feb: < 30% of Swift bootcamp; YC app submited to accelerate iteration
-* 📌 Feb 12–15: [Crave Phone MVP](https://github.com/The-Obstacle-Is-The-Way/CRAVECRAVE), [Crave Phone Refactor](https://github.com/The-Obstacle-Is-The-Way/crave-refactor) – Zero to basic SwiftUI app, SwiftData, Clean architecture refactor 
+* 📌 Feb 12–15: [Crave Phone MVP](https://github.com/The-Obstacle-Is-The-Way/CRAVECRAVE), [Refactor](https://github.com/The-Obstacle-Is-The-Way/crave-refactor) – Zero to basic SwiftUI app, SwiftData, Clean architecture refactor 
 * 📌 Feb 16–18: [Crave WatchOS MVP](https://github.com/The-Obstacle-Is-The-Way/isolated-crave-watch) – On-wrist craving logging, watch-to-phone sync  
 * 📌 Feb 19-21: [Crave-Trinity (iOS + Watch + Vision)](https://github.com/The-Obstacle-Is-The-Way/crave-trinity) – Unified codebase, WatchOS Refined UI/UX
 * 📌 Feb 22–23: [CraveWave Backend](https://github.com/Crave-Trinity/crave-trinity-backend) – Backend foundation, iOS syncing, refined UI/UX 
