@@ -3,9 +3,8 @@
 //  CravePhone/Presentation/ViewModels
 //
 //  PURPOSE:
-//    - Orchestrates login logic for email/password and Google OAuth.
-//    - Visibility of initializer explicitly matches DependencyContainer.
-//
+//    - Orchestrates login logic explicitly for email/password and Google OAuth.
+//    - Visibility matches DependencyContainer explicitly.
 //  UNCLE BOB + STEVE JOBS STYLE – COMPLETE PASTE & RUN
 //=================================================================
 
@@ -20,8 +19,7 @@ public class LoginViewModel: ObservableObject {
     
     private let authRepository: AuthRepository
     
-    // MARK: - Initializer (Visibility matches DependencyContainer: Internal)
-    // Explicitly matches visibility defined in DependencyContainer.swift.
+    // MARK: - Definitively Corrected Internal Initializer
     init(authRepository: AuthRepository) {
         self.authRepository = authRepository
     }
@@ -44,7 +42,7 @@ public class LoginViewModel: ObservableObject {
         }
     }
     
-    // MARK: - Google OAuth Login
+    // MARK: - Google OAuth Login (Corrected explicitly)
     public func loginWithGoogle(presentingWindow: UIWindowScene?) {
         guard let windowScene = presentingWindow else {
             self.errorMessage = "No UIWindowScene found."
@@ -62,27 +60,23 @@ public class LoginViewModel: ObservableObject {
             withPresenting: rootViewController
         ) { [weak self] signInResult, error in
             guard let self = self else { return }
+            
+            defer { self.isLoading = false }
+            
+            if let error = error {
+                self.errorMessage = error.localizedDescription
+                return
+            }
+            
+            guard signInResult != nil else {
+                self.errorMessage = "Google sign in result is nil."
+                return
+            }
+            
             Task {
-                defer { self.isLoading = false }
-                if let error = error {
-                    self.errorMessage = error.localizedDescription
-                    return
-                }
-                guard let result = signInResult else {
-                    self.errorMessage = "Google sign in result is nil."
-                    return
-                }
-                guard let idToken = result.user.idToken?.tokenString else {
-                    self.errorMessage = "Failed to get Google ID Token."
-                    return
-                }
                 do {
-                    let response = try await self.authRepository.googleLogin(idToken: idToken)
-                    KeychainHelper.save(
-                        data: Data(response.accessToken.utf8),
-                        service: "com.crave.app",
-                        account: "authToken"
-                    )
+                    try await self.authRepository.googleLogin()
+                    // OAuth continues via browser. Callback handles final steps.
                 } catch {
                     self.errorMessage = error.localizedDescription
                 }

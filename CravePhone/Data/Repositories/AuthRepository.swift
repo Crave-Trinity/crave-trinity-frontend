@@ -1,18 +1,11 @@
 //
-//  AuthRepository.swift
-//  CravePhone/Data/Repositories
-//
-//  PURPOSE: Interface for all auth-related operations (login, Google OAuth, etc.)
+// AuthRepository.swift
+// PURPOSE: Protocol for authentication repository to abstract auth implementation details.
 //
 import Foundation
 
 protocol AuthRepository {
-    /// Normal email/password login
     func login(email: String, password: String) async throws -> AuthResponseDTO
-
-    /// Google OAuth login
-    func googleLogin(idToken: String) async throws -> GoogleOAuthResponseDTO
-    
-    /// Possibly fetch user profile after login
+    func googleLogin() async throws   // Definitively NO parameter here now (OAuth initiation is GET)
     func fetchCurrentUser(accessToken: String) async throws -> UserEntity
 }
