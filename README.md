@@ -3,7 +3,7 @@
 **CRAVE-Trinity** is a watchOS/iOS/VisonOS stack built with **SwiftUI**/**SwiftData**, helping you track and manage your cravings through a clean, intuitive interface. Whether it’s late-night snacks or midday munchies, CRAVE ensures you stay in control.
 * 🔗 [Frontend](https://github.com/Crave-Trinity/crave-trinity-frontend) (SwiftUI + SwiftData + MVVM) 
 * 🔗 [Backend](https://github.com/Crave-Trinity/crave-trinity-backend) (FastAPI + PostgreSQL + Pinecone + Llama 2)
-* 🔗 [Back-End Live](https://crave-trinity-backend-production.up.railway.app/)
+* 🔗 [Back-End Live](https://crave-mvp-backend-production-a001.up.railway.app/docs)
 
 <p float="left">
   <img src="https://raw.githubusercontent.com/The-Obstacle-Is-The-Way/crave-trinity/main/CravePhone/Resources/Images/Updated-Final-Gif.gif" width="400" alt="Cravey Watch Demo"/>
@@ -15,34 +15,12 @@
 
 ---
 
-📄 Timeline of commits:
-* 📌 Oct – Dec: Shower thoughts; Ideas into words
-* 📌 Jan - Feb: < 30% of Swift bootcamp
-* 📌 Feb 11: Submit YC app to accelerate iteration
-* 📌 Feb 12–13: [Crave Phone MVP](https://github.com/The-Obstacle-Is-The-Way/CRAVECRAVE) – Zero to basic SwiftUI app with craving logging
-* 📌 Feb 14–15: [Crave Phone Refactor](https://github.com/The-Obstacle-Is-The-Way/crave-refactor) – SwiftData; analytics debugging and clean refactor
-* 📌 Feb 16–18: [Crave WatchOS MVP](https://github.com/The-Obstacle-Is-The-Way/isolated-crave-watch) – On-wrist craving logging, watch-to-phone sync  
-* 📌 Feb 19: [Crave-trinity (iOS + Watch + Vision)](https://github.com/The-Obstacle-Is-The-Way/crave-trinity) – Unified codebase with AR/VR hooks for the future
-* 📌 Feb 20–21: WatchOS – Refined UI/UX, aesthetics, HIG-compliant intensity/resistance sliders
-* 📌 Feb 22–23: [CraveWave Backend](https://github.com/Crave-Trinity/crave-trinity-backend) – Backend foundation, improved syncing, refined UI/UX 
-* 📌 Feb 23 – Mar 3: Full-Stack MVP, Better Front-end
-* 📌 Mar 3 - Present: Live on [TestFlight](https://testflight.apple.com/join/Yb1uKZYx); Integrated [Backend Infrastructure](https://crave-mvp-backend-production-a001.up.railway.app)
-  
-💡 Functional watchOS/iOS MVP - built in 7 days from scratch while learning Swift with AI acceleration and basecode abstraction. 
-* It wasn’t just copy-pasta spaghetti; I debugged, refactored, and solved SwiftData issues. I can learn, execute fast, and build something real. The marathon continues.
-
----
-
-* 🫡 "It is not the critic who counts; not the man who points out how the strong man stumbles... The credit belongs to the man who is actually in the arena... who at the best knows in the end the triumph of high achievement, and who at the worst, if he fails, at least fails while daring greatly." - Theodore Roosevelt 
-
----
-
 ## 🚀 CRAVE MVP – Finalized Architecture & Execution Plan  
 ### 📌 What We’re Shipping First 
 CRAVE is an AI-powered craving analytics system, built to provide personalized behavioral analysis by combining user logs, RAG, and LoRA fine-tuning.  
 
 * ✅ Apple Watch + iPhone App → Seamless craving logging.  
-* ✅ [Backend](https://github.com/Crave-Trinity/crave-trinity-backend) that processes & analyzes cravings, not just stores them.
+* ✅ [Backend](https://crave-mvp-backend-production-a001.up.railway.app/docs) that processes & analyzes cravings, not just stores them.
 * ✅ RAG (Retrieval-Augmented Generation) to personalize AI responses without costly fine-tuning.  
 * ✅ LoRA (Low-Rank Adaptation) to fine-tune craving personas with minimal compute costs.
 * ✅ A scalable backend with fast inference on AWS, using open-source models.
@@ -53,8 +31,29 @@ CRAVE is an AI-powered craving analytics system, built to provide personalized b
 
 ---
 
+📄 Timeline of commits:
+* 📌 Oct – Dec: Shower thoughts; Ideas into words
+* 📌 Jan - Feb: < 30% of Swift bootcamp; YC app submited to accelerate iteration
+* 📌 Feb 12–15: [Crave Phone MVP](https://github.com/The-Obstacle-Is-The-Way/CRAVECRAVE), [Clean Refactor](https://github.com/The-Obstacle-Is-The-Way/crave-refactor) – Zero to basic SwiftUI app, SwiftData, Clean architecture refactor 
+* 📌 Feb 16–18: [Crave WatchOS MVP](https://github.com/The-Obstacle-Is-The-Way/isolated-crave-watch) – On-wrist craving logging, watch-to-phone sync  
+* 📌 Feb 19-21: [Crave-Trinity (iOS + Watch + Vision)](https://github.com/The-Obstacle-Is-The-Way/crave-trinity) – Unified codebase, WatchOS Refined UI/UX
+* 📌 Feb 22–23: [CraveWave Backend](https://github.com/Crave-Trinity/crave-trinity-backend) – Backend foundation, iOS syncing, refined UI/UX 
+* 📌 Feb 23 – Mar 3: Deployed Backend on Railway, Improved Front-end
+* 📌 Mar 3 - Mar 6: Iterate [TestFlight](https://testflight.apple.com/join/Yb1uKZYx); Integrated [Backend Infra](https://crave-mvp-backend-production-a001.up.railway.app/docs)
+
+---
+
+* 💡 WatchOS/iOS MVP - built in 7 days from scratch while learning Swift with AI acceleration and basecode abstraction. It wasn’t just copy-pasta spaghetti; I debugged, refactored, and built something real. The marathon continues.
+
+* 🫡 "It is not the critic who counts; not the man who points out how the strong man stumbles. The credit belongs to the man who is actually in the arena, who at the best knows in the end the triumph of high achievement, and who at the worst, if he fails, at least fails while daring greatly." - Theodore Roosevelt 
+
+---
+
 ### From Humble MVP to Unicorn 
 📍 CRAVE will scale from simple B2C to anonymized, population-level, HIPPA-compliant, ETHICAL data analytics (Do No Harm DaaS) 
+
+* 💡 In 1-2 years, privacy-first, ethically sourced DaaS will be valuable; the market is shifting to trustworthy data sets. 
+* 💡 Impulse control isn’t niche—it’s the core of performance, addiction, stress, dopamine loops, and digital overstimulation.
 
 <p align="center">
     <img src="https://raw.githubusercontent.com/The-Obstacle-Is-The-Way/crave-trinity/main/CravePhone/Resources/Images/high-vision-one-png.png" alt="CRAVE Vision" width="100%"/>
@@ -86,18 +85,6 @@ CRAVE is an AI-powered craving analytics system, built to provide personalized b
 ✅ **5. No Credit or Risk-Based Consumer Profiling**
 - Avoid partnerships where craving data could be used against individuals (e.g., credit scoring based on impulsive purchases).  
 - We don’t sell data to insurers, financial risk assessors, or predatory lenders.
-
----
-
-Investors may think there’s no money in cravings management. They’re wrong.
-* 💡 In 1-2 years, privacy-first, ethically sourced DaaS will be valuable; the market is shifting to trustworthy data sets. 
-- Impulse control isn’t niche—it’s the core of performance, addiction, stress, dopamine loops, and digital overstimulation.
-
----
-
-### 🔑 How We Win
-* ✅ Organic growth → AI-backed personalized insights → B2B healthcare SaaS on DaaS
-* ✅ Turn cravings data into a next-gen addiction & impulse control platform
 
 ---
 
@@ -421,12 +408,6 @@ jj@Johns-MacBook-Pro-3 crave-trinity % tree -I ".git"
 
 ---
 
-## Logging Flow
-
-<img src="https://github.com/The-Obstacle-Is-The-Way/CRAVE/blob/main/CRAVEApp/Resources/Docs/Images/crave-logging-flow.svg" alt="CRAVE Logging Flow" width="100%"/>
-
----
-
 ## Navigation States
 
 <img src="https://github.com/The-Obstacle-Is-The-Way/CRAVE/blob/main/CRAVEApp/Resources/Docs/Images/crave-navigation-states.svg" alt="CRAVE Navigation States" width="100%"/>
@@ -441,29 +422,6 @@ jj@Johns-MacBook-Pro-3 crave-trinity % tree -I ".git"
 
 *This MVP has a solid MVVM foundation, and I'm in the process of pivoting to find a technical cofounder for YC. Once that's secured, I'll revisit and refine the code further.*
 
-## 🌟 Architecture & Features
-
-### Data Layer
-- **SwiftData Integration**: Harnesses `@Model` for modern persistence and efficient CRUD operations.  
-- **Soft Deletions**: Archives cravings instead of fully removing them, preserving data for potential analytics.  
-- **Data Manager**: A dedicated `CravingManager` ensures thread-safe data access and state consistency.
-
-### Design System
-- **Centralized Tokens**: Unified colors, typography, and spacing for a polished, cohesive design.  
-- **Reusable Components**: Custom buttons, text editors, and haptic feedback helpers.  
-- **Adaptive Layout**: Responsive UI that looks great on various iOS screens.
-
-### Core Features
-- **Quick Logging**: Rapid craving entry with instant persistence.  
-- **Smart History**: Cravings are grouped by date, with friendly placeholders if no data exists.  
-- **Easy Management**: Swipe-to-archive, bulk edits, and other intuitive actions keep your list tidy.
-
-### Technical Excellence
-- **MVVM Architecture**: Leverages `@Observable` for clean, scalable state management.  
-- **Comprehensive Testing**: Unit tests, UI tests, and ephemeral in-memory data configurations using XCTest.  
-- **Performance Focus**: Swift animations, minimal overhead, and optimized data fetches keep the app smooth.
-
----
 
 ## 🚀 Roadmap
 💎 Ultra Dank Roadmap for Voice, AI, and Analytics Integration
