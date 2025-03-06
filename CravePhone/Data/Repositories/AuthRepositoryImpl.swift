@@ -3,7 +3,7 @@
 // AUTHOR: Uncle Bob / Steve Jobs Style
 
 import Foundation
-import UIKit
+import SwiftUI
 
 final class AuthRepositoryImpl: AuthRepository {
     private let backendClient: CraveBackendAPIClient
@@ -45,24 +45,27 @@ final class AuthRepositoryImpl: AuthRepository {
     
     // MARK: - Native Google Sign-In Verification
     func verifyGoogleIdToken(idToken: String) async throws -> AuthResponseDTO {
-        // Use the new endpoint that expects an ID token from the iOS client
         guard let url = URL(string: "\(backendClient.baseURL)/api/v1/auth/verify-google-id-token") else {
             throw APIError.invalidURL
         }
-        
+
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        // The backend expects a JSON body with the key "id_token"
+
         let body = ["id_token": idToken]
         request.httpBody = try JSONSerialization.data(withJSONObject: body, options: [])
-        
+
         let (data, response) = try await URLSession.shared.data(for: request)
         guard let httpResponse = response as? HTTPURLResponse else {
             throw APIError.invalidResponse
         }
-        
+
+        print("HTTP Status Code: \(httpResponse.statusCode)")
+        if let responseBody = String(data: data, encoding: .utf8) {
+            print("Response Body: \(responseBody)")
+        }
+
         switch httpResponse.statusCode {
         case 200..<300:
             return try JSONDecoder().decode(AuthResponseDTO.self, from: data)
