@@ -51,6 +51,11 @@ CRAVE is an AI-powered craving analytics system, built to provide personalized b
 
 ### From Humble MVP to Unicorn 
 📍 CRAVE will scale from simple B2C to anonymized, population-level, HIPPA-compliant, ETHICAL data analytics (Do No Harm DaaS) 
+Investors may think there’s no money in cravings management. They’re wrong.
+
+Investors may think there’s no money in cravings management. They’re wrong.
+* 💡 In 1-2 years, privacy-first, ethically sourced DaaS will be valuable; the market is shifting to trustworthy data sets. 
+- Impulse control isn’t niche—it’s the core of performance, addiction, stress, dopamine loops, and digital overstimulation.
 
 <p align="center">
     <img src="https://raw.githubusercontent.com/The-Obstacle-Is-The-Way/crave-trinity/main/CravePhone/Resources/Images/high-vision-one-png.png" alt="CRAVE Vision" width="100%"/>
@@ -82,12 +87,6 @@ CRAVE is an AI-powered craving analytics system, built to provide personalized b
 ✅ **5. No Credit or Risk-Based Consumer Profiling**
 - Avoid partnerships where craving data could be used against individuals (e.g., credit scoring based on impulsive purchases).  
 - We don’t sell data to insurers, financial risk assessors, or predatory lenders.
-
----
-
-Investors may think there’s no money in cravings management. They’re wrong.
-* 💡 In 1-2 years, privacy-first, ethically sourced DaaS will be valuable; the market is shifting to trustworthy data sets. 
-- Impulse control isn’t niche—it’s the core of performance, addiction, stress, dopamine loops, and digital overstimulation.
 
 ---
 
