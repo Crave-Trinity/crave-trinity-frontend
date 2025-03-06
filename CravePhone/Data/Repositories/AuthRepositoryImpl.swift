@@ -62,22 +62,24 @@ final class AuthRepositoryImpl: AuthRepository {
     // - Throws: APIError if the network call or decoding fails.
     // - Returns: A GoogleOAuthResponseDTO containing the authentication details.
     func googleLogin(idToken: String) async throws -> GoogleOAuthResponseDTO {
-        guard let url = URL(string: "\(backendClient.baseURL)/api/v1/auth/google-oauth") else {
+        guard let url = URL(string: "\(backendClient.baseURL)/auth/oauth/google/login") else {
             throw APIError.invalidURL
         }
-        
+
         var request = URLRequest(url: url)
-        request.httpMethod = "POST"
+        request.httpMethod = "GET" // ← This should be GET for OAuth initiation
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        let body = GoogleOAuthRequestDTO(idToken: idToken)
-        request.httpBody = try JSONEncoder().encode(body)
-        
+        // Typically, you don't send a request body when using GET for OAuth initiation.
+        // Remove the body encoding entirely:
+        // let body = GoogleOAuthRequestDTO(idToken: idToken)
+        // request.httpBody = try JSONEncoder().encode(body)
+
         let (data, response) = try await URLSession.shared.data(for: request)
         guard let httpResponse = response as? HTTPURLResponse else {
             throw APIError.invalidResponse
         }
-        
+
         switch httpResponse.statusCode {
         case 200..<300:
             return try JSONDecoder().decode(GoogleOAuthResponseDTO.self, from: data)
@@ -89,7 +91,6 @@ final class AuthRepositoryImpl: AuthRepository {
             throw APIError.invalidResponse
         }
     }
-    
     // MARK: - Fetch Current User
     // Retrieves the current authenticated user's details using a valid access token.
     // - Parameter accessToken: A valid OAuth access token.
