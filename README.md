@@ -29,7 +29,7 @@
 
 ---
 
-* 🫡 "It is not the critic who counts; not the man who points out how the strong man stumbles... The credit belongs to the man who is actually in the arena... who at the best knows in the end the triumph of high achievement, and who at the worst, if he fails, at least fails while daring greatly." - Theodore Roosevelt 
+* 🫡 "It is not the critic who counts; not the man who points out how the strong man stumbles. The credit belongs to the man who is actually in the arena, who at the best knows in the end the triumph of high achievement, and who at the worst, if he fails, at least fails while daring greatly." - Theodore Roosevelt 
 
 ---
 
