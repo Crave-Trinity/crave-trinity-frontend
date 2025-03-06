@@ -62,7 +62,7 @@ public final class AppCoordinator: ObservableObject {
             )
         case .loggedOut:
             return AnyView(
-                LoginView(viewModel: self.container.makeLoginViewModel())
+                LoginView(viewModel: self.container.makeLoginViewModel(coordinator: self))
             )
         case .loggedIn:
             return AnyView(

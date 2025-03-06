@@ -119,7 +119,9 @@ public final class DependencyContainer: ObservableObject {
         SplashViewModel(coordinator: coordinator)
     }
     
-    func makeLoginViewModel() -> LoginViewModel {
-        LoginViewModel(authRepository: authRepository)
+    // Factory method for creating LoginViewModel
+    // Now requires an AppCoordinator to enable navigation upon login
+    func makeLoginViewModel(coordinator: AppCoordinator) -> LoginViewModel {
+        LoginViewModel(authRepository: authRepository, coordinator: coordinator)
     }
 }

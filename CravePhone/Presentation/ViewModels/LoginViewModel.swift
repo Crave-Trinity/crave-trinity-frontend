@@ -5,6 +5,7 @@
 import SwiftUI
 import GoogleSignIn
 
+@MainActor
 public class LoginViewModel: ObservableObject {
     @Published public var email: String = ""
     @Published public var password: String = ""
@@ -12,16 +13,20 @@ public class LoginViewModel: ObservableObject {
     @Published public var errorMessage: String?
     
     private let authRepository: AuthRepository
-    
+    private let coordinator: AppCoordinator   // 1) Inject the coordinator
+
     // MARK: - Initializer
-    init(authRepository: AuthRepository) {
+    init(authRepository: AuthRepository, coordinator: AppCoordinator) {
         self.authRepository = authRepository
+        self.coordinator = coordinator
     }
     
     // MARK: - Email/Password Login
     public func loginWithEmailPassword() {
+        // We’re not marking the function itself as async;
+        // we use Task { } to handle async calls inside.
+        isLoading = true
         Task {
-            isLoading = true
             defer { isLoading = false }
             do {
                 let response = try await authRepository.login(email: email, password: password)
@@ -30,6 +35,8 @@ public class LoginViewModel: ObservableObject {
                     service: "com.crave.app",
                     account: "authToken"
                 )
+                // 2) Navigate to main screen:
+                coordinator.setLoggedIn()
             } catch {
                 errorMessage = error.localizedDescription
             }
@@ -50,7 +57,7 @@ public class LoginViewModel: ObservableObject {
         
         isLoading = true
         
-        // Initiate Google sign-in with the provided root view controller.
+        // GoogleSignIn uses a completion handler, so no 'await' needed here.
         GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController) { [weak self] signInResult, error in
             guard let self = self else { return }
             defer { self.isLoading = false }
@@ -66,7 +73,7 @@ public class LoginViewModel: ObservableObject {
                 return
             }
             
-            // Call the new backend endpoint to verify the Google ID token.
+            // 3) Verify Google ID token asynchronously
             Task {
                 do {
                     let response = try await self.authRepository.verifyGoogleIdToken(idToken: idToken)
@@ -75,6 +82,8 @@ public class LoginViewModel: ObservableObject {
                         service: "com.crave.app",
                         account: "authToken"
                     )
+                    // 4) Navigate to main screen:
+                    self.coordinator.setLoggedIn()
                 } catch {
                     self.errorMessage = error.localizedDescription
                 }
