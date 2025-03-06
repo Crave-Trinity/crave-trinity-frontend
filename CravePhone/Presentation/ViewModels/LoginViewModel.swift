@@ -1,9 +1,12 @@
-//=================================================================
-// File: CravePhone/Presentation/ViewModels/LoginViewModel.swift
-// PURPOSE:
-//  - Orchestrates login logic for email/password and Google OAuth.
-//  - Adjusted initializer access level to match internal types.
-// UNCLE BOB + STEVE JOBS STYLE – COMPLETE PASTE & RUN
+//
+//  LoginViewModel.swift
+//  CravePhone/Presentation/ViewModels
+//
+//  PURPOSE:
+//    - Orchestrates login logic for email/password and Google OAuth.
+//    - Visibility of initializer explicitly matches DependencyContainer.
+//
+//  UNCLE BOB + STEVE JOBS STYLE – COMPLETE PASTE & RUN
 //=================================================================
 
 import SwiftUI
@@ -17,11 +20,13 @@ public class LoginViewModel: ObservableObject {
     
     private let authRepository: AuthRepository
     
-    // Removed 'public' from the initializer to avoid exposing internal types.
+    // MARK: - Initializer (Visibility matches DependencyContainer: Internal)
+    // Explicitly matches visibility defined in DependencyContainer.swift.
     init(authRepository: AuthRepository) {
         self.authRepository = authRepository
     }
     
+    // MARK: - Email/Password Login
     public func loginWithEmailPassword() {
         Task {
             isLoading = true
@@ -39,6 +44,7 @@ public class LoginViewModel: ObservableObject {
         }
     }
     
+    // MARK: - Google OAuth Login
     public func loginWithGoogle(presentingWindow: UIWindowScene?) {
         guard let windowScene = presentingWindow else {
             self.errorMessage = "No UIWindowScene found."
