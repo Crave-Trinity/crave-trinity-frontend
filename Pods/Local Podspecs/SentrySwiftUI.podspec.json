@@ -1,0 +1,35 @@
+{
+  "name": "SentrySwiftUI",
+  "version": "8.46.0",
+  "summary": "Sentry client for SwiftUI",
+  "homepage": "https://github.com/getsentry/sentry-cocoa",
+  "license": "mit",
+  "authors": "Sentry",
+  "source": {
+    "git": "https://github.com/getsentry/sentry-cocoa.git",
+    "tag": "8.46.0"
+  },
+  "platforms": {
+    "ios": "13.0",
+    "osx": "10.15",
+    "tvos": "13.0",
+    "watchos": "6.0"
+  },
+  "module_name": "SentrySwiftUI",
+  "requires_arc": true,
+  "frameworks": [
+    "Foundation",
+    "SwiftUI"
+  ],
+  "swift_versions": "5.5",
+  "watchos": {
+    "frameworks": "WatchKit"
+  },
+  "source_files": "Sources/SentrySwiftUI/**/*.{swift,h,m}",
+  "dependencies": {
+    "Sentry/HybridSDK": [
+      "8.46.0"
+    ]
+  },
+  "swift_version": "5.5"
+}

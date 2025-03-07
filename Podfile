@@ -1,49 +1,46 @@
-# Uncomment the next line to define a global platform for your project
-# platform :ios, '9.0'
+# Declare a global platform for iOS targets
+platform :ios, '13.0'
+use_frameworks!
 
+# ---------------------------
+# iOS: CravePhone
+# ---------------------------
 target 'CravePhone' do
-  # Comment the next line if you don't want to use dynamic frameworks
-  use_frameworks!
-
-  # Pods for CravePhone
+  pod 'SentrySwiftUI', :git => 'https://github.com/getsentry/sentry-cocoa.git', :tag => '8.46.0'
 
   target 'CravePhoneTests' do
     inherit! :search_paths
-    # Pods for testing
   end
 
   target 'CravePhoneUITests' do
-    # Pods for testing
+    inherit! :search_paths
   end
-
 end
 
+# ---------------------------
+# iOS: CraveVision (No pods)
+# ---------------------------
 target 'CraveVision' do
-  # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
-
-  # Pods for CraveVision
-
+  # No pods for CraveVision
   target 'CraveVisionTests' do
     inherit! :search_paths
-    # Pods for testing
   end
-
 end
 
+# ---------------------------
+# watchOS: CraveWatch Watch App (No pods)
+# ---------------------------
 target 'CraveWatch Watch App' do
-  # Comment the next line if you don't want to use dynamic frameworks
+  platform :watchos, '9.0'
   use_frameworks!
-
-  # Pods for CraveWatch Watch App
+  # No pods for CraveWatch
 
   target 'CraveWatch Watch AppTests' do
     inherit! :search_paths
-    # Pods for testing
   end
 
   target 'CraveWatch Watch AppUITests' do
-    # Pods for testing
+    inherit! :search_paths
   end
-
 end

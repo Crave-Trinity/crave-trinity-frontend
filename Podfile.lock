@@ -1,3 +1,29 @@
-PODFILE CHECKSUM: 731350c0d7177868d1bbc4937a2cef41daae1b7f
+PODS:
+  - Sentry/HybridSDK (8.46.0)
+  - SentrySwiftUI (8.46.0):
+    - Sentry/HybridSDK (= 8.46.0)
+
+DEPENDENCIES:
+  - SentrySwiftUI (from `https://github.com/getsentry/sentry-cocoa.git`, tag `8.46.0`)
+
+SPEC REPOS:
+  trunk:
+    - Sentry
+
+EXTERNAL SOURCES:
+  SentrySwiftUI:
+    :git: https://github.com/getsentry/sentry-cocoa.git
+    :tag: 8.46.0
+
+CHECKOUT OPTIONS:
+  SentrySwiftUI:
+    :git: https://github.com/getsentry/sentry-cocoa.git
+    :tag: 8.46.0
+
+SPEC CHECKSUMS:
+  Sentry: da60d980b197a46db0b35ea12cb8f39af48d8854
+  SentrySwiftUI: 00b50a3ff6fd3f6f731533cea67d14d772feded7
+
+PODFILE CHECKSUM: 16d8709ce1355fb3cc9ed8058b0adc1c698479f6
 
 COCOAPODS: 1.16.2
