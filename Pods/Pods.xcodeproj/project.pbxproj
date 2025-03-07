@@ -1,0 +1,1631 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0A3FFD7F261FE98E02ADAA4F6F4B2DF3 /* Pods-CravePhone-CravePhoneUITests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 43B1F7E524BAA680B571E55FE3865105 /* Pods-CravePhone-CravePhoneUITests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0A7BAD82E6BD06DD00519E6A24A728A4 /* Pods-CravePhoneTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A41E127C7A3A16463BC75532E1C7587 /* Pods-CravePhoneTests-dummy.m */; };
+		122933EA962CF34E2BFB2AE7E0ED132E /* Pods-CraveVision-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 2024DF73C1B46E9A32E796B2D2B3D80D /* Pods-CraveVision-dummy.m */; };
+		244BA2882F3899AB5752BC65F23871BC /* Pods-CraveWatch Watch App-CraveWatch Watch AppUITests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D754F1C3E9A86DDCFC3B08890A32300 /* Pods-CraveWatch Watch App-CraveWatch Watch AppUITests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4546050F457CD7609EF798448EDC89C3 /* Pods-CravePhone-CravePhoneUITests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 851A667AB3494186DBA35940B0831C73 /* Pods-CravePhone-CravePhoneUITests-dummy.m */; };
+		45A91FFDD1CADB1D30CC7915B54E33C3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5297C841B5962873C89DBA63396D0BF0 /* Foundation.framework */; };
+		47D61376C79229732F45867B0918DE34 /* Pods-CraveWatch Watch App-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E20E332BDDA08DA7178969AE9B3C59B /* Pods-CraveWatch Watch App-dummy.m */; };
+		56A5C0366DBFDFF22F38AF9FDCCE1415 /* Pods-CraveVision-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 14D1583BC914F1C95CAF61169A77F9D5 /* Pods-CraveVision-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6B04A15B1B56CF45DA5110627FD55AE1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB73CB01FB873488716459ABDC9E0BCF /* Foundation.framework */; };
+		715CC6EB439484215F70F220CC487D7A /* Pods-CraveWatch Watch App-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C5A445A876CFAE0F8C3663C33780E9E /* Pods-CraveWatch Watch App-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		81C2B025ACB87C7527350326E0549757 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5297C841B5962873C89DBA63396D0BF0 /* Foundation.framework */; };
+		869E4CD1579F9DE7FBC54220A533E604 /* Pods-CraveWatch Watch AppTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BB30590C398B888F13EECC785DB0627 /* Pods-CraveWatch Watch AppTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8C41F4133E4ECC4E4A0E76F61AD53D3C /* Pods-CravePhone-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 6EF4CECF4E1DC2BF5DA5607587556299 /* Pods-CravePhone-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A3788ABAFD8F4A106163A030FA0F7D0A /* Pods-CraveWatch Watch AppTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = B2A0B86C0F8302E3282AC5D6B5BD6BF5 /* Pods-CraveWatch Watch AppTests-dummy.m */; };
+		C5CACDE51B430A0C4D4F2A477CED64CD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70E8DDDE6965AD5F1D2EA6E832F3860A /* Foundation.framework */; };
+		C972D29FC818088DFEDB2E43F9C1B63A /* Pods-CravePhone-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 37F1007A508BDD28EA78824FC39ABC7B /* Pods-CravePhone-dummy.m */; };
+		CE36D1C869278E72DA21DC59966B4CFF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB73CB01FB873488716459ABDC9E0BCF /* Foundation.framework */; };
+		D0CC823EA92287DC4E1EB5C8CCB78B06 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB73CB01FB873488716459ABDC9E0BCF /* Foundation.framework */; };
+		EDD219BB1CACE4D91513B555E3A6E140 /* Pods-CraveVisionTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = B7087CB0351CAD48DBE9B985BB7B5543 /* Pods-CraveVisionTests-dummy.m */; };
+		F2F53855FF500E3A7232F10BED144CED /* Pods-CraveWatch Watch App-CraveWatch Watch AppUITests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 186F65969CB495562D7F3D4AFED1A925 /* Pods-CraveWatch Watch App-CraveWatch Watch AppUITests-dummy.m */; };
+		F5B2FA44A4A3E8AD881F099634A5E8D7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5297C841B5962873C89DBA63396D0BF0 /* Foundation.framework */; };
+		F67F82E8A9A0D48BE84454B10948964D /* Pods-CraveVisionTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 18AB5EACBDA41825F1ED720C3DA3B89A /* Pods-CraveVisionTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F72C6D15439B752059F124EAB55603D2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70E8DDDE6965AD5F1D2EA6E832F3860A /* Foundation.framework */; };
+		FFA1AF9C0505468A510E2D51E91E1E08 /* Pods-CravePhoneTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EECE4E685095606D0B3C56105C04015 /* Pods-CravePhoneTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		10DFC9992C2EABC421A0BFBBED0D4891 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FCA252A5CC239474B3B68B505AAC0305;
+			remoteInfo = "Pods-CraveVision";
+		};
+		47791F72A31FF1A09FFD8D367B977DCB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9B0339273F726E36067E151A14F54919;
+			remoteInfo = "Pods-CraveWatch Watch App";
+		};
+		6E01E60AE11A99F20E8A38A671AC4DB4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9EAC5F7254AFCFE0A31CCC61A3AF4911;
+			remoteInfo = "Pods-CravePhone";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		00AB5AFAA58D034552E674D0353739C2 /* Pods-CravePhone */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-CravePhone"; path = Pods_CravePhone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		071D4ED298066D6BCE900E34261E5156 /* Pods-CravePhone-CravePhoneUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CravePhone-CravePhoneUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		0B00509375F2A97A130819E5A7723ED9 /* Pods-CravePhone.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-CravePhone.modulemap"; sourceTree = "<group>"; };
+		12BC536A1B1D78179B90E03319AA5AA1 /* Pods-CraveVision-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-CraveVision-Info.plist"; sourceTree = "<group>"; };
+		14D1583BC914F1C95CAF61169A77F9D5 /* Pods-CraveVision-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-CraveVision-umbrella.h"; sourceTree = "<group>"; };
+		186F65969CB495562D7F3D4AFED1A925 /* Pods-CraveWatch Watch App-CraveWatch Watch AppUITests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-CraveWatch Watch App-CraveWatch Watch AppUITests-dummy.m"; sourceTree = "<group>"; };
+		18AB5EACBDA41825F1ED720C3DA3B89A /* Pods-CraveVisionTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-CraveVisionTests-umbrella.h"; sourceTree = "<group>"; };
+		1C5A445A876CFAE0F8C3663C33780E9E /* Pods-CraveWatch Watch App-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-CraveWatch Watch App-umbrella.h"; sourceTree = "<group>"; };
+		2024DF73C1B46E9A32E796B2D2B3D80D /* Pods-CraveVision-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-CraveVision-dummy.m"; sourceTree = "<group>"; };
+		203CA17060BF4345DD01BB94256202CB /* Pods-CravePhone-CravePhoneUITests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-CravePhone-CravePhoneUITests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		20C76C37898014F896B1171EDE4AC0C7 /* Pods-CraveWatch Watch AppTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-CraveWatch Watch AppTests.modulemap"; sourceTree = "<group>"; };
+		22064DA950B20DD728DCD56EF4C443E3 /* Pods-CraveWatch Watch App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CraveWatch Watch App.debug.xcconfig"; sourceTree = "<group>"; };
+		2BEF7647ED12396D24CF8EC25EBCBF70 /* Pods-CravePhoneTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CravePhoneTests.debug.xcconfig"; sourceTree = "<group>"; };
+		30E834A004B245E50E990DF66A94A65B /* Pods-CraveVision-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-CraveVision-acknowledgements.plist"; sourceTree = "<group>"; };
+		35E2CCE2F45D584A39C94E991312DB17 /* Pods-CravePhone-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-CravePhone-acknowledgements.plist"; sourceTree = "<group>"; };
+		37F1007A508BDD28EA78824FC39ABC7B /* Pods-CravePhone-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-CravePhone-dummy.m"; sourceTree = "<group>"; };
+		3CBAD66D6F84345199550F158CA704A4 /* Pods-CravePhone-CravePhoneUITests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-CravePhone-CravePhoneUITests-Info.plist"; sourceTree = "<group>"; };
+		3CF1490D23E068165863CF5981BB10FB /* Pods-CravePhone-CravePhoneUITests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-CravePhone-CravePhoneUITests-acknowledgements.plist"; sourceTree = "<group>"; };
+		3EECE4E685095606D0B3C56105C04015 /* Pods-CravePhoneTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-CravePhoneTests-umbrella.h"; sourceTree = "<group>"; };
+		43B1F7E524BAA680B571E55FE3865105 /* Pods-CravePhone-CravePhoneUITests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-CravePhone-CravePhoneUITests-umbrella.h"; sourceTree = "<group>"; };
+		4C1FE935263E5A948D69851DE2ADD002 /* Pods-CraveWatch Watch App-CraveWatch Watch AppUITests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-CraveWatch Watch App-CraveWatch Watch AppUITests.modulemap"; sourceTree = "<group>"; };
+		4DB244C487E906DE1823A69B18BD9E04 /* Pods-CraveVisionTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CraveVisionTests.release.xcconfig"; sourceTree = "<group>"; };
+		4E20E332BDDA08DA7178969AE9B3C59B /* Pods-CraveWatch Watch App-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-CraveWatch Watch App-dummy.m"; sourceTree = "<group>"; };
+		5297C841B5962873C89DBA63396D0BF0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		52B01B505F86540881AAF88CC4047E1A /* Pods-CravePhoneTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-CravePhoneTests-acknowledgements.plist"; sourceTree = "<group>"; };
+		54D04978294D6B92982CBBBFCEC654E6 /* Pods-CraveWatch Watch AppTests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-CraveWatch Watch AppTests-Info.plist"; sourceTree = "<group>"; };
+		636E26E2B759682B7194035504BEF463 /* Pods-CraveWatch Watch AppTests */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-CraveWatch Watch AppTests"; path = Pods_CraveWatch_Watch_AppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		63CE7B22431CD7F82DF1F1AE77943A76 /* Pods-CravePhone-CravePhoneUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CravePhone-CravePhoneUITests.release.xcconfig"; sourceTree = "<group>"; };
+		63FB2C2099175EEC542E89031A5090DC /* Pods-CraveWatch Watch AppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CraveWatch Watch AppTests.release.xcconfig"; sourceTree = "<group>"; };
+		6970B8AA43747AAF9C2093D754177518 /* Pods-CraveVision-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-CraveVision-acknowledgements.markdown"; sourceTree = "<group>"; };
+		6A01F376D4DDB38B78449B9CDBC49818 /* Pods-CraveWatch Watch App-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-CraveWatch Watch App-acknowledgements.plist"; sourceTree = "<group>"; };
+		6E195C560360ACD19A3139498D763A84 /* Pods-CraveVision.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CraveVision.debug.xcconfig"; sourceTree = "<group>"; };
+		6EF4CECF4E1DC2BF5DA5607587556299 /* Pods-CravePhone-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-CravePhone-umbrella.h"; sourceTree = "<group>"; };
+		6EFF27C8076FBEF222C7A85C4D0BEEDE /* Pods-CraveWatch Watch App */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-CraveWatch Watch App"; path = Pods_CraveWatch_Watch_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		70455E0404FCCC70C02869CED6EC118A /* Pods-CraveVisionTests */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-CraveVisionTests"; path = Pods_CraveVisionTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		70E8DDDE6965AD5F1D2EA6E832F3860A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/XROS.platform/Developer/SDKs/XROS2.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		772E21BF71743F3F08BC5DBD8A0B7BA2 /* Pods-CravePhoneTests */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-CravePhoneTests"; path = Pods_CravePhoneTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7BEE6018282237639DC4FDD5246018F4 /* Pods-CraveWatch Watch App-CraveWatch Watch AppUITests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-CraveWatch Watch App-CraveWatch Watch AppUITests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		806679C79C13F9F3E616F1FD58F296EC /* Pods-CravePhoneTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CravePhoneTests.release.xcconfig"; sourceTree = "<group>"; };
+		851A667AB3494186DBA35940B0831C73 /* Pods-CravePhone-CravePhoneUITests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-CravePhone-CravePhoneUITests-dummy.m"; sourceTree = "<group>"; };
+		868B5E959FB810B8B59B7308719288D7 /* Pods-CraveVision.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-CraveVision.modulemap"; sourceTree = "<group>"; };
+		89B73D946189EC619D080D209CA52ACD /* Pods-CraveWatch Watch App-CraveWatch Watch AppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CraveWatch Watch App-CraveWatch Watch AppUITests.release.xcconfig"; sourceTree = "<group>"; };
+		8BB30590C398B888F13EECC785DB0627 /* Pods-CraveWatch Watch AppTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-CraveWatch Watch AppTests-umbrella.h"; sourceTree = "<group>"; };
+		8EE59D44669F4EE21A4F1177DECDDB36 /* Pods-CraveVisionTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CraveVisionTests.debug.xcconfig"; sourceTree = "<group>"; };
+		95C34DBBD1B880BDFF8658A034B69FCF /* Pods-CravePhone.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CravePhone.release.xcconfig"; sourceTree = "<group>"; };
+		974C54279A018C0988C4A9784CBB91B7 /* Pods-CravePhoneTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-CravePhoneTests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		991235A4F7E4D5649B486992E7D19361 /* Pods-CraveWatch Watch AppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CraveWatch Watch AppTests.debug.xcconfig"; sourceTree = "<group>"; };
+		9A41E127C7A3A16463BC75532E1C7587 /* Pods-CravePhoneTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-CravePhoneTests-dummy.m"; sourceTree = "<group>"; };
+		9D754F1C3E9A86DDCFC3B08890A32300 /* Pods-CraveWatch Watch App-CraveWatch Watch AppUITests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-CraveWatch Watch App-CraveWatch Watch AppUITests-umbrella.h"; sourceTree = "<group>"; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9ECD02B376D4B345DD6EFF92F172DEEF /* Pods-CravePhone-CravePhoneUITests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-CravePhone-CravePhoneUITests.modulemap"; sourceTree = "<group>"; };
+		A4FBAF44673B4FCB8B35D8EA04A11C39 /* Pods-CraveWatch Watch App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CraveWatch Watch App.release.xcconfig"; sourceTree = "<group>"; };
+		A6D902D1578A3EECC8E9BDB3FC0253D8 /* Pods-CravePhoneTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-CravePhoneTests.modulemap"; sourceTree = "<group>"; };
+		AACA1F59F90FB24D2B0F8F56ABE463FC /* Pods-CravePhone-CravePhoneUITests */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-CravePhone-CravePhoneUITests"; path = Pods_CravePhone_CravePhoneUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AB1A7D64057D4B05723AB937DEBDF60A /* Pods-CraveWatch Watch App-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-CraveWatch Watch App-acknowledgements.markdown"; sourceTree = "<group>"; };
+		AB5D494CB93A98F53895B4AEF2C925D3 /* Pods-CraveWatch Watch App-CraveWatch Watch AppUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CraveWatch Watch App-CraveWatch Watch AppUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		AC7987998334D5354DB8F2B06B6E4307 /* Pods-CraveWatch Watch AppTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-CraveWatch Watch AppTests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		B0C1C0B8EFC847DBFEF95931FA549C63 /* Pods-CravePhoneTests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-CravePhoneTests-Info.plist"; sourceTree = "<group>"; };
+		B2A0B86C0F8302E3282AC5D6B5BD6BF5 /* Pods-CraveWatch Watch AppTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-CraveWatch Watch AppTests-dummy.m"; sourceTree = "<group>"; };
+		B3F56298B30CAF7BF73E01DB4D607C35 /* Pods-CraveWatch Watch App-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-CraveWatch Watch App-Info.plist"; sourceTree = "<group>"; };
+		B7087CB0351CAD48DBE9B985BB7B5543 /* Pods-CraveVisionTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-CraveVisionTests-dummy.m"; sourceTree = "<group>"; };
+		BF7437345E36B74AD18165ADA1845E5D /* Pods-CravePhone-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-CravePhone-acknowledgements.markdown"; sourceTree = "<group>"; };
+		C2F218CEA7C2BBC9F986068598B8B912 /* Pods-CraveWatch Watch App-CraveWatch Watch AppUITests */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-CraveWatch Watch App-CraveWatch Watch AppUITests"; path = Pods_CraveWatch_Watch_App_CraveWatch_Watch_AppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA06CA136D751B600EC783C649277B76 /* Pods-CraveVisionTests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-CraveVisionTests-Info.plist"; sourceTree = "<group>"; };
+		D6716FCC0CA3E342E96BBE3E6A1D890E /* Pods-CraveVisionTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-CraveVisionTests-acknowledgements.plist"; sourceTree = "<group>"; };
+		DB73CB01FB873488716459ABDC9E0BCF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS11.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		DDD6E529A0611F44E5E21459B3CADB66 /* Pods-CraveVision */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-CraveVision"; path = Pods_CraveVision.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E14AE6A395F9EBFE24CC282F550C01C4 /* Pods-CravePhone.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CravePhone.debug.xcconfig"; sourceTree = "<group>"; };
+		E1880338F9600A3F8F52A9F077660D24 /* Pods-CraveVisionTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-CraveVisionTests.modulemap"; sourceTree = "<group>"; };
+		E4710C6E4BA4A7ADB8D7E51EF3703F82 /* Pods-CraveWatch Watch App-CraveWatch Watch AppUITests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-CraveWatch Watch App-CraveWatch Watch AppUITests-acknowledgements.plist"; sourceTree = "<group>"; };
+		EA4E943C6BCB434FC8BC15E3BECA92C5 /* Pods-CravePhone-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-CravePhone-Info.plist"; sourceTree = "<group>"; };
+		EA60A4F399DB2D4E61D94D2ADBA4DA74 /* Pods-CraveVisionTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-CraveVisionTests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		EA9C3AD92BB0DF4B16583F7537C58CA8 /* Pods-CraveWatch Watch App-CraveWatch Watch AppUITests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-CraveWatch Watch App-CraveWatch Watch AppUITests-Info.plist"; sourceTree = "<group>"; };
+		F26C92F39303F8BF9F20EE9D8B6FA537 /* Pods-CraveWatch Watch AppTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-CraveWatch Watch AppTests-acknowledgements.plist"; sourceTree = "<group>"; };
+		F2D7EEDB290B74994E7FA3E7FD218E9F /* Pods-CraveWatch Watch App.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-CraveWatch Watch App.modulemap"; sourceTree = "<group>"; };
+		F91FF3CF857ADAA904EAE6790594E007 /* Pods-CraveVision.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CraveVision.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		07110004611483B00537DFED2461EA8E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C5CACDE51B430A0C4D4F2A477CED64CD /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		148718ECAE13FEF4755B57B2B329E10E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D0CC823EA92287DC4E1EB5C8CCB78B06 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		537E6DED9F74D726502013C326B547A2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				45A91FFDD1CADB1D30CC7915B54E33C3 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC149DA5DBFFDC87044A14C798AE56DE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F72C6D15439B752059F124EAB55603D2 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E182468CEA503D990BBBB01DF92D14AE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				81C2B025ACB87C7527350326E0549757 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E491A605885E7A4ACD798EA89BA39C83 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6B04A15B1B56CF45DA5110627FD55AE1 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E9134A9FFFD1429C1C2FCF82439EBD30 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE36D1C869278E72DA21DC59966B4CFF /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F79A4E2AA47B2829CD4320C75B48329C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F5B2FA44A4A3E8AD881F099634A5E8D7 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1B83CE2640AA24062811BC1075449CB7 /* visionOS */ = {
+			isa = PBXGroup;
+			children = (
+				70E8DDDE6965AD5F1D2EA6E832F3860A /* Foundation.framework */,
+			);
+			name = visionOS;
+			sourceTree = "<group>";
+		};
+		270A0138543CB363E2211410E264C9B4 /* Pods-CravePhoneTests */ = {
+			isa = PBXGroup;
+			children = (
+				A6D902D1578A3EECC8E9BDB3FC0253D8 /* Pods-CravePhoneTests.modulemap */,
+				974C54279A018C0988C4A9784CBB91B7 /* Pods-CravePhoneTests-acknowledgements.markdown */,
+				52B01B505F86540881AAF88CC4047E1A /* Pods-CravePhoneTests-acknowledgements.plist */,
+				9A41E127C7A3A16463BC75532E1C7587 /* Pods-CravePhoneTests-dummy.m */,
+				B0C1C0B8EFC847DBFEF95931FA549C63 /* Pods-CravePhoneTests-Info.plist */,
+				3EECE4E685095606D0B3C56105C04015 /* Pods-CravePhoneTests-umbrella.h */,
+				2BEF7647ED12396D24CF8EC25EBCBF70 /* Pods-CravePhoneTests.debug.xcconfig */,
+				806679C79C13F9F3E616F1FD58F296EC /* Pods-CravePhoneTests.release.xcconfig */,
+			);
+			name = "Pods-CravePhoneTests";
+			path = "Target Support Files/Pods-CravePhoneTests";
+			sourceTree = "<group>";
+		};
+		3C1D79AA4B2AA38805FC89643ED1637F /* Pods-CraveWatch Watch App-CraveWatch Watch AppUITests */ = {
+			isa = PBXGroup;
+			children = (
+				4C1FE935263E5A948D69851DE2ADD002 /* Pods-CraveWatch Watch App-CraveWatch Watch AppUITests.modulemap */,
+				7BEE6018282237639DC4FDD5246018F4 /* Pods-CraveWatch Watch App-CraveWatch Watch AppUITests-acknowledgements.markdown */,
+				E4710C6E4BA4A7ADB8D7E51EF3703F82 /* Pods-CraveWatch Watch App-CraveWatch Watch AppUITests-acknowledgements.plist */,
+				186F65969CB495562D7F3D4AFED1A925 /* Pods-CraveWatch Watch App-CraveWatch Watch AppUITests-dummy.m */,
+				EA9C3AD92BB0DF4B16583F7537C58CA8 /* Pods-CraveWatch Watch App-CraveWatch Watch AppUITests-Info.plist */,
+				9D754F1C3E9A86DDCFC3B08890A32300 /* Pods-CraveWatch Watch App-CraveWatch Watch AppUITests-umbrella.h */,
+				AB5D494CB93A98F53895B4AEF2C925D3 /* Pods-CraveWatch Watch App-CraveWatch Watch AppUITests.debug.xcconfig */,
+				89B73D946189EC619D080D209CA52ACD /* Pods-CraveWatch Watch App-CraveWatch Watch AppUITests.release.xcconfig */,
+			);
+			name = "Pods-CraveWatch Watch App-CraveWatch Watch AppUITests";
+			path = "Target Support Files/Pods-CraveWatch Watch App-CraveWatch Watch AppUITests";
+			sourceTree = "<group>";
+		};
+		4FC190C7FCBCE8C02251B2FBF74A392B /* watchOS */ = {
+			isa = PBXGroup;
+			children = (
+				DB73CB01FB873488716459ABDC9E0BCF /* Foundation.framework */,
+			);
+			name = watchOS;
+			sourceTree = "<group>";
+		};
+		58199AB2FDAA345E98F7888EB6332D03 /* Pods-CraveVisionTests */ = {
+			isa = PBXGroup;
+			children = (
+				E1880338F9600A3F8F52A9F077660D24 /* Pods-CraveVisionTests.modulemap */,
+				EA60A4F399DB2D4E61D94D2ADBA4DA74 /* Pods-CraveVisionTests-acknowledgements.markdown */,
+				D6716FCC0CA3E342E96BBE3E6A1D890E /* Pods-CraveVisionTests-acknowledgements.plist */,
+				B7087CB0351CAD48DBE9B985BB7B5543 /* Pods-CraveVisionTests-dummy.m */,
+				CA06CA136D751B600EC783C649277B76 /* Pods-CraveVisionTests-Info.plist */,
+				18AB5EACBDA41825F1ED720C3DA3B89A /* Pods-CraveVisionTests-umbrella.h */,
+				8EE59D44669F4EE21A4F1177DECDDB36 /* Pods-CraveVisionTests.debug.xcconfig */,
+				4DB244C487E906DE1823A69B18BD9E04 /* Pods-CraveVisionTests.release.xcconfig */,
+			);
+			name = "Pods-CraveVisionTests";
+			path = "Target Support Files/Pods-CraveVisionTests";
+			sourceTree = "<group>";
+		};
+		8FA3A114E3533B44335208C7C5A77BDC /* Pods-CravePhone-CravePhoneUITests */ = {
+			isa = PBXGroup;
+			children = (
+				9ECD02B376D4B345DD6EFF92F172DEEF /* Pods-CravePhone-CravePhoneUITests.modulemap */,
+				203CA17060BF4345DD01BB94256202CB /* Pods-CravePhone-CravePhoneUITests-acknowledgements.markdown */,
+				3CF1490D23E068165863CF5981BB10FB /* Pods-CravePhone-CravePhoneUITests-acknowledgements.plist */,
+				851A667AB3494186DBA35940B0831C73 /* Pods-CravePhone-CravePhoneUITests-dummy.m */,
+				3CBAD66D6F84345199550F158CA704A4 /* Pods-CravePhone-CravePhoneUITests-Info.plist */,
+				43B1F7E524BAA680B571E55FE3865105 /* Pods-CravePhone-CravePhoneUITests-umbrella.h */,
+				071D4ED298066D6BCE900E34261E5156 /* Pods-CravePhone-CravePhoneUITests.debug.xcconfig */,
+				63CE7B22431CD7F82DF1F1AE77943A76 /* Pods-CravePhone-CravePhoneUITests.release.xcconfig */,
+			);
+			name = "Pods-CravePhone-CravePhoneUITests";
+			path = "Target Support Files/Pods-CravePhone-CravePhoneUITests";
+			sourceTree = "<group>";
+		};
+		9FA94A79A51D8283A5CCF860780B5354 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EB0F0435316749264FA64C5A08408E76 /* iOS */,
+				1B83CE2640AA24062811BC1075449CB7 /* visionOS */,
+				4FC190C7FCBCE8C02251B2FBF74A392B /* watchOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A5A42A085CDBD341B5B29CCD54A08D30 /* Pods-CraveWatch Watch AppTests */ = {
+			isa = PBXGroup;
+			children = (
+				20C76C37898014F896B1171EDE4AC0C7 /* Pods-CraveWatch Watch AppTests.modulemap */,
+				AC7987998334D5354DB8F2B06B6E4307 /* Pods-CraveWatch Watch AppTests-acknowledgements.markdown */,
+				F26C92F39303F8BF9F20EE9D8B6FA537 /* Pods-CraveWatch Watch AppTests-acknowledgements.plist */,
+				B2A0B86C0F8302E3282AC5D6B5BD6BF5 /* Pods-CraveWatch Watch AppTests-dummy.m */,
+				54D04978294D6B92982CBBBFCEC654E6 /* Pods-CraveWatch Watch AppTests-Info.plist */,
+				8BB30590C398B888F13EECC785DB0627 /* Pods-CraveWatch Watch AppTests-umbrella.h */,
+				991235A4F7E4D5649B486992E7D19361 /* Pods-CraveWatch Watch AppTests.debug.xcconfig */,
+				63FB2C2099175EEC542E89031A5090DC /* Pods-CraveWatch Watch AppTests.release.xcconfig */,
+			);
+			name = "Pods-CraveWatch Watch AppTests";
+			path = "Target Support Files/Pods-CraveWatch Watch AppTests";
+			sourceTree = "<group>";
+		};
+		ACFB68032AB21956F3E00CF3AFB05723 /* Pods-CraveVision */ = {
+			isa = PBXGroup;
+			children = (
+				868B5E959FB810B8B59B7308719288D7 /* Pods-CraveVision.modulemap */,
+				6970B8AA43747AAF9C2093D754177518 /* Pods-CraveVision-acknowledgements.markdown */,
+				30E834A004B245E50E990DF66A94A65B /* Pods-CraveVision-acknowledgements.plist */,
+				2024DF73C1B46E9A32E796B2D2B3D80D /* Pods-CraveVision-dummy.m */,
+				12BC536A1B1D78179B90E03319AA5AA1 /* Pods-CraveVision-Info.plist */,
+				14D1583BC914F1C95CAF61169A77F9D5 /* Pods-CraveVision-umbrella.h */,
+				6E195C560360ACD19A3139498D763A84 /* Pods-CraveVision.debug.xcconfig */,
+				F91FF3CF857ADAA904EAE6790594E007 /* Pods-CraveVision.release.xcconfig */,
+			);
+			name = "Pods-CraveVision";
+			path = "Target Support Files/Pods-CraveVision";
+			sourceTree = "<group>";
+		};
+		AFB1449577328B50B9E6F9744ABC7C05 /* Pods-CravePhone */ = {
+			isa = PBXGroup;
+			children = (
+				0B00509375F2A97A130819E5A7723ED9 /* Pods-CravePhone.modulemap */,
+				BF7437345E36B74AD18165ADA1845E5D /* Pods-CravePhone-acknowledgements.markdown */,
+				35E2CCE2F45D584A39C94E991312DB17 /* Pods-CravePhone-acknowledgements.plist */,
+				37F1007A508BDD28EA78824FC39ABC7B /* Pods-CravePhone-dummy.m */,
+				EA4E943C6BCB434FC8BC15E3BECA92C5 /* Pods-CravePhone-Info.plist */,
+				6EF4CECF4E1DC2BF5DA5607587556299 /* Pods-CravePhone-umbrella.h */,
+				E14AE6A395F9EBFE24CC282F550C01C4 /* Pods-CravePhone.debug.xcconfig */,
+				95C34DBBD1B880BDFF8658A034B69FCF /* Pods-CravePhone.release.xcconfig */,
+			);
+			name = "Pods-CravePhone";
+			path = "Target Support Files/Pods-CravePhone";
+			sourceTree = "<group>";
+		};
+		B728D601D76043388F4605D7FF829353 /* Pods-CraveWatch Watch App */ = {
+			isa = PBXGroup;
+			children = (
+				F2D7EEDB290B74994E7FA3E7FD218E9F /* Pods-CraveWatch Watch App.modulemap */,
+				AB1A7D64057D4B05723AB937DEBDF60A /* Pods-CraveWatch Watch App-acknowledgements.markdown */,
+				6A01F376D4DDB38B78449B9CDBC49818 /* Pods-CraveWatch Watch App-acknowledgements.plist */,
+				4E20E332BDDA08DA7178969AE9B3C59B /* Pods-CraveWatch Watch App-dummy.m */,
+				B3F56298B30CAF7BF73E01DB4D607C35 /* Pods-CraveWatch Watch App-Info.plist */,
+				1C5A445A876CFAE0F8C3663C33780E9E /* Pods-CraveWatch Watch App-umbrella.h */,
+				22064DA950B20DD728DCD56EF4C443E3 /* Pods-CraveWatch Watch App.debug.xcconfig */,
+				A4FBAF44673B4FCB8B35D8EA04A11C39 /* Pods-CraveWatch Watch App.release.xcconfig */,
+			);
+			name = "Pods-CraveWatch Watch App";
+			path = "Target Support Files/Pods-CraveWatch Watch App";
+			sourceTree = "<group>";
+		};
+		CF1408CF629C7361332E53B88F7BD30C = {
+			isa = PBXGroup;
+			children = (
+				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
+				9FA94A79A51D8283A5CCF860780B5354 /* Frameworks */,
+				D0646AF027E23CE85BC8D2BDF6B0E22B /* Products */,
+				E8DDC1D51781A6B3D6E89CD8FE305C21 /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		D0646AF027E23CE85BC8D2BDF6B0E22B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				00AB5AFAA58D034552E674D0353739C2 /* Pods-CravePhone */,
+				AACA1F59F90FB24D2B0F8F56ABE463FC /* Pods-CravePhone-CravePhoneUITests */,
+				772E21BF71743F3F08BC5DBD8A0B7BA2 /* Pods-CravePhoneTests */,
+				DDD6E529A0611F44E5E21459B3CADB66 /* Pods-CraveVision */,
+				70455E0404FCCC70C02869CED6EC118A /* Pods-CraveVisionTests */,
+				6EFF27C8076FBEF222C7A85C4D0BEEDE /* Pods-CraveWatch Watch App */,
+				C2F218CEA7C2BBC9F986068598B8B912 /* Pods-CraveWatch Watch App-CraveWatch Watch AppUITests */,
+				636E26E2B759682B7194035504BEF463 /* Pods-CraveWatch Watch AppTests */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E8DDC1D51781A6B3D6E89CD8FE305C21 /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				AFB1449577328B50B9E6F9744ABC7C05 /* Pods-CravePhone */,
+				8FA3A114E3533B44335208C7C5A77BDC /* Pods-CravePhone-CravePhoneUITests */,
+				270A0138543CB363E2211410E264C9B4 /* Pods-CravePhoneTests */,
+				ACFB68032AB21956F3E00CF3AFB05723 /* Pods-CraveVision */,
+				58199AB2FDAA345E98F7888EB6332D03 /* Pods-CraveVisionTests */,
+				B728D601D76043388F4605D7FF829353 /* Pods-CraveWatch Watch App */,
+				3C1D79AA4B2AA38805FC89643ED1637F /* Pods-CraveWatch Watch App-CraveWatch Watch AppUITests */,
+				A5A42A085CDBD341B5B29CCD54A08D30 /* Pods-CraveWatch Watch AppTests */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		EB0F0435316749264FA64C5A08408E76 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				5297C841B5962873C89DBA63396D0BF0 /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		184B1BC5AAA5B46A53842A43C2278275 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				715CC6EB439484215F70F220CC487D7A /* Pods-CraveWatch Watch App-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2B678DA1365E8B4A54894E4EAA10613D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8C41F4133E4ECC4E4A0E76F61AD53D3C /* Pods-CravePhone-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4DDC8A90641D5D49962B2AAF9957E765 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				869E4CD1579F9DE7FBC54220A533E604 /* Pods-CraveWatch Watch AppTests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		503CB8AD8C59451F755D955764EFE661 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				56A5C0366DBFDFF22F38AF9FDCCE1415 /* Pods-CraveVision-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9ECE0DC17A3C29434DB18C2F99F14083 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FFA1AF9C0505468A510E2D51E91E1E08 /* Pods-CravePhoneTests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC117843B79E2B38AFC3B18D9E820F15 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0A3FFD7F261FE98E02ADAA4F6F4B2DF3 /* Pods-CravePhone-CravePhoneUITests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E3BE7F5A448D31AAAF3699C4B478CB88 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				244BA2882F3899AB5752BC65F23871BC /* Pods-CraveWatch Watch App-CraveWatch Watch AppUITests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F0810BDD38F231D37254B2D82AEA3A23 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F67F82E8A9A0D48BE84454B10948964D /* Pods-CraveVisionTests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		397F69F0FBB0D6D5C6AC227DF4453A88 /* Pods-CraveVisionTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E07E37A96848F6C25B005F158DE4833E /* Build configuration list for PBXNativeTarget "Pods-CraveVisionTests" */;
+			buildPhases = (
+				F0810BDD38F231D37254B2D82AEA3A23 /* Headers */,
+				31205F43663D3602700070783B51E990 /* Sources */,
+				DC149DA5DBFFDC87044A14C798AE56DE /* Frameworks */,
+				FC88B9A7B5954B94706A3D7B909DAE98 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9AAE5E8A26EE132637F8D53A741140A8 /* PBXTargetDependency */,
+			);
+			name = "Pods-CraveVisionTests";
+			productName = Pods_CraveVisionTests;
+			productReference = 70455E0404FCCC70C02869CED6EC118A /* Pods-CraveVisionTests */;
+			productType = "com.apple.product-type.framework";
+		};
+		9B0339273F726E36067E151A14F54919 /* Pods-CraveWatch Watch App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1D00D05382F01647C5395A25D1297984 /* Build configuration list for PBXNativeTarget "Pods-CraveWatch Watch App" */;
+			buildPhases = (
+				184B1BC5AAA5B46A53842A43C2278275 /* Headers */,
+				47897AE0E172766397809A8689C87705 /* Sources */,
+				E9134A9FFFD1429C1C2FCF82439EBD30 /* Frameworks */,
+				B6D35685849D824FBB8DDAC66248441C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Pods-CraveWatch Watch App";
+			productName = Pods_CraveWatch_Watch_App;
+			productReference = 6EFF27C8076FBEF222C7A85C4D0BEEDE /* Pods-CraveWatch Watch App */;
+			productType = "com.apple.product-type.framework";
+		};
+		9EAC5F7254AFCFE0A31CCC61A3AF4911 /* Pods-CravePhone */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5D76A0887474C12B181F9637F209E117 /* Build configuration list for PBXNativeTarget "Pods-CravePhone" */;
+			buildPhases = (
+				2B678DA1365E8B4A54894E4EAA10613D /* Headers */,
+				5BDEA3EE82B0F0F94FCB9818F4D4603A /* Sources */,
+				E182468CEA503D990BBBB01DF92D14AE /* Frameworks */,
+				66025E6A972A56194BD4B8366A53B54B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Pods-CravePhone";
+			productName = Pods_CravePhone;
+			productReference = 00AB5AFAA58D034552E674D0353739C2 /* Pods-CravePhone */;
+			productType = "com.apple.product-type.framework";
+		};
+		AB2E7FFE75CB4CA3D48F7633D81D8B19 /* Pods-CraveWatch Watch AppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3B4564AB11DBE06B936A73163EC9D65E /* Build configuration list for PBXNativeTarget "Pods-CraveWatch Watch AppTests" */;
+			buildPhases = (
+				4DDC8A90641D5D49962B2AAF9957E765 /* Headers */,
+				E4F79A6869EEEE2032DE5C15871CF7A7 /* Sources */,
+				148718ECAE13FEF4755B57B2B329E10E /* Frameworks */,
+				AFC20444DB32911D4A9A0961CCEAC032 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9C729B7C5E1A1F2F2B93992775032826 /* PBXTargetDependency */,
+			);
+			name = "Pods-CraveWatch Watch AppTests";
+			productName = Pods_CraveWatch_Watch_AppTests;
+			productReference = 636E26E2B759682B7194035504BEF463 /* Pods-CraveWatch Watch AppTests */;
+			productType = "com.apple.product-type.framework";
+		};
+		CF7CCCE276B303FDE6484F4D854E09B5 /* Pods-CraveWatch Watch App-CraveWatch Watch AppUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5468DC598E7E31991913643DE1DA7998 /* Build configuration list for PBXNativeTarget "Pods-CraveWatch Watch App-CraveWatch Watch AppUITests" */;
+			buildPhases = (
+				E3BE7F5A448D31AAAF3699C4B478CB88 /* Headers */,
+				B3E68B3AC689255C3DEFE0E83A34747B /* Sources */,
+				E491A605885E7A4ACD798EA89BA39C83 /* Frameworks */,
+				BDB97CEC8E074E745A362399BC6F9DDD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Pods-CraveWatch Watch App-CraveWatch Watch AppUITests";
+			productName = Pods_CraveWatch_Watch_App_CraveWatch_Watch_AppUITests;
+			productReference = C2F218CEA7C2BBC9F986068598B8B912 /* Pods-CraveWatch Watch App-CraveWatch Watch AppUITests */;
+			productType = "com.apple.product-type.framework";
+		};
+		EACC9EE2B8E78D07BB57A2BCB5A0F55D /* Pods-CravePhoneTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 16C0F6278F0E94A0CF71E5EC40D75D12 /* Build configuration list for PBXNativeTarget "Pods-CravePhoneTests" */;
+			buildPhases = (
+				9ECE0DC17A3C29434DB18C2F99F14083 /* Headers */,
+				2BE3A8481DE9C361A8055E69DE010584 /* Sources */,
+				537E6DED9F74D726502013C326B547A2 /* Frameworks */,
+				542A5B750DC6C01B06D06F8E3C045DBC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6B5EF808388A344B58C9A982E62B6376 /* PBXTargetDependency */,
+			);
+			name = "Pods-CravePhoneTests";
+			productName = Pods_CravePhoneTests;
+			productReference = 772E21BF71743F3F08BC5DBD8A0B7BA2 /* Pods-CravePhoneTests */;
+			productType = "com.apple.product-type.framework";
+		};
+		EBC7EF158FC48351854EB8D1EC14F4F1 /* Pods-CravePhone-CravePhoneUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6E3AC36D31AFBC757357CCB877A35E86 /* Build configuration list for PBXNativeTarget "Pods-CravePhone-CravePhoneUITests" */;
+			buildPhases = (
+				DC117843B79E2B38AFC3B18D9E820F15 /* Headers */,
+				C548CE3A6E47D418D56A5CA1A6194241 /* Sources */,
+				F79A4E2AA47B2829CD4320C75B48329C /* Frameworks */,
+				9B86661CADE2F9107272CD3654AAF3AD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Pods-CravePhone-CravePhoneUITests";
+			productName = Pods_CravePhone_CravePhoneUITests;
+			productReference = AACA1F59F90FB24D2B0F8F56ABE463FC /* Pods-CravePhone-CravePhoneUITests */;
+			productType = "com.apple.product-type.framework";
+		};
+		FCA252A5CC239474B3B68B505AAC0305 /* Pods-CraveVision */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B40CEBC7836970274A7C81D2781B60A5 /* Build configuration list for PBXNativeTarget "Pods-CraveVision" */;
+			buildPhases = (
+				503CB8AD8C59451F755D955764EFE661 /* Headers */,
+				01282527A375BB5C0095E956E825C36B /* Sources */,
+				07110004611483B00537DFED2461EA8E /* Frameworks */,
+				EDA70B86A51BE184001846A22EB4D157 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Pods-CraveVision";
+			productName = Pods_CraveVision;
+			productReference = DDD6E529A0611F44E5E21459B3CADB66 /* Pods-CraveVision */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BFDFE7DC352907FC980B868725387E98 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 1600;
+			};
+			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
+			compatibilityVersion = "Xcode 16.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
+			minimizedProjectReferenceProxies = 0;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = D0646AF027E23CE85BC8D2BDF6B0E22B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				9EAC5F7254AFCFE0A31CCC61A3AF4911 /* Pods-CravePhone */,
+				EBC7EF158FC48351854EB8D1EC14F4F1 /* Pods-CravePhone-CravePhoneUITests */,
+				EACC9EE2B8E78D07BB57A2BCB5A0F55D /* Pods-CravePhoneTests */,
+				FCA252A5CC239474B3B68B505AAC0305 /* Pods-CraveVision */,
+				397F69F0FBB0D6D5C6AC227DF4453A88 /* Pods-CraveVisionTests */,
+				9B0339273F726E36067E151A14F54919 /* Pods-CraveWatch Watch App */,
+				CF7CCCE276B303FDE6484F4D854E09B5 /* Pods-CraveWatch Watch App-CraveWatch Watch AppUITests */,
+				AB2E7FFE75CB4CA3D48F7633D81D8B19 /* Pods-CraveWatch Watch AppTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		542A5B750DC6C01B06D06F8E3C045DBC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		66025E6A972A56194BD4B8366A53B54B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9B86661CADE2F9107272CD3654AAF3AD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AFC20444DB32911D4A9A0961CCEAC032 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B6D35685849D824FBB8DDAC66248441C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BDB97CEC8E074E745A362399BC6F9DDD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EDA70B86A51BE184001846A22EB4D157 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FC88B9A7B5954B94706A3D7B909DAE98 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		01282527A375BB5C0095E956E825C36B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				122933EA962CF34E2BFB2AE7E0ED132E /* Pods-CraveVision-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2BE3A8481DE9C361A8055E69DE010584 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0A7BAD82E6BD06DD00519E6A24A728A4 /* Pods-CravePhoneTests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		31205F43663D3602700070783B51E990 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EDD219BB1CACE4D91513B555E3A6E140 /* Pods-CraveVisionTests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		47897AE0E172766397809A8689C87705 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				47D61376C79229732F45867B0918DE34 /* Pods-CraveWatch Watch App-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5BDEA3EE82B0F0F94FCB9818F4D4603A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C972D29FC818088DFEDB2E43F9C1B63A /* Pods-CravePhone-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B3E68B3AC689255C3DEFE0E83A34747B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F2F53855FF500E3A7232F10BED144CED /* Pods-CraveWatch Watch App-CraveWatch Watch AppUITests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C548CE3A6E47D418D56A5CA1A6194241 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4546050F457CD7609EF798448EDC89C3 /* Pods-CravePhone-CravePhoneUITests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E4F79A6869EEEE2032DE5C15871CF7A7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A3788ABAFD8F4A106163A030FA0F7D0A /* Pods-CraveWatch Watch AppTests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6B5EF808388A344B58C9A982E62B6376 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Pods-CravePhone";
+			target = 9EAC5F7254AFCFE0A31CCC61A3AF4911 /* Pods-CravePhone */;
+			targetProxy = 6E01E60AE11A99F20E8A38A671AC4DB4 /* PBXContainerItemProxy */;
+		};
+		9AAE5E8A26EE132637F8D53A741140A8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Pods-CraveVision";
+			target = FCA252A5CC239474B3B68B505AAC0305 /* Pods-CraveVision */;
+			targetProxy = 10DFC9992C2EABC421A0BFBBED0D4891 /* PBXContainerItemProxy */;
+		};
+		9C729B7C5E1A1F2F2B93992775032826 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Pods-CraveWatch Watch App";
+			target = 9B0339273F726E36067E151A14F54919 /* Pods-CraveWatch Watch App */;
+			targetProxy = 47791F72A31FF1A09FFD8D367B977DCB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		14349D9F35F27FB69B31E322287737FF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E14AE6A395F9EBFE24CC282F550C01C4 /* Pods-CravePhone.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				INFOPLIST_FILE = "Target Support Files/Pods-CravePhone/Pods-CravePhone-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-CravePhone/Pods-CravePhone.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		1A2FB5A2A712BF0B3CEE3352833A11BF /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 95C34DBBD1B880BDFF8658A034B69FCF /* Pods-CravePhone.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				INFOPLIST_FILE = "Target Support Files/Pods-CravePhone/Pods-CravePhone-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-CravePhone/Pods-CravePhone.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		1D8AFEC547324CA40ABE141694AB9820 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 991235A4F7E4D5649B486992E7D19361 /* Pods-CraveWatch Watch AppTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				INFOPLIST_FILE = "Target Support Files/Pods-CraveWatch Watch AppTests/Pods-CraveWatch Watch AppTests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-CraveWatch Watch AppTests/Pods-CraveWatch Watch AppTests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+				WATCHOS_DEPLOYMENT_TARGET = 11.2;
+			};
+			name = Debug;
+		};
+		3B7C535F00BF4B284FC69CD8350F7FFD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6E195C560360ACD19A3139498D763A84 /* Pods-CraveVision.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				INFOPLIST_FILE = "Target Support Files/Pods-CraveVision/Pods-CraveVision-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-CraveVision/Pods-CraveVision.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = xros;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+				XROS_DEPLOYMENT_TARGET = 2.2;
+			};
+			name = Debug;
+		};
+		40F4F0D6A60D8FE0EEED429545BB29C9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_DEBUG=1",
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				SYMROOT = "${SRCROOT}/../build";
+				WATCHOS_DEPLOYMENT_TARGET = 11.2;
+				XROS_DEPLOYMENT_TARGET = 2.2;
+			};
+			name = Debug;
+		};
+		5DF52143BFEC842B5AB7754A6C505FEB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AB5D494CB93A98F53895B4AEF2C925D3 /* Pods-CraveWatch Watch App-CraveWatch Watch AppUITests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				INFOPLIST_FILE = "Target Support Files/Pods-CraveWatch Watch App-CraveWatch Watch AppUITests/Pods-CraveWatch Watch App-CraveWatch Watch AppUITests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-CraveWatch Watch App-CraveWatch Watch AppUITests/Pods-CraveWatch Watch App-CraveWatch Watch AppUITests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+				WATCHOS_DEPLOYMENT_TARGET = 11.2;
+			};
+			name = Debug;
+		};
+		78EE1D305970731D497FF64D17FB3043 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 22064DA950B20DD728DCD56EF4C443E3 /* Pods-CraveWatch Watch App.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				INFOPLIST_FILE = "Target Support Files/Pods-CraveWatch Watch App/Pods-CraveWatch Watch App-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-CraveWatch Watch App/Pods-CraveWatch Watch App.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+				WATCHOS_DEPLOYMENT_TARGET = 11.2;
+			};
+			name = Debug;
+		};
+		8738FDA1048DF7F221D69D4D3084FF41 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 63CE7B22431CD7F82DF1F1AE77943A76 /* Pods-CravePhone-CravePhoneUITests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				INFOPLIST_FILE = "Target Support Files/Pods-CravePhone-CravePhoneUITests/Pods-CravePhone-CravePhoneUITests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-CravePhone-CravePhoneUITests/Pods-CravePhone-CravePhoneUITests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		8968AE04F4C63CE85A5FA0F84AA83081 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F91FF3CF857ADAA904EAE6790594E007 /* Pods-CraveVision.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				INFOPLIST_FILE = "Target Support Files/Pods-CraveVision/Pods-CraveVision-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-CraveVision/Pods-CraveVision.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = xros;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+				XROS_DEPLOYMENT_TARGET = 2.2;
+			};
+			name = Release;
+		};
+		89CF5E92EFA92ED5447D7569E921B090 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_RELEASE=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				SYMROOT = "${SRCROOT}/../build";
+				WATCHOS_DEPLOYMENT_TARGET = 11.2;
+				XROS_DEPLOYMENT_TARGET = 2.2;
+			};
+			name = Release;
+		};
+		8BC347B1D623EAE87A36E0DC690A66B5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 89B73D946189EC619D080D209CA52ACD /* Pods-CraveWatch Watch App-CraveWatch Watch AppUITests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				INFOPLIST_FILE = "Target Support Files/Pods-CraveWatch Watch App-CraveWatch Watch AppUITests/Pods-CraveWatch Watch App-CraveWatch Watch AppUITests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-CraveWatch Watch App-CraveWatch Watch AppUITests/Pods-CraveWatch Watch App-CraveWatch Watch AppUITests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+				WATCHOS_DEPLOYMENT_TARGET = 11.2;
+			};
+			name = Release;
+		};
+		947FF791DADB81F29FDB5F0F896A007C /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 63FB2C2099175EEC542E89031A5090DC /* Pods-CraveWatch Watch AppTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				INFOPLIST_FILE = "Target Support Files/Pods-CraveWatch Watch AppTests/Pods-CraveWatch Watch AppTests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-CraveWatch Watch AppTests/Pods-CraveWatch Watch AppTests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+				WATCHOS_DEPLOYMENT_TARGET = 11.2;
+			};
+			name = Release;
+		};
+		B6DC1E5F5F202248CFD3A7F8E6173B51 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 071D4ED298066D6BCE900E34261E5156 /* Pods-CravePhone-CravePhoneUITests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				INFOPLIST_FILE = "Target Support Files/Pods-CravePhone-CravePhoneUITests/Pods-CravePhone-CravePhoneUITests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-CravePhone-CravePhoneUITests/Pods-CravePhone-CravePhoneUITests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		C01FE23BC35856EC0C25A8A8D32EC95B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2BEF7647ED12396D24CF8EC25EBCBF70 /* Pods-CravePhoneTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				INFOPLIST_FILE = "Target Support Files/Pods-CravePhoneTests/Pods-CravePhoneTests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-CravePhoneTests/Pods-CravePhoneTests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		D761F8B38BE1BE3A971728D6DA1B6DA0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A4FBAF44673B4FCB8B35D8EA04A11C39 /* Pods-CraveWatch Watch App.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				INFOPLIST_FILE = "Target Support Files/Pods-CraveWatch Watch App/Pods-CraveWatch Watch App-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-CraveWatch Watch App/Pods-CraveWatch Watch App.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+				WATCHOS_DEPLOYMENT_TARGET = 11.2;
+			};
+			name = Release;
+		};
+		E230112797FDAA50322420BF8D1DE8BF /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4DB244C487E906DE1823A69B18BD9E04 /* Pods-CraveVisionTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				INFOPLIST_FILE = "Target Support Files/Pods-CraveVisionTests/Pods-CraveVisionTests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-CraveVisionTests/Pods-CraveVisionTests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = xros;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+				XROS_DEPLOYMENT_TARGET = 2.2;
+			};
+			name = Release;
+		};
+		EF054B40DE525A102D975D1B7A70325E /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 806679C79C13F9F3E616F1FD58F296EC /* Pods-CravePhoneTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				INFOPLIST_FILE = "Target Support Files/Pods-CravePhoneTests/Pods-CravePhoneTests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-CravePhoneTests/Pods-CravePhoneTests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		F7F38C2EEB4278A153A10A194858D8FC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8EE59D44669F4EE21A4F1177DECDDB36 /* Pods-CraveVisionTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				INFOPLIST_FILE = "Target Support Files/Pods-CraveVisionTests/Pods-CraveVisionTests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-CraveVisionTests/Pods-CraveVisionTests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = xros;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+				XROS_DEPLOYMENT_TARGET = 2.2;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		16C0F6278F0E94A0CF71E5EC40D75D12 /* Build configuration list for PBXNativeTarget "Pods-CravePhoneTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FE23BC35856EC0C25A8A8D32EC95B /* Debug */,
+				EF054B40DE525A102D975D1B7A70325E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1D00D05382F01647C5395A25D1297984 /* Build configuration list for PBXNativeTarget "Pods-CraveWatch Watch App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				78EE1D305970731D497FF64D17FB3043 /* Debug */,
+				D761F8B38BE1BE3A971728D6DA1B6DA0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3B4564AB11DBE06B936A73163EC9D65E /* Build configuration list for PBXNativeTarget "Pods-CraveWatch Watch AppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D8AFEC547324CA40ABE141694AB9820 /* Debug */,
+				947FF791DADB81F29FDB5F0F896A007C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				40F4F0D6A60D8FE0EEED429545BB29C9 /* Debug */,
+				89CF5E92EFA92ED5447D7569E921B090 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5468DC598E7E31991913643DE1DA7998 /* Build configuration list for PBXNativeTarget "Pods-CraveWatch Watch App-CraveWatch Watch AppUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5DF52143BFEC842B5AB7754A6C505FEB /* Debug */,
+				8BC347B1D623EAE87A36E0DC690A66B5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5D76A0887474C12B181F9637F209E117 /* Build configuration list for PBXNativeTarget "Pods-CravePhone" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				14349D9F35F27FB69B31E322287737FF /* Debug */,
+				1A2FB5A2A712BF0B3CEE3352833A11BF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6E3AC36D31AFBC757357CCB877A35E86 /* Build configuration list for PBXNativeTarget "Pods-CravePhone-CravePhoneUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B6DC1E5F5F202248CFD3A7F8E6173B51 /* Debug */,
+				8738FDA1048DF7F221D69D4D3084FF41 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B40CEBC7836970274A7C81D2781B60A5 /* Build configuration list for PBXNativeTarget "Pods-CraveVision" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3B7C535F00BF4B284FC69CD8350F7FFD /* Debug */,
+				8968AE04F4C63CE85A5FA0F84AA83081 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E07E37A96848F6C25B005F158DE4833E /* Build configuration list for PBXNativeTarget "Pods-CraveVisionTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F7F38C2EEB4278A153A10A194858D8FC /* Debug */,
+				E230112797FDAA50322420BF8D1DE8BF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+}
