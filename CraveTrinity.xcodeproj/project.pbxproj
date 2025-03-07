@@ -965,7 +965,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/sh\n# Remove extended attributes from Sentry frameworks to avoid sandbox rsync errors.\n\nif [ -d \"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sentry.framework\" ]; then\n  echo \"Removing extended attributes from Sentry.framework...\"\n  xattr -rc \"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sentry.framework\"\nfi\n\nif [ -d \"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SentrySwiftUI.framework\" ]; then\n  echo \"Removing extended attributes from SentrySwiftUI.framework...\"\n  xattr -rc \"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SentrySwiftUI.framework\"\nfi\n";
+			shellScript = "#!/bin/sh\n# Only run the extended attribute removal on device builds.\nif [ \"$PLATFORM_NAME\" = \"iphonesimulator\" ]; then\n  echo \"Skipping extended attribute removal on simulator build.\"\n  exit 0\nfi\n\necho \"Removing extended attributes from Sentry frameworks...\"\nif [ -d \"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sentry.framework\" ]; then\n  xattr -rc \"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sentry.framework\"\nfi\n\nif [ -d \"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SentrySwiftUI.framework\" ]; then\n  xattr -rc \"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SentrySwiftUI.framework\"\nfi\n";
 		};
 		7CD2336C551D2E5D44DD0622 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
