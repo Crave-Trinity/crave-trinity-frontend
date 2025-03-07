@@ -1,21 +1,18 @@
 //
-//  ViewModifiers.swift
-//  CravePhone
+// ViewModifiers.swift
+// /CravePhone/Presentation/Common/DesignSystem/Components/ViewModifiers.swift
 //
-//  RESPONSIBILITY:
-//    - Houses shared view modifiers.
-//    - Example here: clearing the TextEditor background for iOS < 16.
-//
-
+// Revised for consistency. This file provides custom view modifiers with no font changes,
+// but now uses clear header documentation and adheres to our global styling approach.
 import SwiftUI
 
 struct ScrollBackgroundClearModifier: ViewModifier {
     func body(content: Content) -> some View {
         if #available(iOS 16.0, *) {
-            // On iOS 16+, we can hide the scroll background natively
+            // On iOS 16+, hide the scroll background natively.
             return AnyView(content.scrollContentBackground(.hidden))
         } else {
-            // For earlier iOS versions, adjust UITextView appearance
+            // For earlier versions, adjust UITextView appearance for consistency.
             return AnyView(
                 content
                     .onAppear {

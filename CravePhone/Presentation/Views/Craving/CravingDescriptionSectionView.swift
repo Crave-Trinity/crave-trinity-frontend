@@ -1,27 +1,24 @@
 //
-//  CravingDescriptionSectionView.swift
-//  CravePhone
+// CravingDescriptionSectionView.swift
+// /CravePhone/Presentation/Views/Craving/CravingDescriptionSectionView.swift
 //
+// Revised for consistent typography and spacing.
+// The section now uses global styles for the title, text editor, and character counter.
 import SwiftUI
 
 struct CravingDescriptionSectionView: View {
     @Binding var text: String
-
-    // This must be a FocusState.Binding<Bool>,
-    // which can be passed to .focused(...)
     @FocusState.Binding var isFocused: Bool
-
+    
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            // CHANGED: Now uses .heading to match "Craving Logs" & "Analytics"
+        VStack(alignment: .leading, spacing: CraveTheme.Spacing.medium) {
+            // Section title using the global heading style.
             Text("🍫 What are you craving?")
                 .font(CraveTheme.Typography.heading)
                 .foregroundColor(CraveTheme.Colors.primaryText)
-
+            // Custom text editor.
             CraveTextEditor(text: $text)
-                // Tie the editor focus to this parent's focus binding
                 .focused($isFocused)
-                // Let the user tap the text area to become focused
                 .onTapGesture {
                     isFocused = true
                 }
@@ -29,17 +26,17 @@ struct CravingDescriptionSectionView: View {
             
             HStack {
                 Spacer()
+                // Character count using the global caption style.
                 Text("\(text.count)/300")
-                    .font(.system(size: 12))
+                    .font(CraveTheme.Typography.caption)
                     .foregroundColor(
                         text.count > 280 ? .red :
                         text.count > 250 ? .orange :
                         CraveTheme.Colors.secondaryText
                     )
-                    .padding(.trailing, 8)
+                    .padding(.trailing, CraveTheme.Spacing.small)
             }
         }
-        .padding(.vertical, 8)
+        .padding(.vertical, CraveTheme.Spacing.medium)
     }
 }
-

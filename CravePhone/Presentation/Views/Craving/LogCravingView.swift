@@ -1,45 +1,36 @@
 //
-//  LogCravingView.swift
-//  CravePhone
+// LogCravingView.swift
+// /CravePhone/Presentation/Views/Craving/LogCravingView.swift
 //
-//  RESPONSIBILITY:
-//   - Presents the "Log Craving" screen with description, sliders, and emotion chips.
-//   - Allows toggling speech recognition via a button.
-//   - Validates inputs and shows alerts as needed.
-//
-
+// Revised for consistent styling and typography.
+// Uses CraveTheme's global design system for spacing, fonts, and corner radii.
 import SwiftUI
 
 public struct LogCravingView: View {
     @ObservedObject var viewModel: LogCravingViewModel
-    
-    // Control keyboard focus on the description field
     @FocusState private var isDescriptionFocused: Bool
-    
-    // Track submission state
     @State private var isSubmitting = false
-
+    
     public init(viewModel: LogCravingViewModel) {
         self.viewModel = viewModel
     }
-
+    
     public var body: some View {
         ZStack {
-            // Background gradient that dismisses keyboard on tap
+            // Background gradient that dismisses the keyboard on tap.
             CraveTheme.Colors.primaryGradient
                 .ignoresSafeArea()
                 .onTapGesture { isDescriptionFocused = false }
             
             ScrollView {
-                VStack(alignment: .leading, spacing: 24) {
-                    
-                    // Description text area
+                VStack(alignment: .leading, spacing: CraveTheme.Spacing.large) {
+                    // Description section.
                     CravingDescriptionSectionView(
                         text: $viewModel.cravingDescription,
                         isFocused: $isDescriptionFocused
                     )
                     
-                    // Speech toggle button – uses view model’s isRecordingSpeech and toggleSpeechRecognition()
+                    // Speech toggle button.
                     CraveSpeechToggleButton(
                         isRecording: viewModel.isRecordingSpeech,
                         onToggle: {
@@ -48,13 +39,13 @@ public struct LogCravingView: View {
                         }
                     )
                     
-                    // Sliders for intensity & resistance
+                    // Intensity and resistance sliders.
                     CravingSlidersSectionView(
                         cravingStrength: $viewModel.cravingStrength,
                         resistance: $viewModel.confidenceToResist
                     )
                     
-                    // Emotion chips view – now calls toggleEmotion(_:)
+                    // Emotion chips view.
                     CravingEmotionChipsView(
                         selectedEmotions: viewModel.selectedEmotions,
                         onToggleEmotion: { emotion in
@@ -63,29 +54,28 @@ public struct LogCravingView: View {
                         }
                     )
                     
-                    // Submit button
+                    // Submit button.
                     submitButton
                 }
-                .padding()
+                .padding(CraveTheme.Spacing.medium)
             }
         }
         .toolbar {
-            // Keyboard toolbar with a "Done" button
+            // Keyboard toolbar with a "Done" button.
             ToolbarItemGroup(placement: .keyboard) {
                 Spacer()
                 Button("Done") { isDescriptionFocused = false }
             }
         }
-        // Alert for success/error messages
         .alert(item: $viewModel.alertInfo) { info in
             Alert(
-                title: Text(info.title),
-                message: Text(info.message),
-                dismissButton: .default(Text("OK"))
+                title: Text(info.title).font(CraveTheme.Typography.heading),
+                message: Text(info.message).font(CraveTheme.Typography.body),
+                dismissButton: .default(Text("OK").font(CraveTheme.Typography.subheading))
             )
         }
     }
-
+    
     // MARK: - Submit Button
     private var submitButton: some View {
         Button {
@@ -94,19 +84,20 @@ public struct LogCravingView: View {
             HStack {
                 if isSubmitting {
                     ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                        .padding(.trailing, 6)
+                        .progressViewStyle(CircularProgressViewStyle(tint: CraveTheme.Colors.buttonText))
+                        .padding(.trailing, CraveTheme.Spacing.small)
                 }
                 Text(isSubmitting ? "Saving..." : "Log Craving")
+                    .font(CraveTheme.Typography.heading)
             }
             .frame(maxWidth: .infinity)
-            .padding()
-            .background(Color.blue.cornerRadius(8))
-            .foregroundColor(.white)
+            .padding(CraveTheme.Spacing.medium)
+            .background(Color.blue.cornerRadius(CraveTheme.Layout.cornerRadius))
+            .foregroundColor(CraveTheme.Colors.buttonText)
         }
         .disabled(isSubmitting || !viewModel.isValid)
     }
-
+    
     // MARK: - Submit Logic
     private func submitCraving() {
         guard !isSubmitting else { return }

@@ -1,16 +1,10 @@
 //
-//  CraveTheme.swift
-//  CravePhone
+// CraveTheme.swift
+// /CravePhone/Presentation/Common/DesignSystem/Components/CraveTheme.swift
 //
-//  PURPOSE:
-//    - Single source of truth for design (colors, fonts, spacing, layout, animations).
-//
-//  ARCHITECTURE (SOLID):
-//    - Single Responsibility: Styling constants only.
-//
-//  "DESIGNED FOR STEVE JOBS":
-//    - Minimal, consistent naming.
-//
+// Revised for consistent typography and styling across the Log Craving view.
+// This file now provides a single source of truth for fonts, colors, spacing, and layout,
+// including an added caption style for small text elements.
 import SwiftUI
 
 public struct CraveTheme {
@@ -41,14 +35,22 @@ public struct CraveTheme {
     }
     
     public struct Typography {
-        public static let heading           = Font.custom("HelveticaNeue-Bold", size: 20)
-        public static let subheading        = Font.custom("HelveticaNeue-Medium", size: 16)
-        public static let body              = Font.custom("HelveticaNeue", size: 14)
-        public static let largestCraving    = Font.custom("HelveticaNeue-Heavy", size: 24)
+        // Headings for section titles.
+        public static let heading = Font.custom("HelveticaNeue-Bold", size: 20)
+        // Subheadings for labels (e.g. slider labels, chip titles).
+        public static let subheading = Font.custom("HelveticaNeue-Medium", size: 16)
+        // Body text for general content.
+        public static let body = Font.custom("HelveticaNeue", size: 14)
+        // Caption for less prominent details (e.g. character count).
+        public static let caption = Font.custom("HelveticaNeue", size: 12)
+        // For emphasizing large craving values or alerts.
+        public static let largestCraving = Font.custom("HelveticaNeue-Heavy", size: 24)
     }
     
     public struct Spacing {
+        public static let small: CGFloat = 8
         public static let medium: CGFloat = 16
+        public static let large: CGFloat = 24
     }
     
     public struct Layout {
