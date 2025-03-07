@@ -1,13 +1,9 @@
-
 //
 //  CravingMapper.swift
 //  CravePhone
 //
-//  Uncle Bob & Steve Jobs Style:
-//   - Now fully aligns DTO <-> Entity with 'emotions' field.
-//   - Freed from optional checks by giving `emotions` a default in DTO init.
+//  Maps new fields (location, people, trigger) in both directions.
 //
-
 internal struct CravingMapper {
     
     func mapToEntity(_ dto: CravingDTO) -> CravingEntity {
@@ -18,7 +14,10 @@ internal struct CravingMapper {
             confidenceToResist: dto.confidenceToResist,
             emotions: dto.emotions,
             timestamp: dto.timestamp,
-            isArchived: dto.isArchived
+            isArchived: dto.isArchived,
+            location: dto.location,
+            people: dto.people,
+            trigger: dto.trigger
         )
     }
     
@@ -30,13 +29,10 @@ internal struct CravingMapper {
             cravingStrength: entity.cravingStrength,
             timestamp: entity.timestamp,
             isArchived: entity.isArchived,
-            emotions: entity.emotions
+            emotions: entity.emotions,
+            location: entity.location,
+            people: entity.people,
+            trigger: entity.trigger
         )
     }
 }
-
-
-
-
-
-

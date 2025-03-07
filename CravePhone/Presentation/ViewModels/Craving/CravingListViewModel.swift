@@ -1,45 +1,48 @@
-
-/* -----------------------------------------
-   CravingListViewModel.swift
-   ----------------------------------------- */
+//
+//  CravingListViewModel.swift
+//  CravePhone
+//
+//  Manages list retrieval, refreshing, and archiving of cravings.
+//
 import SwiftUI
-import Combine
+import Foundation
 
 @MainActor
-public final class CravingListViewModel: ObservableObject {
-    
-    private let fetchCravingsUseCase: FetchCravingsUseCaseProtocol
-    private let archiveCravingUseCase: ArchiveCravingUseCaseProtocol
-    
-    @Published public private(set) var cravings: [CravingEntity] = []
-    @Published public var alertInfo: AlertInfo?
+public class CravingListViewModel: ObservableObject {
+    @Published public var cravings: [CravingEntity] = []
     @Published public var isLoading: Bool = false
+    @Published public var alertInfo: AlertInfo?
     
-    public init(fetchCravingsUseCase: FetchCravingsUseCaseProtocol,
-                archiveCravingUseCase: ArchiveCravingUseCaseProtocol) {
-        self.fetchCravingsUseCase = fetchCravingsUseCase
-        self.archiveCravingUseCase = archiveCravingUseCase
+    private let cravingRepo: CravingRepository
+    
+    public init(cravingRepo: CravingRepository) {
+        self.cravingRepo = cravingRepo
     }
     
     public func fetchCravings() async {
+        isLoading = true
         do {
-            isLoading = true
-            cravings = try await fetchCravingsUseCase.execute()
+            let activeCravings = try await cravingRepo.fetchActiveCravings()
+            cravings = activeCravings
         } catch {
-            alertInfo = AlertInfo(title: "Error", message: error.localizedDescription)
+            alertInfo = AlertInfo(
+                title: "Error",
+                message: "Failed to fetch cravings: \(error.localizedDescription)"
+            )
         }
         isLoading = false
     }
     
     public func archiveCraving(_ craving: CravingEntity) async {
         do {
-            isLoading = true
-            try await archiveCravingUseCase.execute(craving)
-            await fetchCravings()
+            try await cravingRepo.archiveCraving(craving)
+            // Refresh the local list
+            cravings.removeAll { $0.id == craving.id }
         } catch {
-            alertInfo = AlertInfo(title: "Error", message: error.localizedDescription)
+            alertInfo = AlertInfo(
+                title: "Error",
+                message: "Could not archive craving: \(error.localizedDescription)"
+            )
         }
-        isLoading = false
     }
 }
-

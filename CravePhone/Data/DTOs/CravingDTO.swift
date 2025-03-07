@@ -2,11 +2,8 @@
 //  CravingDTO.swift
 //  CravePhone
 //
-//  Uncle Bob & Steve Jobs Style:
-//   - Added 'emotions' field to match CravingEntity.
-//   - Ensures proper mapping in CravingMapper.
+//  Extended to include location, people, trigger for mapping.
 //
-
 import Foundation
 
 struct CravingDTO {
@@ -17,7 +14,12 @@ struct CravingDTO {
     let timestamp: Date
     let isArchived: Bool
     let emotions: [String]
-
+    
+    // NEW fields
+    let location: String?
+    let people: [String]?
+    let trigger: String?
+    
     init(
         id: UUID,
         text: String,
@@ -25,7 +27,10 @@ struct CravingDTO {
         cravingStrength: Double,
         timestamp: Date,
         isArchived: Bool,
-        emotions: [String] = []
+        emotions: [String] = [],
+        location: String? = nil,
+        people: [String]? = nil,
+        trigger: String? = nil
     ) {
         self.id = id
         self.text = text
@@ -34,5 +39,8 @@ struct CravingDTO {
         self.timestamp = timestamp
         self.isArchived = isArchived
         self.emotions = emotions
+        self.location = location
+        self.people = people
+        self.trigger = trigger
     }
 }

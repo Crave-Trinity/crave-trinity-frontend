@@ -2,8 +2,9 @@
 //  CravingRepositoryImpl.swift
 //  CravePhone
 //
-//  Description:
-//    Uses SwiftData to store/fetch CravingEntity
+//  SwiftData storage implementation.
+//  The new fields (location, people, trigger) are automatically persisted
+//  because CravingEntity is updated with them.
 //
 import SwiftData
 import Foundation
@@ -17,6 +18,7 @@ public final class CravingRepositoryImpl: CravingRepository {
     }
     
     public func addCraving(_ craving: CravingEntity) async throws {
+        // Insert new entity with location/people/trigger included
         modelContext.insert(craving)
         try modelContext.save()
     }

@@ -105,10 +105,7 @@ public final class DependencyContainer: ObservableObject {
     }
     
     func makeCravingListViewModel() -> CravingListViewModel {
-        CravingListViewModel(
-            fetchCravingsUseCase: FetchCravingsUseCase(cravingRepository: cravingRepository),
-            archiveCravingUseCase: ArchiveCravingUseCase(cravingRepository: cravingRepository)
-        )
+        CravingListViewModel(cravingRepo: cravingRepository)
     }
     
     func makeAnalyticsViewModel() -> AnalyticsViewModel {

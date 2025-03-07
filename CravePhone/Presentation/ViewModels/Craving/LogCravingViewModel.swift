@@ -3,20 +3,16 @@
 //  CravePhone
 //
 //  Uncle Bob: A ViewModel should contain presentation logic and mediate
-//  between the View (UI) and the Domain/UseCase layers. It does not handle
-//  direct data persistence; it delegates to repositories or use cases.
-//  Keep responsibilities clear and minimal.
+//  between the View and the Domain/UseCase layers.
 //
 import SwiftUI
 import Foundation
+
 @MainActor
 public final class LogCravingViewModel: ObservableObject {
     // MARK: - Dependencies
     private let cravingRepo: CravingRepository
-    
-    // Changed from AnalyticsRepositoryProtocol to AnalyticsRepository
     private let analyticsRepo: AnalyticsRepository
-    
     private let speechService: SpeechToTextServiceProtocol
     
     // MARK: - User Input Properties
@@ -24,6 +20,11 @@ public final class LogCravingViewModel: ObservableObject {
     @Published public var cravingStrength: Double = 5
     @Published public var confidenceToResist: Double = 5
     @Published public var selectedEmotions: Set<String> = []
+    
+    // NEW fields for location, people, trigger
+    @Published public var selectedLocation: String? = nil
+    @Published public var selectedPeople: [String] = []
+    @Published public var triggerDescription: String = ""
     
     // MARK: - UI State
     @Published public var isLoading: Bool = false
@@ -46,46 +47,42 @@ public final class LogCravingViewModel: ObservableObject {
         }
     }
     
-    // MARK: - Public Methods
-    
-    /// Logs a new craving by:
-    /// 1) Persisting a CravingEntity to the local repository,
-    /// 2) Persisting an Analytics event for that craving,
-    /// 3) Providing user feedback via an alert,
-    /// 4) Resetting the form fields.
+    // MARK: - Logging
     public func logCraving() async {
         isLoading = true
         
         let entity = CravingEntity(
+            id: UUID(),
             cravingDescription: cravingDescription,
             cravingStrength: cravingStrength,
             confidenceToResist: confidenceToResist,
             emotions: Array(selectedEmotions),
             timestamp: Date(),
-            isArchived: false
+            isArchived: false,
+            // NEW
+            location: selectedLocation,
+            people: selectedPeople,
+            trigger: triggerDescription
         )
         
         do {
             // Save the new craving
             try await cravingRepo.addCraving(entity)
             
-            // Save an analytics event capturing this craving log
+            // Save analytics event
             try await analyticsRepo.storeCravingEvent(from: entity)
             
-            // Provide success feedback
+            // Success feedback
             alertInfo = AlertInfo(title: "Success", message: "Craving logged successfully!")
-            
-            // Reset for next input
             resetForm()
         } catch {
-            // Display any errors
             alertInfo = AlertInfo(title: "Error", message: error.localizedDescription)
         }
         
         isLoading = false
     }
     
-    /// Toggles speech recognition on/off using the injected speech service.
+    // MARK: - Speech
     public func toggleSpeechRecognition() {
         if isRecordingSpeech {
             speechService.stopRecording()
@@ -100,7 +97,7 @@ public final class LogCravingViewModel: ObservableObject {
         }
     }
     
-    /// Toggle a specific emotion in the selectedEmotions set.
+    // MARK: - Emotions/Moods
     public func toggleEmotion(_ emotion: String) {
         if selectedEmotions.contains(emotion) {
             selectedEmotions.remove(emotion)
@@ -109,19 +106,20 @@ public final class LogCravingViewModel: ObservableObject {
         }
     }
     
-    /// A convenient property to validate whether the form can be submitted.
+    // MARK: - Validation
     public var isValid: Bool {
         !cravingDescription.isEmpty && cravingStrength > 0
     }
     
     // MARK: - Private Helpers
-    
-    /// Clears input fields after a successful submission.
     private func resetForm() {
         cravingDescription = ""
         cravingStrength = 5
         confidenceToResist = 5
         selectedEmotions.removeAll()
+        // New fields
+        selectedLocation = nil
+        selectedPeople.removeAll()
+        triggerDescription = ""
     }
 }
-

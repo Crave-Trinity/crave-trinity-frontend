@@ -2,9 +2,8 @@
 //  CravingEntity.swift
 //  CravePhone
 //
-//  Uncle Bob & Steve Jobs: Single responsibility, single definition.
+//  Adds location, people, trigger fields to the model.
 //
-
 import SwiftData
 import Foundation
 
@@ -17,7 +16,12 @@ public final class CravingEntity {
     public var emotions: [String]
     public var timestamp: Date
     public var isArchived: Bool
-
+    
+    // NEW fields
+    public var location: String?
+    public var people: [String]?
+    public var trigger: String?
+    
     public init(
         id: UUID = UUID(),
         cravingDescription: String,
@@ -25,7 +29,11 @@ public final class CravingEntity {
         confidenceToResist: Double,
         emotions: [String],
         timestamp: Date,
-        isArchived: Bool
+        isArchived: Bool,
+        // Add new fields to initializer
+        location: String? = nil,
+        people: [String]? = nil,
+        trigger: String? = nil
     ) {
         self.id = id
         self.cravingDescription = cravingDescription
@@ -34,5 +42,8 @@ public final class CravingEntity {
         self.emotions = emotions
         self.timestamp = timestamp
         self.isArchived = isArchived
+        self.location = location
+        self.people = people
+        self.trigger = trigger
     }
 }
