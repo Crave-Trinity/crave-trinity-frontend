@@ -29,7 +29,6 @@
 //  - Injects dependencies.
 //  - Uses TabView with CravingLogView as root.
 //
-//  (C) 2030 – Uncle Bob & Steve Jobs Approved
 //
 
 import SwiftUI

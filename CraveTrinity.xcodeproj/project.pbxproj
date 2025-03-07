@@ -9,7 +9,15 @@
 /* Begin PBXBuildFile section */
 		28A3F8EC2D65973500D8DE44 /* CraveWatch Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 28A3F8C92D65973300D8DE44 /* CraveWatch Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		28A3F90A2D65978500D8DE44 /* RealityKitContent in Frameworks */ = {isa = PBXBuildFile; productRef = 28A3F9092D65978500D8DE44 /* RealityKitContent */; };
+		68816690FB3DF3FA7456780E /* Pods_CraveWatch_Watch_AppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3738A647E0A1435A64D767E6 /* Pods_CraveWatch_Watch_AppUITests.framework */; };
+		6C8D47120020512B3593B031 /* Pods_CravePhoneTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B000F8BBB3388EF7606E3061 /* Pods_CravePhoneTests.framework */; };
 		715CE4B82D78F9AE0008EE44 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 715CE4B72D78F9AE0008EE44 /* GoogleSignIn */; };
+		7526C5B5BF41CC8C8A43E481 /* Pods_CravePhone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 972ECF6DBD69D9508457275F /* Pods_CravePhone.framework */; };
+		89FE84F9886A789A1FC13478 /* Pods_CraveVisionTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EC2C432096AFD77A4CE6C66 /* Pods_CraveVisionTests.framework */; };
+		A6284081E9E4A6B3C712BFB2 /* Pods_CravePhoneUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE1972E9D106CE635258A87D /* Pods_CravePhoneUITests.framework */; };
+		BD00BE97334A29408F22814C /* Pods_CraveWatch_Watch_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FADDFC0A19A3FC27560382E /* Pods_CraveWatch_Watch_App.framework */; };
+		D1FF7EEAF5DD67935A249777 /* Pods_CraveVision.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0A5BB711A9CAAF469F21711 /* Pods_CraveVision.framework */; };
+		DD78139BEDE05D75B8082FC9 /* Pods_CraveWatch_Watch_AppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A124A2F0272B96898096C937 /* Pods_CraveWatch_Watch_AppTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +80,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0636C0A0E30B35BCD4ABEBC3 /* Pods-CravePhoneUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CravePhoneUITests.release.xcconfig"; path = "Target Support Files/Pods-CravePhoneUITests/Pods-CravePhoneUITests.release.xcconfig"; sourceTree = "<group>"; };
+		0EC2C432096AFD77A4CE6C66 /* Pods_CraveVisionTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CraveVisionTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		23AF5CDB70BB60B996046729 /* Pods-CraveWatch Watch AppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CraveWatch Watch AppTests.release.xcconfig"; path = "Target Support Files/Pods-CraveWatch Watch AppTests/Pods-CraveWatch Watch AppTests.release.xcconfig"; sourceTree = "<group>"; };
 		28A3F8592D65962900D8DE44 /* CravePhone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CravePhone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		28A3F86B2D65962B00D8DE44 /* CravePhoneTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CravePhoneTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		28A3F8752D65962B00D8DE44 /* CravePhoneUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CravePhoneUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -80,6 +91,32 @@
 		28A3F8E22D65973500D8DE44 /* CraveWatch Watch AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "CraveWatch Watch AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		28A3F9052D65978500D8DE44 /* CraveVision.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CraveVision.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		28A3F9192D65978600D8DE44 /* CraveVisionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CraveVisionTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2FADDFC0A19A3FC27560382E /* Pods_CraveWatch_Watch_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CraveWatch_Watch_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3738A647E0A1435A64D767E6 /* Pods_CraveWatch_Watch_AppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CraveWatch_Watch_AppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		47C7B10F6AE8D3ECCC06055E /* Pods-CravePhone-CravePhoneUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CravePhone-CravePhoneUITests.release.xcconfig"; path = "Target Support Files/Pods-CravePhone-CravePhoneUITests/Pods-CravePhone-CravePhoneUITests.release.xcconfig"; sourceTree = "<group>"; };
+		4D3242A316A186BF36B04DFD /* Pods-CraveWatch Watch App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CraveWatch Watch App.debug.xcconfig"; path = "Target Support Files/Pods-CraveWatch Watch App/Pods-CraveWatch Watch App.debug.xcconfig"; sourceTree = "<group>"; };
+		4D984FEBBCEE15B97B259890 /* Pods-CraveWatch Watch AppUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CraveWatch Watch AppUITests.debug.xcconfig"; path = "Target Support Files/Pods-CraveWatch Watch AppUITests/Pods-CraveWatch Watch AppUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		5E7083BC95257F1C27460192 /* Pods-CraveWatch Watch AppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CraveWatch Watch AppUITests.release.xcconfig"; path = "Target Support Files/Pods-CraveWatch Watch AppUITests/Pods-CraveWatch Watch AppUITests.release.xcconfig"; sourceTree = "<group>"; };
+		665B730797D60B410914D2F2 /* Pods-CravePhone.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CravePhone.release.xcconfig"; path = "Target Support Files/Pods-CravePhone/Pods-CravePhone.release.xcconfig"; sourceTree = "<group>"; };
+		67FF8C48895BC2D64A9F52DA /* Pods-CravePhone-CravePhoneUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CravePhone-CravePhoneUITests.debug.xcconfig"; path = "Target Support Files/Pods-CravePhone-CravePhoneUITests/Pods-CravePhone-CravePhoneUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		6E20569D8A72459EABEE6BF9 /* Pods-CravePhoneTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CravePhoneTests.debug.xcconfig"; path = "Target Support Files/Pods-CravePhoneTests/Pods-CravePhoneTests.debug.xcconfig"; sourceTree = "<group>"; };
+		972ECF6DBD69D9508457275F /* Pods_CravePhone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CravePhone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		97FB44C565AB169EA93564BE /* Pods-CravePhoneUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CravePhoneUITests.debug.xcconfig"; path = "Target Support Files/Pods-CravePhoneUITests/Pods-CravePhoneUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		A124A2F0272B96898096C937 /* Pods_CraveWatch_Watch_AppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CraveWatch_Watch_AppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A63ACD7D71A0E792CFE1D442 /* Pods-CraveVision.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CraveVision.debug.xcconfig"; path = "Target Support Files/Pods-CraveVision/Pods-CraveVision.debug.xcconfig"; sourceTree = "<group>"; };
+		A8413A484EEEDC5AA7007D74 /* Pods-CraveWatch Watch App-CraveWatch Watch AppUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CraveWatch Watch App-CraveWatch Watch AppUITests.debug.xcconfig"; path = "Target Support Files/Pods-CraveWatch Watch App-CraveWatch Watch AppUITests/Pods-CraveWatch Watch App-CraveWatch Watch AppUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		B000F8BBB3388EF7606E3061 /* Pods_CravePhoneTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CravePhoneTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C0A5BB711A9CAAF469F21711 /* Pods_CraveVision.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CraveVision.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C16DA68E16161F9574BF4EEB /* Pods-CraveWatch Watch App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CraveWatch Watch App.release.xcconfig"; path = "Target Support Files/Pods-CraveWatch Watch App/Pods-CraveWatch Watch App.release.xcconfig"; sourceTree = "<group>"; };
+		CB95A75FD452410445EE2D48 /* Pods-CravePhoneTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CravePhoneTests.release.xcconfig"; path = "Target Support Files/Pods-CravePhoneTests/Pods-CravePhoneTests.release.xcconfig"; sourceTree = "<group>"; };
+		CDBFC2B3285C7BE331CF47C5 /* Pods-CraveVisionTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CraveVisionTests.debug.xcconfig"; path = "Target Support Files/Pods-CraveVisionTests/Pods-CraveVisionTests.debug.xcconfig"; sourceTree = "<group>"; };
+		CE1972E9D106CE635258A87D /* Pods_CravePhoneUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CravePhoneUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D2793D12D5D98E7C25A6AB37 /* Pods_CraveWatch_Watch_App_CraveWatch_Watch_AppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CraveWatch_Watch_App_CraveWatch_Watch_AppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D85976308965E1B383742750 /* Pods-CraveWatch Watch AppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CraveWatch Watch AppTests.debug.xcconfig"; path = "Target Support Files/Pods-CraveWatch Watch AppTests/Pods-CraveWatch Watch AppTests.debug.xcconfig"; sourceTree = "<group>"; };
+		E9254574CED2A15638FF05C9 /* Pods-CravePhone.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CravePhone.debug.xcconfig"; path = "Target Support Files/Pods-CravePhone/Pods-CravePhone.debug.xcconfig"; sourceTree = "<group>"; };
+		EA190DE167D38847FAB9274F /* Pods-CraveVisionTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CraveVisionTests.release.xcconfig"; path = "Target Support Files/Pods-CraveVisionTests/Pods-CraveVisionTests.release.xcconfig"; sourceTree = "<group>"; };
+		EBDFC46CCDCB5BD9207478CD /* Pods-CraveWatch Watch App-CraveWatch Watch AppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CraveWatch Watch App-CraveWatch Watch AppUITests.release.xcconfig"; path = "Target Support Files/Pods-CraveWatch Watch App-CraveWatch Watch AppUITests/Pods-CraveWatch Watch App-CraveWatch Watch AppUITests.release.xcconfig"; sourceTree = "<group>"; };
+		ED448375F344712A51CB92D7 /* Pods-CraveVision.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CraveVision.release.xcconfig"; path = "Target Support Files/Pods-CraveVision/Pods-CraveVision.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -345,6 +382,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				715CE4B82D78F9AE0008EE44 /* GoogleSignIn in Frameworks */,
+				7526C5B5BF41CC8C8A43E481 /* Pods_CravePhone.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -352,6 +390,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6C8D47120020512B3593B031 /* Pods_CravePhoneTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -359,6 +398,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6284081E9E4A6B3C712BFB2 /* Pods_CravePhoneUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -366,6 +406,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BD00BE97334A29408F22814C /* Pods_CraveWatch_Watch_App.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -373,6 +414,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DD78139BEDE05D75B8082FC9 /* Pods_CraveWatch_Watch_AppTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -380,6 +422,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				68816690FB3DF3FA7456780E /* Pods_CraveWatch_Watch_AppUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -388,6 +431,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				28A3F90A2D65978500D8DE44 /* RealityKitContent in Frameworks */,
+				D1FF7EEAF5DD67935A249777 /* Pods_CraveVision.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -395,6 +439,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89FE84F9886A789A1FC13478 /* Pods_CraveVisionTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -409,6 +454,7 @@
 				28A3F9062D65978500D8DE44 /* CraveVision */,
 				715CE4B62D78F9AE0008EE44 /* Frameworks */,
 				28A3F85A2D65962900D8DE44 /* Products */,
+				8803F7B6CFAB67A7BBF5D394 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -430,8 +476,44 @@
 		715CE4B62D78F9AE0008EE44 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				972ECF6DBD69D9508457275F /* Pods_CravePhone.framework */,
+				B000F8BBB3388EF7606E3061 /* Pods_CravePhoneTests.framework */,
+				C0A5BB711A9CAAF469F21711 /* Pods_CraveVision.framework */,
+				0EC2C432096AFD77A4CE6C66 /* Pods_CraveVisionTests.framework */,
+				2FADDFC0A19A3FC27560382E /* Pods_CraveWatch_Watch_App.framework */,
+				D2793D12D5D98E7C25A6AB37 /* Pods_CraveWatch_Watch_App_CraveWatch_Watch_AppUITests.framework */,
+				A124A2F0272B96898096C937 /* Pods_CraveWatch_Watch_AppTests.framework */,
+				CE1972E9D106CE635258A87D /* Pods_CravePhoneUITests.framework */,
+				3738A647E0A1435A64D767E6 /* Pods_CraveWatch_Watch_AppUITests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8803F7B6CFAB67A7BBF5D394 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				E9254574CED2A15638FF05C9 /* Pods-CravePhone.debug.xcconfig */,
+				665B730797D60B410914D2F2 /* Pods-CravePhone.release.xcconfig */,
+				67FF8C48895BC2D64A9F52DA /* Pods-CravePhone-CravePhoneUITests.debug.xcconfig */,
+				47C7B10F6AE8D3ECCC06055E /* Pods-CravePhone-CravePhoneUITests.release.xcconfig */,
+				6E20569D8A72459EABEE6BF9 /* Pods-CravePhoneTests.debug.xcconfig */,
+				CB95A75FD452410445EE2D48 /* Pods-CravePhoneTests.release.xcconfig */,
+				A63ACD7D71A0E792CFE1D442 /* Pods-CraveVision.debug.xcconfig */,
+				ED448375F344712A51CB92D7 /* Pods-CraveVision.release.xcconfig */,
+				CDBFC2B3285C7BE331CF47C5 /* Pods-CraveVisionTests.debug.xcconfig */,
+				EA190DE167D38847FAB9274F /* Pods-CraveVisionTests.release.xcconfig */,
+				4D3242A316A186BF36B04DFD /* Pods-CraveWatch Watch App.debug.xcconfig */,
+				C16DA68E16161F9574BF4EEB /* Pods-CraveWatch Watch App.release.xcconfig */,
+				A8413A484EEEDC5AA7007D74 /* Pods-CraveWatch Watch App-CraveWatch Watch AppUITests.debug.xcconfig */,
+				EBDFC46CCDCB5BD9207478CD /* Pods-CraveWatch Watch App-CraveWatch Watch AppUITests.release.xcconfig */,
+				D85976308965E1B383742750 /* Pods-CraveWatch Watch AppTests.debug.xcconfig */,
+				23AF5CDB70BB60B996046729 /* Pods-CraveWatch Watch AppTests.release.xcconfig */,
+				97FB44C565AB169EA93564BE /* Pods-CravePhoneUITests.debug.xcconfig */,
+				0636C0A0E30B35BCD4ABEBC3 /* Pods-CravePhoneUITests.release.xcconfig */,
+				4D984FEBBCEE15B97B259890 /* Pods-CraveWatch Watch AppUITests.debug.xcconfig */,
+				5E7083BC95257F1C27460192 /* Pods-CraveWatch Watch AppUITests.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -441,10 +523,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 28A3F87F2D65962B00D8DE44 /* Build configuration list for PBXNativeTarget "CravePhone" */;
 			buildPhases = (
+				116DB8FF2ADE65C95B433116 /* [CP] Check Pods Manifest.lock */,
 				28A3F8552D65962900D8DE44 /* Sources */,
 				28A3F8562D65962900D8DE44 /* Frameworks */,
 				28A3F8572D65962900D8DE44 /* Resources */,
 				28A3F8B32D65968100D8DE44 /* Embed Watch Content */,
+				8A1E38AF00AFA2CEA89E2004 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -466,6 +550,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 28A3F8822D65962B00D8DE44 /* Build configuration list for PBXNativeTarget "CravePhoneTests" */;
 			buildPhases = (
+				0EB21579272F0C69E3C47A77 /* [CP] Check Pods Manifest.lock */,
 				28A3F8672D65962B00D8DE44 /* Sources */,
 				28A3F8682D65962B00D8DE44 /* Frameworks */,
 				28A3F8692D65962B00D8DE44 /* Resources */,
@@ -476,8 +561,6 @@
 				28A3F86D2D65962B00D8DE44 /* PBXTargetDependency */,
 			);
 			name = CravePhoneTests;
-			packageProductDependencies = (
-			);
 			productName = CraveTrinityTests;
 			productReference = 28A3F86B2D65962B00D8DE44 /* CravePhoneTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -486,6 +569,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 28A3F8852D65962B00D8DE44 /* Build configuration list for PBXNativeTarget "CravePhoneUITests" */;
 			buildPhases = (
+				B353B1C8AF519B965ADCDFB3 /* [CP] Check Pods Manifest.lock */,
 				28A3F8712D65962B00D8DE44 /* Sources */,
 				28A3F8722D65962B00D8DE44 /* Frameworks */,
 				28A3F8732D65962B00D8DE44 /* Resources */,
@@ -496,8 +580,6 @@
 				28A3F8772D65962B00D8DE44 /* PBXTargetDependency */,
 			);
 			name = CravePhoneUITests;
-			packageProductDependencies = (
-			);
 			productName = CraveTrinityUITests;
 			productReference = 28A3F8752D65962B00D8DE44 /* CravePhoneUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
@@ -506,6 +588,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 28A3F8ED2D65973500D8DE44 /* Build configuration list for PBXNativeTarget "CraveWatch Watch App" */;
 			buildPhases = (
+				7CD2336C551D2E5D44DD0622 /* [CP] Check Pods Manifest.lock */,
 				28A3F8C52D65973300D8DE44 /* Sources */,
 				28A3F8C62D65973300D8DE44 /* Frameworks */,
 				28A3F8C72D65973300D8DE44 /* Resources */,
@@ -518,8 +601,6 @@
 				28A3F8CA2D65973300D8DE44 /* CraveWatch */,
 			);
 			name = "CraveWatch Watch App";
-			packageProductDependencies = (
-			);
 			productName = "CraveWatch Watch App";
 			productReference = 28A3F8C92D65973300D8DE44 /* CraveWatch Watch App.app */;
 			productType = "com.apple.product-type.application";
@@ -528,6 +609,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 28A3F8F02D65973500D8DE44 /* Build configuration list for PBXNativeTarget "CraveWatch Watch AppTests" */;
 			buildPhases = (
+				304F4BD559C6B8CE6075C77D /* [CP] Check Pods Manifest.lock */,
 				28A3F8D42D65973500D8DE44 /* Sources */,
 				28A3F8D52D65973500D8DE44 /* Frameworks */,
 				28A3F8D62D65973500D8DE44 /* Resources */,
@@ -538,8 +620,6 @@
 				28A3F8DA2D65973500D8DE44 /* PBXTargetDependency */,
 			);
 			name = "CraveWatch Watch AppTests";
-			packageProductDependencies = (
-			);
 			productName = "CraveWatch Watch AppTests";
 			productReference = 28A3F8D82D65973500D8DE44 /* CraveWatch Watch AppTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -548,6 +628,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 28A3F8F32D65973500D8DE44 /* Build configuration list for PBXNativeTarget "CraveWatch Watch AppUITests" */;
 			buildPhases = (
+				55B592A7A7F29583F309F2A7 /* [CP] Check Pods Manifest.lock */,
 				28A3F8DE2D65973500D8DE44 /* Sources */,
 				28A3F8DF2D65973500D8DE44 /* Frameworks */,
 				28A3F8E02D65973500D8DE44 /* Resources */,
@@ -558,8 +639,6 @@
 				28A3F8E42D65973500D8DE44 /* PBXTargetDependency */,
 			);
 			name = "CraveWatch Watch AppUITests";
-			packageProductDependencies = (
-			);
 			productName = "CraveWatch Watch AppUITests";
 			productReference = 28A3F8E22D65973500D8DE44 /* CraveWatch Watch AppUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
@@ -568,6 +647,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 28A3F9202D65978600D8DE44 /* Build configuration list for PBXNativeTarget "CraveVision" */;
 			buildPhases = (
+				09EBEFE10BD21C206D2F6A67 /* [CP] Check Pods Manifest.lock */,
 				28A3F9012D65978500D8DE44 /* Sources */,
 				28A3F9022D65978500D8DE44 /* Frameworks */,
 				28A3F9032D65978500D8DE44 /* Resources */,
@@ -591,6 +671,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 28A3F9232D65978600D8DE44 /* Build configuration list for PBXNativeTarget "CraveVisionTests" */;
 			buildPhases = (
+				14AE368A2CD565317F379242 /* [CP] Check Pods Manifest.lock */,
 				28A3F9152D65978600D8DE44 /* Sources */,
 				28A3F9162D65978600D8DE44 /* Frameworks */,
 				28A3F9172D65978600D8DE44 /* Resources */,
@@ -601,8 +682,6 @@
 				28A3F91B2D65978600D8DE44 /* PBXTargetDependency */,
 			);
 			name = CraveVisionTests;
-			packageProductDependencies = (
-			);
 			productName = CraveVisionTests;
 			productReference = 28A3F9192D65978600D8DE44 /* CraveVisionTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -736,6 +815,202 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		09EBEFE10BD21C206D2F6A67 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CraveVision-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		0EB21579272F0C69E3C47A77 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CravePhoneTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		116DB8FF2ADE65C95B433116 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CravePhone-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		14AE368A2CD565317F379242 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CraveVisionTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		304F4BD559C6B8CE6075C77D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CraveWatch Watch AppTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		55B592A7A7F29583F309F2A7 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CraveWatch Watch AppUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7CD2336C551D2E5D44DD0622 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CraveWatch Watch App-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8A1E38AF00AFA2CEA89E2004 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CravePhone/Pods-CravePhone-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CravePhone/Pods-CravePhone-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CravePhone/Pods-CravePhone-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B353B1C8AF519B965ADCDFB3 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CravePhoneUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		28A3F8552D65962900D8DE44 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -866,7 +1141,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -929,7 +1204,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -950,8 +1225,7 @@
 		};
 		28A3F8802D65962B00D8DE44 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReferenceAnchor = 28A3F85B2D65962900D8DE44 /* CravePhone */;
-			baseConfigurationReferenceRelativePath = PhoneApp/Debug.xcconfig;
+			baseConfigurationReference = E9254574CED2A15638FF05C9 /* Pods-CravePhone.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -961,6 +1235,7 @@
 				DEVELOPMENT_ASSET_PATHS = "'CravePhone/Resources/Preview Content'";
 				DEVELOPMENT_TEAM = HJ7W9PTAD8;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = CravePhone/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
@@ -984,8 +1259,7 @@
 		};
 		28A3F8812D65962B00D8DE44 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReferenceAnchor = 28A3F85B2D65962900D8DE44 /* CravePhone */;
-			baseConfigurationReferenceRelativePath = PhoneApp/Release.xcconfig;
+			baseConfigurationReference = 665B730797D60B410914D2F2 /* Pods-CravePhone.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -995,6 +1269,7 @@
 				DEVELOPMENT_ASSET_PATHS = "'CravePhone/Resources/Preview Content'";
 				DEVELOPMENT_TEAM = HJ7W9PTAD8;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = CravePhone/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
@@ -1018,6 +1293,7 @@
 		};
 		28A3F8832D65962B00D8DE44 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6E20569D8A72459EABEE6BF9 /* Pods-CravePhoneTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -1037,6 +1313,7 @@
 		};
 		28A3F8842D65962B00D8DE44 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CB95A75FD452410445EE2D48 /* Pods-CravePhoneTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -1056,6 +1333,7 @@
 		};
 		28A3F8862D65962B00D8DE44 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 97FB44C565AB169EA93564BE /* Pods-CravePhoneUITests.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1073,6 +1351,7 @@
 		};
 		28A3F8872D65962B00D8DE44 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0636C0A0E30B35BCD4ABEBC3 /* Pods-CravePhoneUITests.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1090,6 +1369,7 @@
 		};
 		28A3F8EE2D65973500D8DE44 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4D3242A316A186BF36B04DFD /* Pods-CraveWatch Watch App.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1120,6 +1400,7 @@
 		};
 		28A3F8EF2D65973500D8DE44 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C16DA68E16161F9574BF4EEB /* Pods-CraveWatch Watch App.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1150,6 +1431,7 @@
 		};
 		28A3F8F12D65973500D8DE44 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D85976308965E1B383742750 /* Pods-CraveWatch Watch AppTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -1170,6 +1452,7 @@
 		};
 		28A3F8F22D65973500D8DE44 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 23AF5CDB70BB60B996046729 /* Pods-CraveWatch Watch AppTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -1190,6 +1473,7 @@
 		};
 		28A3F8F42D65973500D8DE44 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4D984FEBBCEE15B97B259890 /* Pods-CraveWatch Watch AppUITests.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1209,6 +1493,7 @@
 		};
 		28A3F8F52D65973500D8DE44 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5E7083BC95257F1C27460192 /* Pods-CraveWatch Watch AppUITests.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1228,6 +1513,7 @@
 		};
 		28A3F9212D65978600D8DE44 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A63ACD7D71A0E792CFE1D442 /* Pods-CraveVision.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1256,6 +1542,7 @@
 		};
 		28A3F9222D65978600D8DE44 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = ED448375F344712A51CB92D7 /* Pods-CraveVision.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1284,6 +1571,7 @@
 		};
 		28A3F9242D65978600D8DE44 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CDBFC2B3285C7BE331CF47C5 /* Pods-CraveVisionTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -1305,6 +1593,7 @@
 		};
 		28A3F9252D65978600D8DE44 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EA190DE167D38847FAB9274F /* Pods-CraveVisionTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
