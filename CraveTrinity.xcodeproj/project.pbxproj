@@ -529,7 +529,6 @@
 				28A3F8572D65962900D8DE44 /* Resources */,
 				28A3F8B32D65968100D8DE44 /* Embed Watch Content */,
 				8A1E38AF00AFA2CEA89E2004 /* [CP] Embed Pods Frameworks */,
-				714D933B2D7B3B56006DA2AC /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -949,24 +948,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		714D933B2D7B3B56006DA2AC /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "#!/bin/sh\n# Only run the extended attribute removal on device builds.\nif [ \"$PLATFORM_NAME\" = \"iphonesimulator\" ]; then\n  echo \"Skipping extended attribute removal on simulator build.\"\n  exit 0\nfi\n\necho \"Removing extended attributes from Sentry frameworks...\"\nif [ -d \"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sentry.framework\" ]; then\n  xattr -rc \"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sentry.framework\"\nfi\n\nif [ -d \"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SentrySwiftUI.framework\" ]; then\n  xattr -rc \"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SentrySwiftUI.framework\"\nfi\n";
-		};
 		7CD2336C551D2E5D44DD0622 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1160,7 +1141,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1223,7 +1204,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -1254,6 +1235,7 @@
 				DEVELOPMENT_ASSET_PATHS = "'CravePhone/Resources/Preview Content'";
 				DEVELOPMENT_TEAM = HJ7W9PTAD8;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = CravePhone/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
@@ -1287,6 +1269,7 @@
 				DEVELOPMENT_ASSET_PATHS = "'CravePhone/Resources/Preview Content'";
 				DEVELOPMENT_TEAM = HJ7W9PTAD8;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = CravePhone/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
