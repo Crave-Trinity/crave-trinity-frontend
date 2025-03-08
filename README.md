@@ -3,7 +3,7 @@
 **CRAVE-Trinity** is a watchOS/iOS/VisonOS stack built with **SwiftUI**/**SwiftData**, helping you track and manage your cravings through a clean, intuitive interface. Whether it’s late-night snacks or midday munchies, CRAVE ensures you stay in control.
 * 🔗 [Frontend](https://github.com/Crave-Trinity/crave-trinity-frontend) (SwiftUI + SwiftData + MVVM) 
 * 🔗 [Backend](https://github.com/Crave-Trinity/crave-trinity-backend) (FastAPI + PostgreSQL + Pinecone + Llama 2)
-* 🔗 [Back-End Live](https://crave-mvp-backend-production-a001.up.railway.app/docs)
+* 🔗 [Back-End Live](https://crave-mvp-backend-production-a001.up.railway.app/)
 
 <p float="left">
   <img src="https://raw.githubusercontent.com/The-Obstacle-Is-The-Way/crave-trinity/main/CravePhone/Resources/Images/Updated-Final-Gif.gif" width="400" alt="Cravey Watch Demo"/>
@@ -39,7 +39,7 @@ CRAVE is an AI-powered craving analytics system, built to provide personalized b
 * 📌 Feb 19-21: [Crave-Trinity (iOS + Watch + Vision)](https://github.com/The-Obstacle-Is-The-Way/crave-trinity) – Unified codebase, WatchOS Refined UI/UX
 * 📌 Feb 22–23: [CraveWave Backend](https://github.com/Crave-Trinity/crave-trinity-backend) – Backend foundation, iOS syncing, refined UI/UX 
 * 📌 Feb 23 – Mar 3: Deployed Backend on Railway, Improved Front-end
-* 📌 Mar 3 - Mar 6: Iterate [TestFlight](https://testflight.apple.com/join/Yb1uKZYx); Integrated [Backend Infra](https://crave-mvp-backend-production-a001.up.railway.app/docs)
+* 📌 Mar 3 - Mar 6: Iterate [TestFlight](https://testflight.apple.com/join/Yb1uKZYx); Integrated [Backend Infra](https://crave-mvp-backend-production-a001.up.railway.app/)
 
 ---
 
