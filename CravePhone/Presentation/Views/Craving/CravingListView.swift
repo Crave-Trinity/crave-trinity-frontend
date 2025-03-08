@@ -1,3 +1,4 @@
+
 //
 //  CravingListView.swift
 //  CravePhone
@@ -5,7 +6,6 @@
 //  Shows a list of cravings with filters. The new fields are passed into CravingCard automatically.
 //
 import SwiftUI
-
 struct CravingListView: View {
     @ObservedObject var viewModel: CravingListViewModel
     
@@ -258,3 +258,4 @@ struct CravingListView: View {
         }
     }
 }
+

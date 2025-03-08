@@ -12,7 +12,6 @@
 //  NOTE: You must add 'NSLocationWhenInUseUsageDescription' to Info.plist.
 import SwiftUI
 import CoreLocation
-
 public struct CravingLocationChipsView: View {
     @Binding var selectedLocation: String?
     
@@ -20,11 +19,11 @@ public struct CravingLocationChipsView: View {
     // One special 'Current Location' + other example options with emojis
     private let locationChip = "📍 Current Location"
     private let options: [String] = [
-        "📍 Current Location",
-        "🏠 Home",
-        "🏢 Work",
-        "🎉 Social",
-        "🌲 Outdoors"
+        "📍Current",
+        "🏠Home",
+        "🏢Work",
+        "🎉Social",
+        "🌲Outside"
     ]
     
     // MARK: - Minimal Location Manager (for demo)
@@ -107,7 +106,6 @@ public struct CravingLocationChipsView: View {
         }
     }
 }
-
 // MARK: - LocationFetcher
 // A minimal CoreLocation manager to fetch a single location on demand.
 // In a production app, consider a dedicated location service.
@@ -141,3 +139,4 @@ private class LocationFetcher: NSObject, ObservableObject, CLLocationManagerDele
         completion = nil
     }
 }
+

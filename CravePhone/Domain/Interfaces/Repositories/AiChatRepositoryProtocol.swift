@@ -3,24 +3,16 @@
 
 import Foundation
 
+/// Conforms to DIP (Dependency Inversion Principle) by abstracting the data layer for AI Chat.
 public protocol AiChatRepositoryProtocol {
+    /// Returns a string response from AI given the user's query and a valid auth token.
     func getAiResponse(for userQuery: String, authToken: String) async throws -> String
 }
 
-// MARK: - Chat Data Errors
-public enum ChatDataError: Error, LocalizedError {
-    case noResponse
-    case invalidDataFormat
-    case parsingFailed(String)
-
-    public var errorDescription: String? {
-        switch self {
-        case .noResponse:
-            return "The backend returned an empty message."
-        case .invalidDataFormat:
-            return "The chat response wasn't in the expected format."
-        case .parsingFailed(let details):
-            return "Failed to parse chat data: \(details)"
-        }
-    }
+/// Example error type for AI Chat.
+/// If you already have ChatDataError defined somewhere else, remove or rename one.
+public enum ChatDataError: Error {
+    case invalidToken
+    case serverError(String)
+    case unknown
 }

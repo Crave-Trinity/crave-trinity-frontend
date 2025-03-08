@@ -1,3 +1,4 @@
+
 //
 //  CravingCard.swift
 //  CravePhone
@@ -6,7 +7,6 @@
 //  Renamed "Emotions" label to "Mood" for clarity.
 //
 import SwiftUI
-
 public struct CravingCard: View {
     private let craving: CravingEntity
     private let isFeatured: Bool
@@ -283,3 +283,4 @@ public struct CravingCard: View {
         }
     }
 }
+

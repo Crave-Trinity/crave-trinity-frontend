@@ -11,7 +11,6 @@
 //  LAST UPDATED: <today's date>
 //
 import SwiftUI
-
 @MainActor
 public struct CoordinatorHostView: View {
     @StateObject private var coordinator: AppCoordinator

@@ -205,6 +205,7 @@
 				Presentation/Common/DesignSystem/CraveTheme.swift = (ios, );
 				"Presentation/Common/Extensions/AnalyticsDashboardView+TimeFrameConversion.swift" = (ios, );
 				"Presentation/Common/Extensions/Date+Extensions.swift" = (ios, );
+				"Presentation/Common/Extensions/DependencyContainer+Preview.swift" = (ios, );
 				"Presentation/Common/Extensions/View+Extensions.swift" = (ios, );
 				Presentation/Common/SafeAreaInsetsEnvironment.swift = (ios, );
 				"Presentation/Configuration/AnalyticsConfiguration+Defaults.swift" = (ios, );
