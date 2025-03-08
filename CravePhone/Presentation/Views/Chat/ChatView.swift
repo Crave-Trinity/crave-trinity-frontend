@@ -1,11 +1,5 @@
-//
-//  ChatView.swift
-//  CravePhone/Presentation/Views/Chat
-//
-//  PURPOSE:
-//   - Shows the chat messages & text input box
-//   - Has a "Get Test Token" button for dev usage
-//
+// DIRECTORY/FILENAME: CravePhone/Presentation/Views/Chat/ChatView.swift
+// PASTE & RUN (Removed "Get Test Token" button; minimal changes)
 
 import SwiftUI
 
@@ -34,11 +28,9 @@ struct ChatView: View {
                         }
                         .padding(.top, 12)
                     }
-                    .onChange(of: viewModel.messages.count) { oldCount, newCount in
-                        if newCount > oldCount, let lastID = viewModel.messages.last?.id {
-                            withAnimation {
-                                proxy.scrollTo(lastID, anchor: .bottom)
-                            }
+                    .onChange(of: viewModel.messages.count) { _, _ in
+                        if let lastID = viewModel.messages.last?.id {
+                            withAnimation { proxy.scrollTo(lastID, anchor: .bottom) }
                         }
                     }
                 }
@@ -47,7 +39,7 @@ struct ChatView: View {
                 inputBar
             }
             
-            // 3) Loading Overlay
+            // 3) Loading
             if viewModel.isLoading {
                 VStack {
                     Spacer()
@@ -59,26 +51,7 @@ struct ChatView: View {
                     Spacer()
                 }
             }
-            
-            // 4) "Get Test Token" dev button at top
-            VStack {
-                HStack {
-                    Button("Get Test Token") {
-                        viewModel.getTestToken()
-                    }
-                    .padding(8)
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(8)
-                    
-                    Spacer()
-                }
-                .padding()
-                
-                Spacer()
-            }
         }
-        // Show any alerts from the view model
         .alert(item: $viewModel.alertInfo) { info in
             Alert(
                 title: Text(info.title),
@@ -87,7 +60,6 @@ struct ChatView: View {
             )
         }
         .onAppear {
-            // Optionally load token from Keychain if you want to skip tapping "Get Test Token" every time
             viewModel.loadAuthToken()
             viewModel.sendWelcomeMessage()
         }
@@ -101,13 +73,9 @@ struct ChatView: View {
                     .focused($isInputFocused)
                     .padding(.horizontal, 12)
                     .frame(minHeight: 36)
-                    .onSubmit {
-                        sendMessage()
-                    }
+                    .onSubmit { sendMessage() }
                 
-                Button(action: {
-                    sendMessage()
-                }) {
+                Button(action: sendMessage) {
                     Image(systemName: "paperplane.fill")
                         .font(.system(size: 24))
                 }
@@ -121,13 +89,11 @@ struct ChatView: View {
     }
     
     private func sendMessage() {
-        let text = messageText.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !text.isEmpty else { return }
-        viewModel.userInput = text
+        let trimmed = messageText.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { return }
+        viewModel.userInput = trimmed
         messageText = ""
-        Task {
-            await viewModel.sendMessage()
-        }
+        Task { await viewModel.sendMessage() }
     }
     
     private func messageBubble(_ msg: ChatViewModel.Message) -> some View {

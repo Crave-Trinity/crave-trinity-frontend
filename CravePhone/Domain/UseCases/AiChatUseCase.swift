@@ -1,16 +1,10 @@
-//
-//  AiChatUseCase.swift
-//  CravePhone/Domain/UseCases
-//
-//  PURPOSE:
-//   - Provides a clean domain-level interface to get a test token or send user queries.
-//   - The ChatViewModel calls these methods.
+// DIRECTORY/FILENAME: CravePhone/Domain/UseCases/AiChatUseCase.swift
+// PASTE & RUN (Removed getTestToken(); only real JWT usage remains)
 
 import Foundation
 
 public protocol AiChatUseCaseProtocol {
     func execute(userQuery: String, authToken: String) async throws -> String
-    func getTestToken() async throws -> String
 }
 
 public struct AiChatUseCase: AiChatUseCaseProtocol {
@@ -22,9 +16,5 @@ public struct AiChatUseCase: AiChatUseCaseProtocol {
     
     public func execute(userQuery: String, authToken: String) async throws -> String {
         try await repository.getAiResponse(for: userQuery, authToken: authToken)
-    }
-    
-    public func getTestToken() async throws -> String {
-        try await repository.getTestToken()
     }
 }
