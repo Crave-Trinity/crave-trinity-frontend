@@ -23,19 +23,6 @@ struct CravingDescriptionSectionView: View {
                     isFocused = true
                 }
                 .frame(maxWidth: .infinity, minHeight: 120)
-            
-            HStack {
-                Spacer()
-                // Character count using the global caption style.
-                Text("\(text.count)/300")
-                    .font(CraveTheme.Typography.caption)
-                    .foregroundColor(
-                        text.count > 280 ? .red :
-                        text.count > 250 ? .orange :
-                        CraveTheme.Colors.secondaryText
-                    )
-                    .padding(.trailing, CraveTheme.Spacing.small)
-            }
         }
         .padding(.vertical, CraveTheme.Spacing.medium)
     }

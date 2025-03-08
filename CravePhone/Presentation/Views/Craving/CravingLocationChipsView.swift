@@ -20,11 +20,11 @@ public struct CravingLocationChipsView: View {
     // One special 'Current Location' + other example options with emojis
     private let locationChip = "📍 Current Location"
     private let options: [String] = [
-        "📍 Current",
-        "🏠 Home",
-        "🏢 Work",
-        "🎉 Social",
-        "🌲 Outside"
+        "📍Current",
+        "🏠Home",
+        "🏢Work",
+        "🎉Social",
+        "🌲Outside"
     ]
     
     // MARK: - Minimal Location Manager (for demo)
