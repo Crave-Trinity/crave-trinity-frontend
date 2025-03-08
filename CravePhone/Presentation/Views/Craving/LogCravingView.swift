@@ -66,10 +66,11 @@ public struct LogCravingView: View {
                     Text("What triggered it?")
                         .font(CraveTheme.Typography.subheading)
                         .foregroundColor(CraveTheme.Colors.primaryText)
-                    
-                    TextField("Describe any trigger here...", text: $viewModel.triggerDescription)
-                        .textFieldStyle(.roundedBorder)
+
+                    // Use your custom text editor here:
+                    CraveTextEditor(text: $viewModel.triggerDescription)
                         .focused($isTriggerFocused)
+                        .frame(minHeight: 100) // optional: ensures some initial height
                     
                     // Intensity and Resistance sliders.
                     CravingSlidersSectionView(
