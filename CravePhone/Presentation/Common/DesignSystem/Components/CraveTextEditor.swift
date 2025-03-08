@@ -4,6 +4,8 @@
 //
 // Revised for consistent font, spacing, and styling in the Log Craving view.
 // Uses CraveTheme values for fonts, colors, corner radius, and spacing.
+// Placeholder text has been removed, leaving a clean, empty text box when empty.
+//
 import SwiftUI
 
 struct CraveTextEditor: View {
@@ -17,11 +19,14 @@ struct CraveTextEditor: View {
     
     var body: some View {
         ZStack(alignment: .topLeading) {
-            // Show placeholder when text is empty.
+            
+            // Show placeholder only when text is empty.
+            // Now it's just an empty view, so no visible placeholder text is displayed.
             if text.isEmpty {
-                placeholderContent
-                    .allowsHitTesting(false) // Allow taps to pass through.
+                EmptyView()
+                    .allowsHitTesting(false) // Let taps go through to the editor.
             }
+            
             // Main TextEditor with consistent styling.
             TextEditor(text: $text)
                 .font(CraveTheme.Typography.body)
@@ -46,27 +51,14 @@ struct CraveTextEditor: View {
         }
     }
     
-    // MARK: - Placeholder Content
-    private var placeholderContent: some View {
-        VStack(alignment: .leading, spacing: CraveTheme.Spacing.small) {
-            Text("Trigger?")
-            Text("Location?")
-            Text("Activity?")
-            Text("People?")
-        }
-        .font(CraveTheme.Typography.body.weight(.medium))
-        .foregroundColor(CraveTheme.Colors.placeholderSecondary)
-        .padding(.leading, CraveTheme.Spacing.small)
-        .padding(.top, CraveTheme.Spacing.medium)
-        .frame(maxWidth: .infinity, alignment: .leading)
-    }
-    
     // MARK: - Dynamic Height Calculation
     private func recalcHeight() {
-        // Estimate lines based on character count.
+        // Estimate lines based on character count (about 35 chars per line).
         let linesCount = text.count / 35 + 1
-        // Calculate new height while capping at 300 for aesthetics.
+        
+        // Calculate new height, capping at 300 for aesthetics.
         let newHeight = min(max(150, CGFloat(linesCount) * 20), 300)
+        
         if editorHeight != newHeight {
             withAnimation(CraveTheme.Animations.smooth) {
                 editorHeight = newHeight
