@@ -23,7 +23,7 @@ struct CravingSlidersSectionView: View {
                         .font(CraveTheme.Typography.subheading.weight(.semibold))
                         .foregroundColor(intensityColor)
                 }
-                Slider(value: $cravingStrength, in: 1...10, step: 1)
+                Slider(value: $cravingStrength, in: 0...10, step: 1)
                     .accentColor(intensityColor)
                     .onChange(of: cravingStrength, initial: false) { newValue, _ in
                         CraveHaptics.shared.selectionChanged()
@@ -43,7 +43,7 @@ struct CravingSlidersSectionView: View {
                         .font(CraveTheme.Typography.subheading.weight(.semibold))
                         .foregroundColor(resistanceColor)
                 }
-                Slider(value: $resistance, in: 1...10, step: 1)
+                Slider(value: $resistance, in: 0...10, step: 1)
                     .accentColor(resistanceColor)
                     .onChange(of: resistance, initial: false) { newValue, _ in
                         CraveHaptics.shared.selectionChanged()

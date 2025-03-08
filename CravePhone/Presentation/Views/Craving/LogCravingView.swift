@@ -29,9 +29,11 @@ public struct LogCravingView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: CraveTheme.Spacing.large) {
                     
-                    // Description Section: Pass only the text binding, then attach focus modifier.
-                    CravingDescriptionSectionView(text: $viewModel.cravingDescription)
-                        .focused($isDescriptionFocused)
+                    // Description Section
+                    CravingDescriptionSectionView(
+                        text: $viewModel.cravingDescription
+                    )
+                    .focused($isDescriptionFocused)
                     
                     // Speech Toggle Button (Optional Microphone for dictation).
                     CraveSpeechToggleButton(
@@ -64,11 +66,11 @@ public struct LogCravingView: View {
                     Text("What triggered it?")
                         .font(CraveTheme.Typography.subheading)
                         .foregroundColor(CraveTheme.Colors.primaryText)
-                    
+
                     // Use your custom text editor here:
                     CraveTextEditor(text: $viewModel.triggerDescription)
                         .focused($isTriggerFocused)
-                        .frame(minHeight: 100) // ensures some initial height
+                        .frame(minHeight: 100) // optional: ensures some initial height
                     
                     // Intensity and Resistance sliders.
                     CravingSlidersSectionView(
