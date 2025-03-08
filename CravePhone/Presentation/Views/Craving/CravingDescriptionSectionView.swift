@@ -1,42 +1,54 @@
 //
-// CravingDescriptionSectionView.swift
-// /CravePhone/Presentation/Views/Craving/CravingDescriptionSectionView.swift
+// 5) FILE: CravingDescriptionSectionView.swift
+//    DIRECTORY: CravePhone/Presentation/Views/Craving
+//    DESCRIPTION: Shows the text editor for the craving description,
+//                 plus the mic button near the character count.
 //
-// Revised for consistent typography and spacing.
-// The section now uses global styles for the title, text editor, and character counter.
+
 import SwiftUI
 
 struct CravingDescriptionSectionView: View {
-    @Binding var text: String
-    @FocusState.Binding var isFocused: Bool
+    @ObservedObject var viewModel: LogCravingViewModel
+    
+    private let characterLimit = 300
     
     var body: some View {
-        VStack(alignment: .leading, spacing: CraveTheme.Spacing.medium) {
-            // Section title using the global heading style.
-            Text("🍫 What are you craving?")
-                .font(CraveTheme.Typography.heading)
-                .foregroundColor(CraveTheme.Colors.primaryText)
-            // Custom text editor.
-            CraveTextEditor(text: $text)
-                .focused($isFocused)
-                .onTapGesture {
-                    isFocused = true
-                }
-                .frame(maxWidth: .infinity, minHeight: 120)
+        VStack(alignment: .leading, spacing: 12) {
             
-            HStack {
-                Spacer()
-                // Character count using the global caption style.
-                Text("\(text.count)/300")
-                    .font(CraveTheme.Typography.caption)
-                    .foregroundColor(
-                        text.count > 280 ? .red :
-                        text.count > 250 ? .orange :
-                        CraveTheme.Colors.secondaryText
-                    )
-                    .padding(.trailing, CraveTheme.Spacing.small)
+            Text("What are you craving?")
+                .font(.headline)
+            
+            // ZStack to overlay the mic + char count in top-right
+            ZStack(alignment: .topTrailing) {
+                
+                // The custom text editor
+                CraveTextEditor(
+                    text: $viewModel.cravingDescription,
+                    placeholder: "Describe your craving...",
+                    minHeight: 120
+                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(Color.secondary, lineWidth: 1)
+                )
+                
+                // HStack for char count + mic
+                HStack(spacing: 8) {
+                    Text("\(viewModel.cravingDescription.count)/\(characterLimit)")
+                        .font(.footnote)
+                        .foregroundColor(.secondary)
+                    
+                    CraveSpeechToggleButton { recognizedText in
+                        // Decide whether to append or replace
+                        // For example, let's just set (replace) for clarity
+                        viewModel.cravingDescription = recognizedText
+                    }
+                }
+                .padding(.top, 8)
+                .padding(.trailing, 8)
             }
         }
-        .padding(.vertical, CraveTheme.Spacing.medium)
+        .padding(.vertical, 8)
+        .padding(.horizontal, 16)
     }
 }

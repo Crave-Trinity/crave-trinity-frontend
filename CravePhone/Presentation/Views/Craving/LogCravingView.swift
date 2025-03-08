@@ -1,154 +1,92 @@
 //
-// LogCravingView.swift
-// /CravePhone/Presentation/Views/Craving/LogCravingView.swift
+//  LogCravingView.swift
+//  CravePhone/Presentation/Views/Craving
+//  DESCRIPTION: Main view that orchestrates logging a craving,
+//               including the description section, location, etc.
 //
-// Revised for consistent styling, adding Location/People chips and a Trigger field.
-//
+
 import SwiftUI
 
-public struct LogCravingView: View {
-    @ObservedObject var viewModel: LogCravingViewModel
-    @FocusState private var isDescriptionFocused: Bool
-    @FocusState private var isTriggerFocused: Bool
-    @State private var isSubmitting = false
+struct LogCravingView: View {
+    // Accept the view model from outside
+    @StateObject private var viewModel: LogCravingViewModel
     
-    public init(viewModel: LogCravingViewModel) {
-        self.viewModel = viewModel
+    // Custom initializer so the DI container can supply the view model.
+    init(viewModel: LogCravingViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel)
     }
     
-    public var body: some View {
-        ZStack {
-            // Background gradient that dismisses the keyboard on tap.
-            CraveTheme.Colors.primaryGradient
-                .ignoresSafeArea()
-                .onTapGesture {
-                    isDescriptionFocused = false
-                    isTriggerFocused = false
-                }
-            
-            ScrollView {
-                VStack(alignment: .leading, spacing: CraveTheme.Spacing.large) {
-                    
-                    // Description Section
-                    CravingDescriptionSectionView(
-                        text: $viewModel.cravingDescription,
-                        isFocused: $isDescriptionFocused
-                    )
-                    
-                    // Speech Toggle Button (Optional Microphone for dictation).
-                    CraveSpeechToggleButton(
-                        isRecording: viewModel.isRecordingSpeech,
-                        onToggle: {
-                            viewModel.toggleSpeechRecognition()
-                            CraveHaptics.shared.mediumImpact()
-                        }
-                    )
-                    
-                    // Location Chips
+    var body: some View {
+        ScrollView {
+            VStack(spacing: 24) {
+                // The description section
+                CravingDescriptionSectionView(viewModel: viewModel)
+                
+                // Location
+                VStack(alignment: .leading, spacing: 8) {
                     Text("Where are you?")
-                        .font(CraveTheme.Typography.subheading)
-                        .foregroundColor(CraveTheme.Colors.primaryText)
-                    
-                    CravingLocationChipsView(
-                        selectedLocation: $viewModel.selectedLocation
-                    )
-                    
-                    // People Chips
+                        .font(.headline)
+                    CraveTextEditor(text: $viewModel.location,
+                                    placeholder: "Current, Home, Work, Social, etc.",
+                                    minHeight: 40)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color.secondary, lineWidth: 1)
+                        )
+                }
+                
+                // People
+                VStack(alignment: .leading, spacing: 8) {
                     Text("Who are you with?")
-                        .font(CraveTheme.Typography.subheading)
-                        .foregroundColor(CraveTheme.Colors.primaryText)
-                    
-                    CravingPeopleChipsView(
-                        selectedPeople: $viewModel.selectedPeople
-                    )
-                    
-                    // (Optional) Trigger text field.
+                        .font(.headline)
+                    CraveTextEditor(text: $viewModel.people,
+                                    placeholder: "Alone, Friends, Family, Coworkers...",
+                                    minHeight: 40)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color.secondary, lineWidth: 1)
+                        )
+                }
+                
+                // Trigger
+                VStack(alignment: .leading, spacing: 8) {
                     Text("What triggered it?")
-                        .font(CraveTheme.Typography.subheading)
-                        .foregroundColor(CraveTheme.Colors.primaryText)
-                    
-                    TextField("Describe any trigger here...", text: $viewModel.triggerDescription)
-                        .textFieldStyle(.roundedBorder)
-                        .focused($isTriggerFocused)
-                    
-                    // Intensity and Resistance sliders.
-                    CravingSlidersSectionView(
-                        cravingStrength: $viewModel.cravingStrength,
-                        resistance: $viewModel.confidenceToResist
-                    )
-                    
-                    // Mood (Emotions) chips
-                    CravingEmotionChipsView(
-                        selectedEmotions: viewModel.selectedEmotions,
-                        onToggleEmotion: { emotion in
-                            viewModel.toggleEmotion(emotion)
-                            CraveHaptics.shared.selectionChanged()
-                        }
-                    )
-                    
-                    // Submit Button
-                    submitButton
+                        .font(.headline)
+                    CraveTextEditor(text: $viewModel.trigger,
+                                    placeholder: "What might have caused this craving?",
+                                    minHeight: 40)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color.secondary, lineWidth: 1)
+                        )
                 }
-                .padding(CraveTheme.Spacing.medium)
-            }
-        }
-        .toolbar {
-            // Keyboard toolbar with a "Done" button.
-            ToolbarItemGroup(placement: .keyboard) {
-                Spacer()
-                Button("Done") {
-                    isDescriptionFocused = false
-                    isTriggerFocused = false
+                
+                // Intensity
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Intensity")
+                        .font(.headline)
+                    Slider(value: $viewModel.intensity, in: 0...10, step: 1)
+                    Text("\(Int(viewModel.intensity))")
+                        .font(.footnote)
+                        .foregroundColor(.secondary)
                 }
-            }
-        }
-        .alert(item: $viewModel.alertInfo) { info in
-            Alert(
-                title: Text(info.title).font(CraveTheme.Typography.heading),
-                message: Text(info.message).font(CraveTheme.Typography.body),
-                dismissButton: .default(Text("OK").font(CraveTheme.Typography.subheading))
-            )
-        }
-    }
-    
-    // MARK: - Submit Button
-    private var submitButton: some View {
-        Button {
-            submitCraving()
-        } label: {
-            HStack {
-                if isSubmitting {
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle(tint: CraveTheme.Colors.buttonText))
-                        .padding(.trailing, CraveTheme.Spacing.small)
+                
+                // Log button
+                Button(action: {
+                    viewModel.logCraving()
+                }) {
+                    Text("Log Craving")
+                        .fontWeight(.semibold)
+                        .foregroundColor(.white)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(Color.blue.cornerRadius(8))
                 }
-                Text(isSubmitting ? "Saving..." : "Log Craving")
-                    .font(CraveTheme.Typography.heading)
+                .padding(.top, 16)
             }
-            .frame(maxWidth: .infinity)
-            .padding(CraveTheme.Spacing.medium)
-            .background(Color.blue.cornerRadius(CraveTheme.Layout.cornerRadius))
-            .foregroundColor(CraveTheme.Colors.buttonText)
+            .padding()
         }
-        .disabled(isSubmitting || !viewModel.isValid)
-    }
-    
-    // MARK: - Submit Logic
-    private func submitCraving() {
-        guard !isSubmitting else { return }
-        guard viewModel.isValid else {
-            viewModel.alertInfo = AlertInfo(
-                title: "Invalid Entry",
-                message: "Please enter a valid craving description and intensity."
-            )
-            return
-        }
-        isSubmitting = true
-        Task {
-            await viewModel.logCraving()
-            isSubmitting = false
-            isDescriptionFocused = false
-            isTriggerFocused = false
-        }
+        .navigationTitle("Log Craving")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }

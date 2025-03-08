@@ -1,49 +1,35 @@
 //
-//  CraveSpeechToggleButton.swift
-//  CravePhone
-//
-//  RESPONSIBILITY: Standalone mic button to start/stop speech input.
+// 2) FILE: CraveSpeechToggleButton.swift
+//    DIRECTORY: CravePhone/Presentation/Views/Craving
+//    DESCRIPTION: A mic button that toggles speech recognition on/off.
+//                 Passes recognized text up via onSpeechResult closure.
 //
 
 import SwiftUI
 
 struct CraveSpeechToggleButton: View {
-    let isRecording: Bool
-    let onToggle: () -> Void
-
+    @StateObject private var speechService = SpeechToTextServiceImpl()
+    
+    // This closure is called whenever new speech text is recognized
+    let onSpeechResult: (String) -> Void
+    
     var body: some View {
-        Button {
-            CraveHaptics.shared.lightImpact()
-            onToggle()
-        } label: {
-            Image(systemName: isRecording ? "waveform.circle.fill" : "mic.fill")
-                .font(.system(size: 18, weight: .semibold))
-                .foregroundColor(
-                    isRecording
-                    ? CraveTheme.Colors.accent
-                    : Color.white.opacity(0.8)
-                )
+        Button(action: {
+            if speechService.isRecording {
+                speechService.stopRecording()
+            } else {
+                speechService.startRecording { recognizedText in
+                    // Forward recognized text to parent
+                    onSpeechResult(recognizedText)
+                }
+            }
+        }) {
+            Image(systemName: speechService.isRecording ? "mic.fill" : "mic")
+                .foregroundColor(speechService.isRecording ? .red : .blue)
                 .padding(8)
-                .background(
-                    Circle().fill(
-                        isRecording
-                        ? Color.white.opacity(0.2)
-                        : Color.black.opacity(0.4)
-                    )
-                )
-                .overlay(
-                    Circle()
-                        .stroke(
-                            isRecording ? CraveTheme.Colors.accent : .clear,
-                            lineWidth: 1.5
-                        )
-                )
-                .scaleEffect(isRecording ? 1.1 : 1.0)
-                .animation(
-                    .spring(response: 0.3, dampingFraction: 0.6),
-                    value: isRecording
-                )
+                .background(Circle().fill(Color(.systemGray6)))
         }
-        .accessibilityLabel(isRecording ? "Stop recording" : "Start voice input")
+        .accessibilityLabel("Toggle Speech Recognition")
+        .animation(.easeInOut, value: speechService.isRecording)
     }
 }
