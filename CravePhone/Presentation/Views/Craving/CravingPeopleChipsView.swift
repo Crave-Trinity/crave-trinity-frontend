@@ -12,7 +12,7 @@ public struct CravingPeopleChipsView: View {
     
     // Example set
     private let peopleOptions = [
-        "Alone", "Family", "Friends", "Coworkers", "Strangers"
+        "🧍Alone", "👪 Family", "👫 Friends", "💼 Coworkers", "👥 Strangers"
     ]
     
     public init(selectedPeople: Binding<[String]>) {
