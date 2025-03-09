@@ -1,16 +1,9 @@
-//=================================================================
-// File: CravePhone/Presentation/Views/Splash/SplashView.swift
-// PURPOSE:
-//  - Minimal splash screen before navigating to LoginView or CRAVETabView.
-//
-// UNCLE BOB + STEVE JOBS STYLE – COMPLETE PASTE & RUN
-//=================================================================
-
+// File: SplashView.swift
+// PURPOSE: Provides a simple splash screen.
 import SwiftUI
 
 struct SplashView: View {
     @StateObject var viewModel: SplashViewModel
-    
     var body: some View {
         ZStack {
             Color.black.ignoresSafeArea()
@@ -23,8 +16,6 @@ struct SplashView: View {
                     .progressViewStyle(CircularProgressViewStyle(tint: .white))
             }
         }
-        .onAppear {
-            viewModel.onAppear()
-        }
+        .onAppear { viewModel.onAppear() }
     }
 }

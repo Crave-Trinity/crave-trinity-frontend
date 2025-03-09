@@ -1,33 +1,34 @@
-//
-//  KeychainHelper.swift
-//  CravePhone/PhoneApp
-//
-//  PURPOSE:
-//   - Save/load/delete the JWT token from the iOS Keychain.
-//   - Provide a one-time convenience method to clear tokens for debug/testing.
-//
-
+// File: KeychainHelper.swift
+// PURPOSE: Provides a simple facade for storing, loading, and deleting JWT tokens
+//          (and optionally refresh tokens) from the iOS Keychain.
+// DESIGN: Single Responsibility, Facade Pattern, clean and testable.
 import Foundation
 import Security
 
 struct KeychainHelper {
+    
+    // MARK: - Save Token
     static func save(data: Data, service: String, account: String) {
         let query = [
-            kSecValueData: data,
             kSecClass: kSecClassGenericPassword,
+            kSecAttrAccessible: kSecAttrAccessibleWhenUnlockedThisDeviceOnly, // Removed on uninstall
             kSecAttrService: service,
             kSecAttrAccount: account,
+            kSecValueData: data
         ] as CFDictionary
         
-        // Remove any existing entry before adding
+        // Remove any existing token before saving
         SecItemDelete(query)
         
         let status = SecItemAdd(query, nil)
         if status != errSecSuccess {
-            print("Error saving to Keychain: \(status)")
+            print("❌ [Keychain] Error saving item for \(account): \(status)")
+        } else {
+            print("✅ [Keychain] Successfully saved item for \(account).")
         }
     }
     
+    // MARK: - Load Token
     static func load(service: String, account: String) -> Data? {
         let query = [
             kSecClass: kSecClassGenericPassword,
@@ -39,39 +40,37 @@ struct KeychainHelper {
         
         var result: AnyObject?
         let status = SecItemCopyMatching(query, &result)
-        
         if status == errSecSuccess {
             return result as? Data
         } else {
-            print("Error loading from Keychain: \(status)")
+            if status != errSecItemNotFound {
+                print("❌ [Keychain] Error loading item for \(account): \(status)")
+            }
             return nil
         }
     }
     
+    // MARK: - Delete Token
     static func delete(service: String, account: String) {
         let query = [
             kSecClass: kSecClassGenericPassword,
             kSecAttrService: service,
-            kSecAttrAccount: account,
+            kSecAttrAccount: account
         ] as CFDictionary
         
         let status = SecItemDelete(query)
         if status != errSecSuccess && status != errSecItemNotFound {
-            print("Error deleting from Keychain: \(status)")
+            print("❌ [Keychain] Error deleting item for \(account): \(status)")
+        } else {
+            print("✅ [Keychain] Successfully deleted item for \(account).")
         }
     }
     
-    // MARK: - One-Time Clear JWT/Refresh
+    // MARK: - Clear All Tokens (for testing)
     static func clearCraveTokensOnce() {
-        // Adjust these to match whatever you actually store in Keychain:
-        let service = "com.Novamind.CRAVE"
-        
-        // If you only need to remove JWT token:
-        delete(service: service, account: "jwtToken")
-        
-        // If you also want to remove refresh token:
-        // delete(service: service, account: "refreshToken")
-        
-        print("✅ One-time Keychain cleanup completed.")
+        let service = "com.crave.app" // Must match usage in AuthRepositoryImpl & AiChatUseCase
+        delete(service: service, account: "authToken")
+        delete(service: service, account: "refreshToken")
+        print("✅ [Keychain] One-time token cleanup completed.")
     }
 }

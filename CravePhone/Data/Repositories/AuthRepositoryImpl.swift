@@ -1,14 +1,16 @@
 // File: AuthRepositoryImpl.swift
-// PURPOSE: Implements authentication logic (email/password and native Google sign‑in)
-// AUTHOR: Uncle Bob / Steve Jobs Style
-
+// PURPOSE: Implements authentication logic (Email/Password and Google OAuth),
+//          saving tokens to the Keychain and providing a logout method.
+// DESIGN: Single Responsibility; uses Dependency Inversion for testability.
 import Foundation
 import SwiftUI
 
 final class AuthRepositoryImpl: AuthRepository {
     private let backendClient: CraveBackendAPIClient
+    private let keychainService = "com.crave.app"
+    private let jwtAccount = "authToken"
+    private let refreshAccount = "refreshToken"
     
-    // MARK: - Designated Initializer
     init(backendClient: CraveBackendAPIClient) {
         self.backendClient = backendClient
     }
@@ -33,7 +35,18 @@ final class AuthRepositoryImpl: AuthRepository {
         
         switch httpResponse.statusCode {
         case 200..<300:
-            return try JSONDecoder().decode(AuthResponseDTO.self, from: data)
+            let authResponse = try JSONDecoder().decode(AuthResponseDTO.self, from: data)
+            // Save the access token
+            KeychainHelper.save(data: Data(authResponse.accessToken.utf8),
+                                service: keychainService,
+                                account: jwtAccount)
+            // Save the refresh token if provided
+            if let refresh = authResponse.refreshToken, !refresh.isEmpty {
+                KeychainHelper.save(data: Data(refresh.utf8),
+                                    service: keychainService,
+                                    account: refreshAccount)
+            }
+            return authResponse
         case 401:
             throw APIError.unauthorized
         case 500...599:
@@ -43,32 +56,33 @@ final class AuthRepositoryImpl: AuthRepository {
         }
     }
     
-    // MARK: - Native Google Sign-In Verification
+    // MARK: - Google OAuth Verification
     func verifyGoogleIdToken(idToken: String) async throws -> AuthResponseDTO {
         guard let url = URL(string: "\(backendClient.baseURL)/api/v1/auth/verify-google-id-token") else {
             throw APIError.invalidURL
         }
-
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-
         let body = ["id_token": idToken]
         request.httpBody = try JSONSerialization.data(withJSONObject: body, options: [])
-
+        
         let (data, response) = try await URLSession.shared.data(for: request)
         guard let httpResponse = response as? HTTPURLResponse else {
             throw APIError.invalidResponse
         }
-
-        print("HTTP Status Code: \(httpResponse.statusCode)")
-        if let responseBody = String(data: data, encoding: .utf8) {
-            print("Response Body: \(responseBody)")
-        }
-
         switch httpResponse.statusCode {
         case 200..<300:
-            return try JSONDecoder().decode(AuthResponseDTO.self, from: data)
+            let authResponse = try JSONDecoder().decode(AuthResponseDTO.self, from: data)
+            KeychainHelper.save(data: Data(authResponse.accessToken.utf8),
+                                service: keychainService,
+                                account: jwtAccount)
+            if let refresh = authResponse.refreshToken, !refresh.isEmpty {
+                KeychainHelper.save(data: Data(refresh.utf8),
+                                    service: keychainService,
+                                    account: refreshAccount)
+            }
+            return authResponse
         case 401:
             throw APIError.unauthorized
         case 500...599:
@@ -78,22 +92,19 @@ final class AuthRepositoryImpl: AuthRepository {
         }
     }
     
-    // MARK: - Fetch Current User
+    // MARK: - Fetch Current User (via token)
     func fetchCurrentUser(accessToken: String) async throws -> UserEntity {
         guard let url = URL(string: "\(backendClient.baseURL)/api/v1/auth/me") else {
             throw APIError.invalidURL
         }
-        
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
-        
         let (data, response) = try await URLSession.shared.data(for: request)
         guard let httpResponse = response as? HTTPURLResponse else {
             throw APIError.invalidResponse
         }
-        
         switch httpResponse.statusCode {
         case 200..<300:
             return try JSONDecoder().decode(UserEntity.self, from: data)
@@ -102,5 +113,12 @@ final class AuthRepositoryImpl: AuthRepository {
         default:
             throw APIError.invalidResponse
         }
+    }
+    
+    // MARK: - Logout
+    func logout() {
+        KeychainHelper.delete(service: keychainService, account: jwtAccount)
+        KeychainHelper.delete(service: keychainService, account: refreshAccount)
+        print("✅ [AuthRepositoryImpl] User logged out, tokens removed.")
     }
 }
