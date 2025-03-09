@@ -4,13 +4,10 @@
 //
 //  RESPONSIBILITY: Standalone mic button to start/stop speech input.
 //
-
 import SwiftUI
-
 struct CraveSpeechToggleButton: View {
     let isRecording: Bool
     let onToggle: () -> Void
-
     var body: some View {
         Button {
             CraveHaptics.shared.lightImpact()
@@ -47,3 +44,5 @@ struct CraveSpeechToggleButton: View {
         .accessibilityLabel(isRecording ? "Stop recording" : "Start voice input")
     }
 }
+
+

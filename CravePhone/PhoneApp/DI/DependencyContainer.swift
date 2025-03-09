@@ -1,15 +1,16 @@
+//
 // File: CravePhone/PhoneApp/DI/DependencyContainer.swift
-// PURPOSE: Acts as the single source of truth for object creation.
-//          All dependencies are created and injected here so that the rest of the app remains decoupled.
+// PURPOSE: Single source of truth for object creation.
+// UNCLE BOB + STEVE JOBS STYLE – COMPLETE PASTE & RUN
+//
 import SwiftUI
 import SwiftData
 
 @MainActor
-public final class DependencyContainer: ObservableObject {
+internal final class DependencyContainer: ObservableObject {
     
     // MARK: - SwiftData Model Container
     @Published private(set) var modelContainer: ModelContainer
-    // Use the container's mainContext for our repositories.
     private lazy var modelContext: ModelContext = modelContainer.mainContext
     
     // MARK: - Cravings
@@ -62,20 +63,20 @@ public final class DependencyContainer: ObservableObject {
         AiChatUseCase(repository: aiChatRepository)
     }()
     
-    // MARK: - Auth (Google OAuth and Email/Password)
-    // Notice how we inject the backend client into AuthRepositoryImpl.
+    // MARK: - Auth
     private lazy var authRepository: AuthRepository = {
         AuthRepositoryImpl(backendClient: backendClient)
     }()
     
     // MARK: - Initialization
-    public init() {
-        // Configure SwiftData schema for our domain objects.
+    internal init() {
+        // Configure SwiftData schema for domain objects
         let schema = Schema([
             CravingEntity.self,
             AnalyticsMetadata.self,
             AnalyticsDTO.self
         ])
+        
         let modelConfiguration = ModelConfiguration(
             schema: schema,
             isStoredInMemoryOnly: false
@@ -91,12 +92,13 @@ public final class DependencyContainer: ObservableObject {
     }
     
     // MARK: - Factory Methods for ViewModels
+    // All internal, returning internal or private types.
     
-    func makeChatViewModel() -> ChatViewModel {
+    internal func makeChatViewModel() -> ChatViewModel {
         ChatViewModel(aiChatUseCase: aiChatUseCase)
     }
     
-    func makeLogCravingViewModel() -> LogCravingViewModel {
+    internal func makeLogCravingViewModel() -> LogCravingViewModel {
         LogCravingViewModel(
             cravingRepo: cravingRepository,
             analyticsRepo: analyticsRepository,
@@ -104,21 +106,19 @@ public final class DependencyContainer: ObservableObject {
         )
     }
     
-    func makeCravingListViewModel() -> CravingListViewModel {
+    internal func makeCravingListViewModel() -> CravingListViewModel {
         CravingListViewModel(cravingRepo: cravingRepository)
     }
     
-    func makeAnalyticsViewModel() -> AnalyticsViewModel {
+    internal func makeAnalyticsViewModel() -> AnalyticsViewModel {
         AnalyticsViewModel(manager: analyticsManager)
     }
     
-    func makeSplashViewModel(coordinator: AppCoordinator) -> SplashViewModel {
+    internal func makeSplashViewModel(coordinator: AppCoordinator) -> SplashViewModel {
         SplashViewModel(coordinator: coordinator)
     }
     
-    // Factory method for creating LoginViewModel
-    // Now requires an AppCoordinator to enable navigation upon login
-    func makeLoginViewModel(coordinator: AppCoordinator) -> LoginViewModel {
+    internal func makeLoginViewModel(coordinator: AppCoordinator) -> LoginViewModel {
         LoginViewModel(authRepository: authRepository, coordinator: coordinator)
     }
 }

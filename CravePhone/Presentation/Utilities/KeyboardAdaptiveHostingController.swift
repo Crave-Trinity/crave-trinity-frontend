@@ -20,17 +20,14 @@ public class KeyboardAdaptiveHostingController<Content: View>: UIHostingControll
     public override func viewDidLoad() {
         super.viewDidLoad()
         
-        // iOS 16 and newer: Let SwiftUI handle the keyboard avoidance automatically
         if #available(iOS 16.0, *) {
-            // No manual constraints needed here.
+            // SwiftUI handles keyboard avoidance automatically.
         } else {
-            // Fallback for iOS < 16
             addKeyboardObservers()
         }
     }
 
     // MARK: - Fallback Approach
-
     private func addKeyboardObservers() {
         keyboardWillShowObserver = NotificationCenter.default.addObserver(
             forName: UIResponder.keyboardWillShowNotification,
@@ -67,7 +64,6 @@ public class KeyboardAdaptiveHostingController<Content: View>: UIHostingControll
             options: animationOptions,
             animations: {
                 if isShowing {
-                    // If you have a bottom TabView, optionally subtract its height:
                     let tabBarHeight: CGFloat = 49
                     self.additionalSafeAreaInsets.bottom = max(
                         0,
@@ -91,4 +87,3 @@ public class KeyboardAdaptiveHostingController<Content: View>: UIHostingControll
         }
     }
 }
-

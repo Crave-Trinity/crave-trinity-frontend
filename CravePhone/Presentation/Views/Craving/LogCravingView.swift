@@ -31,9 +31,9 @@ public struct LogCravingView: View {
                     
                     // Description Section
                     CravingDescriptionSectionView(
-                        text: $viewModel.cravingDescription,
-                        isFocused: $isDescriptionFocused
+                        text: $viewModel.cravingDescription
                     )
+                    .focused($isDescriptionFocused)
                     
                     // Speech Toggle Button (Optional Microphone for dictation).
                     CraveSpeechToggleButton(
