@@ -3,19 +3,17 @@
 //  CravePhone
 //
 //  PURPOSE:
-//    - The @main entry point. We extend the background color everywhere,
-//      but let SwiftUI manage safe areas naturally.
-//    - This prevents conflicting safe-area calculations that can lead
-//      to negative frame dimensions.
-//    - UNCLE BOB / STEVE JOBS STYLE: Keep things minimal and let the system do its job.
+//    - The @main entry point with minimal overhead.
+//    - We wrap the root view in SentryTracedView for performance monitoring.
 //
 //  NOTE:
-//    We removed the custom SafeAreaInsetsEnvironmentReader from the top-level view.
-//    If you still need safe area insets in your subviews, consider applying the modifier at a lower level.
+//    Remove or comment out the `.onAppear { ... }` block
+//    after verifying the token is cleared once on a real device.
+//
 
 import SwiftUI
 import SwiftData
-import SentrySwiftUI  // Imports both Sentry and SwiftUI instrumentation features
+import SentrySwiftUI
 
 @main
 struct CRAVEApp: App {
@@ -25,16 +23,13 @@ struct CRAVEApp: App {
     init() {
         SentrySDK.start { options in
             options.dsn = "https://313df134566da34789fef865938493bc@o4508933259198464.ingest.us.sentry.io/4508936692498432"
-            options.debug = true  // Enable debug mode for development. Remove or set to false for production.
-            // Optionally, configure additional options:
-            // options.environment = "development"
-            // options.releaseName = "cravephone@1.0.0"
+            options.debug = true  // Debug mode for development
         }
     }
     
     var body: some Scene {
         WindowGroup {
-            // Wrap the root view in a SentryTracedView to monitor performance.
+            // Monitor performance with Sentry
             SentryTracedView("RootView") {
                 ZStack {
                     // Full-bleed background
@@ -43,6 +38,14 @@ struct CRAVEApp: App {
                     // Coordinator-driven UI
                     CoordinatorHostView(container: container)
                 }
+            }
+            .onAppear {
+                #if DEBUG
+                // Clear your Keychain tokens ONE TIME to fix the messed-up state.
+                KeychainHelper.clearCraveTokensOnce()
+                
+                // IMPORTANT: Remove or comment out after verifying it works.
+                #endif
             }
             .preferredColorScheme(.dark)
         }
