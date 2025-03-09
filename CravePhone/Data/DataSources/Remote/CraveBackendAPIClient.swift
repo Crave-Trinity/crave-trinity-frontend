@@ -1,5 +1,4 @@
-// DIRECTORY/FILENAME: CravePhone/Data/DataSources/Remote/CraveBackendAPIClient.swift
-// PASTE & RUN (Removed generateTestToken(); everything else intact)
+//CravePhone/Data/DataSources/Remote/CraveBackendAPIClient.swift
 
 import Foundation
 
@@ -52,15 +51,18 @@ public struct ChatResponse: Decodable {
 
 // MARK: - CraveBackendAPIClient
 public class CraveBackendAPIClient {
+    // If you prefer retrieving baseURL from SecretsManager, do so here.
+    // Otherwise, keep it hard-coded.
+    //public let baseURL: String = (try? SecretsManager.baseURL()) ?? "https://your-default-backend.com"
     public let baseURL: String = "https://crave-mvp-backend-production-a001.up.railway.app"
+    private let chatEndpoint = "/ai/chat" // Avoid magic strings
     
     public init() {}
     
-    // MARK: - sendMessage(userQuery:authToken:)
+    /// Sends a user query to the server's AI chat endpoint.
+    /// Expects a JSON response containing { "message": "<AI reply>" }
     public func sendMessage(userQuery: String, authToken: String) async throws -> String {
-        print("DEBUG: sendMessage(...) with token:", authToken)
-        
-        guard let url = URL(string: "\(baseURL)/api/v1/chat") else {
+        guard let url = URL(string: baseURL + chatEndpoint) else {
             throw APIError.invalidURL
         }
         
@@ -72,29 +74,33 @@ public class CraveBackendAPIClient {
         let payload = ["userQuery": userQuery]
         request.httpBody = try JSONSerialization.data(withJSONObject: payload, options: [])
         
-        let (data, response) = try await URLSession.shared.data(for: request)
-        guard let httpResponse = response as? HTTPURLResponse else {
-            throw APIError.invalidResponse
-        }
-        
-        print("DEBUG: Chat request status code:", httpResponse.statusCode)
-        let rawBody = String(data: data, encoding: .utf8) ?? "nil"
-        print("DEBUG: Chat raw response body:", rawBody)
-        
-        switch httpResponse.statusCode {
-        case 200..<300:
-            do {
-                let decoded = try JSONDecoder().decode(ChatResponse.self, from: data)
-                return decoded.message
-            } catch {
-                throw APIError.decodingError(error)
+        do {
+            let (data, response) = try await URLSession.shared.data(for: request)
+            guard let httpResponse = response as? HTTPURLResponse else {
+                throw APIError.invalidResponse
             }
-        case 401:
-            throw APIError.unauthorized
-        case 500...599:
-            throw APIError.serverError(httpResponse.statusCode)
-        default:
-            throw APIError.invalidResponse
+            
+            switch httpResponse.statusCode {
+            case 200..<300:
+                do {
+                    let decoded = try JSONDecoder().decode(ChatResponse.self, from: data)
+                    return decoded.message
+                } catch {
+                    throw APIError.decodingError(error)
+                }
+            case 401:
+                throw APIError.unauthorized
+            case 400, 402..<500:
+                throw APIError.other("Client error: \(httpResponse.statusCode)")
+            case 500..<600:
+                throw APIError.serverError(httpResponse.statusCode)
+            default:
+                throw APIError.invalidResponse
+            }
+        } catch let urlError as URLError {
+            throw APIError.networkError(urlError)
+        } catch {
+            throw APIError.other(error.localizedDescription)
         }
     }
 }

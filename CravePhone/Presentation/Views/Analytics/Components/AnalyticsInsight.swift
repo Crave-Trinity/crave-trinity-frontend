@@ -2,8 +2,6 @@
 //  AnalyticsInsight.swift
 //  CravePhone
 //
-//  Created by ...
-//  Updated by ChatGPT on ...
 //
 
 import SwiftUI

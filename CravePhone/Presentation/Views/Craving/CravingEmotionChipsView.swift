@@ -3,21 +3,23 @@
 // /CravePhone/Presentation/Views/Craving/CravingEmotionChipsView.swift
 //
 // Revised for consistent styling and typography.
-// Updated to use CraveTheme values for fonts, spacing, and corner radius in emotion chips.
+// Updated to use a Capsule background with an overlay stroke for unselected chips,
+// providing a sleeker look that aligns with other chips in the app.
 import SwiftUI
 
 struct CravingEmotionChipsView: View {
     let selectedEmotions: Set<String>
     let onToggleEmotion: (String) -> Void
     
+    // List of available mood options
     private let allEmotions = [
         "Hungry", "Angry", "Lonely", "Tired",
-        "Happy", "Sad", "Bored", "Anxious"
+        "Happy", "Sad", "Anxious", "Bored"
     ]
     
     var body: some View {
         VStack(alignment: .leading, spacing: CraveTheme.Spacing.medium) {
-            // Title using the global subheading style.
+            // Title for the mood section, using a global subheading style.
             Text("💖 Mood")
                 .font(CraveTheme.Typography.subheading)
                 .foregroundColor(CraveTheme.Colors.primaryText)
@@ -54,11 +56,22 @@ struct CravingEmotionChipsView: View {
                 .foregroundColor(.white)
                 .padding(.vertical, CraveTheme.Spacing.small)
                 .padding(.horizontal, CraveTheme.Spacing.medium)
+                // Use a Capsule for a sleek, rounded look
                 .background(
-                    RoundedRectangle(cornerRadius: CraveTheme.Layout.cornerRadius)
+                    Capsule()
                         .fill(selectedEmotions.contains(emotion)
-                            ? CraveTheme.Colors.accent
-                            : Color.white.opacity(0.2)
+                              ? CraveTheme.Colors.accent
+                              : Color.white.opacity(0.15)
+                        )
+                )
+                // Overlay a stroke on unselected chips to enhance definition
+                .overlay(
+                    Capsule()
+                        .stroke(
+                            selectedEmotions.contains(emotion)
+                                ? Color.clear
+                                : Color.white.opacity(0.5),
+                            lineWidth: 1
                         )
                 )
         }

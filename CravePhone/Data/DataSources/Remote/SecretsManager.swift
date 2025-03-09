@@ -1,32 +1,26 @@
-//=================================================================
-// 3) SecretsManager.swift
-//    CravePhone/Data/DataSources/Remote/SecretsManager.swift
-//
-//  PURPOSE:
-//  - Retrieve secrets (e.g. OPENAI_API_KEY) from a Secrets.plist or similar.
-//  - Minimal usage demonstration.
-//
-//=================================================================
+//CravePhone/Data/DataSources/Remote/SecretsManager.swift
 
 import Foundation
 
+/// If you no longer need to retrieve an OpenAI key on-device, you can remove or repurpose this file.
+/// For example, store your backend baseURL if you wish to keep "SecretsManager" around:
 public enum SecretsManager {
-    public static func openAIAPIKey() throws -> String {
+    /// Example: a secure place for your backend base URL if you don't want it hard-coded.
+    public static func baseURL() throws -> String {
         guard
             let filePath = Bundle.main.path(forResource: "Secrets", ofType: "plist"),
             let plist = NSDictionary(contentsOfFile: filePath),
-            let apiKey = plist["OPENAI_API_KEY"] as? String,
-            !apiKey.isEmpty
+            let baseURL = plist["CRAVE_BACKEND_BASE_URL"] as? String,
+            !baseURL.isEmpty
         else {
-            throw SecretsError.missingKey("OPENAI_API_KEY")
+            throw SecretsError.missingKey("CRAVE_BACKEND_BASE_URL")
         }
-        return apiKey
+        return baseURL
     }
 }
 
 public enum SecretsError: Error, LocalizedError {
     case missingKey(String)
-
     public var errorDescription: String? {
         switch self {
         case .missingKey(let keyName):

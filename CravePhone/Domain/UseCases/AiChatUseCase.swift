@@ -1,16 +1,19 @@
-// DIRECTORY/FILENAME: CravePhone/Domain/UseCases/AiChatUseCase.swift
-// PASTE & RUN (Removed getTestToken(); only real JWT usage remains)
+//CravePhone/Domain/UseCases/AiChatUseCase.swift
 
 import Foundation
 
-/// High-level business logic for AI chat.
-/// Follows the Command pattern from the GoF:
-/// "sendMessage" is the single operation we can invoke.
 public protocol AiChatUseCaseProtocol {
     func sendMessage(_ userQuery: String) async throws -> String
 }
 
+/// Error type for the AI Chat Use Case
+public enum AIChatError: Error {
+    case noAuthToken
+    case custom(String)
+}
+
 /// Concrete implementation bridging the presentation layer and the repository.
+/// Follows the "Command" idea from GoF: we have a single operation (sendMessage).
 public final class AiChatUseCase: AiChatUseCaseProtocol {
     private let repository: AiChatRepositoryProtocol
     
@@ -19,8 +22,18 @@ public final class AiChatUseCase: AiChatUseCaseProtocol {
     }
     
     public func sendMessage(_ userQuery: String) async throws -> String {
-        // In a real app, you'd fetch the auth token from Keychain or an AuthRepository:
-        let token = "DummyAuthTokenForPreview"
-        return try await repository.getAiResponse(for: userQuery, authToken: token)
+        // Example: retrieving token from Keychain.
+        // Adjust if you prefer an AuthRepository or a different mechanism.
+        guard
+            let tokenData = KeychainHelper.load(service: "com.crave.app", account: "authToken"),
+            let token = String(data: tokenData, encoding: .utf8),
+            !token.isEmpty
+        else {
+            throw AIChatError.noAuthToken
+        }
+        
+        // Now pass the real token to the repository
+        let aiResponse = try await repository.getAiResponse(for: userQuery, authToken: token)
+        return aiResponse
     }
 }
