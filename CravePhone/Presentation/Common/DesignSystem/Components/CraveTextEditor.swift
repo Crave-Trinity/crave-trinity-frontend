@@ -1,13 +1,14 @@
+//==================================================
+// File: CraveTextEditor.swift
+// Directory: CravePhone/Presentation/Common/DesignSystem/Components/CraveTextEditor.swift
 //
-// CraveTextEditor.swift
-// /CravePhone/Presentation/Common/DesignSystem/Components/CraveTextEditor.swift
-//
-// Revised for consistent font, spacing, and styling in the Log Craving view.
-// Uses CraveTheme values for fonts, colors, corner radius, and spacing.
-// Now with:
-//  - Smaller default min height (100 instead of 150).
-//  - A character count indicator (e.g. 0/300) displayed at the bottom-right.
-//
+// Purpose:
+//   Refactor the CraveTextEditor so that it focuses solely on text input,
+//   dynamic height calculation, and enforcing the character limit.
+//   The accessory controls (character count and mic toggle) are delegated
+//   to a dedicated accessory row, making the component adhere to the
+//   Single Responsibility Principle.
+//==================================================
 import SwiftUI
 
 struct CraveTextEditor: View {
@@ -16,22 +17,23 @@ struct CraveTextEditor: View {
     // Maximum number of characters allowed.
     let characterLimit: Int = 300
     
-    // Tracks the dynamic height of the TextEditor; starting at a smaller box height.
+    // New parameters for accessory behavior.
+    let isRecording: Bool
+    let onToggle: () -> Void
+    
+    // Tracks the dynamic height of the TextEditor; starting with a minimal height.
     @State private var editorHeight: CGFloat = 100
     
     var body: some View {
         VStack(alignment: .trailing, spacing: 4) {
-            
-            // The main TextEditor wrapped in a ZStack for placeholder handling.
+            // Main TextEditor for text input with placeholder handling.
             ZStack(alignment: .topLeading) {
-                
-                // Show a placeholder only when text is empty. Currently empty, so no visible text.
                 if text.isEmpty {
+                    // Placeholder handling can be customized here.
                     EmptyView()
-                        .allowsHitTesting(false) // Let taps go through to the editor.
+                        .allowsHitTesting(false)
                 }
                 
-                // Main TextEditor with consistent styling.
                 TextEditor(text: $text)
                     .font(CraveTheme.Typography.body)
                     .foregroundColor(CraveTheme.Colors.primaryText)
@@ -45,7 +47,7 @@ struct CraveTextEditor: View {
                     )
                     .modifier(ScrollBackgroundClearModifier())
                     .onChangeBackport(of: text, initial: false) { _, newVal in
-                        // Enforce character limit and update height.
+                        // Enforce character limit and recalculate dynamic height.
                         if newVal.count > characterLimit {
                             text = String(newVal.prefix(characterLimit))
                             CraveHaptics.shared.notification(type: .warning)
@@ -54,20 +56,21 @@ struct CraveTextEditor: View {
                     }
             }
             
-            // Character count (e.g. "0/300"), aligned to the trailing edge.
-            Text("\(text.count)/\(characterLimit)")
-                .font(.footnote)
-                .foregroundColor(.gray)
-                .padding(.trailing, 4)
+            // Accessory row displaying character count and speech-to-text mic button.
+            CraveTextEditorAccessoryRow(
+                text: $text,
+                characterLimit: characterLimit,
+                isRecording: isRecording,
+                onToggle: onToggle
+            )
         }
     }
     
     // MARK: - Dynamic Height Calculation
     private func recalcHeight() {
-        // Estimate lines based on character count (about 35 chars per line).
+        // Estimate lines based on character count (approximately 35 chars per line).
         let linesCount = text.count / 35 + 1
-        
-        // Calculate new height, capping at 300 for aesthetics.
+        // Calculate new height with a cap for aesthetics.
         let newHeight = min(max(100, CGFloat(linesCount) * 20), 300)
         
         if editorHeight != newHeight {

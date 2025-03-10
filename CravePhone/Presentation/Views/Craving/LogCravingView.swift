@@ -1,9 +1,14 @@
+//==================================================
+// File: LogCravingView.swift
+// Directory: CravePhone/Presentation/Views/Craving/LogCravingView.swift
 //
-// LogCravingView.swift
-// /CravePhone/Presentation/Views/Craving/LogCravingView.swift
-//
-// Revised for consistent styling, adding Location/People chips and a Trigger field.
-//
+// Purpose:
+//   Refactor the Log Craving screen so that the text input area
+//   (dynamic, auto-sizing text editor) is decoupled from its ancillary controls.
+//   This view now passes the speech recording state (isRecording) and
+//   the speech toggle callback to the text editor, which internally uses
+//   a dedicated accessory row for the character counter and mic button.
+//==================================================
 import SwiftUI
 
 public struct LogCravingView: View {
@@ -29,22 +34,15 @@ public struct LogCravingView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: CraveTheme.Spacing.large) {
                     
-                    // Description Section
+                    // Description Section.
                     CravingDescriptionSectionView(
                         text: $viewModel.cravingDescription
                     )
                     .focused($isDescriptionFocused)
                     
-                    // Speech Toggle Button (Optional Microphone for dictation).
-                    CraveSpeechToggleButton(
-                        isRecording: viewModel.isRecordingSpeech,
-                        onToggle: {
-                            viewModel.toggleSpeechRecognition()
-                            CraveHaptics.shared.mediumImpact()
-                        }
-                    )
+                    // (Removed inline speech toggle – now integrated in the accessory row)
                     
-                    // Location Chips
+                    // Location Chips Section.
                     Text("Where are you?")
                         .font(CraveTheme.Typography.subheading)
                         .foregroundColor(CraveTheme.Colors.primaryText)
@@ -53,7 +51,7 @@ public struct LogCravingView: View {
                         selectedLocation: $viewModel.selectedLocation
                     )
                     
-                    // People Chips
+                    // People Chips Section.
                     Text("Who are you with?")
                         .font(CraveTheme.Typography.subheading)
                         .foregroundColor(CraveTheme.Colors.primaryText)
@@ -62,15 +60,21 @@ public struct LogCravingView: View {
                         selectedPeople: $viewModel.selectedPeople
                     )
                     
-                    // (Optional) Trigger text field.
+                    // Trigger Field Section using the custom text editor.
                     Text("What triggered it?")
                         .font(CraveTheme.Typography.subheading)
                         .foregroundColor(CraveTheme.Colors.primaryText)
-
-                    // Use your custom text editor here:
-                    CraveTextEditor(text: $viewModel.triggerDescription)
-                        .focused($isTriggerFocused)
-                        .frame(minHeight: 100) // optional: ensures some initial height
+                    
+                    CraveTextEditor(
+                        text: $viewModel.triggerDescription,
+                        isRecording: viewModel.isRecordingSpeech,
+                        onToggle: {
+                            viewModel.toggleSpeechRecognition()
+                            CraveHaptics.shared.mediumImpact()
+                        }
+                    )
+                    .focused($isTriggerFocused)
+                    .frame(minHeight: 100)
                     
                     // Intensity and Resistance sliders.
                     CravingSlidersSectionView(
@@ -78,7 +82,7 @@ public struct LogCravingView: View {
                         resistance: $viewModel.confidenceToResist
                     )
                     
-                    // Mood (Emotions) chips
+                    // Mood (Emotions) chips.
                     CravingEmotionChipsView(
                         selectedEmotions: viewModel.selectedEmotions,
                         onToggleEmotion: { emotion in
@@ -87,7 +91,7 @@ public struct LogCravingView: View {
                         }
                     )
                     
-                    // Submit Button
+                    // Submit Button.
                     submitButton
                 }
                 .padding(CraveTheme.Spacing.medium)
@@ -120,7 +124,9 @@ public struct LogCravingView: View {
             HStack {
                 if isSubmitting {
                     ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle(tint: CraveTheme.Colors.buttonText))
+                        .progressViewStyle(
+                            CircularProgressViewStyle(tint: CraveTheme.Colors.buttonText)
+                        )
                         .padding(.trailing, CraveTheme.Spacing.small)
                 }
                 Text(isSubmitting ? "Saving..." : "Log Craving")
