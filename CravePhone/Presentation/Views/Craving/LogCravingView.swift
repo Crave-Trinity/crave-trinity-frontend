@@ -36,7 +36,12 @@ public struct LogCravingView: View {
                     
                     // Description Section.
                     CravingDescriptionSectionView(
-                        text: $viewModel.cravingDescription
+                        text: $viewModel.cravingDescription,
+                        isRecording: viewModel.isRecordingSpeech,
+                        onToggle: {
+                            viewModel.toggleSpeechRecognition()
+                            CraveHaptics.shared.mediumImpact()
+                        }
                     )
                     .focused($isDescriptionFocused)
                     
